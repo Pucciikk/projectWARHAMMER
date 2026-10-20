@@ -4,6 +4,7 @@ import dev.warpbound.chaos.ChaosAttachments;
 import dev.warpbound.chaos.ChaosLogic;
 import dev.warpbound.command.WarpboundCommands;
 import dev.warpbound.config.WarpboundConfig;
+import dev.warpbound.entity.WarpboundEntities;
 import dev.warpbound.network.WarpboundNetwork;
 import dev.warpbound.ship.ShipTicker;
 import net.fabricmc.api.ModInitializer;
@@ -26,6 +27,7 @@ public class Warpbound implements ModInitializer {
     public void onInitialize() {
         WarpboundConfig.load();
         ChaosAttachments.register();
+        WarpboundEntities.register();
         WarpboundNetwork.registerPayloads();
         ChaosLogic.registerEvents();
         ShipTicker.register();

@@ -4,19 +4,34 @@
   "version": "${version}",
   "name": "Warpbound",
   "description": "Фанатский мод по мотивам Warhammer 40k: корабли, варп, порча Хаоса.",
-  "authors": ["Puccikk"],
+  "authors": [
+    "Puccikk"
+  ],
   "license": "All-Rights-Reserved",
   "icon": "assets/warpbound/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": ["dev.warpbound.Warpbound"],
-    "client": ["dev.warpbound.client.WarpboundClient"],
-    "fabric-datagen": ["dev.warpbound.client.datagen.WarpboundDataGenerator"]
+    "main": [
+      "dev.warpbound.Warpbound"
+    ],
+    "client": [
+      "dev.warpbound.client.WarpboundClient"
+    ],
+    "fabric-datagen": [
+      "dev.warpbound.client.datagen.WarpboundDataGenerator"
+    ]
   },
   "depends": {
     "fabricloader": ">=0.16.0",
     "minecraft": "~1.21.1",
     "java": ">=21",
     "fabric-api": "*"
-  }
+  },
+  "mixins": [
+    "warpbound.mixins.json",
+    {
+      "config": "warpbound.client.mixins.json",
+      "environment": "client"
+    }
+  ]
 }

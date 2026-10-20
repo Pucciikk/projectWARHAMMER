@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "dev.warpbound.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "LevelMultipartMixin",
+    "ServerLevelMultipartMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
