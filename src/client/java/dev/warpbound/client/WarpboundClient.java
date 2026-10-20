@@ -1,10 +1,16 @@
 package dev.warpbound.client;
 
+import dev.warpbound.client.entity.DreadnoughtFx;
+import dev.warpbound.client.entity.DreadnoughtMesh;
+import dev.warpbound.client.entity.DreadnoughtRenderer;
+import dev.warpbound.entity.WarpboundEntities;
 import dev.warpbound.network.ChaosSyncPayload;
 import dev.warpbound.network.ShipStatePayload;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
 public class WarpboundClient implements ClientModInitializer {
     @Override
@@ -21,5 +27,9 @@ public class WarpboundClient implements ClientModInitializer {
 
         WarpSkyRenderer.register();
         WarpHud.register();
+
+        EntityModelLayerRegistry.registerModelLayer(DreadnoughtRenderer.LAYER, DreadnoughtMesh::create);
+        EntityRendererRegistry.register(WarpboundEntities.DREADNOUGHT, DreadnoughtRenderer::new);
+        DreadnoughtFx.register();
     }
 }

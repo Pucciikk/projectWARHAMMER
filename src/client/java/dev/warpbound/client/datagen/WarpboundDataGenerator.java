@@ -29,6 +29,8 @@ public class WarpboundDataGenerator implements DataGeneratorEntrypoint {
         public void generateTranslations(HolderLookup.Provider registries, TranslationBuilder builder) {
             builder.add("modmenu.nameTranslation.warpbound", "Warpbound");
             builder.add("warpbound.ship_interior", "Борт корабля");
+            builder.add("entity.warpbound.dreadnought", "Дредноут");
+            builder.add("item.warpbound.dreadnought_spawn_egg", "Яйцо призыва дредноута");
         }
     }
 
@@ -41,6 +43,8 @@ public class WarpboundDataGenerator implements DataGeneratorEntrypoint {
         public void generateTranslations(HolderLookup.Provider registries, TranslationBuilder builder) {
             builder.add("modmenu.nameTranslation.warpbound", "Warpbound");
             builder.add("warpbound.ship_interior", "Shipboard");
+            builder.add("entity.warpbound.dreadnought", "Dreadnought");
+            builder.add("item.warpbound.dreadnought_spawn_egg", "Dreadnought Spawn Egg");
         }
     }
 }
