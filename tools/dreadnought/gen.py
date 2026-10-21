@@ -83,62 +83,100 @@ def mp(p):
     return (-p[0], p[1], p[2])
 
 
+def lift(cubes, du):
+    out = []
+    for c in cubes:
+        c = dict(c)
+        c["lo"] = (c["lo"][0], c["lo"][1] + du, c["lo"][2])
+        c["hi"] = (c["hi"][0], c["hi"][1] + du, c["hi"][2])
+        if c["center"] is not None:
+            c["center"] = (c["center"][0], c["center"][1] + du, c["center"][2])
+        out.append(c)
+    return out
+
+
+def up(p, du):
+    return (p[0], p[1] + du, p[2])
+
+
+# Всё выше ног поднято на LIFT: ноги v3 длиннее (бедро на 56, а не на 46), как на референсах 3ddd
+LIFT = 10
+HIP, KNEE, ANKLE = (24, 56, 0), (24, 34, 1), (24, 10, 1)
+
 # ---------- ноги (правая; левая — зеркало)
 LEG = [
     # огромный приводной барабан бедра
-    *cyl("R", (46, 0), 12, 8, 34, "iron", {"right": "drum_end", "front": "drum", "back": "drum", "top": "drum"}),
-    *cyl("R", (46, 0), 8, 34, 37, "steel", {"right": "drum_end"}),
-    box((16, 30, -7), (28, 42, 5), "iron", {"front": "piston"}),            # шатун до колена
+    *cyl("R", (56, 0), 13, 9, 36, "iron", {"right": "drum_end", "front": "drum", "back": "drum", "top": "drum"}),
+    *cyl("R", (56, 0), 9, 36, 39, "steel", {"right": "drum_end"}),
+    box((17, 34, -7), (31, 50, 7), "iron", {"front": "piston", "back": "piston"}),       # бедренная тяга
+    box((31, 36, -2), (34, 52, 2), "steel", {"right": "piston"}),                         # гидравлика снаружи
+    box((14, 38, -3), (17, 50, 1), "hose", {}),                                           # шланг внутри
 ]
 SHIN = [
-    box((15, 23, -7), (29, 33, 7), "iron", {}),                                # колено
-    box((11, 9, -8), (33, 29, 10), "blue", {"right": "plate", "left": "plate"}),
-    box((12, 12, 10), (32, 29, 14), "blue", {"front": "knee"}),               # лобовой щиток с черепом
-    box((18, 8, -13), (26, 25, -8), "iron", {"back": "piston"}),             # задний поршень
-    box((10, 25, -9), (34, 29, 11), "blue_edge", {}),                         # верхний край щитка
+    *cyl("R", (34, 1), 8, 15, 33, "steel", {"right": "drum_end", "left": "drum_end"}),   # колено
+    box((18, 10, -6), (30, 32, 6), "iron", {"back": "piston"}),
+    # большой гнутый щиток голени: лоб, верхняя кромка с наклоном назад, боковины
+    box((12, 12, 6), (36, 34, 12), "blue", {"front": "knee"}),
+    box((13, 32, 1), (35, 36, 10), "blue_edge", {"top": "plate"}, rot=(-20, 0, 0), center=(24, 34, 6)),
+    box((11, 14, -5), (14, 32, 9), "blue", {"right": "plate"}),
+    box((34, 14, -5), (37, 32, 9), "blue", {"left": "plate"}),
+    box((19, 12, -10), (23, 30, -6), "steel", {"back": "piston"}),                       # задние поршни
+    box((25, 12, -10), (29, 30, -6), "steel", {"back": "piston"}),
 ]
 FOOT = [
-    box((14, 4, -9), (30, 12, 9), "iron", {}),                                 # голеностоп
-    box((8, 0, -14), (36, 5, 14), "iron", {"front": "hazard_none"}),
-    box((8, 0, 11), (21, 8, 27), "blue", {"front": "toe", "top": "toe_top"}),
-    box((23, 0, 11), (36, 8, 27), "blue", {"front": "toe", "top": "toe_top"}),
-    box((14, 0, -22), (30, 7, -11), "blue", {"back": "toe", "top": "toe_top"}),
-    box((5, 0, -6), (9, 6, 8), "blue", {}),                                    # боковые упоры
-    box((35, 0, -6), (39, 6, 8), "blue", {}),
+    box((16, 4, -8), (32, 13, 9), "iron", {"front": "ribs"}),                             # голеностоп
+    box((9, 0, -14), (39, 5, 14), "iron", {}),
+    box((9, 0, 12), (22, 9, 28), "blue", {"front": "toe", "top": "toe_top"}),
+    box((26, 0, 12), (39, 9, 28), "blue", {"front": "toe", "top": "toe_top"}),
+    box((10, 0, 27), (21, 6, 32), "blue_edge", {}, rot=(-25, 0, 0), center=(15.5, 3, 29.5)),
+    box((27, 0, 27), (38, 6, 32), "blue_edge", {}, rot=(-25, 0, 0), center=(32.5, 3, 29.5)),
+    box((16, 0, -25), (32, 8, -12), "blue", {"back": "toe", "top": "toe_top"}),
+    box((5, 0, -6), (9, 7, 8), "blue", {}),                                               # боковые упоры
+    box((39, 0, -6), (43, 7, 8), "blue", {}),
 ]
-part("body", "root", (0, 50, 0), [
+part("body", "root", (0, 50 + LIFT, 0), lift([
     box((-14, 34, -12), (14, 58, 12), "iron", {"front": "grill"}),           # таз
     box((-25, 52, -18), (25, 61, 16), "iron", {"front": "ribs", "back": "ribs"}),  # поясное кольцо
     box((-9, 32, 12), (9, 54, 17), "blue_trim", {"front": "codpiece"}),       # щиток между ног
-    box((-14, 40, -4), (14, 50, 4), "steel", {}),                              # ось бёдер
     box((-7, 26, 17), (-2, 40, 18), "seal", {"front": "seal"}),
+    # гофрированные шланги от таза к бёдрам, висят дугой
+    box((10, 38, 6), (14, 54, 10), "hose", {}, rot=(0, 0, 25), center=(12, 46, 8)),
+    box((-14, 38, 6), (-10, 54, 10), "hose", {}, rot=(0, 0, -25), center=(-12, 46, 8)),
+    box((10, 38, -10), (14, 54, -6), "hose", {}, rot=(0, 0, 25), center=(12, 46, -8)),
+    box((-14, 38, -10), (-10, 54, -6), "hose", {}, rot=(0, 0, -25), center=(-12, 46, -8)),
+], LIFT) + [
+    box((-14, 50, -4), (14, 60, 4), "steel", {}),                            # ось бёдер на уровне барабанов
 ])
-part("leg_r", "body", (22, 46, 0), LEG)
-part("shin_r", "leg_r", (22, 30, 0), SHIN)
-part("foot_r", "shin_r", (22, 10, 0), FOOT)
-part("leg_l", "body", mp((22, 46, 0)), mirror(LEG))
-part("shin_l", "leg_l", mp((22, 30, 0)), mirror(SHIN))
-part("foot_l", "shin_l", mp((22, 10, 0)), mirror(FOOT))
+part("leg_r", "body", HIP, LEG)
+part("shin_r", "leg_r", KNEE, SHIN)
+part("foot_r", "shin_r", ANKLE, FOOT)
+part("leg_l", "body", mp(HIP), mirror(LEG))
+part("shin_l", "leg_l", mp(KNEE), mirror(SHIN))
+part("foot_l", "shin_l", mp(ANKLE), mirror(FOOT))
 
 # ---------- корпус
-part("torso", "body", (0, 60, 0), [
+part("torso", "body", (0, 60 + LIFT, 0), lift([
     # саркофаг — выступает вперёд из корпуса
     box((-14, 58, -6), (14, 114, 30), "blue", {"front": "sarcophagus", "right": "cables", "left": "cables", "top": "plate"}),
     box((-12, 114, -4), (12, 118, 26), "blue_edge", {}),
     # бронеблоки по бокам
     box((15, 60, -26), (42, 112, 22), "blue", {"front": "slab_r", "right": "slab_side", "top": "slab_top", "back": "plate"}),
     box((-42, 60, -26), (-15, 112, 22), "blue", {"front": "slab_l", "left": "slab_side", "top": "slab_top", "back": "plate"}),
-    # скошенные верхние кромки бронеблоков, как на референсах
+    # скошенные верхние кромки бронеблоков
     box((16, 106, 13), (41, 109, 25), "blue_edge", {"top": "plate"}, rot=(45, 0, 0), center=(28, 109, 19)),
     box((-41, 106, 13), (-16, 109, 25), "blue_edge", {"top": "plate"}, rot=(45, 0, 0), center=(-28, 109, 19)),
     box((15, 54, -20), (38, 61, 16), "iron", {"front": "ribs"}),               # механика под блоками
     box((-38, 54, -20), (-15, 61, 16), "iron", {"front": "ribs"}),
     # кабели в щелях между саркофагом и блоками
-    box((13, 70, 18), (16, 100, 26), "cable_bundle", {}),
-    box((-16, 70, 18), (-13, 100, 26), "cable_bundle", {}),
+    box((13, 62, 18), (16, 104, 27), "hose", {}),
+    box((-16, 62, 18), (-13, 104, 27), "hose", {}),
+    box((11, 50, 20), (15, 64, 24), "hose", {}, rot=(0, 0, -20), center=(13, 57, 22)),
+    box((-15, 50, 20), (-11, 64, 24), "hose", {}, rot=(0, 0, 20), center=(-13, 57, 22)),
     # двигатель сзади
     box((-24, 64, -40), (24, 106, -26), "iron", {"back": "engine", "right": "vents", "left": "vents", "top": "ribs"}),
     box((-12, 72, -43), (12, 100, -40), "blue_trim", {"back": "back_grill"}),
+    box((-22, 56, -38), (-18, 70, -34), "hose", {}),
+    box((18, 56, -38), (22, 70, -34), "hose", {}),
     box((-24, 112, -26), (24, 116, 0), "iron", {"top": "deck"}),               # верхняя палуба
     box((-8, 116, -22), (-4, 120, -6), "steel", {}),                           # рёбра
     box((-2, 116, -22), (2, 120, -6), "steel", {}),
@@ -148,18 +186,21 @@ part("torso", "body", (0, 60, 0), [
     *cyl("U", (-13, -33), 5, 98, 132, "iron", {"front": "perforated", "back": "perforated", "right": "perforated", "left": "perforated", "top": "pipe_top"}),
     *cyl("U", (13, -33), 6, 96, 99, "steel", {}),
     *cyl("U", (-13, -33), 6, 96, 99, "steel", {}),
-])
-part("head", "torso", (0, 116, 16), [
+], LIFT))
+part("head", "torso", up((0, 116, 16), LIFT), lift([
     box((-6, 114, 12), (6, 122, 28), "iron", {"front": "sensor"}),
     box((-4, 116, 28), (4, 120, 30), "lens", {}),
-])
+], LIFT))
 
 # ---------- правая рука: штурмовая пушка
-part("arm_r", "torso", (46, 86, 0), [
+part("arm_r", "torso", up((46, 86, 0), LIFT), lift([
     *cyl("R", (86, 0), 10, 41, 50, "iron", {"right": "drum_end"}),
     box((50, 62, -18), (66, 98, 18), "blue", {"right": "gun_side", "top": "slab_top", "front": "plate", "left": "plate"}),
-    box((60, 52, -6), (67, 64, 6), "steel", {"right": "belt", "front": "belt"}),   # лента
-])
+    # лента патронов петлёй из короба вниз и обратно в руку, как на референсах
+    box((60, 50, 2), (66, 64, 8), "belt_mat", {"right": "belt", "front": "belt", "left": "belt"}),
+    box((60, 46, -12), (66, 52, 8), "belt_mat", {"right": "belt", "bottom": "belt"}),
+    box((60, 50, -12), (66, 62, -6), "belt_mat", {"right": "belt", "back": "belt"}),
+], LIFT))
 GUN = [
     box((50, 70, 14), (66, 90, 32), "iron", {"front": "ribs", "right": "ribs"}),
     box((54, 76, 32), (62, 84, 70), "iron", {}),
@@ -169,26 +210,27 @@ GUN = [
 ]
 for k in range(6):
     a = math.radians(30 + 60 * k)
-    cx, cy = 58 + 5.5 * math.cos(a), 80 + 5.5 * math.sin(a)
-    cx, cy = round(cx), round(cy)
+    cx, cy = round(58 + 5.5 * math.cos(a)), round(80 + 5.5 * math.sin(a))
     GUN.append(box((cx - 2, cy - 2, 32), (cx + 2, cy + 2, 72), "barrel", {"front": "bore"}))
-part("gun", "arm_r", (58, 80, 8), GUN)
+part("gun", "arm_r", up((58, 80, 8), LIFT), lift(GUN, LIFT))
 
 # ---------- левая рука: силовой кулак
-part("arm_l", "torso", (-46, 84, 0), [
+part("arm_l", "torso", up((-46, 84, 0), LIFT), lift([
     *cyl("R", (84, 0), 10, -50, -41, "iron", {"left": "drum_end"}),
     box((-64, 72, -16), (-50, 96, 10), "blue", {"left": "fist_shoulder", "top": "slab_top", "front": "plate"}),
-])
-part("fist", "arm_l", (-58, 74, 6), [
-    *cyl("F", (-58, 72), 13, -12, 30, "blue", {"front": "plate", "top": "forearm", "left": "forearm", "right": "forearm", "bottom": "forearm"}),
-    *cyl("F", (-58, 72), 11, 30, 35, "iron", {}),
-    box((-69, 61, 34), (-47, 83, 41), "iron", {"front": "knuckles"}),
-    box((-68, 76, 41), (-61, 83, 58), "claw", {"front": "claw_tip"}),           # пальцы
-    box((-58, 76, 41), (-51, 83, 58), "claw", {"front": "claw_tip"}),
-    box((-50, 66, 41), (-45, 76, 55), "claw", {"front": "claw_tip"}),
-    box((-62, 59, 41), (-54, 66, 54), "claw", {"front": "claw_tip"}),           # большой палец
-    box((-48, 64, 6), (-44, 80, 26), "lens_blue", {}),                          # катушка поля
-])
+    box((-52, 66, -10), (-48, 84, -6), "hose", {}),
+], LIFT))
+part("fist", "arm_l", up((-58, 74, 6), LIFT), lift([
+    *cyl("F", (-58, 72), 15, -12, 28, "blue", {"front": "plate", "top": "forearm", "left": "forearm", "right": "forearm", "bottom": "forearm"}),
+    *cyl("F", (-58, 72), 12, 28, 34, "iron", {}),
+    box((-70, 60, 33), (-46, 84, 41), "iron", {"front": "knuckles"}),
+    # когти разведены веером
+    box((-69, 77, 40), (-61, 84, 60), "claw", {"front": "claw_tip"}, rot=(-12, -8, 0), center=(-65, 80, 41)),
+    box((-58, 77, 40), (-50, 84, 60), "claw", {"front": "claw_tip"}, rot=(-12, 8, 0), center=(-54, 80, 41)),
+    box((-50, 64, 40), (-44, 76, 57), "claw", {"front": "claw_tip"}, rot=(0, 14, 0), center=(-47, 70, 41)),
+    box((-63, 58, 40), (-54, 66, 56), "claw", {"front": "claw_tip"}, rot=(14, 0, 0), center=(-58, 62, 41)),
+    box((-46, 62, 4), (-42, 82, 24), "lens_blue", {}),                          # катушка поля
+], LIFT))
 
 # =============================================================== развёртка
 
@@ -236,6 +278,8 @@ MATS = {
     "lens": (hx("#d01e12"), hx("#ff7050"), hx("#700a06")),
     "lens_blue": (hx("#3a6fd0"), hx("#a8d8ff"), hx("#1a3170")),
     "cable_bundle": (hx("#2a2a2c"), hx("#555555"), hx("#111111")),
+    "hose": (hx("#2b2a2d"), hx("#5d5a62"), hx("#121114")),
+    "belt_mat": (hx("#8a6a2a"), hx("#e0c070"), hx("#4a3412")),
 }
 GOLD = (hx("#c9a24a"), hx("#f3d98a"), hx("#7b5a1c"))
 BONE = hx("#e4dcc4")
@@ -299,25 +343,49 @@ def rivet_row(r, x, y, w, step=4):
         px(r[0] + i + 1, r[1] + y + 1, hx("#1c2a4c"))
 
 
+def _smooth_noise(size, cell, seed):
+    g = np.random.default_rng(seed).normal(0, 1, (size // cell + 2, size // cell + 2))
+    img = Image.fromarray(((g - g.min()) / (g.max() - g.min()) * 255).astype(np.uint8))
+    img = img.resize((size + 2 * cell, size + 2 * cell), Image.BICUBIC)
+    return np.asarray(img, dtype=float)[cell:cell + size, cell:cell + size] / 255.0 - 0.5
+
+
+# Крупные пятна (как ручная покраска) вместо попиксельного шума — приём из The Betweenlands
+MOTTLE = _smooth_noise(TEX, 6, 7) * 0.7 + _smooth_noise(TEX, 2, 8) * 0.3
+SHADOW_HUE = hx("#1c1640")   # тени уходят в фиолетово-синий, а не в чёрный
+LIGHT_HUE = hx("#d8ecff")    # блики в холодный белый
+
+
 def base_paint(r, mat, face, w, h):
-    """Основа: шум, вертикальный градиент грязи, фаски, сколы, ржавые потёки."""
+    """Основа: пятнистая краска, сдвиг оттенка в тенях, затенение у нижней кромки,
+    фаски, сколы, ржавые потёки."""
     base, light, shadow = MATS[mat]
     x0, y0 = r[0], r[1]
     tint = {"top": 1.1, "bottom": 0.62}.get(face, 1.0)
     painted = mat.startswith("blue")
+    side = face not in ("top", "bottom")
     for y in range(h):
-        grime = 1.0 - 0.18 * (y / max(1, h - 1)) ** 1.6 if face not in ("top", "bottom") else 1.0
+        t = y / max(1, h - 1)
+        # затенение внизу граней (запечённая окклюзия) и лёгкий подсвет сверху
+        ao = (0.55 * max(0.0, t - 0.65) / 0.35) ** 1.5 if side else 0.0
+        top_light = 0.08 * max(0.0, 0.25 - t) / 0.25 if side else 0.0
         for x in range(w):
-            n = rng.gauss(0, 3.0)
-            c = base * tint * grime + n
+            m = MOTTLE[(y0 + y) % TEX, (x0 + x) % TEX]
+            c = base * tint * (1.0 + 0.16 * m)
+            c = c * (1 - ao) + SHADOW_HUE * ao
+            c = c * (1 - top_light) + LIGHT_HUE * top_light
+            if mat == "hose" and (y % 3 == 0 or (face in ("top", "bottom") and x % 3 == 0)):
+                c = c * 0.55
+            if mat == "belt_mat" and y % 4 < 2:
+                c = hx("#c9a24a") * (1.0 + 0.2 * m) if y % 4 == 0 else hx("#6a4c18")
             px(x0 + x, y0 + y, c)
     if w >= 3 and h >= 3:
         for x in range(w):
             px(x0 + x, y0, light * tint)
-            px(x0 + x, y0 + h - 1, shadow)
+            px(x0 + x, y0 + h - 1, shadow * 0.7 + SHADOW_HUE * 0.3)
         for y in range(h):
             blend(x0, y0 + y, light, 0.5)
-            px(x0 + w - 1, y0 + y, shadow * 1.1)
+            px(x0 + w - 1, y0 + y, shadow * 0.8 + SHADOW_HUE * 0.2)
     if painted and w * h > 60:
         # сколы по краям: сначала тёмная грунтовка, в середине — голый металл
         for _ in range(max(1, (w + h) // 9)):

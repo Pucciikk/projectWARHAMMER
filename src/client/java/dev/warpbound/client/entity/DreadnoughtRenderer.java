@@ -21,7 +21,7 @@ public class DreadnoughtRenderer extends MobRenderer<DreadnoughtEntity, Dreadnou
     private static final RenderType GLOW = RenderType.eyes(Warpbound.id("textures/entity/dreadnought_glow.png"));
 
     public DreadnoughtRenderer(EntityRendererProvider.Context context) {
-        super(context, new DreadnoughtModel(context.bakeLayer(LAYER)), 1.8f);
+        super(context, new DreadnoughtModel(context.bakeLayer(LAYER)), 2.3f);
         // Линза, смотровая щель, решётка реактора светятся в темноте
         this.addLayer(new EyesLayer<>(this) {
             @Override
@@ -57,8 +57,9 @@ public class DreadnoughtRenderer extends MobRenderer<DreadnoughtEntity, Dreadnou
 
     @Override
     protected void scale(DreadnoughtEntity entity, PoseStack pose, float partialTick) {
-        // Модель нарисована в 1/32 блока: вдвое детальнее текстура при том же размере
-        pose.scale(0.5f, 0.5f, 0.5f);
+        // Модель нарисована в 1/32 блока (вдвое детальнее текстура), плюс общий масштаб машины
+        float k = 0.5f * DreadnoughtEntity.SCALE;
+        pose.scale(k, k, k);
     }
 
     @Override

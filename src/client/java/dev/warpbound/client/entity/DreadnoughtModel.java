@@ -50,33 +50,34 @@ public class DreadnoughtModel extends HierarchicalModel<DreadnoughtEntity> {
         float pt = ageInTicks - e.tickCount;
         float g = Mth.lerp(pt, e.gaitO, e.gait);
         float amt = Mth.lerp(pt, e.strideO, e.stride);
-        float s = Mth.sin(g);
-        float c = Mth.cos(g);
 
-        // Ноги: бедро качается, колено сгибается только когда нога идёт вперёд по воздуху
-        legR.xRot = -s * 0.42f * amt;
-        legL.xRot = s * 0.42f * amt;
-        float liftR = Math.max(0f, c) * amt;
-        float liftL = Math.max(0f, -c) * amt;
-        shinR.xRot = liftR * 0.55f;
-        shinL.xRot = liftL * 0.55f;
-        footR.xRot = -(legR.xRot + shinR.xRot) * 0.85f;
-        footL.xRot = -(legL.xRot + shinL.xRot) * 0.85f;
+        // --- ноги: опорная нога равномерно уходит назад, переносимая — быстрой дугой с подъёмом колена
+        Leg r = leg(g / Mth.TWO_PI, amt);
+        Leg l = leg(g / Mth.TWO_PI + 0.5f, amt);
+        r.apply(legR, shinR, footR);
+        l.apply(legL, shinL, footL);
+        // Высоту таза задаёт стоящая на земле нога: отсюда естественное покачивание вверх-вниз
+        float drop = r.stance && l.stance ? Math.min(r.drop, l.drop) : r.stance ? r.drop : l.stance ? l.drop : Math.min(r.drop, l.drop);
+        float jolt = e.jolt.get(pt);
+        body.y += drop - jolt * 3.0f;
 
-        // Корпус проседает в момент удара ступни (|sin| = 1) и раскачивается с боку на бок
-        float impact = Math.abs(s);
-        body.y += impact * impact * 3.2f * amt;   // модель в масштабе 0.5: единицы вдвое мельче
-        body.zRot = s * 0.035f * amt;
-        torso.xRot = 0.05f * amt + impact * 0.025f * amt;
-        // Дыхание реактора на месте
-        torso.y += Mth.sin(ageInTicks * 0.06f) * 0.5f;
+        // --- перенос веса: корпус смещается и кренится к опорной ноге
+        float shift = Mth.cos(g - 0.6f * Mth.PI) * amt;
+        torso.x -= shift * 1.6f;
+        torso.zRot = -shift * 0.04f;
+        // Плечи закручиваются навстречу шагу
+        float twist = Mth.sin(g) * 0.05f * amt;
 
-        // Корпус крутится отдельно от ног
+        // --- инерция: откидывается при разгоне, клюёт при торможении и от удара пятки
+        float lean = e.lean.get(pt);
+        torso.xRot = 0.04f * amt + lean * 0.10f - jolt * 0.05f;
+        torso.y += Mth.sin(ageInTicks * 0.06f) * 0.5f;          // дыхание реактора
+
         float bodyYaw = Mth.rotLerp(pt, e.yBodyRotO, e.yBodyRot);
         float torsoYaw = Mth.rotLerp(pt, e.torsoYawO, e.torsoYaw);
-        torso.yRot = Mth.wrapDegrees(torsoYaw - bodyYaw) * Mth.DEG_TO_RAD;
+        torso.yRot = Mth.wrapDegrees(torsoYaw - bodyYaw) * Mth.DEG_TO_RAD + twist;
 
-        // Пушка и голова смотрят туда же, куда пилот (или ИИ) по вертикали
+        // --- пилот, прицел, кабина
         Entity pilot = e.getFirstPassenger();
         // Пилот изнутри не видит стенок саркофага и головы: только руки и ноги машины
         Minecraft mc = Minecraft.getInstance();
@@ -85,13 +86,62 @@ public class DreadnoughtModel extends HierarchicalModel<DreadnoughtEntity> {
         head.visible = !cockpit;
         float pitch = (pilot != null ? pilot.getViewXRot(pt) : headPitch) * Mth.DEG_TO_RAD;
         head.xRot = Mth.clamp(pitch, -0.4f, 0.5f);
-        gun.xRot = Mth.clamp(pitch, -0.6f, 0.7f);
+        gun.xRot = Mth.clamp(pitch, -0.6f, 0.7f) - jolt * 0.08f;
+        if (pilot == null) {
+            // Без пилота сервоприводы «ищут» цель: голова и пушка чуть подёргиваются
+            head.yRot = Mth.sin(ageInTicks * 0.021f) * 0.35f;
+            gun.yRot = Mth.sin(ageInTicks * 0.07f) * 0.02f + Mth.sin(ageInTicks * 0.19f) * 0.012f;
+        }
 
-        // Руки: тяжёлый кулак отстаёт, пушка почти неподвижна
-        armL.xRot = s * 0.12f * amt;
-        fist.xRot = -0.15f + Math.abs(c) * 0.06f * amt;
-        armR.xRot = -s * 0.05f * amt;
+        // --- руки: тяжёлый кулак раскачивается и отстаёт при повороте, пушка почти неподвижна
+        float lag = e.armLag.get(pt);
+        armL.xRot = Mth.sin(g) * 0.10f * amt - jolt * 0.10f;
+        armL.yRot = lag * 0.14f;
+        fist.xRot = -0.12f + Math.abs(Mth.cos(g)) * 0.05f * amt - jolt * 0.08f;
+        armR.xRot = -Mth.sin(g) * 0.04f * amt;
+        armR.yRot = lag * 0.08f;
         armR.zRot = 0.02f;
         armL.zRot = -0.02f;
+    }
+
+    // Длины звеньев ноги в единицах модели (бедро 56 → колено 34 → голеностоп 10)
+    private static final float THIGH = 22f;
+    private static final float SHIN = 24f;
+    /** Поза покоя: лёгкий присед, колени вперёд, как у референсов. */
+    private static final float REST_THIGH = -0.16f;
+    private static final float REST_SHIN = 0.32f;
+    private static final float SWING = 0.42f;   // вместе с STRIDE подобрано так, чтобы опорная ступня не скользила
+
+    private record Leg(float thigh, float shin, float foot, float drop, boolean stance) {
+        void apply(ModelPart t, ModelPart s, ModelPart f) {
+            t.xRot = thigh;
+            s.xRot = shin;
+            f.xRot = foot;
+        }
+    }
+
+    private static Leg leg(float cycle, float amt) {
+        float p = cycle - Mth.floor(cycle);
+        float swing;
+        float knee;
+        float toe = 0f;
+        boolean stance = p < DreadnoughtEntity.STANCE;
+        if (stance) {
+            float u = p / DreadnoughtEntity.STANCE;
+            swing = SWING - 2f * SWING * u;
+            knee = 0.12f * (float) Math.exp(-u * 10f);          // колено гасит удар пятки
+        } else {
+            float q = (p - DreadnoughtEntity.STANCE) / (1f - DreadnoughtEntity.STANCE);
+            float eased = q * q * (3f - 2f * q);
+            swing = -SWING + 2f * SWING * eased;
+            knee = Mth.sin(q * Mth.PI) * 0.55f;
+            toe = Mth.sin(q * Mth.PI) * 0.15f;
+        }
+        // Отрицательный поворот по X выносит ногу вперёд
+        float thigh = REST_THIGH - swing * amt;
+        float shin = REST_SHIN + knee * amt;
+        float foot = -(thigh + shin) - toe * amt;
+        float drop = THIGH + SHIN - (THIGH * Mth.cos(thigh) + SHIN * Mth.cos(thigh + shin));
+        return new Leg(thigh, shin, foot, drop, stance || amt < 0.05f);
     }
 }

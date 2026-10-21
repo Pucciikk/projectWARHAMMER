@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * которая слабеет с расстоянием. Пилоту трясёт сильнее всех.
  */
 public final class DreadnoughtFx {
-    private static final float SHAKE_RADIUS = 18f;
+    private static final float SHAKE_RADIUS = 24f;
     private static float shake;
     private static long lastNanos;
 
@@ -34,9 +34,9 @@ public final class DreadnoughtFx {
             return;
         }
         float yaw = e.yBodyRot * Mth.DEG_TO_RAD;
-        float side = rightFoot ? 0.69f : -0.69f;
-        double fx = e.getX() - Mth.cos(yaw) * side - Mth.sin(yaw) * 0.4;
-        double fz = e.getZ() - Mth.sin(yaw) * side + Mth.cos(yaw) * 0.4;
+        float side = (rightFoot ? 0.75f : -0.75f) * DreadnoughtEntity.SCALE;
+        double fx = e.getX() - Mth.cos(yaw) * side - Mth.sin(yaw) * 0.5;
+        double fz = e.getZ() - Mth.sin(yaw) * side + Mth.cos(yaw) * 0.5;
         double fy = e.getY();
 
         float strength = e.stride;
@@ -48,9 +48,9 @@ public final class DreadnoughtFx {
         BlockState ground = mc.level.getBlockState(BlockPos.containing(fx, fy - 0.2, fz));
         if (ground.getRenderShape() != RenderShape.INVISIBLE) {
             BlockParticleOption dust = new BlockParticleOption(ParticleTypes.BLOCK, ground);
-            for (int i = 0; i < 14; i++) {
+            for (int i = 0; i < 22; i++) {
                 double a = mc.level.random.nextDouble() * Mth.TWO_PI;
-                double r = 0.3 + mc.level.random.nextDouble() * 0.5;
+                double r = 0.4 + mc.level.random.nextDouble() * 0.8;
                 mc.level.addParticle(dust, fx + Math.cos(a) * r, fy + 0.1, fz + Math.sin(a) * r,
                         Math.cos(a) * 0.15, 0.12, Math.sin(a) * 0.15);
             }
