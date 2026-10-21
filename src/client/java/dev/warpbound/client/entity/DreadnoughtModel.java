@@ -17,7 +17,7 @@ public class DreadnoughtModel extends HierarchicalModel<DreadnoughtEntity> {
     private final ModelPart body;
     private final ModelPart legR, shinR, footR;
     private final ModelPart legL, shinL, footL;
-    private final ModelPart torso, head, armR, gun, armL, fist;
+    private final ModelPart waist, torso, head, armR, gun, armL, fist;
 
     public DreadnoughtModel(ModelPart root) {
         // entityCutout (с отсечением граней): пилот видит наружу сквозь стенки корпуса
@@ -30,7 +30,8 @@ public class DreadnoughtModel extends HierarchicalModel<DreadnoughtEntity> {
         this.legL = body.getChild("leg_l");
         this.shinL = legL.getChild("shin_l");
         this.footL = shinL.getChild("foot_l");
-        this.torso = body.getChild("torso");
+        this.waist = body.getChild("waist");
+        this.torso = waist.getChild("torso");
         this.head = torso.getChild("head");
         this.armR = torso.getChild("arm_r");
         this.gun = armR.getChild("gun");
@@ -61,12 +62,23 @@ public class DreadnoughtModel extends HierarchicalModel<DreadnoughtEntity> {
         float jolt = e.jolt.get(pt);
         body.y += drop - jolt * 3.0f;
 
-        // --- перенос веса: корпус смещается и кренится к опорной ноге
+        // --- таз: кренится к опорной ноге и поворачивается вслед за выносимой.
+        // Ноги и ступни компенсируют крен, чтобы стоять отвесно; «талия» гасит
+        // качание, поэтому таз ходит под саркофагом заметно, а сам корпус — мягко.
         float shift = Mth.cos(g - 0.6f * Mth.PI) * amt;
-        torso.x -= shift * 1.6f;
-        torso.zRot = -shift * 0.04f;
+        float roll = shift * 0.07f;
+        float hipYaw = Mth.cos(g) * 0.10f * amt;
+        body.zRot = roll;
+        body.yRot = hipYaw;
+        legR.zRot = -roll;
+        legL.zRot = -roll;
+        waist.zRot = -roll * 0.75f;
+        waist.yRot = -hipYaw * 0.8f;
+        waist.x -= shift * 0.8f;
+        torso.x -= shift * 0.8f;
+        torso.zRot = -shift * 0.02f;
         // Плечи закручиваются навстречу шагу
-        float twist = Mth.sin(g) * 0.05f * amt;
+        float twist = -hipYaw * 0.3f;
 
         // --- инерция: откидывается при разгоне, клюёт при торможении и от удара пятки
         float lean = e.lean.get(pt);
