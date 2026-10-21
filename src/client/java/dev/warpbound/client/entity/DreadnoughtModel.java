@@ -51,23 +51,26 @@ public class DreadnoughtModel extends HierarchicalModel<DreadnoughtEntity> {
         float pt = ageInTicks - e.tickCount;
         float g = Mth.lerp(pt, e.gaitO, e.gait);
         float amt = Mth.lerp(pt, e.strideO, e.stride);
+        float run = Mth.lerp(pt, e.runO, e.run) * amt;
 
-        // --- ноги: опорная нога равномерно уходит назад, переносимая — быстрой дугой с подъёмом колена
-        Leg r = leg(g / Mth.TWO_PI, amt);
-        Leg l = leg(g / Mth.TWO_PI + 0.5f, amt);
+        // --- ноги: опорная нога равномерно уходит назад, переносимая — быстрой дугой с подъёмом колена.
+        // На бегу опора короче, мах шире, колено выше
+        Leg r = leg(g / Mth.TWO_PI, amt, run);
+        Leg l = leg(g / Mth.TWO_PI + 0.5f, amt, run);
         r.apply(legR, shinR, footR);
         l.apply(legL, shinL, footL);
         // Высоту таза задаёт стоящая на земле нога: отсюда естественное покачивание вверх-вниз
         float drop = r.stance && l.stance ? Math.min(r.drop, l.drop) : r.stance ? r.drop : l.stance ? l.drop : Math.min(r.drop, l.drop);
         float jolt = e.jolt.get(pt);
-        body.y += drop - jolt * 3.0f;
+        // На бегу таз ещё и подпрыгивает дважды за цикл — на каждом толчке
+        body.y += drop - jolt * 3.0f - run * Math.abs(Mth.sin(g)) * 2.5f;
 
         // --- таз: кренится к опорной ноге и поворачивается вслед за выносимой.
         // Ноги и ступни компенсируют крен, чтобы стоять отвесно; «талия» гасит
         // качание, поэтому таз ходит под саркофагом заметно, а сам корпус — мягко.
         float shift = Mth.cos(g - 0.6f * Mth.PI) * amt;
-        float roll = shift * 0.07f;
-        float hipYaw = Mth.cos(g) * 0.10f * amt;
+        float roll = shift * (0.07f + 0.05f * run);
+        float hipYaw = Mth.cos(g) * (0.10f + 0.06f * run) * amt;
         body.zRot = roll;
         body.yRot = hipYaw;
         legR.zRot = -roll;
@@ -76,13 +79,15 @@ public class DreadnoughtModel extends HierarchicalModel<DreadnoughtEntity> {
         waist.yRot = -hipYaw * 0.8f;
         waist.x -= shift * 0.8f;
         torso.x -= shift * 0.8f;
-        torso.zRot = -shift * 0.02f;
+        // Бег: корпус пошатывается из стороны в сторону с запаздыванием и клюёт на каждом шаге
+        torso.zRot = -shift * 0.02f + Mth.sin(g - 0.9f) * 0.05f * run;
         // Плечи закручиваются навстречу шагу
         float twist = -hipYaw * 0.3f;
 
         // --- инерция: откидывается при разгоне, клюёт при торможении и от удара пятки
         float lean = e.lean.get(pt);
-        torso.xRot = 0.04f * amt + lean * 0.10f - jolt * 0.05f;
+        torso.xRot = 0.04f * amt + 0.10f * run + lean * 0.10f - jolt * 0.05f
+                + Mth.sin(2f * g - 0.8f) * 0.035f * run;
         torso.y += Mth.sin(ageInTicks * 0.06f) * 0.5f;          // дыхание реактора
 
         float bodyYaw = Mth.rotLerp(pt, e.yBodyRotO, e.yBodyRot);
@@ -107,10 +112,10 @@ public class DreadnoughtModel extends HierarchicalModel<DreadnoughtEntity> {
 
         // --- руки: тяжёлый кулак раскачивается и отстаёт при повороте, пушка почти неподвижна
         float lag = e.armLag.get(pt);
-        armL.xRot = Mth.sin(g) * 0.10f * amt - jolt * 0.10f;
+        armL.xRot = Mth.sin(g) * (0.10f + 0.16f * run) * amt - jolt * 0.10f;
         armL.yRot = lag * 0.14f;
         fist.xRot = -0.12f + Math.abs(Mth.cos(g)) * 0.05f * amt - jolt * 0.08f;
-        armR.xRot = -Mth.sin(g) * 0.04f * amt;
+        armR.xRot = -Mth.sin(g) * (0.04f + 0.08f * run) * amt;
         armR.yRot = lag * 0.08f;
         armR.zRot = 0.02f;
         armL.zRot = -0.02f;
@@ -132,22 +137,25 @@ public class DreadnoughtModel extends HierarchicalModel<DreadnoughtEntity> {
         }
     }
 
-    private static Leg leg(float cycle, float amt) {
+    private static Leg leg(float cycle, float amt, float run) {
         float p = cycle - Mth.floor(cycle);
+        float stanceLen = Mth.lerp(run, DreadnoughtEntity.STANCE, DreadnoughtEntity.RUN_STANCE);
+        // мах растёт вместе с длиной шага, чтобы опорная ступня не скользила
+        float amp = SWING * (1f + (DreadnoughtEntity.RUN_STRIDE - 1f) * run);
         float swing;
         float knee;
         float toe = 0f;
-        boolean stance = p < DreadnoughtEntity.STANCE;
+        boolean stance = p < stanceLen;
         if (stance) {
-            float u = p / DreadnoughtEntity.STANCE;
-            swing = SWING - 2f * SWING * u;
-            knee = 0.12f * (float) Math.exp(-u * 10f);          // колено гасит удар пятки
+            float u = p / stanceLen;
+            swing = amp - 2f * amp * u;
+            knee = (0.12f + 0.18f * run) * (float) Math.exp(-u * 10f);   // колено гасит удар пятки
         } else {
-            float q = (p - DreadnoughtEntity.STANCE) / (1f - DreadnoughtEntity.STANCE);
+            float q = (p - stanceLen) / (1f - stanceLen);
             float eased = q * q * (3f - 2f * q);
-            swing = -SWING + 2f * SWING * eased;
-            knee = Mth.sin(q * Mth.PI) * 0.55f;
-            toe = Mth.sin(q * Mth.PI) * 0.15f;
+            swing = -amp + 2f * amp * eased;
+            knee = Mth.sin(q * Mth.PI) * (0.55f + 0.4f * run);
+            toe = Mth.sin(q * Mth.PI) * (0.15f + 0.1f * run);
         }
         // Отрицательный поворот по X выносит ногу вперёд
         float thigh = REST_THIGH - swing * amt;

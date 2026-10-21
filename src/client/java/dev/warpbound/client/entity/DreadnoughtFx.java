@@ -39,7 +39,7 @@ public final class DreadnoughtFx {
         double fz = e.getZ() - Mth.sin(yaw) * side + Mth.cos(yaw) * 0.5;
         double fy = e.getY();
 
-        float strength = e.stride;
+        float strength = e.stride * (1f + 0.4f * e.run);
         mc.level.playLocalSound(fx, fy, fz, SoundEvents.IRON_GOLEM_STEP, SoundSource.NEUTRAL,
                 1.6f * strength, 0.5f + mc.level.random.nextFloat() * 0.08f, false);
         mc.level.playLocalSound(fx, fy, fz, SoundEvents.RAVAGER_STEP, SoundSource.NEUTRAL,
