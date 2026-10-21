@@ -53,7 +53,7 @@ public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
     private static final float TORSO_TURN = 3.5f;      // град/тик
     private static final float TORSO_LIMIT = 70f;      // насколько корпус может обогнать ноги
     private static final float SEAT_HEIGHT = 2.54f * SCALE;   // глаза пилота на ~4.3, внутри саркофага
-    private static final float SEAT_FORWARD = 0.75f * SCALE;
+    private static final float SEAT_FORWARD = 0.6f * SCALE;
 
     /** Клиентский хук шага (звук, пыль, тряска камеры). Ставит клиентский код. */
     public static StepListener stepListener = (entity, right) -> {
@@ -99,8 +99,8 @@ public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
                 part("pelvis", false, 0f, 1.37f, 0f, 0.85f, 0.8f, 0.6f),
                 part("slab_right", true, 0.89f, 2.11f, 0.13f, 0.9f, 1.7f, 0.5f),
                 part("slab_left", true, -0.89f, 2.11f, 0.13f, 0.9f, 1.7f, 0.5f),
-                part("sarcophagus", true, 0f, 2.11f, 0.85f, 0.9f, 1.8f, 1.5f),
-                part("sensor", true, 0f, 3.87f, 1.12f, 0.4f, 0.25f, 1.25f),
+                part("sarcophagus", true, 0f, 2.11f, 0.7f, 0.9f, 1.8f, 1.5f),
+                part("sensor", true, 0f, 3.87f, 1.0f, 0.4f, 0.25f, 1.25f),
                 part("engine", true, 0f, 2.31f, -0.84f, 0.9f, 2.1f, 2.0f),
                 part("cannon_arm", true, 1.81f, 1.75f, 0.19f, 0.6f, 1.6f, 0.6f),
                 part("cannon", true, 1.81f, 2.51f, 1.79f, 0.6f, 0.6f, 0.9f),
