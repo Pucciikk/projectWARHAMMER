@@ -32,13 +32,21 @@ import org.jetbrains.annotations.Nullable;
  * скорость набирается и сбрасывается с инерцией и «толкается» на каждом шаге.
  */
 public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
-    /** Длина одного шага в блоках: за это расстояние фаза походки проходит π. */
-    public static final float STRIDE = 1.6f;
+    /**
+     * Масштаб относительно модели. По Imperial Armour 2 дредноут Mk IV — 3,7 м в высоту;
+     * берём «игровой» масштаб крупнее (~5 блоков), как делают в играх по 40k,
+     * чтобы рядом с игроком (1,8 блока) он выглядел машиной, а не игрушкой.
+     */
+    public static final float SCALE = 1.3f;
+    /** Путь за один шаг в блоках: за это расстояние фаза походки проходит π. */
+    public static final float STRIDE = 1.3f;
+    /** Доля цикла, когда нога стоит на земле. Больше половины — есть фаза опоры на обе ноги. */
+    public static final float STANCE = 0.6f;
     private static final float MAX_TURN = 2.4f;        // град/тик
     private static final float TORSO_TURN = 3.5f;      // град/тик
     private static final float TORSO_LIMIT = 70f;      // насколько корпус может обогнать ноги
-    private static final float SEAT_HEIGHT = 2.23f;    // глаза пилота окажутся на ~3.25, внутри саркофага
-    private static final float SEAT_FORWARD = 0.4f;
+    private static final float SEAT_HEIGHT = 2.54f * SCALE;   // глаза пилота на ~4.3, внутри саркофага
+    private static final float SEAT_FORWARD = 0.4f * SCALE;
 
     /** Клиентский хук шага (звук, пыль, тряска камеры). Ставит клиентский код. */
     public static StepListener stepListener = (entity, right) -> {
@@ -55,7 +63,7 @@ public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
 
     public float torsoYaw;
     public float torsoYawO;
-    /** Фаза походки в радианах; ступня опускается при gait = π/2 + kπ. */
+    /** Фаза походки в радианах; правая пятка бьёт в землю при gait = 2kπ, левая — при (2k+1)π. */
     public float gait;
     public float gaitO;
     /** 0..1, насколько сейчас идёт: для амплитуды анимации. */
@@ -63,22 +71,29 @@ public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
     public float strideO;
     private int lastStepIndex;
 
+    // Клиентские пружины для вторичного движения: корпус кренится при разгоне,
+    // вздрагивает от каждого шага, руки догоняют поворот корпуса с запаздыванием
+    public final Spring lean = new Spring(0.08f, 0.25f);
+    public final Spring jolt = new Spring(0.22f, 0.18f);
+    public final Spring armLag = new Spring(0.10f, 0.22f);
+    private float lastSpeed;
+    private float lastTorsoYaw;
+
     public DreadnoughtEntity(EntityType<? extends DreadnoughtEntity> type, Level level) {
         super(type, level);
-        // Размеры в блоках, сняты с модели (tools/dreadnought/gen.py, 32 ед. = 1 блок)
         this.parts = new HitboxPart[]{
-                part("leg_right", false, 0.69f, 0f, 0f, 0.9f, 1.45f, 0.7f),
-                part("leg_left", false, -0.69f, 0f, 0f, 0.9f, 1.45f, 0.7f),
-                part("pelvis", false, 0f, 1.05f, 0f, 0.85f, 0.8f, 0.6f),
-                part("slab_right", true, 0.89f, 1.8f, -0.06f, 0.9f, 1.7f, 0.5f),
-                part("slab_left", true, -0.89f, 1.8f, -0.06f, 0.9f, 1.7f, 0.5f),
-                part("sarcophagus", true, 0f, 1.8f, 0.5f, 0.85f, 1.8f, 1.5f),
-                part("sensor", true, 0f, 3.56f, 0.62f, 0.4f, 0.25f, 1.25f),
-                part("engine", true, 0f, 2.0f, -1.03f, 0.9f, 2.1f, 2.0f),
-                part("cannon_arm", true, 1.81f, 1.94f, 0f, 0.6f, 1.15f, 0.6f),
-                part("cannon", true, 1.81f, 2.2f, 1.6f, 0.6f, 0.6f, 0.9f),
-                part("fist_arm", true, -1.81f, 1.85f, 0.4f, 0.8f, 1.15f, 0.6f),
-                part("fist", true, -1.81f, 1.85f, 1.45f, 0.7f, 0.75f, 0.6f),
+                part("leg_right", false, 0.75f, 0f, 0f, 0.95f, 1.75f, 0.7f),
+                part("leg_left", false, -0.75f, 0f, 0f, 0.95f, 1.75f, 0.7f),
+                part("pelvis", false, 0f, 1.37f, 0f, 0.85f, 0.8f, 0.6f),
+                part("slab_right", true, 0.89f, 2.11f, -0.06f, 0.9f, 1.7f, 0.5f),
+                part("slab_left", true, -0.89f, 2.11f, -0.06f, 0.9f, 1.7f, 0.5f),
+                part("sarcophagus", true, 0f, 2.11f, 0.5f, 0.85f, 1.8f, 1.5f),
+                part("sensor", true, 0f, 3.87f, 0.62f, 0.4f, 0.25f, 1.25f),
+                part("engine", true, 0f, 2.31f, -1.03f, 0.9f, 2.1f, 2.0f),
+                part("cannon_arm", true, 1.81f, 1.75f, 0f, 0.6f, 1.6f, 0.6f),
+                part("cannon", true, 1.81f, 2.51f, 1.6f, 0.6f, 0.6f, 0.9f),
+                part("fist_arm", true, -1.81f, 2.09f, 0.3f, 0.95f, 0.95f, 0.6f),
+                part("fist", true, -1.81f, 2.09f, 1.45f, 0.8f, 0.95f, 0.6f),
         };
         // Части получают ID сразу после хозяина, как у дракона
         this.setId(this.getId());
@@ -86,7 +101,9 @@ public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
     }
 
     private HitboxPart part(String name, boolean torso, float right, float up, float fwd, float w, float h, float armor) {
-        return new HitboxPart(this, new HitboxPart.Spec(name, torso, right, up, fwd, w, h, armor));
+        // Размеры сняты с модели (32 ед. = 1 блок) и умножаются на общий масштаб
+        return new HitboxPart(this, new HitboxPart.Spec(name, torso, right * SCALE, up * SCALE, fwd * SCALE,
+                w * SCALE, h * SCALE, armor));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -94,10 +111,10 @@ public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
                 .add(Attributes.MAX_HEALTH, 400.0)
                 .add(Attributes.ARMOR, 20.0)
                 .add(Attributes.ARMOR_TOUGHNESS, 12.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.07)
+                .add(Attributes.MOVEMENT_SPEED, 0.055)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0)
                 .add(Attributes.EXPLOSION_KNOCKBACK_RESISTANCE, 1.0)
-                .add(Attributes.STEP_HEIGHT, 1.1)
+                .add(Attributes.STEP_HEIGHT, 1.6)
                 .add(Attributes.GRAVITY, 0.12)
                 .add(Attributes.SAFE_FALL_DISTANCE, 6.0)
                 .add(Attributes.FALL_DAMAGE_MULTIPLIER, 0.5)
@@ -144,7 +161,7 @@ public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
 
     /** Без частей позиция хитбоксов не обновлялась бы между тиками. */
     private void updateParts() {
-        float legSwing = Mth.sin(gait) * 0.35f * stride;
+        float legSwing = Mth.cos(gait) * 0.4f * SCALE * stride;   // правая нога впереди в момент удара пятки (gait = 0)
         for (HitboxPart p : parts) {
             HitboxPart.Spec s = p.spec;
             float yaw = (s.torsoFrame() ? torsoYaw : yBodyRot) * Mth.DEG_TO_RAD;
@@ -170,6 +187,49 @@ public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
         updateTorso();
         updateGait();
         updateParts();
+        if (level().isClientSide) {
+            updateSprings();
+        }
+    }
+
+    private void updateSprings() {
+        float speed = (float) Math.sqrt((getX() - xo) * (getX() - xo) + (getZ() - zo) * (getZ() - zo));
+        float accel = speed - lastSpeed;
+        lastSpeed = speed;
+        // Разгон — корпус отстаёт и откидывается назад, торможение — клюёт вперёд
+        lean.update(Mth.clamp(-accel * 18f, -1f, 1f));
+        jolt.update(0f);
+        float yawVel = Mth.wrapDegrees(torsoYaw - lastTorsoYaw);
+        lastTorsoYaw = torsoYaw;
+        armLag.update(Mth.clamp(-yawVel / 4f, -1f, 1f));
+    }
+
+    /** Затухающая пружина: x догоняет цель с перелётом, как тяжёлая подвеска. */
+    public static final class Spring {
+        private final float stiffness;
+        private final float damping;
+        public float x;
+        public float xO;
+        private float v;
+
+        Spring(float stiffness, float damping) {
+            this.stiffness = stiffness;
+            this.damping = damping;
+        }
+
+        void update(float target) {
+            xO = x;
+            v += (target - x) * stiffness - v * damping;
+            x += v;
+        }
+
+        void kick(float impulse) {
+            v += impulse * 0.35f;
+        }
+
+        public float get(float partialTick) {
+            return Mth.lerp(partialTick, xO, x);
+        }
     }
 
     private void updateTorso() {
@@ -196,17 +256,18 @@ public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
         float turn = Math.abs(Mth.wrapDegrees(yBodyRot - yBodyRotO)) * 0.012f;
         float advance = forward + Math.signum(forward == 0 ? 1 : forward) * turn;
         gait += advance * Mth.PI / STRIDE;
-        float moving = Mth.clamp(Math.abs(advance) / 0.12f, 0f, 1f);
+        float moving = Mth.clamp(Math.abs(advance) / 0.1f, 0f, 1f);
         stride += (moving - stride) * 0.15f;
 
         if (level().isClientSide && stride > 0.2f) {
-            int stepIndex = Mth.floor((gait - Mth.HALF_PI) / Mth.PI);
+            int stepIndex = Mth.floor(gait / Mth.PI);
             if (stepIndex != lastStepIndex) {
                 stepListener.onStep(this, (stepIndex & 1) == 0);
+                jolt.kick(-1.0f * stride);
             }
             lastStepIndex = stepIndex;
         } else {
-            lastStepIndex = Mth.floor((gait - Mth.HALF_PI) / Mth.PI);
+            lastStepIndex = Mth.floor(gait / Mth.PI);
         }
     }
 
@@ -247,7 +308,7 @@ public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
     @Override
     protected Vec3 getRiddenInput(Player player, Vec3 input) {
         // Скорость пульсирует: максимум посреди шага, минимум когда ступня бьёт в землю
-        float surge = 0.55f + 0.45f * Math.abs(Mth.cos(gait));
+        float surge = 0.55f + 0.45f * Math.abs(Mth.sin(gait));
         return new Vec3(0, 0, throttle * surge);
     }
 

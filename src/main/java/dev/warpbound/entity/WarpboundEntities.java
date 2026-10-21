@@ -17,8 +17,8 @@ public final class WarpboundEntities {
     public static final EntityType<DreadnoughtEntity> DREADNOUGHT = Registry.register(
             BuiltInRegistries.ENTITY_TYPE, Warpbound.id("dreadnought"),
             EntityType.Builder.of(DreadnoughtEntity::new, MobCategory.MISC)
-                    .sized(3.2f, 3.75f)
-                    .eyeHeight(3.25f)
+                    .sized(4.2f, 4.9f)     // 3.2 x 3.75 модели, умноженные на DreadnoughtEntity.SCALE
+                    .eyeHeight(4.3f)
                     .clientTrackingRange(10)
                     .build("dreadnought"));
 
