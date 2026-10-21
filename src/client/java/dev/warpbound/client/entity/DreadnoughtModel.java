@@ -105,7 +105,7 @@ public class DreadnoughtModel extends HierarchicalModel<DreadnoughtEntity> {
         head.xRot = Mth.clamp(pitch, -0.4f, 0.5f);
         gun.xRot = Mth.clamp(pitch, -0.6f, 0.7f) - jolt * 0.08f;
         if (pilot == null) {
-            // Без пилота сервоприводы «ищут» цель: голова и пушка чуть подёргиваются
+            // Без пилота сервоприводы «ищут» цель: пушка чуть подёргивается
             head.yRot = Mth.sin(ageInTicks * 0.021f) * 0.35f;
             gun.yRot = Mth.sin(ageInTicks * 0.07f) * 0.02f + Mth.sin(ageInTicks * 0.19f) * 0.012f;
         }

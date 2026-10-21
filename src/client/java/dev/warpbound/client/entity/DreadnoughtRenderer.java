@@ -36,7 +36,7 @@ public class DreadnoughtRenderer extends MobRenderer<DreadnoughtEntity, Dreadnou
                        MultiBufferSource buffers, int light) {
         super.render(entity, yaw, partialTick, pose, buffers, light);
         // F3+B: ванилла рисует только общий габарит, части дорисовываем сами.
-        // Красные — уязвимые места (саркофаг, голова, реактор)
+        // Красные — уязвимые места (саркофаг и реактор)
         if (this.entityRenderDispatcher.shouldRenderHitBoxes() && !entity.isInvisible()) {
             double x = Mth.lerp(partialTick, entity.xOld, entity.getX());
             double y = Mth.lerp(partialTick, entity.yOld, entity.getY());
