@@ -33,11 +33,12 @@ import org.jetbrains.annotations.Nullable;
  */
 public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
     /** Длина одного шага в блоках: за это расстояние фаза походки проходит π. */
-    public static final float STRIDE = 1.8f;
+    public static final float STRIDE = 1.6f;
     private static final float MAX_TURN = 2.4f;        // град/тик
     private static final float TORSO_TURN = 3.5f;      // град/тик
     private static final float TORSO_LIMIT = 70f;      // насколько корпус может обогнать ноги
-    private static final float SEAT_HEIGHT = 2.33f;    // глаза пилота окажутся на ~3.35
+    private static final float SEAT_HEIGHT = 2.23f;    // глаза пилота окажутся на ~3.25, внутри саркофага
+    private static final float SEAT_FORWARD = 0.4f;
 
     /** Клиентский хук шага (звук, пыль, тряска камеры). Ставит клиентский код. */
     public static StepListener stepListener = (entity, right) -> {
@@ -64,17 +65,20 @@ public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
 
     public DreadnoughtEntity(EntityType<? extends DreadnoughtEntity> type, Level level) {
         super(type, level);
+        // Размеры в блоках, сняты с модели (tools/dreadnought/gen.py, 32 ед. = 1 блок)
         this.parts = new HitboxPart[]{
-                part("leg_right", false, 0.625f, 0f, 0f, 0.75f, 1.6f, 0.7f),
-                part("leg_left", false, -0.625f, 0f, 0f, 0.75f, 1.6f, 0.7f),
-                part("torso", true, 0f, 1.6f, 0f, 1.6f, 2.2f, 0.5f),
-                part("sarcophagus", true, 0f, 2.19f, 0.72f, 0.9f, 0.9f, 1.75f),
-                part("head", true, 0f, 3.75f, 0.3f, 0.55f, 0.35f, 1.25f),
-                part("shoulder_right", true, 1.25f, 2.41f, 0f, 0.8f, 1.25f, 0.6f),
-                part("cannon", true, 1.19f, 2.06f, 1.1f, 0.75f, 0.7f, 0.9f),
-                part("shoulder_left", true, -1.25f, 2.41f, 0f, 0.8f, 1.25f, 0.6f),
-                part("fist", true, -1.19f, 0.92f, 0f, 0.8f, 1.7f, 0.6f),
-                part("reactor", true, 0f, 2.45f, -0.75f, 0.75f, 1.6f, 2.0f),
+                part("leg_right", false, 0.69f, 0f, 0f, 0.9f, 1.45f, 0.7f),
+                part("leg_left", false, -0.69f, 0f, 0f, 0.9f, 1.45f, 0.7f),
+                part("pelvis", false, 0f, 1.05f, 0f, 0.85f, 0.8f, 0.6f),
+                part("slab_right", true, 0.89f, 1.8f, -0.06f, 0.9f, 1.7f, 0.5f),
+                part("slab_left", true, -0.89f, 1.8f, -0.06f, 0.9f, 1.7f, 0.5f),
+                part("sarcophagus", true, 0f, 1.8f, 0.5f, 0.85f, 1.8f, 1.5f),
+                part("sensor", true, 0f, 3.56f, 0.62f, 0.4f, 0.25f, 1.25f),
+                part("engine", true, 0f, 2.0f, -1.03f, 0.9f, 2.1f, 2.0f),
+                part("cannon_arm", true, 1.81f, 1.94f, 0f, 0.6f, 1.15f, 0.6f),
+                part("cannon", true, 1.81f, 2.2f, 1.6f, 0.6f, 0.6f, 0.9f),
+                part("fist_arm", true, -1.81f, 1.85f, 0.4f, 0.8f, 1.15f, 0.6f),
+                part("fist", true, -1.81f, 1.85f, 1.45f, 0.7f, 0.75f, 0.6f),
         };
         // Части получают ID сразу после хозяина, как у дракона
         this.setId(this.getId());
@@ -254,7 +258,8 @@ public class DreadnoughtEntity extends PathfinderMob implements MultipartHost {
 
     @Override
     protected Vec3 getPassengerAttachmentPoint(Entity passenger, EntityDimensions dimensions, float scale) {
-        return new Vec3(0, SEAT_HEIGHT, 0);
+        // Сиденье в саркофаге, а саркофаг поворачивается вместе с корпусом
+        return new Vec3(0, SEAT_HEIGHT, SEAT_FORWARD).yRot(-torsoYaw * Mth.DEG_TO_RAD);
     }
 
     @Override

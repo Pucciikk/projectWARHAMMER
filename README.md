@@ -46,7 +46,9 @@
 
 Яйцо призыва во вкладке «Яйца призыва» или `/summon warpbound:dreadnought`.
 Модель и текстура генерируются скриптом: `python3 tools/dreadnought/gen.py` (нужны Pillow и numpy).
-Правьте кубы в скрипте, а не в `DreadnoughtMesh.java`; хитбоксы — в `DreadnoughtEntity`.
+Скрипт пишет `assets/warpbound/models/entity/dreadnought.json` и текстуры; игра читает модель из JSON
+при каждой перезагрузке ресурсов. С флагом `--dev` скрипт копирует файлы и в `build/`, и в запущенной
+игре достаточно нажать F3+T. Хитбоксы — в `DreadnoughtEntity`.
 
 ## Настройки
 
