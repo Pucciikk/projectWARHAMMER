@@ -99,6 +99,75 @@ def up(p, du):
     return (p[0], p[1] + du, p[2])
 
 
+def bolt(c, r, depth, axis="F"):
+    """Выступающая головка болта: короткий восьмигранник на грани (по умолчанию лицом вперёд)."""
+    i = "RUF".index(axis)
+    o = [c[j] for j in range(3) if j != i]
+    return cyl(axis, o, r, c[i], c[i] + depth, "steel", {})
+
+
+def hose_arc(p0, p1, sag, r, n=3):
+    """Гофрированный шланг из n отрезков по провисающей дуге от p0 к p1.
+    Каждый отрезок — куб вдоль оси U, повёрнутый сперва вокруг R, потом вокруг F."""
+    pts = []
+    for k in range(n + 1):
+        t = k / n
+        p = [p0[j] + (p1[j] - p0[j]) * t for j in range(3)]
+        p[1] -= sag * 4 * t * (1 - t)
+        pts.append(p)
+    out = []
+    for a, b in zip(pts, pts[1:]):
+        d = [b[j] - a[j] for j in range(3)]
+        length = math.sqrt(sum(x * x for x in d))
+        d = [x / length for x in d]
+        # знак: ось куба смотрит «вниз» по U, если отрезок идёт вниз — разворачиваем
+        if d[1] < 0:
+            d = [-x for x in d]
+        rx = math.degrees(math.asin(max(-1, min(1, d[2]))))
+        rz = math.degrees(math.atan2(-d[0], d[1]))
+        c = [(a[j] + b[j]) / 2 for j in range(3)]
+        half = length / 2 + r * 0.5
+        out.append(box((round(c[0] - r), round(c[1] - half), round(c[2] - r)),
+                       (round(c[0] + r), round(c[1] + half), round(c[2] + r)),
+                       "hose", {}, rot=(rx, 0, rz), center=tuple(c)))
+    return out
+
+
+def skull3d(c, s=1.0, axis="F", mat="bone"):
+    """Объёмный череп: черепная коробка с глазницами и челюсть, утопленная назад.
+    c — центр низа челюсти на грани; axis — куда смотрит лицо (F вперёд, R вправо, -R влево)."""
+    w, h = max(4, round(8 * s)), max(3, round(7 * s))
+    jw, jh = max(3, round(6 * s)), max(2, round(3 * s))
+    dep, jdep = max(2, round(4 * s)), max(1, round(3 * s))
+    parts = [  # (поперёк, вверх, наружу) от центра
+        ((-w / 2, jh - 1, 0), (w / 2, jh - 1 + h, dep), "skull_face"),
+        ((-jw / 2, 0, 0), (jw / 2, jh, jdep), "skull_jaw"),
+        ((-w / 2 + 1, jh - 1 + h, 0), (w / 2 - 1, jh + h, dep - 1), None),     # свод черепа
+    ]
+    out = []
+    for lo, hi, deco in parts:
+        lo = tuple(round(v) for v in lo)
+        hi = tuple(round(v) for v in hi)
+        if axis == "F":
+            a = (c[0] + lo[0], c[1] + lo[1], c[2] + lo[2])
+            b = (c[0] + hi[0], c[1] + hi[1], c[2] + hi[2])
+            face = "front"
+        elif axis == "R":
+            a = (c[0] + lo[2], c[1] + lo[1], c[2] - hi[0])
+            b = (c[0] + hi[2], c[1] + hi[1], c[2] - lo[0])
+            face = "right"
+        elif axis == "-F":
+            a = (c[0] - hi[0], c[1] + lo[1], c[2] - hi[2])
+            b = (c[0] - lo[0], c[1] + hi[1], c[2] - lo[2])
+            face = "back"
+        else:  # "-R"
+            a = (c[0] - hi[2], c[1] + lo[1], c[2] + lo[0])
+            b = (c[0] - lo[2], c[1] + hi[1], c[2] + hi[0])
+            face = "left"
+        out.append(box(a, b, mat, {face: deco} if deco else {}))
+    return out
+
+
 # Всё выше ног поднято на LIFT: ноги v3 длиннее (бедро на 56, а не на 46), как на референсах 3ddd
 LIFT = 10
 HIP, KNEE, ANKLE = (24, 56, 0), (24, 34, 1), (24, 10, 1)
@@ -108,6 +177,9 @@ LEG = [
     # огромный приводной барабан бедра
     *cyl("R", (56, 0), 13, 9, 36, "iron", {"right": "drum_end", "front": "drum", "back": "drum", "top": "drum"}),
     *cyl("R", (56, 0), 9, 36, 39, "steel", {"right": "drum_end"}),
+    *bolt((39, 56, 0), 4, 3, axis="R"),                                                  # ступица
+    # выпуклые стальные обручи на барабане: рельеф, как на референсе
+    *[c for r0 in (12, 19, 26, 33) for c in cyl("R", (56, 0), 14, r0, r0 + 2, "steel", {})],
     box((17, 34, -7), (31, 50, 7), "iron", {"front": "piston", "back": "piston"}),       # бедренная тяга
     box((31, 36, -2), (34, 52, 2), "steel", {"right": "piston"}),                         # гидравлика снаружи
     box((14, 38, -3), (17, 50, 1), "hose", {}),                                           # шланг внутри
@@ -122,6 +194,13 @@ SHIN = [
     box((34, 14, -5), (37, 32, 9), "blue", {"left": "plate"}),
     box((19, 12, -10), (23, 30, -6), "steel", {"back": "piston"}),                       # задние поршни
     box((25, 12, -10), (29, 30, -6), "steel", {"back": "piston"}),
+    # белый щит на колене и тёмный череп с красными глазами поверх
+    *cyl("F", (24, 23), 6, 12, 13, "ivory", {}),
+    *skull3d((24, 19, 13), 0.75, mat="iron"),
+    box((14, 31, 11), (17, 34, 13), "steel", {}), box((31, 31, 11), (34, 34, 13), "steel", {}),
+    box((14, 13, 11), (17, 16, 13), "steel", {}), box((31, 13, 11), (34, 16, 13), "steel", {}),
+    # шланг от колена к голеностопу сзади
+    *hose_arc((20, 30, -8), (20, 12, -9), -3, 2, 2),
 ]
 FOOT = [
     box((16, 4, -8), (32, 13, 9), "iron", {"front": "ribs"}),                             # голеностоп
@@ -134,18 +213,43 @@ FOOT = [
     box((5, 0, -6), (9, 7, 8), "blue", {}),                                               # боковые упоры
     box((39, 0, -6), (43, 7, 8), "blue", {}),
 ]
-part("body", "root", (0, 50 + LIFT, 0), lift([
-    box((-14, 34, -12), (14, 58, 12), "iron", {"front": "grill"}),           # таз
-    box((-25, 52, -18), (25, 61, 16), "iron", {"front": "ribs", "back": "ribs"}),  # поясное кольцо
-    box((-9, 32, 12), (9, 54, 17), "blue_trim", {"front": "codpiece"}),       # щиток между ног
-    box((-7, 26, 17), (-2, 40, 18), "seal", {"front": "seal"}),
-    # гофрированные шланги от таза к бёдрам, висят дугой
-    box((10, 38, 6), (14, 54, 10), "hose", {}, rot=(0, 0, 25), center=(12, 46, 8)),
-    box((-14, 38, 6), (-10, 54, 10), "hose", {}, rot=(0, 0, -25), center=(-12, 46, 8)),
-    box((10, 38, -10), (14, 54, -6), "hose", {}, rot=(0, 0, 25), center=(12, 46, -8)),
-    box((-14, 38, -10), (-10, 54, -6), "hose", {}, rot=(0, 0, -25), center=(-12, 46, -8)),
-], LIFT) + [
-    box((-14, 50, -4), (14, 60, 4), "steel", {}),                            # ось бёдер на уровне барабанов
+# ---------- таз: центральный блок между барабанами бёдер, как на референсе автора.
+# Точка вращения на оси бёдер: таз качается и поворачивается под шагом, а «талия»
+# (колокол и поясное кольцо) гасит это движение, чтобы саркофаг шёл ровно.
+PELVIS = [
+    box((-10, 44, -10), (10, 62, 10), "iron", {"right": "ribs", "left": "ribs", "back": "ribs"}),
+    box((-8, 48, 10), (8, 62, 14), "iron", {"front": "grill"}),                 # решётка с отверстиями
+    box((-7, 36, 11), (7, 48, 15), "blue_trim", {"front": "codpiece"}),          # щиток между ног
+    box((-6, 26, 15), (-2, 40, 16), "seal", {"front": "seal"}),
+    # скобы, которые держат барабаны сверху и снизу
+    box((6, 60, -6), (13, 66, 6), "steel", {"top": "plate"}),
+    box((-13, 60, -6), (-6, 66, 6), "steel", {"top": "plate"}),
+    box((6, 44, -5), (12, 49, 5), "steel", {}),
+    box((-12, 44, -5), (-6, 49, 5), "steel", {}),
+    box((-14, 52, -4), (14, 60, 4), "steel", {}),                                # ось бёдер
+    # крупные болты на решётке
+    *bolt((-6, 60, 14), 2, 2), *bolt((6, 60, 14), 2, 2),
+    *bolt((-6, 50, 14), 2, 2), *bolt((6, 50, 14), 2, 2),
+    # гидроцилиндры от блока к барабанам: спереди и сзади
+    *(PISTONS := [*cyl("R", (54, 7), 3, 8, 12, "iron", {}), *cyl("R", (54, 7), 2, 12, 15, "steel", {}),
+                  *cyl("R", (50, -7), 3, 8, 12, "iron", {}), *cyl("R", (50, -7), 2, 12, 15, "steel", {})]),
+    *mirror(PISTONS),
+    # гофрированные шланги дугой от таза к барабанам
+    *hose_arc((7, 63, 9), (11, 50, 11), 4, 2),
+    *hose_arc((-7, 63, 9), (-11, 50, 11), 4, 2),
+    *hose_arc((7, 63, -9), (11, 48, -10), 4, 2),
+    *hose_arc((-7, 63, -9), (-11, 48, -10), 4, 2),
+]
+part("body", "root", (0, 56, 0), PELVIS)
+# «Талия»: ребристый колокол и поясное кольцо под корпусом
+part("waist", "body", (0, 64, 0), [
+    *cyl("U", (0, 0), 7, 60, 64, "steel", {"front": "ribs", "back": "ribs", "right": "ribs", "left": "ribs"}),
+    *cyl("U", (0, 0), 9, 64, 67, "iron", {"front": "ribs", "back": "ribs", "right": "ribs", "left": "ribs"}),
+    *cyl("U", (0, 0), 12, 67, 70, "steel", {"front": "bolts", "back": "bolts", "right": "bolts", "left": "bolts"}),
+    box((-18, 68, -14), (18, 73, 12), "iron", {"front": "ribs", "back": "ribs"}),   # поясное кольцо
+    # шланги от кольца вниз к тазу
+    *hose_arc((16, 67, 12), (9, 58, 9), 3, 2),
+    *hose_arc((-16, 67, 12), (-9, 58, 9), 3, 2),
 ])
 part("leg_r", "body", HIP, LEG)
 part("shin_r", "leg_r", KNEE, SHIN)
@@ -155,7 +259,7 @@ part("shin_l", "leg_l", mp(KNEE), mirror(SHIN))
 part("foot_l", "shin_l", mp(ANKLE), mirror(FOOT))
 
 # ---------- корпус
-part("torso", "body", (0, 60 + LIFT, 0), lift([
+part("torso", "waist", (0, 60 + LIFT, 0), lift([
     # саркофаг — выступает вперёд из корпуса
     box((-14, 58, -6), (14, 114, 30), "blue", {"front": "sarcophagus", "right": "cables", "left": "cables", "top": "plate"}),
     box((-12, 114, -4), (12, 118, 26), "blue_edge", {}),
@@ -186,10 +290,40 @@ part("torso", "body", (0, 60 + LIFT, 0), lift([
     *cyl("U", (-13, -33), 5, 98, 132, "iron", {"front": "perforated", "back": "perforated", "right": "perforated", "left": "perforated", "top": "pipe_top"}),
     *cyl("U", (13, -33), 6, 96, 99, "steel", {}),
     *cyl("U", (-13, -33), 6, 96, 99, "steel", {}),
+    # --- объёмные детали саркофага: козырёк над смотровой щелью, щёки, нижняя губа, череп
+    box((-13, 110, 29), (13, 113, 35), "blue_edge", {"top": "plate"}),
+    box((-14, 104, 30), (-11, 110, 33), "blue_edge", {}),
+    box((11, 104, 30), (14, 110, 33), "blue_edge", {}),
+    box((-11, 104, 30), (11, 106, 32), "blue_trim", {}),
+    *skull3d((0, 85, 30), 1.0),
+    box((-6, 82, 30), (6, 85, 33), "blue_trim", {}),                         # полочка под черепом
+    *bolt((-11, 64, 30), 1, 1), *bolt((11, 64, 30), 1, 1),
+    *bolt((-11, 100, 30), 1, 1), *bolt((11, 100, 30), 1, 1),
+    # черепа на бронеблоках: спереди под лавровым венком и по бокам
+    *skull3d((28, 89, 22), 1.0),
+    *skull3d((42, 63, -2), 1.0, axis="R"),
+    *skull3d((-42, 63, -2), 1.0, axis="-R"),
+    *bolt((18, 108, 22), 1, 1), *bolt((39, 64, 22), 1, 1), *bolt((18, 64, 22), 1, 1),
+    *bolt((-18, 108, 22), 1, 1), *bolt((-39, 64, 22), 1, 1), *bolt((-18, 64, 22), 1, 1),
+    # шланги сзади: от двигателя к бронеблокам и вниз к поясу
+    *hose_arc((24, 92, -34), (32, 74, -26), 5, 2),
+    *hose_arc((-24, 92, -34), (-32, 74, -26), 5, 2),
+    *hose_arc((20, 66, -36), (12, 56, -16), 4, 2),
+    *hose_arc((-20, 66, -36), (-12, 56, -16), 4, 2),
+    # череп под решёткой двигателя
+    *skull3d((0, 64, -43), 1.0, axis="-F"),
 ], LIFT))
 part("head", "torso", up((0, 116, 16), LIFT), lift([
     box((-6, 114, 12), (6, 122, 28), "iron", {"front": "sensor"}),
     box((-4, 116, 28), (4, 120, 30), "lens", {}),
+    # козырёк над линзой, боковые датчики и антенна
+    box((-7, 121, 22), (7, 123, 32), "steel", {"top": "plate"}),
+    box((-7, 115, 28), (-4, 121, 31), "iron", {}),
+    box((4, 115, 28), (7, 121, 31), "iron", {}),
+    box((-9, 115, 16), (-6, 120, 26), "iron", {}), box((-9, 116, 26), (-7, 119, 27), "lens_blue", {}),
+    box((6, 115, 16), (9, 120, 26), "iron", {}), box((7, 116, 26), (9, 119, 27), "lens_blue", {}),
+    box((3, 122, 13), (5, 136, 15), "steel", {}),
+    box((2, 132, 12), (6, 133, 16), "steel", {}),
 ], LIFT))
 
 # ---------- правая рука: штурмовая пушка
@@ -200,6 +334,8 @@ part("arm_r", "torso", up((46, 86, 0), LIFT), lift([
     box((60, 50, 2), (66, 64, 8), "belt_mat", {"right": "belt", "front": "belt", "left": "belt"}),
     box((60, 46, -12), (66, 52, 8), "belt_mat", {"right": "belt", "bottom": "belt"}),
     box((60, 50, -12), (66, 62, -6), "belt_mat", {"right": "belt", "back": "belt"}),
+    *skull3d((66, 69, 0), 1.0, axis="R"),
+    *hose_arc((52, 66, 14), (56, 74, 20), -3, 2, 2),                           # питание пушки
 ], LIFT))
 GUN = [
     box((50, 70, 14), (66, 90, 32), "iron", {"front": "ribs", "right": "ribs"}),
@@ -219,6 +355,8 @@ part("arm_l", "torso", up((-46, 84, 0), LIFT), lift([
     *cyl("R", (84, 0), 10, -50, -41, "iron", {"left": "drum_end"}),
     box((-64, 72, -16), (-50, 96, 10), "blue", {"left": "fist_shoulder", "top": "slab_top", "front": "plate"}),
     box((-52, 66, -10), (-48, 84, -6), "hose", {}),
+    *skull3d((-64, 81, -3), 1.0, axis="-R"),
+    *hose_arc((-50, 74, -12), (-54, 64, 2), 4, 2),
 ], LIFT))
 part("fist", "arm_l", up((-58, 74, 6), LIFT), lift([
     *cyl("F", (-58, 72), 15, -12, 28, "blue", {"front": "plate", "top": "forearm", "left": "forearm", "right": "forearm", "bottom": "forearm"}),
@@ -280,6 +418,8 @@ MATS = {
     "cable_bundle": (hx("#2a2a2c"), hx("#555555"), hx("#111111")),
     "hose": (hx("#2b2a2d"), hx("#5d5a62"), hx("#121114")),
     "belt_mat": (hx("#8a6a2a"), hx("#e0c070"), hx("#4a3412")),
+    "bone": (hx("#d8cfb4"), hx("#f4eedb"), hx("#8f8468")),
+    "ivory": (hx("#e6e2d6"), hx("#fbf9f2"), hx("#a9a597")),
 }
 GOLD = (hx("#c9a24a"), hx("#f3d98a"), hx("#7b5a1c"))
 BONE = hx("#e4dcc4")
@@ -699,6 +839,29 @@ def decorate(r, what, mat):
             rect(r, i, 3, 4, h - 6, hx("#4c5058"))
     elif what == "claw_tip":
         frame(r, 0, 0, w, h, MATS["steel"], 1)
+    elif what == "skull_face":
+        # глазницы и нос; у тёмного металлического черепа глаза светятся
+        glow_eyes = mat != "bone"
+        ew = max(1, w // 4)
+        ey = max(1, h // 4)
+        for (ex, ) in ((max(1, w // 2 - ew - 1), ), (w // 2 + 1, )):
+            for j in range(ey, min(h - 1, ey + max(1, h // 3))):
+                for i in range(ex, min(w - 1, ex + ew)):
+                    if glow_eyes:
+                        lit(x0 + i, y0 + j, RED_LIGHT)
+                    else:
+                        px(x0 + i, y0 + j, hx("#18140f"))
+        nx, ny = w // 2 - 1, min(h - 2, ey + max(1, h // 3) + 1)
+        px(x0 + nx, y0 + ny, hx("#18140f"))
+        px(x0 + nx + 1, y0 + ny, hx("#18140f"))
+    elif what == "skull_jaw":
+        for i in range(1, w - 1, 2):
+            for j in range(0, h - 1):
+                px(x0 + i, y0 + j, hx("#3a3226"))
+    elif what == "bolts":
+        for i in range(1, w - 1, 3):
+            px(x0 + i, y0 + h // 2, hx("#c4cad4"))
+            px(x0 + i, y0 + h // 2 + 1, hx("#202226"))
     elif what == "hull":
         pass
 

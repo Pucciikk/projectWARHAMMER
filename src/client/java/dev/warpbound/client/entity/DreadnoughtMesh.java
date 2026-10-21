@@ -27,7 +27,7 @@ public final class DreadnoughtMesh {
         for (String side : new String[]{"r", "l"}) {
             empty(empty(empty(body, "leg_" + side), "shin_" + side), "foot_" + side);
         }
-        PartDefinition torso = empty(body, "torso");
+        PartDefinition torso = empty(empty(body, "waist"), "torso");
         empty(torso, "head");
         empty(empty(torso, "arm_r"), "gun");
         empty(empty(torso, "arm_l"), "fist");
