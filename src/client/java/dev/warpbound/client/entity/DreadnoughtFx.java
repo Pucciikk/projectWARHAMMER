@@ -34,7 +34,7 @@ public final class DreadnoughtFx {
             return;
         }
         float yaw = e.yBodyRot * Mth.DEG_TO_RAD;
-        float side = rightFoot ? 0.625f : -0.625f;
+        float side = rightFoot ? 0.69f : -0.69f;
         double fx = e.getX() - Mth.cos(yaw) * side - Mth.sin(yaw) * 0.4;
         double fz = e.getZ() - Mth.sin(yaw) * side + Mth.cos(yaw) * 0.4;
         double fy = e.getY();

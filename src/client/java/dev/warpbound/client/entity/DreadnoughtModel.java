@@ -65,11 +65,11 @@ public class DreadnoughtModel extends HierarchicalModel<DreadnoughtEntity> {
 
         // Корпус проседает в момент удара ступни (|sin| = 1) и раскачивается с боку на бок
         float impact = Math.abs(s);
-        body.y += impact * impact * 1.6f * amt;
+        body.y += impact * impact * 3.2f * amt;   // модель в масштабе 0.5: единицы вдвое мельче
         body.zRot = s * 0.035f * amt;
         torso.xRot = 0.05f * amt + impact * 0.025f * amt;
         // Дыхание реактора на месте
-        torso.y += Mth.sin(ageInTicks * 0.06f) * 0.25f;
+        torso.y += Mth.sin(ageInTicks * 0.06f) * 0.5f;
 
         // Корпус крутится отдельно от ног
         float bodyYaw = Mth.rotLerp(pt, e.yBodyRotO, e.yBodyRot);
