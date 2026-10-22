@@ -1,0 +1,24 @@
+{
+  "chapter": "warpbound:wreckage",
+  "x": 2,
+  "y": 2,
+  "parents": [
+    "warpbound:chapter1/what_survived"
+  ],
+  "criteria": [
+    {
+      "type": "flag",
+      "flag": "first_night",
+      "label": "Дожить до рассвета"
+    }
+  ],
+  "title": "Первая ночь",
+  "description": "Солнце садится. Здесь нет ни Поля Геллера, ни переборок, только темнота и то, что в ней бродит. Переживи эту ночь.",
+  "icon": "warpbound:first_night",
+  "rewards": [
+    {
+      "item": "minecraft:cooked_beef",
+      "count": 4
+    }
+  ]
+}

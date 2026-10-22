@@ -11,6 +11,8 @@ import dev.warpbound.chaos.ChaosData;
 import dev.warpbound.chaos.ChaosGod;
 import dev.warpbound.chaos.ChaosLogic;
 import dev.warpbound.config.WarpboundConfig;
+import dev.warpbound.quest.QuestManager;
+import dev.warpbound.start.CrashSite;
 import dev.warpbound.ship.Ship;
 import dev.warpbound.ship.ShipRegistry;
 import dev.warpbound.ship.ShipService;
@@ -103,7 +105,25 @@ public final class WarpboundCommands {
                                     touched(ctx, ship);
                                     return shipInfo(ctx);
                                 })))
-                        .then(Commands.literal("info").executes(WarpboundCommands::shipInfo))));
+                        .then(Commands.literal("info").executes(WarpboundCommands::shipInfo)))
+                .then(Commands.literal("crashsite").executes(ctx -> {
+                    ServerPlayer p = ctx.getSource().getPlayerOrException();
+                    CrashSite.place(p.serverLevel(), p.blockPosition(), p.getRandom());
+                    ok(ctx, "Место крушения поставлено рядом.");
+                    return 1;
+                }))
+                .then(Commands.literal("quest")
+                        .then(Commands.literal("reset").executes(ctx -> {
+                            QuestManager.reset(ctx.getSource().getPlayerOrException());
+                            ok(ctx, "Прогресс квестов и сюжетные флаги сброшены.");
+                            return 1;
+                        }))
+                        .then(Commands.literal("flag")
+                                .then(Commands.argument("flag", StringArgumentType.word()).executes(ctx -> {
+                                    QuestManager.setFlag(ctx.getSource().getPlayerOrException(), StringArgumentType.getString(ctx, "flag"));
+                                    ok(ctx, "Флаг поставлен.");
+                                    return 1;
+                                })))));
     }
 
     // --- Хаос ---

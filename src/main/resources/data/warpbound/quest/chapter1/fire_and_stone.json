@@ -1,0 +1,29 @@
+{
+  "chapter": "warpbound:wreckage",
+  "x": 2,
+  "y": 0,
+  "parents": [
+    "warpbound:chapter1/what_survived"
+  ],
+  "criteria": [
+    {
+      "type": "crafted",
+      "item": "minecraft:stone_pickaxe",
+      "label": "Сделать каменную кирку"
+    },
+    {
+      "type": "crafted",
+      "item": "minecraft:furnace",
+      "label": "Сложить печь"
+    }
+  ],
+  "title": "Огонь и камень",
+  "description": "Этот мир дикий: ни мануфактур, ни кузниц. Придётся начинать с камня и огня, как первые люди Терры.",
+  "icon": "warpbound:fire_and_stone",
+  "rewards": [
+    {
+      "item": "minecraft:torch",
+      "count": 8
+    }
+  ]
+}
