@@ -1,0 +1,31 @@
+{
+  "chapter": "warpbound:wreckage",
+  "x": 3,
+  "y": 0,
+  "parents": [
+    "warpbound:chapter1/fire_and_stone"
+  ],
+  "criteria": [
+    {
+      "type": "item",
+      "item": "minecraft:iron_ingot",
+      "count": 8,
+      "label": "Железо"
+    },
+    {
+      "type": "item",
+      "item": "minecraft:copper_ingot",
+      "count": 8,
+      "label": "Медь"
+    },
+    {
+      "type": "item",
+      "item": "minecraft:redstone",
+      "count": 8,
+      "label": "Редстоун"
+    }
+  ],
+  "title": "Железо и медь",
+  "description": "Вокс-маяк капсулы разбит. Чтобы его починить, нужны железо, медь и редстоун: этот мир прячет их под землёй.",
+  "icon": "warpbound:iron_and_copper"
+}

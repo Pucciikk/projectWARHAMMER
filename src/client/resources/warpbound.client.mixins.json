@@ -3,6 +3,7 @@
   "package": "dev.warpbound.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "AbstractContainerScreenAccessor",
     "CameraMixin"
   ],
   "injectors": {

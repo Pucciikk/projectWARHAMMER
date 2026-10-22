@@ -41,6 +41,10 @@ public final class WarpboundConfig {
     /** Расстояние между участками интерьеров в блоках. */
     public int plotSpacing = 2048;
 
+    // Начало игры
+    /** Ставить ли место крушения капсулы у спавна нового мира. */
+    public boolean crashSiteEnabled = true;
+
     private static WarpboundConfig instance = new WarpboundConfig();
 
     public static WarpboundConfig get() {
