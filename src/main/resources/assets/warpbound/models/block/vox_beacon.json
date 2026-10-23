@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "warpbound:block/vox_beacon_top",
+    "front": "warpbound:block/vox_beacon_front",
+    "side": "warpbound:block/vox_beacon_side"
+  }
+}

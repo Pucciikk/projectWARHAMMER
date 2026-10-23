@@ -1,0 +1,24 @@
+{
+  "chapter": "warpbound:wreckage",
+  "x": 4,
+  "y": 1,
+  "parents": [
+    "warpbound:chapter1/smoke_on_horizon",
+    "warpbound:chapter1/iron_and_copper"
+  ],
+  "criteria": [
+    {
+      "type": "flag",
+      "flag": "beacon_repaired",
+      "label": "Починить вокс-маяк (ПКМ вокс-модулем)"
+    }
+  ],
+  "title": "Голос в пустоте",
+  "description": "Вокс-маяк в хвосте капсулы ещё можно спасти. Вставь вокс-модуль, держа при себе металл, и сигнал уйдёт в небо. Кто-нибудь да услышит.",
+  "icon": "warpbound:vox",
+  "rewards": [
+    {
+      "item": "warpbound:omnissiah_sigil"
+    }
+  ]
+}

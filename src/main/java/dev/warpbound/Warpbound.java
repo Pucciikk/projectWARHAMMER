@@ -4,6 +4,13 @@ import dev.warpbound.chaos.ChaosAttachments;
 import dev.warpbound.chaos.ChaosLogic;
 import dev.warpbound.command.WarpboundCommands;
 import dev.warpbound.config.WarpboundConfig;
+import dev.warpbound.core.WarpboundBlocks;
+import dev.warpbound.core.WarpboundItems;
+import dev.warpbound.player.PlayerAttachments;
+import dev.warpbound.quest.QuestManager;
+import dev.warpbound.quest.StoryDirector;
+import dev.warpbound.start.CrashSite;
+import dev.warpbound.team.TeamCommands;
 import dev.warpbound.entity.WarpboundEntities;
 import dev.warpbound.network.WarpboundNetwork;
 import dev.warpbound.ship.ShipTicker;
@@ -27,11 +34,18 @@ public class Warpbound implements ModInitializer {
     public void onInitialize() {
         WarpboundConfig.load();
         ChaosAttachments.register();
+        PlayerAttachments.register();
+        WarpboundBlocks.register();
         WarpboundEntities.register();
+        WarpboundItems.register();
         WarpboundNetwork.registerPayloads();
         ChaosLogic.registerEvents();
         ShipTicker.register();
         WarpboundCommands.register();
+        TeamCommands.register();
+        QuestManager.register();
+        StoryDirector.register();
+        CrashSite.register();
         LOG.info("Warpbound: варп открыт");
     }
 }

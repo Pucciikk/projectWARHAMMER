@@ -1,0 +1,28 @@
+{
+  "chapter": "warpbound:wreckage",
+  "x": 2,
+  "y": 1,
+  "parents": [
+    "warpbound:chapter1/what_survived"
+  ],
+  "criteria": [
+    {
+      "type": "item",
+      "item": "warpbound:data_slate_navigator",
+      "label": "Планшет Навигатора"
+    },
+    {
+      "type": "item",
+      "item": "warpbound:data_slate_ship",
+      "label": "Планшет с мостика"
+    },
+    {
+      "type": "item",
+      "item": "warpbound:vox_module",
+      "label": "Вокс-модуль"
+    }
+  ],
+  "title": "Дым на горизонте",
+  "description": "Вокруг капсулы поднимаются столбы дыма: это догорают обломки корабля. Осмотри их, там могут быть записи и детали для маяка.",
+  "icon": "warpbound:smoke"
+}

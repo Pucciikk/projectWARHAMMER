@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "warpbound:hull_plating",
+    "warpbound:scorched_hull_plating",
+    "warpbound:brass_trim"
+  ]
+}

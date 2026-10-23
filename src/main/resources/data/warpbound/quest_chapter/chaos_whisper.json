@@ -1,0 +1,9 @@
+{
+  "title": "Шёпот",
+  "branch": "chaos",
+  "order": 90,
+  "icon": "warpbound:chapter_whisper",
+  "requires_flag": "chaos_whisper",
+  "sealed": true,
+  "sealed_text": "Ты пока не готов услышать, что оно говорит."
+}

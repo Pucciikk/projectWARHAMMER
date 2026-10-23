@@ -1,0 +1,18 @@
+{
+  "chapter": "warpbound:wreckage",
+  "x": 5,
+  "y": 1,
+  "parents": [
+    "warpbound:chapter1/voice_in_the_void"
+  ],
+  "criteria": [
+    {
+      "type": "flag",
+      "flag": "operator_arrived",
+      "label": "Дождаться ответа"
+    }
+  ],
+  "title": "Ответ",
+  "description": "На сигнал откликнулись. Приложи Знак Омниссии к маяку, и слуга Бога-Машины спустится к тебе.\n\nИли оскверни знак (Shift + ПКМ). Тогда придёт другой. Он тоже служит машинам, но не тому богу.",
+  "icon": "warpbound:answer"
+}

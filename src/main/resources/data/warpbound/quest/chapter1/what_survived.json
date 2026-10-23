@@ -1,0 +1,18 @@
+{
+  "chapter": "warpbound:wreckage",
+  "x": 1,
+  "y": 1,
+  "parents": [
+    "warpbound:chapter1/awakening"
+  ],
+  "criteria": [
+    {
+      "type": "item",
+      "item": "warpbound:data_slate_storm",
+      "label": "Найти инфопланшет в капсуле"
+    }
+  ],
+  "title": "Что уцелело",
+  "description": "Спасательная капсула лежит в борозде, обшивка ещё горячая. Внутри должно было что-то уцелеть. Обыщи её.",
+  "icon": "warpbound:capsule"
+}
