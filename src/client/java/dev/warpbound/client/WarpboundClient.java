@@ -1,5 +1,6 @@
 package dev.warpbound.client;
 
+import dev.warpbound.client.autotest.Autotest;
 import dev.warpbound.client.entity.DreadnoughtFx;
 import dev.warpbound.client.entity.DreadnoughtMesh;
 import dev.warpbound.client.entity.DreadnoughtRenderer;
@@ -56,6 +57,7 @@ public class WarpboundClient implements ClientModInitializer {
             ClientQuestState.reset();
         });
 
+        Autotest.register();
         QuestKeys.register();
         DataSlateItem.openScreen = memory -> Minecraft.getInstance().setScreen(new SlateScreen(memory));
 

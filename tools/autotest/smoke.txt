@@ -1,0 +1,29 @@
+# Дымовой тест: мир открылся, мод живой, корабль и варп-небо рисуются
+cmd time set noon
+cmd weather clear
+# Обзор местности сверху (наблюдатель не падает)
+cmd gamemode spectator
+cmd tp @s ~ ~25 ~ 0 25
+wait 40
+clearchat
+shot 01_world
+cmd gamemode creative
+cmd wb ship create Autotest
+wait 20
+cmd wb ship enter
+wait 60
+cmd wb ship info
+look 0 0
+clearchat
+shot 02_ship_interior
+cmd wb ship storm 80
+cmd wb ship warp 60
+wait 200
+clearchat
+shot 03_warp
+hud off
+wait 5
+shot 04_warp_nohud
+hud on
+cmd wb ship abort
+wait 40

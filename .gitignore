@@ -10,3 +10,4 @@ run/
 bin/
 remappedSrc/
 __pycache__/
+.claude/settings.local.json

@@ -34,6 +34,15 @@ loom {
             vmArg "-Dfabric-api.gametest.report-file=${project.layout.buildDirectory.get()}/gametest/junit.xml"
             runDir "build/gametest"
         }
+        // ./gradlew runAutotest -Pscenario=<имя> — клиент сам открывает тестовый мир, выполняет
+        // run/autotest/<имя>.txt (команды, взгляд, скриншоты) и закрывается
+        autotest {
+            client()
+            name "Autotest"
+            vmArg "-Dwarpbound.autotest=${project.findProperty('scenario') ?: 'smoke'}"
+            vmArg "-Dwarpbound.autotest.dir=${project.file('tools/autotest').absolutePath}"
+            runDir "run"
+        }
     }
 }
 

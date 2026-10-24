@@ -1,0 +1,61 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew *)",
+      "Bash(gradlew *)",
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(pip install *)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git show*)",
+      "Bash(git branch*)",
+      "PowerShell(./gradlew *)",
+      "PowerShell(.\\gradlew *)",
+      "PowerShell(python *)",
+      "PowerShell(git status*)",
+      "PowerShell(git log*)",
+      "PowerShell(git diff*)",
+      "PowerShell(git show*)",
+      "PowerShell(git branch*)",
+      "Edit(src/**)",
+      "Edit(tools/**)",
+      "Edit(docs/**)",
+      "Edit(run/**)",
+      "Edit(.claude/agents/**)",
+      "Read"
+    ],
+    "ask": [
+      "Bash(git commit*)",
+      "Bash(git add*)",
+      "Bash(git push*)",
+      "Bash(git merge*)",
+      "Bash(git rebase*)",
+      "Bash(git reset*)",
+      "Bash(git tag*)",
+      "Bash(git branch -d*)",
+      "Bash(git branch -D*)",
+      "PowerShell(git commit*)",
+      "PowerShell(git add*)",
+      "PowerShell(git push*)",
+      "PowerShell(git merge*)",
+      "PowerShell(git rebase*)",
+      "PowerShell(git reset*)",
+      "PowerShell(git tag*)"
+    ],
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "PowerShell(git push --force*)",
+      "PowerShell(git push -f*)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~*)"
+    ]
+  },
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  }
+}
