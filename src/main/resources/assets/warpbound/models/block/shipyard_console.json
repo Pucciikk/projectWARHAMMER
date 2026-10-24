@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "warpbound:block/shipyard_console_front",
+    "side": "warpbound:block/shipyard_console_side",
+    "top": "warpbound:block/shipyard_console_top"
+  }
+}

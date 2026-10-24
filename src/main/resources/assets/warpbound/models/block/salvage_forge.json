@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "warpbound:block/salvage_forge_front",
+    "side": "warpbound:block/salvage_forge_side",
+    "top": "warpbound:block/salvage_forge_top"
+  }
+}

@@ -11,7 +11,11 @@ import dev.warpbound.chaos.ChaosData;
 import dev.warpbound.chaos.ChaosGod;
 import dev.warpbound.chaos.ChaosLogic;
 import dev.warpbound.config.WarpboundConfig;
+import dev.warpbound.multiblock.MultiblockCoreBlock;
+import dev.warpbound.multiblock.MultiblockOrientation;
+import dev.warpbound.multiblock.Multiblocks;
 import dev.warpbound.quest.QuestManager;
+import dev.warpbound.shipyard.ShipyardBlockEntity;
 import dev.warpbound.start.CrashSite;
 import dev.warpbound.ship.Ship;
 import dev.warpbound.ship.ShipRegistry;
@@ -63,6 +67,9 @@ public final class WarpboundCommands {
                             ChaosLogic.set(ctx.getSource().getPlayerOrException(), ChaosData.EMPTY);
                             return chaosGet(ctx);
                         })))
+                .then(Commands.literal("shipyard")
+                        .then(Commands.literal("frame").executes(WarpboundCommands::shipyardFrame))
+                        .then(Commands.literal("advance").executes(WarpboundCommands::shipyardAdvance)))
                 .then(Commands.literal("ship")
                         .then(Commands.literal("create")
                                 .executes(ctx -> shipCreate(ctx, "Безымянный"))
@@ -207,6 +214,28 @@ public final class WarpboundCommands {
 
     private static void ok(CommandContext<CommandSourceStack> ctx, String text) {
         ctx.getSource().sendSuccess(() -> Component.literal(text), false);
+    }
+
+    /** /wb shipyard frame — поставить раму стапеля вокруг ближайшего пульта (для тестов). */
+    private static int shipyardFrame(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer p = ctx.getSource().getPlayerOrException();
+        var yard = ShipyardBlockEntity.nearest(p.serverLevel(), p.blockPosition(), 24).orElse(null);
+        if (yard == null) return fail(ctx, "Рядом нет пульта верфи.");
+        var facing = yard.getBlockState().getValue(MultiblockCoreBlock.FACING);
+        int n = Multiblocks.placeAll(p.serverLevel(), yard.getBlockPos(), yard.definitionId(), new MultiblockOrientation(facing, false));
+        ctx.getSource().sendSuccess(() -> Component.literal("Рама стапеля: поставлено блоков " + n), false);
+        return 1;
+    }
+
+    /** /wb shipyard advance — закрыть поставки и закончить текущий этап (для тестов). */
+    private static int shipyardAdvance(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer p = ctx.getSource().getPlayerOrException();
+        var yard = ShipyardBlockEntity.nearest(p.serverLevel(), p.blockPosition(), 64).orElse(null);
+        if (yard == null) return fail(ctx, "Рядом нет пульта верфи.");
+        if (!yard.isFormed()) return fail(ctx, "Верфь не освящена.");
+        if (!yard.debugAdvance(p)) return fail(ctx, "Все этапы готовы: жми «Старт» на пульте.");
+        ctx.getSource().sendSuccess(() -> Component.literal("Этап закрыт, через тик появится в доке."), false);
+        return 1;
     }
 
     private static int fail(CommandContext<CommandSourceStack> ctx, String text) {

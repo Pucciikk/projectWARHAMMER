@@ -9,9 +9,12 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LecternBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 
 /**
  * Измерение интерьеров. Каждому кораблю — свой участок вдоль оси X с шагом plotSpacing.
@@ -48,9 +51,39 @@ public final class ShipInteriors {
         return (int) Math.round(x / WarpboundConfig.get().plotSpacing);
     }
 
-    /** Точка появления на корме, лицом к носу. */
-    public static BlockPos spawn(int plot) {
-        return origin(plot).offset(0, 1, -HALF_LENGTH + 3);
+    /** Точка появления на борту, лицом к носу: из раскладки, а у старых кораблей v0 — на корме. */
+    public static BlockPos spawn(Ship ship) {
+        if (ship.layout != null) {
+            var layout = ShipLayout.REGISTRY.get(ship.layout);
+            if (layout.isPresent()) return origin(ship.plot).offset(layout.get().spawn());
+        }
+        return origin(ship.plot).offset(0, 1, -HALF_LENGTH + 3);
+    }
+
+    /**
+     * Интерьер из отсеков-шаблонов по раскладке. Возвращает false, если раскладки или отсека нет:
+     * тогда корабль получает временный корпус v0, чтобы игрок не провалился в пустоту.
+     */
+    public static boolean buildFromLayout(ServerLevel level, int plot, ResourceLocation layoutId) {
+        return buildFromLayout(level, origin(plot), layoutId);
+    }
+
+    /** То же, но от произвольной точки палубы — для тестов и будущей перестройки отсеков. */
+    public static boolean buildFromLayout(ServerLevel level, BlockPos o, ResourceLocation layoutId) {
+        var layout = ShipLayout.REGISTRY.get(layoutId).orElse(null);
+        if (layout == null) return false;
+        var manager = level.getStructureManager();
+        StructurePlaceSettings settings = new StructurePlaceSettings().setIgnoreEntities(true);
+        for (var compartment : layout.compartments()) {
+            var template = manager.get(compartment.structure());
+            if (template.isEmpty()) {
+                Warpbound.LOG.error("Корабль: нет отсека {}", compartment.structure());
+                return false;
+            }
+            BlockPos at = o.offset(compartment.offset());
+            template.get().placeInWorld(level, at, at, settings, level.random, Block.UPDATE_CLIENTS);
+        }
+        return true;
     }
 
     /**

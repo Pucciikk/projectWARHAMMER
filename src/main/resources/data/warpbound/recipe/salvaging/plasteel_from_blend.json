@@ -1,0 +1,12 @@
+{
+  "type": "warpbound:salvaging",
+  "category": "misc",
+  "ingredient": {
+    "item": "warpbound:plasteel_blend"
+  },
+  "result": {
+    "id": "warpbound:plasteel_ingot"
+  },
+  "experience": 0.5,
+  "cookingtime": 600
+}

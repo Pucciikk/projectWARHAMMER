@@ -1,0 +1,18 @@
+{
+  "chapter": "warpbound:keel",
+  "x": 3,
+  "y": 1,
+  "parents": [
+    "warpbound:keel/slipway"
+  ],
+  "criteria": [
+    {
+      "type": "flag",
+      "flag": "shipyard_formed",
+      "label": "Освятить стапель Омниссианским ключом"
+    }
+  ],
+  "title": "Освящение стапеля",
+  "description": "Ударь по пульту Омниссианским ключом. Если дух машины недоволен, он покажет, чего не хватает: жёлтым — пустоты, красным — чужое.",
+  "icon": "warpbound:answer"
+}

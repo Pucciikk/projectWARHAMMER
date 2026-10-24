@@ -1,0 +1,7 @@
+{
+  "input": "warpbound:plasteel_ingot",
+  "die": "plate",
+  "result": "warpbound:plasteel_plate",
+  "count": 1,
+  "presses": 4
+}

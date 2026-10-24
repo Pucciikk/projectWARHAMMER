@@ -3,6 +3,10 @@
   "values": [
     "warpbound:hull_plating",
     "warpbound:scorched_hull_plating",
-    "warpbound:brass_trim"
+    "warpbound:brass_trim",
+    "warpbound:dock_girder",
+    "warpbound:shipyard_console",
+    "warpbound:salvage_forge",
+    "warpbound:manual_press"
   ]
 }

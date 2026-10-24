@@ -1,0 +1,7 @@
+{
+  "input": "warpbound:brass_ingot",
+  "die": "gear",
+  "result": "warpbound:brass_gear",
+  "count": 2,
+  "presses": 3
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "warpbound:block/auspex"
+    },
+    "facing=east": {
+      "model": "warpbound:block/auspex",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "warpbound:block/auspex",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "warpbound:block/auspex",
+      "y": 270
+    }
+  }
+}

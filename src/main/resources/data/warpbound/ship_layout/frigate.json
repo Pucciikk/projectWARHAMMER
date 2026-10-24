@@ -1,0 +1,73 @@
+{
+  "compartments": [
+    {
+      "structure": "warpbound:interior/engine_room",
+      "offset": [
+        -6,
+        0,
+        -26
+      ]
+    },
+    {
+      "structure": "warpbound:interior/reactor_room",
+      "offset": [
+        -5,
+        0,
+        -19
+      ]
+    },
+    {
+      "structure": "warpbound:interior/corridor",
+      "offset": [
+        -3,
+        0,
+        -13
+      ]
+    },
+    {
+      "structure": "warpbound:interior/geller_port",
+      "offset": [
+        -9,
+        0,
+        -12
+      ]
+    },
+    {
+      "structure": "warpbound:interior/geller_star",
+      "offset": [
+        3,
+        0,
+        -12
+      ]
+    },
+    {
+      "structure": "warpbound:interior/teleportarium",
+      "offset": [
+        -9,
+        0,
+        -4
+      ]
+    },
+    {
+      "structure": "warpbound:interior/chapel",
+      "offset": [
+        3,
+        0,
+        -4
+      ]
+    },
+    {
+      "structure": "warpbound:interior/bridge",
+      "offset": [
+        -7,
+        0,
+        3
+      ]
+    }
+  ],
+  "spawn": [
+    0,
+    1,
+    -9
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "warpbound:block/teleportarium_pad_top",
+    "bottom": "warpbound:block/nav_table_side",
+    "side": "warpbound:block/nav_table_side"
+  }
+}

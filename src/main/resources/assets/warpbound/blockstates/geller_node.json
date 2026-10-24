@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "warpbound:block/geller_node"
+    },
+    "facing=east": {
+      "model": "warpbound:block/geller_node",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "warpbound:block/geller_node",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "warpbound:block/geller_node",
+      "y": 270
+    }
+  }
+}

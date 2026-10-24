@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GRG",
+    "IVI",
+    "ISI"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "V": {
+      "item": "warpbound:vox_module"
+    },
+    "S": {
+      "item": "warpbound:shipyard_schematic"
+    }
+  },
+  "result": {
+    "id": "warpbound:shipyard_console",
+    "count": 1
+  }
+}

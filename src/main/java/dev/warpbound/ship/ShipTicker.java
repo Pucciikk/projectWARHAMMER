@@ -1,13 +1,19 @@
 package dev.warpbound.ship;
 
+import dev.warpbound.Warpbound;
 import dev.warpbound.chaos.ChaosLogic;
 import dev.warpbound.config.WarpboundConfig;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -15,6 +21,9 @@ import java.util.List;
 
 /** Серверный тик кораблей: переходы состояний, Поле Геллера, шёпоты. */
 public final class ShipTicker {
+    /** Что игрок может ставить и убирать на борту. */
+    public static final TagKey<Block> PLAYER_PLACEABLE = TagKey.create(Registries.BLOCK, Warpbound.id("ship_player_placeable"));
+
     private ShipTicker() {
     }
 
@@ -22,6 +31,12 @@ public final class ShipTicker {
         ServerTickEvents.END_SERVER_TICK.register(ShipTicker::tick);
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> ShipService.sync(handler.getPlayer()));
         ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> ShipService.sync(player));
+        // Интерьер корабля собран из модулей: стены не ломаются, своё (сундуки, верстаки, факелы) — можно
+        PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, be) -> {
+            if (!ShipInteriors.isInterior(level) || player.isCreative() || state.is(PLAYER_PLACEABLE)) return true;
+            player.displayClientMessage(Component.translatable("ship.warpbound.hull_unbreakable").withStyle(ChatFormatting.GRAY), true);
+            return false;
+        });
     }
 
     private static void tick(MinecraftServer server) {
@@ -64,13 +79,30 @@ public final class ShipTicker {
         };
         ship.state = next;
         ship.stateTicks = 0;
+        if (next == ShipState.ORBIT) arrive(server, ship);
         String text = switch (next) {
             case TRANSIT -> "Корабль в варпе. Да хранит нас Император.";
             case EXITING -> "Навигатор ведёт корабль к выходу.";
-            case ORBIT -> "Корабль вышел в реальное пространство.";
+            case ORBIT -> null; // о прибытии говорит arrive()
             default -> null;
         };
         if (text != null) broadcast(server, ship, Component.literal(text).withStyle(ChatFormatting.GOLD));
+    }
+
+    /** Выход на орбиту цели. Аварийный выход бросает корабль к случайному известному миру. */
+    private static void arrive(MinecraftServer server, Ship ship) {
+        ResourceLocation target = ship.destination;
+        if (ship.aborted) {
+            var known = ShipDestination.REGISTRY.all().entrySet().stream()
+                    .filter(e -> e.getValue().level(server).isPresent()).map(java.util.Map.Entry::getKey).toList();
+            if (!known.isEmpty()) target = known.get(server.overworld().random.nextInt(known.size()));
+        }
+        ship.aborted = false;
+        ship.destination = null;
+        if (target != null) ship.location = target;
+        var name = ShipDestination.REGISTRY.get(ship.location)
+                .map(d -> (Component) Component.translatable(d.name())).orElse(Component.literal(ship.location.toString()));
+        broadcast(server, ship, Component.translatable("ship.warpbound.arrived", name).withStyle(ChatFormatting.GOLD));
     }
 
     private static void tickTransit(MinecraftServer server, Ship ship) {
@@ -82,6 +114,7 @@ public final class ShipTicker {
             broadcast(server, ship, Component.literal("Поле Геллера пало! Аварийный выход из варпа!")
                     .withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
             ShipService.abortWarp(ship);
+            ship.aborted = true;
             return;
         }
 

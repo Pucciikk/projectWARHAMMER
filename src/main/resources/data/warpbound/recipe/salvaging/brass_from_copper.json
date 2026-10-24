@@ -1,0 +1,12 @@
+{
+  "type": "warpbound:salvaging",
+  "category": "misc",
+  "ingredient": {
+    "item": "minecraft:copper_ingot"
+  },
+  "result": {
+    "id": "warpbound:brass_ingot"
+  },
+  "experience": 0.1,
+  "cookingtime": 300
+}

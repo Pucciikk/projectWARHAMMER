@@ -1,11 +1,13 @@
 package dev.warpbound.ship;
 
+import dev.warpbound.Warpbound;
 import dev.warpbound.config.WarpboundConfig;
 import dev.warpbound.network.ShipStatePayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,6 +17,9 @@ import java.util.Optional;
 
 /** Операции над кораблями: создание, вход, выход, запуск перехода. */
 public final class ShipService {
+    /** В Сезоне 1 все корабли — фрегаты. */
+    public static final ResourceLocation DEFAULT_LAYOUT = Warpbound.id("frigate");
+
     private ShipService() {
     }
 
@@ -26,7 +31,12 @@ public final class ShipService {
 
         Ship ship = registry.create(player.getUUID(), name);
         setDock(ship, player);
-        ShipInteriors.buildPlaceholderHull(ShipInteriors.level(server), ship.plot);
+        ServerLevel interior = ShipInteriors.level(server);
+        if (ShipInteriors.buildFromLayout(interior, ship.plot, DEFAULT_LAYOUT)) {
+            ship.layout = DEFAULT_LAYOUT;
+        } else {
+            ShipInteriors.buildPlaceholderHull(interior, ship.plot);
+        }
         registry.setDirty();
         return ship;
     }
@@ -44,7 +54,7 @@ public final class ShipService {
             // Пока корабль на орбите, «док» сдвигается туда, откуда поднялся игрок
             if (ship.state == ShipState.ORBIT) setDock(ship, player);
         }
-        BlockPos spawn = ShipInteriors.spawn(ship.plot);
+        BlockPos spawn = ShipInteriors.spawn(ship);
         player.teleportTo(interior, spawn.getX() + 0.5, spawn.getY(), spawn.getZ() + 0.5, 0f, 0f);
         ShipRegistry.get(player.server).setDirty();
         sync(player);

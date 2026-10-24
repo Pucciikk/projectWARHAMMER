@@ -14,6 +14,10 @@ public final class StoryFlags {
     public static final String PATH_MECHANICUS = "path_mechanicus";
     public static final String PATH_DARK_MECHANICUM = "path_dark_mechanicum";
 
+    /** Сезон 1: стапель освящён и корабль стартовал с верфи. */
+    public static final String SHIPYARD_FORMED = "shipyard_formed";
+    public static final String SHIP_LAUNCHED = "ship_launched";
+
     private StoryFlags() {
     }
 }

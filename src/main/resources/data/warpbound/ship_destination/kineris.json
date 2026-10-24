@@ -1,0 +1,8 @@
+{
+  "name": "destination.warpbound.kineris",
+  "dimension": "warpbound:kineris",
+  "landing": "surface",
+  "x": 0,
+  "z": 0,
+  "radius": 96
+}

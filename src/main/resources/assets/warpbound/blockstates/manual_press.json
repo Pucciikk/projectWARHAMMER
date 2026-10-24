@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "facing=north,strokes=0": {
+      "model": "warpbound:block/manual_press"
+    },
+    "facing=north,strokes=1": {
+      "model": "warpbound:block/manual_press_down"
+    },
+    "facing=north,strokes=2": {
+      "model": "warpbound:block/manual_press_down"
+    },
+    "facing=north,strokes=3": {
+      "model": "warpbound:block/manual_press_down"
+    },
+    "facing=north,strokes=4": {
+      "model": "warpbound:block/manual_press_down"
+    },
+    "facing=north,strokes=5": {
+      "model": "warpbound:block/manual_press_down"
+    },
+    "facing=north,strokes=6": {
+      "model": "warpbound:block/manual_press_down"
+    },
+    "facing=north,strokes=7": {
+      "model": "warpbound:block/manual_press_down"
+    },
+    "facing=east,strokes=0": {
+      "model": "warpbound:block/manual_press",
+      "y": 90
+    },
+    "facing=east,strokes=1": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 90
+    },
+    "facing=east,strokes=2": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 90
+    },
+    "facing=east,strokes=3": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 90
+    },
+    "facing=east,strokes=4": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 90
+    },
+    "facing=east,strokes=5": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 90
+    },
+    "facing=east,strokes=6": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 90
+    },
+    "facing=east,strokes=7": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 90
+    },
+    "facing=south,strokes=0": {
+      "model": "warpbound:block/manual_press",
+      "y": 180
+    },
+    "facing=south,strokes=1": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 180
+    },
+    "facing=south,strokes=2": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 180
+    },
+    "facing=south,strokes=3": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 180
+    },
+    "facing=south,strokes=4": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 180
+    },
+    "facing=south,strokes=5": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 180
+    },
+    "facing=south,strokes=6": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 180
+    },
+    "facing=south,strokes=7": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 180
+    },
+    "facing=west,strokes=0": {
+      "model": "warpbound:block/manual_press",
+      "y": 270
+    },
+    "facing=west,strokes=1": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 270
+    },
+    "facing=west,strokes=2": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 270
+    },
+    "facing=west,strokes=3": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 270
+    },
+    "facing=west,strokes=4": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 270
+    },
+    "facing=west,strokes=5": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 270
+    },
+    "facing=west,strokes=6": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 270
+    },
+    "facing=west,strokes=7": {
+      "model": "warpbound:block/manual_press_down",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "chapter": "warpbound:keel",
+  "x": 2,
+  "y": 1,
+  "parents": [
+    "warpbound:keel/plasteel"
+  ],
+  "criteria": [
+    {
+      "type": "crafted",
+      "item": "warpbound:shipyard_console",
+      "label": "Собрать пульт верфи"
+    }
+  ],
+  "title": "Стапель",
+  "description": "Схема стапеля оживает на экране пульта. Нужна рама из балок: пульт ставится лицом к себе, док уходит за него — 13 на 43 блока.",
+  "icon": "warpbound:capsule"
+}

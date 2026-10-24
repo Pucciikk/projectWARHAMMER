@@ -24,6 +24,17 @@ loom {
             sourceSet sourceSets.client
         }
     }
+
+    runs {
+        // ./gradlew runGametest — автотесты без игрока (сервер сам запускает тесты и выходит)
+        gametest {
+            server()
+            name "Game Test"
+            vmArg "-Dfabric-api.gametest"
+            vmArg "-Dfabric-api.gametest.report-file=${project.layout.buildDirectory.get()}/gametest/junit.xml"
+            runDir "build/gametest"
+        }
+    }
 }
 
 fabricApi {

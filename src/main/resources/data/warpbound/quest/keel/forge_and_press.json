@@ -1,0 +1,23 @@
+{
+  "chapter": "warpbound:keel",
+  "x": 0,
+  "y": 1,
+  "parents": [
+    "warpbound:chapter1/the_answer"
+  ],
+  "criteria": [
+    {
+      "type": "crafted",
+      "item": "warpbound:salvage_forge",
+      "label": "Сложить горн обломков"
+    },
+    {
+      "type": "crafted",
+      "item": "warpbound:manual_press",
+      "label": "Собрать ручной пресс"
+    }
+  ],
+  "title": "Горн и пресс",
+  "description": "Техножрец смотрит на обломки капсулы как на сокровищницу. «Плоть слаба, металл помнит», — шепчет он.\n\nВ горне обломков корабельная обшивка снова станет пласталью. Пресс превратит слитки в пластины и шестерни. Shift + ПКМ пустой рукой по прессу меняет штамп.",
+  "icon": "warpbound:fire_and_stone"
+}

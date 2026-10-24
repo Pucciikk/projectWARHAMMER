@@ -11,6 +11,11 @@ public final class WarpboundNetwork {
         PayloadTypeRegistry.playS2C().register(ShipStatePayload.TYPE, ShipStatePayload.STREAM_CODEC);
         PayloadTypeRegistry.playS2C().register(QuestDataPayload.TYPE, QuestDataPayload.STREAM_CODEC);
         PayloadTypeRegistry.playS2C().register(ProgressSyncPayload.TYPE, ProgressSyncPayload.STREAM_CODEC);
+        PayloadTypeRegistry.playS2C().register(MultiblockErrorsPayload.TYPE, MultiblockErrorsPayload.STREAM_CODEC);
+        PayloadTypeRegistry.playS2C().register(ShipyardStatePayload.TYPE, ShipyardStatePayload.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(QuestBookOpenedPayload.TYPE, QuestBookOpenedPayload.STREAM_CODEC);
+        PayloadTypeRegistry.playS2C().register(NavStatePayload.TYPE, NavStatePayload.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(ShipyardActionPayload.TYPE, ShipyardActionPayload.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(NavJumpPayload.TYPE, NavJumpPayload.STREAM_CODEC);
     }
 }

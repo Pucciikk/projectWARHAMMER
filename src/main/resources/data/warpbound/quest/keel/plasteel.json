@@ -1,0 +1,19 @@
+{
+  "chapter": "warpbound:keel",
+  "x": 1,
+  "y": 1,
+  "parents": [
+    "warpbound:keel/forge_and_press"
+  ],
+  "criteria": [
+    {
+      "type": "item",
+      "item": "warpbound:plasteel_plate",
+      "count": 8,
+      "label": "Пластальные пластины"
+    }
+  ],
+  "title": "Пласталь из пепла",
+  "description": "Переплавь обшивку капсулы и обломков. Когда лом кончится, сгодится пластальная шихта — долгий и дорогой путь.",
+  "icon": "warpbound:iron_and_copper"
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "warpbound:block/teleportarium_pad"
+    },
+    "facing=east": {
+      "model": "warpbound:block/teleportarium_pad",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "warpbound:block/teleportarium_pad",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "warpbound:block/teleportarium_pad",
+      "y": 270
+    }
+  }
+}

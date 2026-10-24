@@ -42,6 +42,11 @@
 python3 tools/textures/gen_ui.py      # текстуры книги квестов, иконки, кнопка, планшет
 python3 tools/textures/gen_items.py   # блоки, предметы, скины техножрецов
 python3 tools/dreadnought/gen.py [--dev]  # модель и текстуры дредноута (Pillow + numpy)
+python3 tools/shipyard/gen.py          # рама верфи, класс «Фрегат», части корабля (.nbt)
+python3 tools/textures/gen_shipyard.py  # текстуры верфи и ключа
+python3 tools/ship/gen_interior.py      # отсеки фрегата (.nbt) и раскладка интерьера
+python3 tools/textures/gen_industry.py  # текстуры горна, пресса, деталей и оборудования корабля
+./gradlew runGametest                 # автотесты без игрока (верфь и т. д.)
 ```
 
 Если Maven Central отвечает 429 — повторить с `--max-workers=1`.
@@ -65,6 +70,12 @@ src/main/java/dev/warpbound/
   network/              пакеты S2C/C2S (CustomPacketPayload)
   command/, config/     /wb …, config/warpbound.json
   mixin/                multipart-хитбоксы
+  multiblock/            каркас мультиблоков: шаблон в data/*/multiblock, проверка, освящение ключом, индекс защиты
+  shipyard/              верфь: этапы корабля (data/*/ship_class, structure/frigate/*.nbt), экран, старт
+  industry/              горн обломков (рецепты warpbound:salvaging), ручной пресс (data/*/pressing)
+  ship/                  + раскладка интерьера из отсеков (data/*/ship_layout, structure/interior), пункты назначения
+                         (data/*/ship_destination), навигация и телепортариум (ShipNavigation), оборудование отсеков (ship/block)
+  test/                  автотесты Fabric GameTest (./gradlew runGametest)
 src/client/java/dev/warpbound/client/
   quest/                QuestScreen (книга квестов), QuestKeys (клавиша J + кнопка-аквила в инвентаре), тосты
   start/                SlateScreen (экран инфопланшета)
@@ -86,6 +97,11 @@ src/main/resources/data/warpbound/
   - Шёпот Хаоса с третьего игрового дня; запечатанная вкладка Хаоса в книге.
   - Книга квестов в стиле Warhammer (аквила, черепа, печать чистоты, 10 иконок); 8 квестов главы.
   - Проверено в клиенте всё, кроме: осквернения знака целиком, первой ночи и шёпота вживую.
+
+- **Сезон 1, неделя 1 (24.10.2026, код):** каркас мультиблоков «Освящение машины» (шаблон, ошибки с подсветкой, ключ, защита),
+  верфь с шестью этапами фрегата и стартом, горн обломков, ручной пресс, интерьер фрегата v1 из 8 отсеков, навигационный стол,
+  телепортариум, телепорт-маяк, глава квестов «Киль». 7 автотестов GameTest. Внешний вид машин после освящения пока не меняется
+  (ждёт моделей автора); фрегат и текстуры — временные из скриптов.
 
 ## Ключевые решения (и почему)
 

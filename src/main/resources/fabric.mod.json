@@ -19,6 +19,11 @@
     ],
     "fabric-datagen": [
       "dev.warpbound.client.datagen.WarpboundDataGenerator"
+    ],
+    "fabric-gametest": [
+      "dev.warpbound.test.ShipyardGameTest",
+      "dev.warpbound.test.IndustryGameTest",
+      "dev.warpbound.test.ShipGameTest"
     ]
   },
   "depends": {
