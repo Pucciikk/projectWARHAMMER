@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "warpbound:hull_plating"
+  },
+  "result": {
+    "id": "warpbound:hull_plating_slab",
+    "count": 2
+  }
+}

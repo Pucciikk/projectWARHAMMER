@@ -61,6 +61,11 @@ public final class WarpSkyRenderer {
                 boltSeed = RANDOM.nextInt(1000);
             }
         }
+        // раскрытие разлома: молнии одна за другой
+        if (ClientShipState.entering() && RANDOM.nextFloat() < dt * 2.5f) {
+            flash = 0.8f + 0.2f * RANDOM.nextFloat();
+            boltSeed = RANDOM.nextInt(1000);
+        }
         flash *= (float) Math.exp(-dt * 3.5);
 
         // Только поворот камеры: перенос в положении неба не участвует
@@ -76,6 +81,11 @@ public final class WarpSkyRenderer {
         shader.safeGetUniform("uFlash").set(flash);
         shader.safeGetUniform("uSpeed").set(0.75f);
         shader.safeGetUniform("uBoltSeed").set(boltSeed);
+        float cruise = ClientShipState.cruise();
+        shader.safeGetUniform("uCruise").set(cruise);
+        // на орбите под кораблём планета; на ходу она уходит, в варпе её нет
+        shader.safeGetUniform("uPlanet").set(Math.max(0f, 1f - cruise * 0.9f) * (1f - eased));
+        shader.safeGetUniform("uPlanetColor").set(0.22f, 0.42f, 0.58f);
 
         RenderSystem.setShader(() -> shader);
         RenderSystem.depthMask(false);

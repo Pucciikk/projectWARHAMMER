@@ -1,0 +1,345 @@
+{
+  "shuttle.engine": {
+    "subtitle": "subtitles.warpbound.shuttle.engine",
+    "sounds": [
+      {
+        "name": "minecraft:item/elytra/elytra_loop",
+        "pitch": 0.55,
+        "volume": 1.0,
+        "attenuation_distance": 96
+      }
+    ]
+  },
+  "shuttle.roar": {
+    "subtitle": "subtitles.warpbound.shuttle.roar",
+    "sounds": [
+      {
+        "name": "minecraft:mob/breeze/whirl",
+        "pitch": 0.5,
+        "attenuation_distance": 128
+      },
+      {
+        "name": "minecraft:mob/ghast/fireball4",
+        "pitch": 0.5,
+        "attenuation_distance": 128
+      }
+    ]
+  },
+  "shuttle.touchdown": {
+    "subtitle": "subtitles.warpbound.shuttle.touchdown",
+    "sounds": [
+      {
+        "name": "minecraft:block/heavy_core/break1",
+        "pitch": 0.5
+      },
+      {
+        "name": "minecraft:block/heavy_core/break2",
+        "pitch": 0.5
+      }
+    ]
+  },
+  "capsule.release": {
+    "subtitle": "subtitles.warpbound.capsule.release",
+    "sounds": [
+      {
+        "name": "minecraft:tile/piston/out",
+        "pitch": 0.5
+      }
+    ]
+  },
+  "capsule.thrust": {
+    "subtitle": "subtitles.warpbound.capsule.thrust",
+    "sounds": [
+      {
+        "name": "minecraft:mob/blaze/breathe1",
+        "pitch": 0.6
+      },
+      {
+        "name": "minecraft:mob/blaze/breathe2",
+        "pitch": 0.6
+      }
+    ]
+  },
+  "capsule.open": {
+    "subtitle": "subtitles.warpbound.capsule.open",
+    "sounds": [
+      {
+        "name": "minecraft:block/trial_spawner/open_shutter",
+        "pitch": 0.6
+      },
+      {
+        "name": "minecraft:block/iron_door/open1",
+        "pitch": 0.5
+      }
+    ]
+  },
+  "warp.ritual": {
+    "subtitle": "subtitles.warpbound.warp.ritual",
+    "sounds": [
+      {
+        "name": "minecraft:mob/warden/sonic_charge1",
+        "pitch": 0.5,
+        "attenuation_distance": 48
+      }
+    ]
+  },
+  "warp.flame": {
+    "subtitle": "subtitles.warpbound.warp.flame",
+    "sounds": [
+      {
+        "name": "minecraft:fire/fire",
+        "pitch": 0.6
+      },
+      {
+        "name": "minecraft:block/respawn_anchor/ambient1",
+        "pitch": 0.7
+      },
+      {
+        "name": "minecraft:block/respawn_anchor/ambient2",
+        "pitch": 0.7
+      }
+    ]
+  },
+  "warp.whisper": {
+    "subtitle": "subtitles.warpbound.warp.whisper",
+    "sounds": [
+      {
+        "name": "minecraft:ambient/nether/soulsand_valley/whisper1",
+        "pitch": 0.8
+      },
+      {
+        "name": "minecraft:ambient/nether/soulsand_valley/whisper4",
+        "pitch": 0.8
+      },
+      {
+        "name": "minecraft:ambient/nether/soulsand_valley/voices2",
+        "pitch": 0.7
+      }
+    ]
+  },
+  "warp.burst": {
+    "subtitle": "subtitles.warpbound.warp.burst",
+    "sounds": [
+      {
+        "name": "minecraft:mob/warden/sonic_boom1",
+        "pitch": 0.6,
+        "attenuation_distance": 64
+      },
+      {
+        "name": "minecraft:mob/warden/sonic_boom2",
+        "pitch": 0.6,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "priest.step": {
+    "subtitle": "subtitles.warpbound.priest.step",
+    "sounds": [
+      {
+        "name": "minecraft:block/copper/step1",
+        "pitch": 0.75,
+        "volume": 0.8
+      },
+      {
+        "name": "minecraft:block/copper/step2",
+        "pitch": 0.75,
+        "volume": 0.8
+      },
+      {
+        "name": "minecraft:block/copper/step3",
+        "pitch": 0.75,
+        "volume": 0.8
+      },
+      {
+        "name": "minecraft:block/copper/step4",
+        "pitch": 0.75,
+        "volume": 0.8
+      },
+      {
+        "name": "minecraft:block/copper/step5",
+        "pitch": 0.75,
+        "volume": 0.8
+      },
+      {
+        "name": "minecraft:block/copper/step6",
+        "pitch": 0.75,
+        "volume": 0.8
+      }
+    ]
+  },
+  "priest.servo": {
+    "subtitle": "subtitles.warpbound.priest.servo",
+    "sounds": [
+      {
+        "name": "minecraft:block/crafter/craft",
+        "pitch": 1.5,
+        "volume": 0.5
+      },
+      {
+        "name": "minecraft:block/vault/insert",
+        "pitch": 1.5,
+        "volume": 0.5
+      }
+    ]
+  },
+  "priest.ambient": {
+    "subtitle": "subtitles.warpbound.priest.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:block/vault/ambient1",
+        "pitch": 1.3,
+        "volume": 0.7
+      },
+      {
+        "name": "minecraft:block/vault/ambient2",
+        "pitch": 1.3,
+        "volume": 0.7
+      },
+      {
+        "name": "minecraft:block/vault/ambient3",
+        "pitch": 1.3,
+        "volume": 0.7
+      },
+      {
+        "name": "minecraft:block/trial_spawner/ambient1",
+        "pitch": 1.3,
+        "volume": 0.7
+      }
+    ]
+  },
+  "priest.hurt": {
+    "subtitle": "subtitles.warpbound.priest.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:mob/irongolem/hit1",
+        "pitch": 1.3,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:mob/irongolem/hit2",
+        "pitch": 1.3,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:mob/irongolem/hit3",
+        "pitch": 1.3,
+        "volume": 1.0
+      }
+    ]
+  },
+  "dark_priest.step": {
+    "subtitle": "subtitles.warpbound.dark_priest.step",
+    "sounds": [
+      {
+        "name": "minecraft:mob/irongolem/walk1",
+        "pitch": 0.7,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:mob/irongolem/walk2",
+        "pitch": 0.7,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:mob/irongolem/walk3",
+        "pitch": 0.7,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:mob/irongolem/walk4",
+        "pitch": 0.7,
+        "volume": 1.0
+      }
+    ]
+  },
+  "dark_priest.flesh": {
+    "subtitle": "subtitles.warpbound.dark_priest.flesh",
+    "sounds": [
+      {
+        "name": "minecraft:block/mud/step1",
+        "pitch": 0.6,
+        "volume": 0.9
+      },
+      {
+        "name": "minecraft:block/mud/step3",
+        "pitch": 0.6,
+        "volume": 0.9
+      },
+      {
+        "name": "minecraft:block/honeyblock/slide1",
+        "pitch": 0.6,
+        "volume": 0.9
+      },
+      {
+        "name": "minecraft:block/honeyblock/slide3",
+        "pitch": 0.6,
+        "volume": 0.9
+      },
+      {
+        "name": "minecraft:mob/slime/big2",
+        "pitch": 0.6,
+        "volume": 0.9
+      }
+    ]
+  },
+  "dark_priest.servo": {
+    "subtitle": "subtitles.warpbound.dark_priest.servo",
+    "sounds": [
+      {
+        "name": "minecraft:block/crafter/craft",
+        "pitch": 0.6,
+        "volume": 0.8
+      },
+      {
+        "name": "minecraft:block/vault/insert",
+        "pitch": 0.6,
+        "volume": 0.8
+      }
+    ]
+  },
+  "dark_priest.ambient": {
+    "subtitle": "subtitles.warpbound.dark_priest.ambient",
+    "sounds": [
+      {
+        "name": "minecraft:mob/warden/heartbeat_1",
+        "pitch": 0.8,
+        "volume": 0.9
+      },
+      {
+        "name": "minecraft:mob/warden/heartbeat_2",
+        "pitch": 0.8,
+        "volume": 0.9
+      },
+      {
+        "name": "minecraft:ambient/nether/soulsand_valley/whisper2",
+        "pitch": 0.8,
+        "volume": 0.9
+      },
+      {
+        "name": "minecraft:ambient/nether/soulsand_valley/whisper5",
+        "pitch": 0.8,
+        "volume": 0.9
+      }
+    ]
+  },
+  "dark_priest.hurt": {
+    "subtitle": "subtitles.warpbound.dark_priest.hurt",
+    "sounds": [
+      {
+        "name": "minecraft:mob/irongolem/hit1",
+        "pitch": 0.7,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:mob/slime/big1",
+        "pitch": 0.7,
+        "volume": 1.0
+      },
+      {
+        "name": "minecraft:mob/slime/big3",
+        "pitch": 0.7,
+        "volume": 1.0
+      }
+    ]
+  }
+}

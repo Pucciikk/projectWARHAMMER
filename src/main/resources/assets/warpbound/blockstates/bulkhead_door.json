@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "warpbound:block/bulkhead_door"
+    }
+  }
+}

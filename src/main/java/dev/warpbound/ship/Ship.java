@@ -1,5 +1,6 @@
 package dev.warpbound.ship;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 
@@ -31,6 +32,29 @@ public class Ship {
     /** Переход сорван (пало Поле Геллера): выбросит не туда. */
     public boolean aborted;
 
+    // ---- системы корабля (см. ShipSystems): реактор, распределение мощности на Поле, радиация
+    /** Режим реактора: порядковый номер {@link ShipSystems.ReactorMode}. */
+    public int reactorMode = ShipSystems.ReactorMode.NORMAL.ordinal();
+    /** Нагрев реактора 0..1: выше 0,7 — утечка радиации в реакторный отсек. */
+    public float heat = 0.3f;
+    /** Доля мощности реактора на генераторы Поля Геллера 0..1. */
+    public float gellerPower = 0.75f;
+    /** Радиация в реакторном отсеке 0..1. */
+    public float radiation;
+    /** Перезарядка импульса Поля и промывки охладителя, тики. */
+    public int boostCooldown, flushCooldown;
+
+    // ---- корабль-постройка (вышел со стапеля, ShipLaunch): метки от центра участка
+    /** Куда ставить вошедших на борт (мостик); null — старые корабли с раскладкой отсеков. */
+    public BlockPos spawnRel;
+    /** Ядро реактора (радиация). */
+    public BlockPos reactorRel;
+    /** Иллюминаторы под бронеставни: позиции и исходные блоки. */
+    public long[] shutterPos = new long[0];
+    public int[] shutterStates = new int[0];
+    // ---- предстартовая подготовка (ShipFlight): двигатели, Поле Геллера, ставни
+    public boolean enginesOn, gellerOn, shuttersClosed;
+
     /** Раскладка интерьера (ship_layout); null — старый временный корпус v0. */
     public ResourceLocation layout;
 
@@ -55,6 +79,19 @@ public class Ship {
         tag.putFloat("field", field);
         tag.putFloat("storm", storm);
         if (layout != null) tag.putString("layout", layout.toString());
+        if (spawnRel != null) tag.putLong("spawnRel", spawnRel.asLong());
+        if (reactorRel != null) tag.putLong("reactorRel", reactorRel.asLong());
+        tag.putLongArray("shutterPos", shutterPos);
+        tag.putIntArray("shutterStates", shutterStates);
+        tag.putBoolean("enginesOn", enginesOn);
+        tag.putBoolean("gellerOn", gellerOn);
+        tag.putBoolean("shuttersClosed", shuttersClosed);
+        tag.putInt("reactorMode", reactorMode);
+        tag.putFloat("heat", heat);
+        tag.putFloat("gellerPower", gellerPower);
+        tag.putFloat("radiation", radiation);
+        tag.putInt("boostCooldown", boostCooldown);
+        tag.putInt("flushCooldown", flushCooldown);
         tag.putString("location", location.toString());
         if (destination != null) tag.putString("destination", destination.toString());
         if (dockDimension != null) {
@@ -78,6 +115,21 @@ public class Ship {
         ship.field = tag.getFloat("field");
         ship.storm = tag.getFloat("storm");
         if (tag.contains("layout")) ship.layout = ResourceLocation.tryParse(tag.getString("layout"));
+        if (tag.contains("spawnRel")) ship.spawnRel = BlockPos.of(tag.getLong("spawnRel"));
+        if (tag.contains("reactorRel")) ship.reactorRel = BlockPos.of(tag.getLong("reactorRel"));
+        ship.shutterPos = tag.getLongArray("shutterPos");
+        ship.shutterStates = tag.getIntArray("shutterStates");
+        ship.enginesOn = tag.getBoolean("enginesOn");
+        ship.gellerOn = tag.getBoolean("gellerOn");
+        ship.shuttersClosed = tag.getBoolean("shuttersClosed");
+        if (tag.contains("reactorMode")) {
+            ship.reactorMode = tag.getInt("reactorMode");
+            ship.heat = tag.getFloat("heat");
+            ship.gellerPower = tag.getFloat("gellerPower");
+            ship.radiation = tag.getFloat("radiation");
+            ship.boostCooldown = tag.getInt("boostCooldown");
+            ship.flushCooldown = tag.getInt("flushCooldown");
+        }
         if (tag.contains("location")) ship.location = ResourceLocation.tryParse(tag.getString("location"));
         if (ship.location == null) ship.location = ShipDestination.HOME;
         if (tag.contains("destination")) ship.destination = ResourceLocation.tryParse(tag.getString("destination"));

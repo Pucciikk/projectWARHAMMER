@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "warpbound:block/vox_grille"
+    },
+    "facing=east": {
+      "model": "warpbound:block/vox_grille",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "warpbound:block/vox_grille",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "warpbound:block/vox_grille",
+      "y": 270
+    }
+  }
+}

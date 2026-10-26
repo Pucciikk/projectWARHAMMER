@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Пиксель-арт предметов, блоков и техножрецов для главы 1.
+Пиксель-арт предметов и блоков для главы 1.
 
     python3 tools/textures/gen_items.py
 
-Блоки и предметы — 16x16, скины техножрецов — 64x64 в раскладке скина игрока.
+Блоки и предметы — 16x16. Модели и текстуры техножрецов — tools/models/gen_entities.py.
 Знак Омниссии берёт рисунок иконки квеста «Ответ» из gen_ui.py.
 """
 import math
@@ -217,76 +217,6 @@ def schematic(paper, ink, mark):
     return c.img()
 
 
-# ------------------------------------------------------------------ техножрецы
-
-def skin(robe, trim, metal, eye):
-    c = Canvas(64, 64)
-    robe_d = shade(robe, 0.7)
-
-    def box(u, v, w, h, d, fill):
-        """Заливка развёртки куба w x h x d с UV-углом (u, v), как у скина игрока."""
-        for (x0, y0, ww, hh) in ((u + d, v, w, d), (u + d + w, v, w, d), (u, v + d, d, h),
-                                 (u + d, v + d, w, h), (u + d + w, v + d, d, h), (u + d + w + d, v + d, w, h)):
-            for y in range(y0, y0 + hh):
-                for x in range(x0, x0 + ww):
-                    fill(c, x, y, x - x0, y - y0, ww, hh)
-
-    def robe_fill(cv, x, y, lx, ly, w, h):
-        col = robe_d if lx % 3 == 1 else robe
-        cv.px(x, y, shade(col, 1 + rng.uniform(-0.06, 0.06)))
-
-    # голова: капюшон, лицо в тени
-    box(0, 0, 8, 8, 8, robe_fill)
-    c.rect(8, 8, 15, 15, (20, 16, 16))
-    c.rect(9, 12, 14, 15, metal)
-    for x in range(9, 15):
-        if x % 2 == 0:
-            c.px(x, 13, shade(metal, 0.5))
-            c.px(x, 14, shade(metal, 0.5))
-    c.px(10, 11, eye)
-    c.px(13, 11, eye)
-    # кайма капюшона на слое шляпы
-    for x in range(40, 48):
-        c.px(x, 8, trim)
-    for y in range(8, 16):
-        c.px(40, y, trim)
-        c.px(47, y, trim)
-    box(32, 0, 8, 8, 8, lambda cv, x, y, lx, ly, w, h: cv.px(x, y, robe) if not (40 <= x < 48 and 8 <= y < 16) else None)
-    for y in range(9, 16):
-        for x in range(41, 47):
-            c.px(x, y, (0, 0, 0), 0)
-    # тело
-    box(16, 16, 8, 12, 4, robe_fill)
-    c.rect(20, 26, 27, 27, (30, 26, 24))
-    c.rect(23, 26, 24, 27, trim)
-    for (x, y) in ((23, 21), (24, 21), (22, 22), (25, 22), (22, 23), (25, 23), (23, 24), (24, 24)):
-        c.px(x, y, trim)
-    c.px(23, 22, metal)
-    c.px(24, 23, metal)
-    # руки: рукава и металлические кисти
-    for (u, v) in ((40, 16), (32, 48)):
-        box(u, v, 4, 12, 4, robe_fill)
-        for y in range(v + 13, v + 16):
-            for x in range(u, u + 16):
-                c.px(x, y, shade(metal, 1 + rng.uniform(-0.1, 0.1)))
-        for x in range(u, u + 16):
-            c.px(x, v + 12, trim)
-    # ноги: подол и сапоги
-    for (u, v) in ((0, 16), (16, 48)):
-        box(u, v, 4, 12, 4, robe_fill)
-        for y in range(v + 13, v + 16):
-            for x in range(u, u + 16):
-                c.px(x, y, (26, 22, 22))
-    return c.img()
-
-
-def eyes(eye):
-    c = Canvas(64, 64)
-    c.px(10, 11, eye)
-    c.px(13, 11, eye)
-    return c.img()
-
-
 if __name__ == "__main__":
     print("Блоки:")
     save(hull((70, 74, 82), (40, 42, 48), (150, 154, 160)), "block", "hull_plating.png")
@@ -304,8 +234,3 @@ if __name__ == "__main__":
     save(from_icon(gen_ui.ic_answer), "item", "omnissiah_sigil.png")
     save(schematic((200, 190, 150), (40, 60, 120), (170, 30, 30)), "item", "forge_schematic.png")
     save(schematic((70, 60, 70), (150, 60, 170), (190, 30, 60)), "item", "obelisk_schematic.png")
-    print("Техножрецы:")
-    save(skin((132, 24, 22), (201, 162, 39), (120, 124, 132), (80, 255, 120)), "entity", "tech_priest.png")
-    save(eyes((80, 255, 120)), "entity", "tech_priest_eyes.png")
-    save(skin((34, 28, 38), (120, 40, 150), (90, 80, 70), (255, 50, 40)), "entity", "dark_tech_priest.png")
-    save(eyes((255, 50, 40)), "entity", "dark_tech_priest_eyes.png")

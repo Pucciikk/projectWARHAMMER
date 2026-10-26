@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "warpbound:plasteel_panel"
+  },
+  "result": {
+    "id": "warpbound:plasteel_panel_slab",
+    "count": 2
+  }
+}

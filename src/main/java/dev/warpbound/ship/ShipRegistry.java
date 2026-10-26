@@ -43,6 +43,12 @@ public class ShipRegistry extends SavedData {
         return byPlot.values().stream().filter(s -> s.owner.equals(owner)).findFirst();
     }
 
+    /** Забыть корабль (отладка: заново построить и вывести в космос). Его участок не переиспользуется. */
+    public void remove(Ship ship) {
+        byPlot.remove(ship.plot);
+        setDirty();
+    }
+
     public Collection<Ship> all() {
         return byPlot.values();
     }

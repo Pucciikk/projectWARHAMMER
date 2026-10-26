@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "warpbound:hull_plating"
+    }
+  },
+  "result": {
+    "id": "warpbound:hull_plating_slab",
+    "count": 6
+  }
+}

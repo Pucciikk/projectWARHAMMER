@@ -1,0 +1,19 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "warpbound:block/mechanicus_forge"
+  },
+  "facing=east": {
+   "model": "warpbound:block/mechanicus_forge",
+   "y": 90
+  },
+  "facing=south": {
+   "model": "warpbound:block/mechanicus_forge",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "warpbound:block/mechanicus_forge",
+   "y": 270
+  }
+ }
+}

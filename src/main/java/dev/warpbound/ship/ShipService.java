@@ -17,8 +17,8 @@ import java.util.Optional;
 
 /** Операции над кораблями: создание, вход, выход, запуск перехода. */
 public final class ShipService {
-    /** В Сезоне 1 все корабли — фрегаты. */
-    public static final ResourceLocation DEFAULT_LAYOUT = Warpbound.id("frigate");
+    /** Корабль Сезона 1 — лёгкий крейсер типа «Неустрашимый» (раскладка отсеков — tools/ship/gen_interior.py). */
+    public static final ResourceLocation DEFAULT_LAYOUT = Warpbound.id("light_cruiser");
 
     private ShipService() {
     }
@@ -39,6 +39,20 @@ public final class ShipService {
         }
         registry.setDirty();
         return ship;
+    }
+
+    /** Перестроить интерьер по текущей раскладке (смена класса корабля, отладка): участок очищается и собирается заново. */
+    public static boolean rebuildInterior(MinecraftServer server, Ship ship) {
+        ServerLevel interior = ShipInteriors.level(server);
+        if (interior == null) return false;
+        BlockPos o = ShipInteriors.origin(ship.plot);
+        for (BlockPos p : BlockPos.betweenClosed(o.offset(-24, -2, -60), o.offset(24, 16, 40))) {
+            if (!interior.getBlockState(p).isAir()) interior.setBlock(p, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), 2 | 16);
+        }
+        if (!ShipInteriors.buildFromLayout(interior, ship.plot, DEFAULT_LAYOUT)) return false;
+        ship.layout = DEFAULT_LAYOUT;
+        ShipRegistry.get(server).setDirty();
+        return true;
     }
 
     private static void setDock(Ship ship, ServerPlayer player) {
@@ -110,7 +124,8 @@ public final class ShipService {
 
     public static ShipStatePayload payload(Ship ship) {
         float progress = Math.min(1f, ship.stateTicks / (float) durationTicks(ship));
-        return new ShipStatePayload(true, ship.state.ordinal(), progress, ship.field, ship.storm);
+        int flight = (ship.enginesOn ? 1 : 0) | (ship.gellerOn ? 2 : 0) | (ship.shuttersClosed ? 4 : 0);
+        return new ShipStatePayload(true, ship.state.ordinal(), progress, ship.field, ship.storm, flight);
     }
 
     public static void sync(ServerPlayer player) {

@@ -4,7 +4,12 @@ import com.mojang.logging.LogUtils;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.BackupConfirmScreen;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.AccessibilityOnboardingScreen;
@@ -35,6 +40,8 @@ import java.util.Locale;
  *   hud on|off           показать/скрыть интерфейс
  *   clearchat            очистить чат, чтобы не закрывал кадр
  *   shot &lt;имя&gt;           скриншот в run/screenshots/autotest/&lt;сценарий&gt;/&lt;имя&gt;.png
+ *   press &lt;текст&gt;        нажать кнопку открытого экрана мода с этим текстом
+ *   close                закрыть открытый экран
  *   log &lt;текст&gt;          записать строку в лог
  *   quit                 выйти из игры (иначе выходим после последней строки)
  *   # ...                комментарий
@@ -88,6 +95,17 @@ public final class Autotest {
 
         // Первый экран (титульный или знакомство со специальными возможностями) — сразу в тестовый мир
         ScreenEvents.AFTER_INIT.register((client, screen, width, height) -> {
+            // Измерение интерьеров корабля делает мир «экспериментальным» — подтверждаем загрузку без резервной копии
+            if (screen instanceof BackupConfirmScreen) {
+                for (AbstractWidget widget : Screens.getButtons(screen)) {
+                    if (widget instanceof Button button && button.getMessage().getContents()
+                            instanceof TranslatableContents tr && tr.getKey().equals("selectWorld.backupJoinSkipButton")) {
+                        log("Мир экспериментальный — подтверждаю загрузку");
+                        client.execute(button::onPress);
+                    }
+                }
+                return;
+            }
             if (worldRequested) return;
             if (screen instanceof TitleScreen || screen instanceof AccessibilityOnboardingScreen) {
                 worldRequested = true;
@@ -112,7 +130,9 @@ public final class Autotest {
             quit(mc);
             return;
         }
-        if (mc.player == null || mc.level == null || mc.screen != null) return;
+        // экраны мода (пульт, книга квестов) сценарий снимает и нажимает в них кнопки; чужие — ждёт
+        boolean ownScreen = mc.screen != null && mc.screen.getClass().getName().startsWith("dev.warpbound.client");
+        if (mc.player == null || mc.level == null || mc.screen != null && !ownScreen) return;
         if (!started) {
             started = true;
             waitTicks = SETTLE_TICKS;
@@ -136,6 +156,8 @@ public final class Autotest {
         try {
             switch (parts[0].toLowerCase(Locale.ROOT)) {
                 case "wait" -> waitTicks = Math.max(1, Integer.parseInt(arg));
+                case "press" -> press(mc, arg);
+                case "close" -> mc.setScreen(null);
                 case "cmd" -> command(mc, arg.startsWith("/") ? arg.substring(1) : arg);
                 case "look" -> {
                     String[] angles = arg.split("\\s+");
@@ -170,6 +192,22 @@ public final class Autotest {
             if (player == null) return;
             server.getCommands().performPrefixedCommand(player.createCommandSourceStack().withPermission(4), command);
         });
+    }
+
+    /** Нажать кнопку открытого экрана, в надписи которой есть текст. */
+    private static void press(Minecraft mc, String text) {
+        if (mc.screen == null) {
+            log("press: экран не открыт");
+            return;
+        }
+        for (AbstractWidget w : Screens.getButtons(mc.screen)) {
+            if (w instanceof net.minecraft.client.gui.components.Button b && b.getMessage().getString().contains(text)) {
+                b.onPress();
+                log("нажата кнопка «" + b.getMessage().getString() + "»");
+                return;
+            }
+        }
+        log("press: нет кнопки «" + text + "»");
     }
 
     private static void screenshot(Minecraft mc, String name) {

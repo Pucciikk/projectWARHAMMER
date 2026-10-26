@@ -17,5 +17,7 @@ public final class WarpboundNetwork {
         PayloadTypeRegistry.playS2C().register(NavStatePayload.TYPE, NavStatePayload.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(ShipyardActionPayload.TYPE, ShipyardActionPayload.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(NavJumpPayload.TYPE, NavJumpPayload.STREAM_CODEC);
+        PayloadTypeRegistry.playS2C().register(ShipConsolePayload.TYPE, ShipConsolePayload.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(ShipConsoleActionPayload.TYPE, ShipConsoleActionPayload.STREAM_CODEC);
     }
 }

@@ -75,6 +75,17 @@ public final class ShipNavigation {
         if (ship == null || !isCrew(player, ship) || ship.state != ShipState.ORBIT) return;
         var dest = ShipDestination.REGISTRY.get(target).orElse(null);
         if (dest == null || dest.level(player.server).isEmpty()) return;
+        if (ship.spawnRel != null) {
+            // корабль-постройка: курс только прокладывается, переход открывает капитан с пульта (вкладка «Полёт»)
+            if (target.equals(ship.location)) return;
+            ship.destination = target;
+            ShipRegistry.get(player.server).setDirty();
+            for (ServerPlayer p : ShipService.crew(player.server, ship)) {
+                p.displayClientMessage(Component.translatable("flight.warpbound.course_plotted", Component.translatable(dest.name()))
+                        .withStyle(ChatFormatting.GOLD), false);
+            }
+            return;
+        }
         if (!plotCourse(ship, target)) return;
         ShipRegistry.get(player.server).setDirty();
         for (ServerPlayer p : ShipService.crew(player.server, ship)) {

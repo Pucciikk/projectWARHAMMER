@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "warpbound:ash_stone_bricks"
+  },
+  "result": {
+    "id": "warpbound:ash_stone_brick_stairs",
+    "count": 1
+  }
+}

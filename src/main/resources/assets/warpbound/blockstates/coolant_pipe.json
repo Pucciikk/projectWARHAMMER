@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "warpbound:block/coolant_pipe"
+    },
+    "axis=z": {
+      "model": "warpbound:block/coolant_pipe_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "warpbound:block/coolant_pipe_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "compartments": [
+    {
+      "structure": "warpbound:interior/cruiser/engine_room",
+      "offset": [
+        -7,
+        0,
+        -47
+      ]
+    },
+    {
+      "structure": "warpbound:interior/cruiser/reactor_room",
+      "offset": [
+        -8,
+        0,
+        -36
+      ]
+    },
+    {
+      "structure": "warpbound:interior/cruiser/spine",
+      "offset": [
+        -3,
+        0,
+        -21
+      ]
+    },
+    {
+      "structure": "warpbound:interior/cruiser/geller_port",
+      "offset": [
+        -14,
+        0,
+        -21
+      ]
+    },
+    {
+      "structure": "warpbound:interior/cruiser/geller_star",
+      "offset": [
+        4,
+        0,
+        -21
+      ]
+    },
+    {
+      "structure": "warpbound:interior/cruiser/quarters",
+      "offset": [
+        -14,
+        0,
+        -10
+      ]
+    },
+    {
+      "structure": "warpbound:interior/cruiser/cargo",
+      "offset": [
+        4,
+        0,
+        -10
+      ]
+    },
+    {
+      "structure": "warpbound:interior/cruiser/teleportarium",
+      "offset": [
+        -12,
+        0,
+        0
+      ]
+    },
+    {
+      "structure": "warpbound:interior/cruiser/chapel",
+      "offset": [
+        4,
+        0,
+        0
+      ]
+    },
+    {
+      "structure": "warpbound:interior/cruiser/bridge",
+      "offset": [
+        -10,
+        0,
+        10
+      ]
+    }
+  ],
+  "spawn": [
+    0,
+    1,
+    -6
+  ],
+  "reactor": [
+    0,
+    1,
+    -29
+  ]
+}

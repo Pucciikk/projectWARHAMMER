@@ -43,16 +43,22 @@ public final class ShipTicker {
         ShipRegistry registry = ShipRegistry.get(server);
         boolean dirty = false;
         for (Ship ship : registry.all()) {
+            ShipSystems.tick(server, ship);
+            ShipFlight.tick(server, ship);
+            if (server.getTickCount() % 20 == 0) {
+                for (ServerPlayer p : ShipService.crew(server, ship)) ServerPlayNetworking.send(p, ShipService.payload(ship));
+            }
             if (ship.state == ShipState.ORBIT) {
-                // На орбите генератор Поля потихоньку подзаряжается
+                // На орбите генератор Поля подзаряжается — тем быстрее, чем больше мощности реактора отдано Полю
                 if (ship.field < 1f) {
-                    ship.field = Math.min(1f, ship.field + WarpboundConfig.get().fieldRechargePerMinute / 1200f);
-                    dirty = true;
+                    ship.field = Math.min(1f, ship.field + WarpboundConfig.get().fieldRechargePerMinute / 1200f
+                            * (0.4f + 1.2f * ShipSystems.fieldSupply(ship)));
                 }
+                dirty = true;
                 continue;
             }
             dirty = true;
-            ship.stateTicks++;
+            ship.stateTicks += ShipSystems.transitStep(ship);
             boolean changed = false;
 
             if (ship.state == ShipState.TRANSIT) {
@@ -107,7 +113,9 @@ public final class ShipTicker {
 
     private static void tickTransit(MinecraftServer server, Ship ship) {
         WarpboundConfig cfg = WarpboundConfig.get();
-        float drain = cfg.fieldDrainPerMinute / 1200f * (1f + ship.storm * (cfg.stormDrainMultiplier - 1f));
+        // питание от реактора тормозит просадку Поля: без питания оно тает в полтора раза быстрее
+        float drain = cfg.fieldDrainPerMinute / 1200f * (1f + ship.storm * (cfg.stormDrainMultiplier - 1f))
+                * (1.5f - ShipSystems.fieldSupply(ship));
         ship.field = Math.max(0f, ship.field - drain);
 
         if (ship.field <= 0f) {

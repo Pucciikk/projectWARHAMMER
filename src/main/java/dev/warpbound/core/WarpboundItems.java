@@ -56,8 +56,13 @@ public final class WarpboundItems {
                         out.accept(WarpboundBlocks.GELLER_NODE);
                         out.accept(WarpboundBlocks.REACTOR_CORE);
                         out.accept(WarpboundBlocks.TELEPORTARIUM_PAD);
+                        out.accept(WarpboundBlocks.COMMAND_THRONE);
+                        out.accept(WarpboundBlocks.COMMAND_CONSOLE);
                         out.accept(WarpboundBlocks.SALVAGE_FORGE);
                         out.accept(WarpboundBlocks.MANUAL_PRESS);
+                        out.accept(WarpboundBlocks.MECHANICUS_FORGE);
+                        WarpboundBuildingBlocks.ALL.forEach(out::accept);
+                        WarpboundBuildingBlocks.ITEMS.forEach(out::accept);
                         out.accept(PLASTEEL_INGOT);
                         out.accept(PLASTEEL_BLEND);
                         out.accept(BRASS_INGOT);
@@ -74,6 +79,12 @@ public final class WarpboundItems {
                         out.accept(WarpboundEntities.TECH_PRIEST_SPAWN_EGG);
                         out.accept(WarpboundEntities.DARK_TECH_PRIEST_SPAWN_EGG);
                         out.accept(WarpboundEntities.DREADNOUGHT_SPAWN_EGG);
+                        out.accept(WarpboundEntities.SERVITOR_SPAWN_EGG);
+                        out.accept(WarpboundEntities.CULTIST_SPAWN_EGG);
+                        out.accept(WarpboundEntities.BLOODLETTER_SPAWN_EGG);
+                        out.accept(WarpboundEntities.PINK_HORROR_SPAWN_EGG);
+                        out.accept(WarpboundEntities.BLUE_HORROR_SPAWN_EGG);
+                        out.accept(WarpboundEntities.POSSESSED_PRIEST_SPAWN_EGG);
                     })
                     .build());
 

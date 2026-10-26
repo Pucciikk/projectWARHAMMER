@@ -17,6 +17,8 @@ public final class StoryFlags {
     /** Сезон 1: стапель освящён и корабль стартовал с верфи. */
     public static final String SHIPYARD_FORMED = "shipyard_formed";
     public static final String SHIP_LAUNCHED = "ship_launched";
+    /** Кузня Механикус освящена (глава 2; награда — Знак Омниссии). */
+    public static final String MECHANICUS_FORGE_BUILT = "mechanicus_forge_built";
 
     private StoryFlags() {
     }

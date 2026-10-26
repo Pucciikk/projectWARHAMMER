@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "warpbound:block/cogitator_bank_front",
+    "side": "warpbound:block/cogitator_bank_side",
+    "top": "warpbound:block/plasteel_panel"
+  }
+}

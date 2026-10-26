@@ -12,6 +12,9 @@ uniform float uEnter;  // 0 = обычный космос, 1 = варп
 uniform float uFlash;  // вспышка молнии 0..1
 uniform float uSpeed;  // скорость прокрутки туннеля
 uniform float uBoltSeed; // форма большой молнии
+uniform float uCruise;  // ход корабля на двигателях 0..1: звёзды текут от носа к корме
+uniform float uPlanet;  // планета под кораблём 0..1 (1 — на низкой орбите, 0 — ушла)
+uniform vec3 uPlanetColor;
 
 in vec2 vNdc;
 out vec4 fragColor;
@@ -44,13 +47,13 @@ float fbm(vec2 p, float per) {
 vec3 space(vec2 p, float r, float a) {
   // Звёзды в полярной сетке: при входе в варп вытягиваются в лучи
   float per = 90.0;
-  vec2 g = vec2(a / 6.2831853 * per, log(r + 0.001) * 14.0 - uTime * 6.0 * uEnter * uEnter);
+  vec2 g = vec2(a / 6.2831853 * per, log(r + 0.001) * 14.0 - uTime * (6.0 * uEnter * uEnter + 2.2 * uCruise));
   vec2 id = floor(g); vec2 f = fract(g) - 0.5;
   id.x = mod(id.x, per);
   float h = hash(id);
   vec2 off = (vec2(hash(id + 3.1), hash(id + 7.7)) - 0.5) * 0.6;
   vec2 d = f - off;
-  d.y /= 1.0 + uEnter * 30.0;
+  d.y /= 1.0 + uEnter * 30.0 + uCruise * 5.0;
   float star = smoothstep(0.09, 0.0, length(d)) * step(0.88, h);
   star *= smoothstep(0.02, 0.25, r);
   vec3 col = vec3(0.004, 0.004, 0.012) + vec3(0.9, 0.92, 1.0) * star * (0.5 + 0.5 * hash(id + 1.3));
@@ -192,10 +195,30 @@ vec3 warp(vec2 p, float r, float a) {
   return col;
 }
 
+// Планета под кораблём: шар с терминатором, облаками и голубой каймой атмосферы
+vec3 planet(vec2 p, vec3 col) {
+  if (uPlanet < 0.01) return col;
+  vec2 c = vec2(0.0, -0.95);
+  float R = 0.75 * uPlanet;
+  vec2 q = (p - c) / R;
+  float d = length(q);
+  float glowRim = smoothstep(1.12, 1.0, d) * smoothstep(0.9, 1.0, d);
+  if (d < 1.0) {
+    float z = sqrt(1.0 - d * d);
+    vec3 n = vec3(q, z);
+    float light = clamp(dot(n, normalize(vec3(-0.6, 0.5, 0.6))), 0.0, 1.0);
+    float clouds = smoothstep(0.55, 0.75, fbm(q * 3.0 + vec2(uTime * 0.004, 0.0), 1000.0));
+    vec3 surf = mix(uPlanetColor * (0.6 + 0.6 * fbm(q * 5.0, 1000.0)), vec3(0.9), clouds * 0.7);
+    col = surf * (0.06 + 0.94 * light);
+  }
+  col += vec3(0.35, 0.6, 1.0) * glowRim * 0.8;
+  return col;
+}
+
 vec3 scene(vec2 p) {
   float r = length(p);
   float a = atan(p.y, p.x);
-  vec3 col = space(p, r, a);
+  vec3 col = planet(p, space(p, r, a));
   if (uEnter > 0.001) {
     // Разрыв пространства раскрывается из центра рваным краем
     float edge = uEnter * 1.9;

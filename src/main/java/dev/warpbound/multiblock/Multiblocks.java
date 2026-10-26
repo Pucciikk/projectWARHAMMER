@@ -34,17 +34,17 @@ public final class Multiblocks {
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> MEMBERS.clear());
 
         ServerBlockEntityEvents.BLOCK_ENTITY_LOAD.register((be, level) -> {
-            if (be instanceof MultiblockCoreBlockEntity core && core.isFormed()) index(level, be.getBlockPos(), core.protectedPositions());
+            if (be instanceof MultiblockHost core && core.isFormed()) index(level, be.getBlockPos(), core.protectedPositions());
         });
         ServerBlockEntityEvents.BLOCK_ENTITY_UNLOAD.register((be, level) -> {
-            if (be instanceof MultiblockCoreBlockEntity core) unindex(level, be.getBlockPos(), core.protectedPositions());
+            if (be instanceof MultiblockHost core) unindex(level, be.getBlockPos(), core.protectedPositions());
         });
 
         // Собранную машину не разобрать киркой: только ключом
         PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, be) -> {
             if (player.isCreative() && player.isShiftKeyDown()) return true;
             boolean protectedPart = coreOf(level, pos).isPresent()
-                    || be instanceof MultiblockCoreBlockEntity core && core.isFormed();
+                    || be instanceof MultiblockHost core && core.isFormed();
             if (!protectedPart) return true;
             player.displayClientMessage(Component.translatable("multiblock.warpbound.use_key")
                     .withStyle(ChatFormatting.GOLD), true);

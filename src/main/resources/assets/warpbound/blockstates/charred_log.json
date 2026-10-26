@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "warpbound:block/charred_log"
+    },
+    "axis=z": {
+      "model": "warpbound:block/charred_log_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "warpbound:block/charred_log_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

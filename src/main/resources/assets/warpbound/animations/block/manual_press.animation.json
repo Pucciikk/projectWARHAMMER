@@ -1,0 +1,58 @@
+{
+ "format_version": "1.8.0",
+ "animations": {
+  "misc.idle": {
+   "animation_length": 3.0,
+   "bones": {},
+   "loop": true
+  },
+  "work.strike": {
+   "animation_length": 0.7,
+   "bones": {
+    "ram": {
+     "position": {
+      "0": [
+       0,
+       0,
+       0
+      ],
+      "0.18": [
+       0,
+       -7.5,
+       0
+      ],
+      "0.24": [
+       0,
+       -7,
+       0
+      ],
+      "0.7": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    "screw": {
+     "rotation": {
+      "0": [
+       0,
+       0,
+       0
+      ],
+      "0.18": [
+       0,
+       120,
+       0
+      ],
+      "0.7": [
+       0,
+       0,
+       0
+      ]
+     }
+    }
+   }
+  }
+ }
+}

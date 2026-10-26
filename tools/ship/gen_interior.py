@@ -36,6 +36,8 @@ GRATE = "minecraft:iron_bars"
 CANDLE = "minecraft:candle[candles=3,lit=true]"
 CARPET = "minecraft:red_carpet"
 AIR = "minecraft:air"
+# невидимая часть крупного оборудования: модель рисует ядро, клетки вокруг заняты частями
+PART = "warpbound:fixture_part"
 
 
 class Room:
@@ -95,6 +97,8 @@ def stern():
     for x in range(2, 11):
         r.put(x, 4, 1, WALL2)
     r.put(6, 1, 4, "warpbound:geller_node[facing=south]")
+    r.put(6, 2, 4, PART)   # генератор Геллера — колонна в 3 блока
+    r.put(6, 3, 4, PART)
     return r
 
 
@@ -103,8 +107,12 @@ def reactor():
     r.shell()
     r.door("stern", 5)
     r.door("bow", 5)
+    # реактор 3×3×4: ядро внизу в центре, вокруг — части
+    for x in (4, 5, 6):
+        for y in (1, 2, 3, 4):
+            for z in (2, 3, 4):
+                r.put(x, y, z, PART)
     r.put(5, 1, 3, "warpbound:reactor_core[facing=south]")
-    r.put(5, 2, 3, "warpbound:reactor_core[facing=south]")
     for x, z in ((3, 2), (7, 2), (3, 4), (7, 4)):
         r.put(x, 1, z, GRATE)
         r.put(x, 2, z, GRATE)
@@ -130,8 +138,10 @@ def geller_room(name):
     r.shell()
     r.door("star" if name.endswith("port") else "port", 3)
     for z in (1, 3, 5):
-        r.put(1 if name.endswith("port") else 5, 1, z, "warpbound:geller_node[facing=east]" if name.endswith("port")
-              else "warpbound:geller_node[facing=west]")
+        x = 1 if name.endswith("port") else 5
+        r.put(x, 1, z, "warpbound:geller_node[facing=east]" if name.endswith("port") else "warpbound:geller_node[facing=west]")
+        r.put(x, 2, z, PART)
+        r.put(x, 3, z, PART)
     r.portholes("port" if name.endswith("port") else "star", every=3)
     return r
 
@@ -157,9 +167,10 @@ def teleportarium():
     r = Room("teleportarium", 7, 6, 7)
     r.shell()
     r.door("star", 3)
-    for x in (2, 4):
-        for z in (2, 4):
-            r.put(x, 0, z, "warpbound:teleportarium_pad[facing=south]")
+    # площадка 3×3 в полу: ядро в центре, вокруг — части
+    for x in (2, 3, 4):
+        for z in (2, 3, 4):
+            r.put(x, 0, z, PART)
     r.put(3, 0, 3, "warpbound:teleportarium_pad[facing=south]")
     for x, z in ((1, 1), (5, 1), (1, 5), (5, 5)):
         r.put(x, 1, z, GRATE)
@@ -182,9 +193,15 @@ def bridge():
         for z in range(3, 7):
             r.put(x, 1, z, "minecraft:polished_deepslate_slab[type=bottom]")
     r.put(7, 1, 4, "minecraft:polished_blackstone_stairs[facing=south]")
+    # навигационный стол 3×2, ауспики в 2 блока высотой
+    for x in (6, 7, 8):
+        for z in (9, 10):
+            r.put(x, 1, z, PART)
     r.put(7, 1, 9, "warpbound:nav_table[facing=north]")
     r.put(4, 1, 10, "warpbound:auspex[facing=east]")
+    r.put(4, 2, 10, PART)
     r.put(10, 1, 10, "warpbound:auspex[facing=west]")
+    r.put(10, 2, 10, PART)
     for z in range(1, 13):
         r.put(7, 0, z, CARPET.replace("carpet", "concrete"))
     return r

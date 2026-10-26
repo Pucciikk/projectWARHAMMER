@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "warpbound:block/geller_conduit_end",
+    "side": "warpbound:block/geller_conduit"
+  }
+}

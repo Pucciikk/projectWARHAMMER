@@ -20,17 +20,17 @@ public class OmnissianKeyItem extends TooltipItem {
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
-        boolean coreClicked = level.getBlockEntity(pos) instanceof MultiblockCoreBlockEntity;
+        boolean coreClicked = level.getBlockEntity(pos) instanceof MultiblockHost;
         BlockPos corePos = coreClicked ? pos : Multiblocks.coreOf(level, pos).orElse(null);
         if (corePos == null) return InteractionResult.PASS;
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
-        if (!(level.getBlockEntity(corePos) instanceof MultiblockCoreBlockEntity core)
+        if (!(level.getBlockEntity(corePos) instanceof MultiblockHost core)
                 || !(context.getPlayer() instanceof ServerPlayer player)) return InteractionResult.PASS;
         if (player.isShiftKeyDown()) {
-            core.unform(player);
+            core.multiblock().unform(player);
         } else if (coreClicked) {
-            core.tryForm(player);
+            core.multiblock().tryForm(player);
         } else {
             return InteractionResult.PASS;
         }

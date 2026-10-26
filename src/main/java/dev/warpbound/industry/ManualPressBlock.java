@@ -18,11 +18,17 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import dev.warpbound.core.WarpboundBlockEntities;
+import dev.warpbound.multiblock.MachineCoreBlock;
+import dev.warpbound.multiblock.MachineCoreBlockEntity;
+import dev.warpbound.multiblock.MultiblockCoreBlockEntity;
+import dev.warpbound.multiblock.MultiblockHost;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -35,10 +41,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.Optional;
 
 /**
- * Ручной пресс: заготовка в руке, ПКМ — удар. Несколько ударов — и деталь готова.
- * Shift+ПКМ пустой рукой меняет штамп (шестерня или пластина). Ход пресса виден на модели.
+ * Ручной пресс — мультиблок 3×2×3 (шаблон data/warpbound/multiblock/manual_press.json): станина,
+ * стойки, поршень, балка. Собирается ПКМ пустой рукой по ядру; собранный рисуется цельной моделью винтового пресса.
+ * <p>
+ * Заготовка в руке, ПКМ — удар (модель бьёт бойком). Несколько ударов — и деталь готова.
+ * Shift+ПКМ пустой рукой меняет штамп (шестерня или пластина).
  */
-public class ManualPressBlock extends HorizontalDirectionalBlock {
+public class ManualPressBlock extends MachineCoreBlock {
     public static final MapCodec<ManualPressBlock> CODEC = simpleCodec(ManualPressBlock::new);
     public static final EnumProperty<Die> DIE = EnumProperty.create("die", Die.class);
     /** Сколько ударов уже сделано по текущей заготовке. */
@@ -74,34 +83,40 @@ public class ManualPressBlock extends HorizontalDirectionalBlock {
 
     public ManualPressBlock(Properties properties) {
         super(properties);
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(DIE, Die.GEAR).setValue(STROKES, 0));
+        registerDefaultState(defaultBlockState().setValue(DIE, Die.GEAR).setValue(STROKES, 0));
     }
 
     public static void register() {
     }
 
     @Override
-    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, DIE, STROKES);
+    protected BlockEntityType<? extends MultiblockCoreBlockEntity> coreType() {
+        return WarpboundBlockEntities.MANUAL_PRESS;
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ManualPressBlockEntity(pos, state);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(DIE, STROKES);
     }
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return state.getValue(MultiblockHost.FORMED) ? Shapes.block() : SHAPE;
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+    protected InteractionResult useFormed(BlockState state, Level level, BlockPos pos, Player player, MachineCoreBlockEntity core) {
         if (!player.isShiftKeyDown()) return InteractionResult.PASS;
         if (!level.isClientSide) {
             Die die = state.getValue(DIE).next();
@@ -121,6 +136,11 @@ public class ManualPressBlock extends HorizontalDirectionalBlock {
                 .filter(r -> r.matches(stack, state.getValue(DIE))).findFirst();
         if (recipe.isEmpty()) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (!(level instanceof ServerLevel server)) return ItemInteractionResult.SUCCESS;
+        if (!(level.getBlockEntity(pos) instanceof ManualPressBlockEntity press) || !press.isFormed()) {
+            player.displayClientMessage(Component.translatable("block.warpbound.manual_press.not_formed").withStyle(ChatFormatting.GOLD), true);
+            return ItemInteractionResult.CONSUME;
+        }
+        press.strike();
 
         int strokes = state.getValue(STROKES) + 1;
         server.sendParticles(new ItemParticleOption(ParticleTypes.ITEM, stack), pos.getX() + 0.5, pos.getY() + 0.3,

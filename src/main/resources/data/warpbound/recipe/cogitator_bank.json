@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "PRP",
+    "GCG",
+    "PRP"
+  ],
+  "key": {
+    "P": {
+      "item": "warpbound:plasteel_plate"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "result": {
+    "id": "warpbound:cogitator_bank",
+    "count": 1
+  }
+}

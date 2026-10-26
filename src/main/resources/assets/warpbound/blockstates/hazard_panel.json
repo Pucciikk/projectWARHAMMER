@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "warpbound:block/hazard_panel"
+    }
+  }
+}

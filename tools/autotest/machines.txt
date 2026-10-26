@@ -1,0 +1,60 @@
+# Галерея машин и корабельного оборудования: два ряда блоков на площадке в небе, днём
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+# прошлый сценарий мог оставить игрока в интерьере корабля
+cmd execute in minecraft:overworld run tp @s 0 150 -6 0 0
+wait 40
+cmd fill -16 149 -10 16 149 12 minecraft:smooth_stone
+cmd fill -16 150 -10 16 160 12 minecraft:air
+cmd kill @e[type=!minecraft:player]
+# ряд 1: машины главы 1 и верфи (лицом на север, к камере)
+cmd setblock -6 150 0 warpbound:vox_beacon[facing=north,repaired=false]
+cmd setblock -4 150 0 warpbound:vox_beacon[facing=north,repaired=true]
+cmd setblock -2 150 0 warpbound:salvage_forge[facing=north,lit=false]
+cmd setblock 0 150 0 warpbound:salvage_forge[facing=north,lit=true]
+cmd setblock 2 150 0 warpbound:manual_press[facing=north,strokes=0]
+cmd setblock 4 150 0 warpbound:manual_press[facing=north,strokes=1]
+cmd setblock 6 150 0 warpbound:shipyard_console[facing=north]
+# ряд 2: оборудование отсеков
+cmd setblock -6 150 4 warpbound:nav_table[facing=north]
+cmd setblock -4 150 4 warpbound:auspex[facing=north]
+cmd setblock -2 150 4 warpbound:geller_node[facing=north]
+cmd setblock 0 150 4 warpbound:reactor_core[facing=north]
+cmd setblock 2 149 4 warpbound:teleportarium_pad[facing=north]
+cmd setblock 4 150 4 warpbound:command_throne[facing=north]
+wait 20
+hud off
+cmd tp @s 0 152.5 -6 0 20
+wait 15
+shot 01_overview
+wait 3
+cmd tp @s -4 151 -2.6 0 25
+wait 15
+shot 02_beacons_forges
+wait 3
+cmd tp @s 4 151 -2.6 0 25
+wait 15
+shot 03_press_console
+wait 3
+cmd tp @s -4 151.3 1.5 0 30
+wait 15
+shot 04_nav_auspex_geller
+wait 3
+cmd tp @s 2 151.3 1.5 0 30
+wait 15
+shot 05_reactor_pad_throne
+wait 3
+# под углом сзади-сбоку
+cmd tp @s 9 153 9 135 30
+wait 15
+shot 06_back_angle
+wait 3
+# ночью — видно свет машин
+cmd time set midnight
+wait 20
+cmd tp @s 0 152.5 -6 0 20
+wait 15
+shot 07_night
+wait 3
+hud on

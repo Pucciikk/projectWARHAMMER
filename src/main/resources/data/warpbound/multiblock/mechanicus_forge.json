@@ -1,0 +1,22 @@
+{
+ "name": "block.warpbound.mechanicus_forge",
+ "layers": [
+  ["SSCSS", "SSSSS", "SSSSS", "SSSSS", "SSSSS"],
+  ["P   P", "W   W", "W A W", "W   W", "PWFWP"],
+  ["P   P", "W   W", "W   W", "W   W", "PWWWP"],
+  ["P   P", "I   I", "I   I", "I   I", "PIIIP"],
+  ["PBBBP", "BHHHB", "BHHHB", "BHHHB", "PBBBP"],
+  ["     ", "     ", "     ", " K K ", "     "]
+ ],
+ "key": {
+  "S": "minecraft:stone_bricks",
+  "W": "minecraft:stone_bricks",
+  "P": "warpbound:hull_plating",
+  "A": "#minecraft:anvil",
+  "F": "minecraft:blast_furnace",
+  "I": "minecraft:iron_bars",
+  "B": "warpbound:brass_trim",
+  "H": "warpbound:hull_plating",
+  "K": "minecraft:bricks"
+ }
+}

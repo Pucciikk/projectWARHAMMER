@@ -11,3 +11,6 @@ bin/
 remappedSrc/
 __pycache__/
 .claude/settings.local.json
+
+# Скриншоты для автора (не в git)
+previews/

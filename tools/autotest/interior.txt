@@ -1,0 +1,86 @@
+# Интерьер лёгкого крейсера: обход отсеков и экран командного пульта (камеры — от точки появления на борту)
+cmd time set noon
+cmd gamemode creative
+cmd execute in minecraft:overworld run tp @s 0 150 0
+wait 30
+cmd wb ship rebuild
+wait 60
+cmd gamemode spectator
+cmd wb ship heat 85
+hud off
+wait 10
+cmd tp @s ~0 ~4.5 ~17 0 22
+wait 25
+shot 01_bridge
+wait 3
+cmd tp @s ~-4.5 ~-1.3 ~1.5 -45 22
+wait 25
+shot 02_console_throne
+wait 3
+cmd tp @s ~4.5 ~-0.2 ~2.5 0 5
+wait 25
+shot 03_bridge_window
+wait 3
+cmd tp @s ~-6 ~2.5 ~-50 -45 30
+wait 25
+shot 04_reactor
+wait 3
+cmd tp @s ~12.5 ~-3.0 ~11 140 12
+wait 25
+shot 05_reactor_side
+wait 3
+cmd tp @s ~-12.5 ~0.5 ~4 60 15
+wait 25
+shot 06_geller_port
+wait 3
+cmd tp @s ~6 ~-1 ~0 0 5
+wait 25
+shot 07_spine
+wait 3
+cmd tp @s ~0 ~1.5 ~-18.5 180 18
+wait 25
+shot 08_engine_room
+wait 3
+cmd tp @s ~-8 ~0.0 ~39.5 0 55
+wait 25
+shot 09_teleportarium
+wait 3
+cmd tp @s ~13.5 ~-1.5 ~3 -90 8
+wait 25
+shot 10_chapel
+wait 3
+cmd tp @s ~-11.5 ~0 ~-10 90 10
+wait 25
+shot 11_quarters_cargo
+wait 3
+cmd gamemode survival
+cmd tp @s ~6 ~-1.8 ~-27.5 0 10
+hud on
+wait 80
+shot 12_radiation_hud
+wait 3
+cmd gamemode creative
+cmd effect clear @s
+cmd wb ship heat 85
+cmd wb ship console
+wait 30
+shot 13_console_status
+wait 3
+press Navigation
+wait 25
+shot 14_console_nav
+wait 3
+press Geller Field
+wait 25
+shot 15_console_geller
+wait 3
+press Reactor
+wait 25
+shot 16_console_reactor
+wait 3
+press Overdrive
+wait 25
+shot 17_console_overdrive
+wait 3
+close
+cmd gamemode creative

@@ -1,0 +1,13 @@
+{
+ "name": "block.warpbound.salvage_forge",
+ "layers": [
+  ["BCB", "BBB", "BBB"],
+  ["BBB", "B.B", "BBB"],
+  [" P ", "PIP", " P "]
+ ],
+ "key": {
+  "B": "minecraft:bricks",
+  "P": "warpbound:hull_plating",
+  "I": "minecraft:iron_bars"
+ }
+}

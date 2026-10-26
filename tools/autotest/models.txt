@@ -1,0 +1,73 @@
+# Галерея моделей GeckoLib (М1–М9): площадка в небе, сущности без ИИ стоят лицом к камере (на север)
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+# прошлый сценарий мог оставить игрока в интерьере корабля
+cmd execute in minecraft:overworld run tp @s 0 150 -6 0 0
+wait 40
+# на мирном враги исчезают сразу
+cmd difficulty normal
+cmd gamerule doMobSpawning false
+cmd fill -16 149 -10 16 149 12 minecraft:smooth_stone
+cmd fill -16 150 -10 16 160 12 minecraft:air
+cmd kill @e[type=!minecraft:player]
+cmd tp @s 0 150 -6 0 0
+wait 20
+cmd summon warpbound:tech_priest -9 150 0 {NoAI:1b,Rotation:[180f,0f]}
+cmd summon warpbound:dark_tech_priest -6 150 0 {NoAI:1b,Rotation:[180f,0f]}
+cmd summon warpbound:servitor -3 150 0 {NoAI:1b,Rotation:[180f,0f]}
+cmd summon warpbound:cultist 0 150 0 {NoAI:1b,Rotation:[180f,0f],Variant:0}
+cmd summon warpbound:cultist 2 150 0 {NoAI:1b,Rotation:[180f,0f],Variant:1}
+cmd summon warpbound:cultist 4 150 0 {NoAI:1b,Rotation:[180f,0f],Variant:2}
+cmd summon warpbound:possessed_priest 7 150 0 {NoAI:1b,Rotation:[180f,0f]}
+cmd summon warpbound:bloodletter -6 150 7 {NoAI:1b,Rotation:[180f,0f]}
+cmd summon warpbound:pink_horror -2 150 7 {NoAI:1b,Rotation:[180f,0f]}
+cmd summon warpbound:blue_horror 1 150 7 {NoAI:1b,Rotation:[180f,0f]}
+cmd summon warpbound:possessed_priest 6 150 7 {NoAI:1b,Rotation:[180f,0f],Daemon:1b}
+wait 40
+hud off
+# Техножрецы и сервитор
+cmd tp @s -6 151.2 -4.5 0 8
+wait 15
+shot 01_priests_servitor
+wait 3
+# Культисты и жрец
+cmd tp @s 3.5 151.2 -4.5 0 8
+wait 15
+shot 02_cultists_priest
+wait 3
+# Демоны и демон-жрец
+cmd tp @s 0 152 1 0 10
+wait 15
+shot 03_daemons
+wait 3
+# Вид сзади: механодендриты, рюкзак, шипы
+cmd tp @s -6 151.2 4.5 180 8
+wait 15
+shot 04_priests_back
+wait 3
+cmd tp @s 0 152.5 13 180 10
+wait 15
+shot 05_daemons_back
+wait 3
+# Сбоку: оружие в правой руке
+cmd tp @s 10 151.2 0 90 5
+wait 15
+shot 06_side
+wait 3
+# Десантный модуль: падает с высоты, врезается и раскрывается
+cmd kill @e[type=!minecraft:player]
+cmd tp @s 0 152 -10 0 0
+cmd tp @s 0 152 -10 0 -30
+cmd summon warpbound:boarding_pod 0 150 2
+wait 8
+shot 07_pod_falling
+wait 3
+cmd tp @s 0 152 -10 0 5
+wait 15
+shot 08_pod_landed
+wait 3
+wait 70
+shot 09_pod_open
+wait 3
+hud on

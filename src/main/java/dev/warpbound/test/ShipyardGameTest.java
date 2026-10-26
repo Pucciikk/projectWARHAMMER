@@ -38,11 +38,11 @@ public class ShipyardGameTest implements FabricGameTest {
     }
 
     @GameTest(template = EMPTY_STRUCTURE, timeoutTicks = TIMEOUT, batch = "shipyard_frigate")
-    public void frigateIsBuiltAndLaunched(GameTestHelper helper) {
+    public void cruiserIsBuiltAndLaunched(GameTestHelper helper) {
         var level = helper.getLevel();
         BlockPos core = placeConsole(helper);
         // Тестовая площадка обнесена барьерами — расчистить место под док
-        for (BlockPos p : BlockPos.betweenClosed(core.offset(-7, 0, 1), core.offset(7, 12, 45))) {
+        for (BlockPos p : BlockPos.betweenClosed(core.offset(-26, 0, 1), core.offset(26, 70, 162))) {
             level.setBlock(p, Blocks.AIR.defaultBlockState(), 2);
         }
         var yard = (ShipyardBlockEntity) level.getBlockEntity(core);
@@ -78,7 +78,7 @@ public class ShipyardGameTest implements FabricGameTest {
     public void rotatedShipyardBuildsBehindConsole(GameTestHelper helper) {
         var level = helper.getLevel();
         BlockPos core = helper.absolutePos(new BlockPos(0, 1, 0));
-        for (BlockPos p : BlockPos.betweenClosed(core.offset(-45, 0, -7), core.offset(-1, 12, 7))) {
+        for (BlockPos p : BlockPos.betweenClosed(core.offset(-162, 0, -26), core.offset(-1, 70, 26))) {
             level.setBlock(p, Blocks.AIR.defaultBlockState(), 2);
         }
         level.setBlockAndUpdate(core, WarpboundBlocks.SHIPYARD_CONSOLE.defaultBlockState()
@@ -91,7 +91,7 @@ public class ShipyardGameTest implements FabricGameTest {
         helper.assertTrue(yard.members().stream().allMatch(p -> p.getX() < core.getX()), "рама должна лежать к западу от пульта");
         helper.startSequence().thenExecute(() -> yard.debugAdvance(player)).thenIdle(2).thenExecute(() -> {
             helper.assertFalse(yard.shipBlocks().isEmpty(), "киль должен появиться");
-            helper.assertTrue(yard.shipBlocks().stream().allMatch(p -> p.getX() < core.getX() && Math.abs(p.getZ() - core.getZ()) <= 5),
+            helper.assertTrue(yard.shipBlocks().stream().allMatch(p -> p.getX() < core.getX() && Math.abs(p.getZ() - core.getZ()) <= 24),
                     "киль должен стоять в доке за пультом");
         }).thenSucceed();
     }

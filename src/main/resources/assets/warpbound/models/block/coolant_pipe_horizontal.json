@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "warpbound:block/coolant_pipe_end",
+    "side": "warpbound:block/coolant_pipe"
+  }
+}

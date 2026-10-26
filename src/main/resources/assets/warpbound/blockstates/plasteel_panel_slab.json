@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "warpbound:block/plasteel_panel_slab"
+    },
+    "type=top": {
+      "model": "warpbound:block/plasteel_panel_slab_top"
+    },
+    "type=double": {
+      "model": "warpbound:block/plasteel_panel"
+    }
+  }
+}

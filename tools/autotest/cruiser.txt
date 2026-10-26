@@ -1,0 +1,65 @@
+# Лёгкий крейсер типа «Неустрашимый» на верфи: рама стапеля, освящение, все шесть этапов, виды с разных сторон
+cmd time set noon
+cmd weather clear
+cmd gamemode spectator
+cmd execute in minecraft:overworld run tp @s 0 190 -30 0 20
+wait 40
+cmd fill -20 179 -6 20 179 112 minecraft:smooth_stone
+cmd fill -20 180 -6 20 185 112 minecraft:air
+cmd fill -20 186 -6 20 191 112 minecraft:air
+cmd fill -20 192 -6 20 197 112 minecraft:air
+cmd fill -20 198 -6 20 203 112 minecraft:air
+cmd fill -20 204 -6 20 209 112 minecraft:air
+cmd fill -20 210 -6 20 215 112 minecraft:air
+cmd fill -20 216 -6 20 221 112 minecraft:air
+cmd fill -20 222 -6 20 227 112 minecraft:air
+cmd kill @e[type=!minecraft:player]
+cmd setblock 0 180 0 warpbound:shipyard_console[facing=north]
+wait 5
+cmd tp @s 0 181 -2 0 0
+cmd wb shipyard frame
+cmd wb machine build
+wait 10
+cmd wb shipyard advance
+wait 5
+cmd wb shipyard advance
+wait 5
+cmd wb shipyard advance
+wait 5
+cmd wb shipyard advance
+wait 5
+cmd wb shipyard advance
+wait 5
+cmd wb shipyard advance
+wait 60
+hud off
+cmd tp @s 60 210 -24 50 20
+wait 50
+shot 01_three_quarter_stern
+wait 3
+cmd tp @s 75 198 52 90 3
+wait 40
+shot 02_side
+wait 3
+cmd tp @s 40 210 140 150 16
+wait 40
+shot 03_bow
+wait 3
+cmd tp @s -22 196 -22 -38 4
+wait 40
+shot 04_engines
+wait 3
+cmd tp @s 18 214 18 35 25
+wait 40
+shot 05_bridge
+wait 3
+cmd tp @s 0 270 52 0 90
+wait 40
+shot 06_top
+wait 3
+cmd tp @s 20 205 96 145 14
+wait 40
+shot 07_prow_aquila
+wait 3
+cmd gamemode creative
+hud on

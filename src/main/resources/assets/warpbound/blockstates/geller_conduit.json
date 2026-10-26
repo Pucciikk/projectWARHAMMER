@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "warpbound:block/geller_conduit"
+    },
+    "axis=z": {
+      "model": "warpbound:block/geller_conduit_horizontal",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "warpbound:block/geller_conduit_horizontal",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

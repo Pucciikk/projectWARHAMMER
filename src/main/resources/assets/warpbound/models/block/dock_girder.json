@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "warpbound:block/dock_girder"
+    "end": "warpbound:block/dock_girder_top",
+    "side": "warpbound:block/dock_girder"
   }
 }

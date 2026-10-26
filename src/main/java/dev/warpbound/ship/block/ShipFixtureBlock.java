@@ -6,21 +6,29 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Оборудование отсека корабля, повёрнутое к игроку: ауспик, узел Поля Геллера, ядро реактора.
  * Сами по себе пока декор; варп-события будут бить именно по ним.
+ * <p>
+ * Крупное оборудование ({@link #bigModel()}) рисуется моделью GeckoLib geo/block/&lt;id&gt;.geo.json на несколько блоков;
+ * соседние клетки отсека заняты невидимыми {@link FixturePartBlock}, ПКМ по ним передаётся сюда.
  */
-public class ShipFixtureBlock extends HorizontalDirectionalBlock {
+public class ShipFixtureBlock extends HorizontalDirectionalBlock implements EntityBlock {
     public static final MapCodec<ShipFixtureBlock> CODEC = simpleCodec(ShipFixtureBlock::new);
 
     private final VoxelShape shape;
+    private boolean big;
 
     public ShipFixtureBlock(Properties properties) {
         this(properties, Shapes.block());
@@ -30,6 +38,16 @@ public class ShipFixtureBlock extends HorizontalDirectionalBlock {
         super(properties);
         this.shape = shape;
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
+
+    /** Рисовать крупной моделью GeckoLib вместо модели блока. */
+    public ShipFixtureBlock bigModel() {
+        this.big = true;
+        return this;
+    }
+
+    public boolean isBig() {
+        return big;
     }
 
     @Override
@@ -49,6 +67,16 @@ public class ShipFixtureBlock extends HorizontalDirectionalBlock {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return shape;
+        return big ? Shapes.block() : shape;
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return big ? RenderShape.ENTITYBLOCK_ANIMATED : RenderShape.MODEL;
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return big ? new ShipFixtureBlockEntity(pos, state) : null;
     }
 }

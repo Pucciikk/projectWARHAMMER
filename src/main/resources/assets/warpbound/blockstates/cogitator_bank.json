@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "warpbound:block/cogitator_bank"
+    },
+    "facing=east": {
+      "model": "warpbound:block/cogitator_bank",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "warpbound:block/cogitator_bank",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "warpbound:block/cogitator_bank",
+      "y": 270
+    }
+  }
+}

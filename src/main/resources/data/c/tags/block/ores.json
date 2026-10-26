@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "warpbound:lead_ore",
+    "warpbound:deepslate_lead_ore",
+    "warpbound:radium_ore",
+    "warpbound:adamantium_ore",
+    "warpbound:warpstone_ore"
+  ]
+}

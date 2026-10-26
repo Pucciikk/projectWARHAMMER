@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "warpbound:block/ash_stone_bricks",
+    "top": "warpbound:block/ash_stone_bricks",
+    "side": "warpbound:block/ash_stone_bricks"
+  }
+}

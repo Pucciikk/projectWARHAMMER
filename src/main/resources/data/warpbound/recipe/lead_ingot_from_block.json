@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "warpbound:lead_block"
+    }
+  ],
+  "result": {
+    "id": "warpbound:lead_ingot",
+    "count": 9
+  }
+}

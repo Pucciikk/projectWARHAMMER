@@ -1,0 +1,50 @@
+# Ритуал тёмного техножреца крупно: символы проступают по очереди, столб пламени, вспышка, подъём магоса.
+# Тики от призыва: кровь 0, кольцо 9, руны 18–48, вязь 46, щупальца 52, стрелы 74, метка 92, столб 95, вспышка 115
+cmd time set midnight
+cmd weather clear
+cmd gamemode spectator
+cmd difficulty normal
+cmd execute in minecraft:overworld run tp @s 0 150 -9 0 30
+wait 40
+cmd fill -12 149 -12 12 149 12 minecraft:stone_bricks
+cmd fill -12 150 -12 12 160 12 minecraft:air
+cmd kill @e[type=!minecraft:player]
+wait 30
+hud off
+cmd tp @s 0 155 -4.5 0 50
+cmd summon warpbound:warp_rift 0 150 0 {Rotation:[0f,0f]}
+wait 13
+shot 01_blood_ring
+wait 3
+wait 15
+shot 02_runes_appear
+wait 3
+wait 17
+shot 03_runes_ring
+wait 3
+wait 17
+shot 04_tentacles
+wait 3
+cmd tp @s 0 157 0.01 0 90
+wait 17
+shot 05_arrows_top
+wait 3
+wait 8
+shot 06_mark_top
+wait 3
+cmd tp @s 0 152.8 -8 0 12
+wait 10
+shot 07_column
+wait 3
+wait 5
+shot 08_burst
+wait 3
+wait 20
+shot 09_emerging
+wait 3
+wait 45
+shot 10_arrived
+wait 3
+cmd time set noon
+cmd gamemode creative
+hud on

@@ -12,6 +12,8 @@ import dev.warpbound.quest.StoryFlags;
 import dev.warpbound.ship.Ship;
 import dev.warpbound.ship.ShipRegistry;
 import dev.warpbound.ship.ShipService;
+import dev.warpbound.ship.ShipInteriors;
+import dev.warpbound.ship.ShipLaunch;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -50,7 +52,7 @@ import java.util.UUID;
 public class ShipyardBlockEntity extends MultiblockCoreBlockEntity {
     public static final ResourceLocation MULTIBLOCK = Warpbound.id("shipyard");
     /** В Сезоне 1 верфь строит только фрегат. */
-    public static final ResourceLocation DEFAULT_CLASS = Warpbound.id("frigate");
+    public static final ResourceLocation DEFAULT_CLASS = Warpbound.id("light_cruiser");
     /** Длительность старта: столько тиков горит варп-огонь, прежде чем док опустеет. */
     private static final int LAUNCH_TICKS = 100;
 
@@ -87,14 +89,14 @@ public class ShipyardBlockEntity extends MultiblockCoreBlockEntity {
     }
 
     @Override
-    protected boolean canUnform(ServerPlayer player) {
+    public boolean canUnform(ServerPlayer player) {
         if (stage == 0 && buildLeft == 0) return true;
         player.displayClientMessage(Component.translatable("shipyard.warpbound.cannot_unform").withStyle(ChatFormatting.RED), true);
         return false;
     }
 
     @Override
-    protected void onFormedBy(ServerPlayer player) {
+    public void onFormedBy(ServerPlayer player) {
         QuestManager.setFlag(player, StoryFlags.SHIPYARD_FORMED);
     }
 
@@ -157,8 +159,35 @@ public class ShipyardBlockEntity extends MultiblockCoreBlockEntity {
         }
         launchLeft = LAUNCH_TICKS;
         launcher = player.getUUID();
+        // герметизация: все люки задраены, внешние заперты — только так Поле Геллера будет держать
+        if (level instanceof ServerLevel server) {
+            ShipLaunch.sealHatches(server, shipBlocks);
+            for (ServerPlayer p : server.getEntitiesOfClass(ServerPlayer.class, shipBox().inflate(2))) {
+                p.displayClientMessage(Component.translatable("flight.warpbound.vox.sealed").withStyle(ChatFormatting.GOLD), false);
+            }
+        }
         sync();
         sendState(player);
+    }
+
+    /** Все этапы построены — корабль можно выводить в космос. */
+    public boolean isComplete() {
+        var cls = shipClass().orElse(null);
+        return cls != null && stage >= cls.stages().size();
+    }
+
+    public boolean isLaunching() {
+        return launchLeft > 0;
+    }
+
+    public int stageCount() {
+        return shipClass().map(c -> c.stages().size()).orElse(0);
+    }
+
+    private net.minecraft.world.phys.AABB shipBox() {
+        if (shipBlocks.isEmpty()) return new net.minecraft.world.phys.AABB(worldPosition);
+        var box = net.minecraft.world.level.levelgen.structure.BoundingBox.encapsulatingPositions(shipBlocks).orElseThrow();
+        return new net.minecraft.world.phys.AABB(box.minX(), box.minY(), box.minZ(), box.maxX() + 1, box.maxY() + 1, box.maxZ() + 1);
     }
 
     public void sendState(ServerPlayer player) {
@@ -220,7 +249,7 @@ public class ShipyardBlockEntity extends MultiblockCoreBlockEntity {
     // ---- работа во времени ----
 
     @Override
-    protected void tickFormed(ServerLevel server) {
+    public void tickFormed(ServerLevel server) {
         if (buildLeft > 0) {
             buildLeft--;
             if (server.getGameTime() % 10 == 0) workEffects(server);
@@ -285,6 +314,13 @@ public class ShipyardBlockEntity extends MultiblockCoreBlockEntity {
     }
 
     private void finishLaunch(ServerLevel server) {
+        // корабль-постройка уходит в космос целиком, вместе с теми, кто на борту
+        ServerPlayer owner = launcher == null ? null : server.getServer().getPlayerList().getPlayer(launcher);
+        Ship launched = null;
+        if (owner != null && ShipInteriors.level(server.getServer()) != null) {
+            launched = ShipLaunch.toSpace(server, shipBlocks, orientation().rotation(), owner.getUUID(),
+                    Component.translatable("shipyard.warpbound.default_ship_name").getString());
+        }
         Multiblocks.unindex(server, worldPosition, shipBlocks);
         for (BlockPos p : shipBlocks) server.setBlock(p, Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
         shipBlocks = new ArrayList<>();
@@ -294,7 +330,8 @@ public class ShipyardBlockEntity extends MultiblockCoreBlockEntity {
         ServerPlayer player = launcher == null ? null : server.getServer().getPlayerList().getPlayer(launcher);
         launcher = null;
         if (player != null) {
-            Ship ship = ShipService.createFor(player, Component.translatable("shipyard.warpbound.default_ship_name").getString());
+            Ship ship = launched != null ? launched
+                    : ShipService.createFor(player, Component.translatable("shipyard.warpbound.default_ship_name").getString());
             player.displayClientMessage(Component.translatable("shipyard.warpbound.launched", ship.name)
                     .withStyle(ChatFormatting.AQUA), false);
             QuestManager.setFlag(player, StoryFlags.SHIP_LAUNCHED);

@@ -24,9 +24,10 @@ DATA_VERSION = 3955  # Minecraft 1.21.1
 
 # ---------------------------------------------------------------- рама верфи
 # Шаблон для пульта, смотрящего на север: строки — по Z (от пульта вглубь дока), символы — по X.
-DOCK_W, DOCK_L, DOCK_H = 13, 43, 11
+# Стапель рассчитан на лёгкий крейсер (153 блока); фрегат помещается в нём же.
+DOCK_W, DOCK_L, DOCK_H = 49, 160, 18
 CORE_X = DOCK_W // 2
-PYLON_Z = (1, DOCK_L // 2, DOCK_L - 1)
+PYLON_Z = (1, DOCK_L // 3, 2 * DOCK_L // 3, DOCK_L - 1)
 
 
 def shipyard_pattern():
@@ -188,16 +189,23 @@ def write_nbt(path, root):
         f.write(data)
 
 
-def write_structure(path, cells):
+def _state(block):
+    if "[" not in block:
+        return {"Name": block}
+    name, props = block[:-1].split("[", 1)
+    return {"Name": name, "Properties": dict(p.split("=") for p in props.split(","))}
+
+
+def write_structure(path, cells, size=None):
     palette, index, entries = [], {}, []
     for (x, y, z), block in sorted(cells.items()):
         if block not in index:
             index[block] = len(palette)
-            palette.append({"Name": block})
+            palette.append(_state(block))
         entries.append({"pos": [x, y, z], "state": index[block]})
     write_nbt(path, {
         "DataVersion": DATA_VERSION,
-        "size": [SHIP_W, SHIP_H, SHIP_L],
+        "size": list(size or (SHIP_W, SHIP_H, SHIP_L)),
         "palette": palette,
         "blocks": entries,
         "entities": [],
@@ -246,8 +254,34 @@ def main():
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(ship_class, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
+    # лёгкий крейсер типа «Неустрашимый» — корабль Сезона 1 (tools/shipyard/dauntless.py, из STL автора)
+    import dauntless
+    cr, cr_size = dauntless.build()
+    cr_stages = {s: {} for s in STAGES}
+    for pos, (block, stage) in cr.items():
+        cr_stages[stage][pos] = block
+    for stage, cells in cr_stages.items():
+        write_structure(DATA / f"structure/cruiser/{stage}.nbt", cells, cr_size)
+    cr_offset = [-(cr_size[0] // 2), 1, 3]
+    cruiser_class = {
+        "name": "ship_class.warpbound.light_cruiser",
+        "stages": [
+            {
+                "name": STAGE_INFO[s][0],
+                "requirements": [{"item": i, "count": c} for i, c in STAGE_INFO[s][1]],
+                "structure": f"warpbound:cruiser/{s}",
+                "offset": cr_offset,
+                "build_seconds": STAGE_INFO[s][2],
+            }
+            for s in STAGES
+        ],
+    }
+    (DATA / "ship_class/light_cruiser.json").write_text(json.dumps(cruiser_class, ensure_ascii=False, indent=2) + "\n",
+                                                        encoding="utf-8")
+    print("крейсер:", len(cr), "блоков,", ", ".join(f"{s} {len(c)}" for s, c in cr_stages.items()))
+
     girders = sum(row.count("G") for layer in pattern["layers"] for row in layer)
-    print(f"верфь: {DOCK_W}×{DOCK_L}×{DOCK_H}, балок {girders}; фрегат: {len(ship)} блоков, "
+    print(f"верфь: {DOCK_W}x{DOCK_L}x{DOCK_H}, балок {girders}; фрегат: {len(ship)} блоков, "
           + ", ".join(f"{s} {len(c)}" for s, c in by_stage.items()))
 
 

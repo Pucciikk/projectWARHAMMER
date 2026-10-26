@@ -12,10 +12,12 @@ import java.util.List;
  * Раскладка интерьера корабля из data/&lt;ns&gt;/ship_layout/*.json: какие отсеки и где.
  * Смещения — от центра палубы участка, нос смотрит на +Z.
  */
-public record ShipLayout(List<Compartment> compartments, BlockPos spawn) {
+public record ShipLayout(List<Compartment> compartments, BlockPos spawn, java.util.Optional<BlockPos> reactor) {
     public static final Codec<ShipLayout> CODEC = RecordCodecBuilder.create(i -> i.group(
             Compartment.CODEC.listOf().fieldOf("compartments").forGetter(ShipLayout::compartments),
-            BlockPos.CODEC.fieldOf("spawn").forGetter(ShipLayout::spawn)
+            BlockPos.CODEC.fieldOf("spawn").forGetter(ShipLayout::spawn),
+            // ядро реактора: вокруг него при перегреве растёт радиация
+            BlockPos.CODEC.optionalFieldOf("reactor").forGetter(ShipLayout::reactor)
     ).apply(i, ShipLayout::new));
 
     public static final DataRegistry<ShipLayout> REGISTRY = new DataRegistry<>("ship_layout", CODEC);

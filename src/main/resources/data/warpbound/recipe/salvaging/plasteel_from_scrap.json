@@ -1,0 +1,13 @@
+{
+  "type": "warpbound:salvaging",
+  "category": "misc",
+  "ingredient": {
+    "item": "warpbound:hull_scrap"
+  },
+  "result": {
+    "id": "warpbound:plasteel_ingot",
+    "count": 2
+  },
+  "experience": 0.2,
+  "cookingtime": 260
+}

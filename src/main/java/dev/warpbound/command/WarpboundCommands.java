@@ -12,12 +12,16 @@ import dev.warpbound.chaos.ChaosGod;
 import dev.warpbound.chaos.ChaosLogic;
 import dev.warpbound.config.WarpboundConfig;
 import dev.warpbound.multiblock.MultiblockCoreBlock;
+import dev.warpbound.multiblock.MultiblockHost;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import dev.warpbound.multiblock.MultiblockOrientation;
 import dev.warpbound.multiblock.Multiblocks;
 import dev.warpbound.quest.QuestManager;
 import dev.warpbound.shipyard.ShipyardBlockEntity;
 import dev.warpbound.start.CrashSite;
 import dev.warpbound.ship.Ship;
+import dev.warpbound.ship.ShipConsole;
 import dev.warpbound.ship.ShipRegistry;
 import dev.warpbound.ship.ShipService;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -70,6 +74,8 @@ public final class WarpboundCommands {
                 .then(Commands.literal("shipyard")
                         .then(Commands.literal("frame").executes(WarpboundCommands::shipyardFrame))
                         .then(Commands.literal("advance").executes(WarpboundCommands::shipyardAdvance)))
+                .then(Commands.literal("machine")
+                        .then(Commands.literal("build").executes(WarpboundCommands::machineBuild)))
                 .then(Commands.literal("ship")
                         .then(Commands.literal("create")
                                 .executes(ctx -> shipCreate(ctx, "Безымянный"))
@@ -109,6 +115,52 @@ public final class WarpboundCommands {
                                 .then(Commands.argument("percent", FloatArgumentType.floatArg(0, 100)).executes(ctx -> {
                                     Ship ship = aboard(ctx);
                                     ship.storm = FloatArgumentType.getFloat(ctx, "percent") / 100f;
+                                    touched(ctx, ship);
+                                    return shipInfo(ctx);
+                                })))
+                        .then(Commands.literal("rebuild").executes(ctx -> {
+                            ServerPlayer p = ctx.getSource().getPlayerOrException();
+                            Ship ship = ShipService.createFor(p, "Безымянный");
+                            if (!ShipService.rebuildInterior(p.server, ship)) return fail(ctx, "Нет раскладки " + ShipService.DEFAULT_LAYOUT);
+                            ShipService.enter(p, ship);
+                            ok(ctx, "Интерьер перестроен: " + ship.layout);
+                            return 1;
+                        }))
+                        .then(Commands.literal("console").executes(ctx -> {
+                            // ближайший пульт мостика (у причала корабль ещё не «на борту» — нужен сам пульт)
+                            ServerPlayer p = ctx.getSource().getPlayerOrException();
+                            BlockPos found = null;
+                            for (BlockPos q : BlockPos.betweenClosed(p.blockPosition().offset(-6, -3, -6), p.blockPosition().offset(6, 3, 6))) {
+                                if (p.level().getBlockState(q).is(dev.warpbound.core.WarpboundBlocks.COMMAND_CONSOLE)) {
+                                    found = q.immutable();
+                                    break;
+                                }
+                            }
+                            ShipConsole.open(p, found);
+                            return 1;
+                        }))
+                        .then(Commands.literal("forget").executes(ctx -> {
+                            ServerPlayer p = ctx.getSource().getPlayerOrException();
+                            var registry = ShipRegistry.get(p.server);
+                            var own = registry.ownedBy(p.getUUID());
+                            if (own.isEmpty()) return fail(ctx, "У тебя нет корабля.");
+                            registry.remove(own.get());
+                            ok(ctx, "Корабль забыт: можно строить и выводить новый.");
+                            return 1;
+                        }))
+                        .then(Commands.literal("target").executes(ctx -> {
+                            // отладка: цель перехода — текущий мир (когда других миров на сервере нет)
+                            Ship ship = aboard(ctx);
+                            ship.destination = ship.location;
+                            touched(ctx, ship);
+                            ok(ctx, "Цель перехода: " + ship.destination);
+                            return 1;
+                        }))
+                        .then(Commands.literal("heat")
+                                .then(Commands.argument("percent", FloatArgumentType.floatArg(0, 100)).executes(ctx -> {
+                                    Ship ship = aboard(ctx);
+                                    ship.heat = FloatArgumentType.getFloat(ctx, "percent") / 100f;
+                                    ship.radiation = Math.max(ship.radiation, ship.heat > 0.7f ? (ship.heat - 0.7f) * 2 : 0);
                                     touched(ctx, ship);
                                     return shipInfo(ctx);
                                 })))
@@ -225,6 +277,26 @@ public final class WarpboundCommands {
         int n = Multiblocks.placeAll(p.serverLevel(), yard.getBlockPos(), yard.definitionId(), new MultiblockOrientation(facing, false));
         ctx.getSource().sendSuccess(() -> Component.literal("Рама стапеля: поставлено блоков " + n), false);
         return 1;
+    }
+
+    /** /wb machine build — достроить груду и освятить все несобранные машины в 16 блоках (для тестов и показа). */
+    private static int machineBuild(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer p = ctx.getSource().getPlayerOrException();
+        var level = p.serverLevel();
+        int built = 0;
+        for (BlockPos pos : BlockPos.betweenClosed(p.blockPosition().offset(-16, -8, -16), p.blockPosition().offset(16, 8, 16))) {
+            if (!(level.getBlockEntity(pos) instanceof MultiblockHost host) || host.isFormed()) continue;
+            var state = level.getBlockState(pos);
+            if (!state.hasProperty(HorizontalDirectionalBlock.FACING)) continue;
+            BlockPos core = pos.immutable();
+            Multiblocks.placeAll(level, core, host.multiblock().definitionId(),
+                    new MultiblockOrientation(state.getValue(HorizontalDirectionalBlock.FACING), false));
+            host.multiblock().tryForm(p);
+            built++;
+        }
+        int n = built;
+        ctx.getSource().sendSuccess(() -> Component.literal("Машин достроено и освящено: " + n), false);
+        return n;
     }
 
     /** /wb shipyard advance — закрыть поставки и закончить текущий этап (для тестов). */

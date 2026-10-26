@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "warpbound:block/riveted_plasteel_panel"
+    }
+  }
+}

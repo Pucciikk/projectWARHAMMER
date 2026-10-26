@@ -26,6 +26,7 @@
 | Fabric API | 0.116.0+1.21.1 |
 | Java | 21 |
 | Маппинги | Mojang + Parchment 2024.11.17 |
+| GeckoLib | 4.7.7 (последняя для loader 0.16) |
 | mod id / пакет | `warpbound` / `dev.warpbound` |
 
 - NeoForge **отменён** (друзья играют на Fabric). В `docs/design-log.md` местами осталось слово NeoForge — читать как Fabric.
@@ -40,14 +41,26 @@
 ./gradlew runServer             # сервер (нужен run/eula.txt с eula=true)
 ./gradlew runDatagen            # переводы → src/main/generated/
 python3 tools/textures/gen_ui.py      # текстуры книги квестов, иконки, кнопка, планшет
-python3 tools/textures/gen_items.py   # блоки, предметы, скины техножрецов
+python3 tools/textures/gen_items.py   # блоки и предметы главы 1
 python3 tools/dreadnought/gen.py [--dev]  # модель и текстуры дредноута (Pillow + numpy)
 python3 tools/shipyard/gen.py          # рама верфи, класс «Фрегат», части корабля (.nbt)
 python3 tools/textures/gen_shipyard.py  # текстуры верфи и ключа
 python3 tools/ship/gen_interior.py      # отсеки фрегата (.nbt) и раскладка интерьера
 python3 tools/textures/gen_industry.py  # текстуры горна, пресса, деталей и оборудования корабля
+python3 tools/models/gen_entities.py    # заглушки моделей GeckoLib М1–М9 (geo, анимации, текстуры, _glow)
+python3 tools/models/shuttle.py         # имперский челнок и десантная капсула (транспорт лоялистов)
+python3 tools/models/warp_rift.py       # ритуальный знак и столб синего пламени (призыв тёмного техножреца)
+python3 tools/models/gen_blocks.py      # модели машин и оборудования корабля (блоки из деталей, 32 px на блок)
+python3 tools/models/gen_machines.py    # цельные модели собранных машин и крупного оборудования корабля (GeckoLib)
+python3 tools/blocks/gen_block_set.py   # набор блоков (обшивка, руды, Кинерис, отсеки): текстуры, модели, лут, рецепты, теги, Java-регистрация
+python3 tools/shipyard/gen.py           # стапель, фрегат и лёгкий крейсер (крейсер — tools/shipyard/dauntless.py из STL автора)
+python3 tools/ship/gen_cruiser_interior.py  # 10 отсеков крейсера и раскладка light_cruiser
+python3 tools/textures/gen_console_gui.py   # фон экрана командного пульта
 ./gradlew runGametest                 # автотесты без игрока (верфь и т. д.)
 ./gradlew runAutotest -Pscenario=smoke  # клиент сам проходит tools/autotest/smoke.txt, скриншоты в run/screenshots/autotest/
+./gradlew runAutotest -Pscenario=arrival   # прибытие операторов: челнок, капсула, ритуал
+./gradlew runAutotest -Pscenario=cruiser   # крейсер на верфи; interior — отсеки и экран пульта; multiblocks — горн, пресс, Кузня
+./gradlew runAutotest -Pscenario=models    # галерея сущностей; machines — галерея машин. Скрины для автора — в previews/ (не в git)
 ```
 
 Если Maven Central отвечает 429 — повторить с `--max-workers=1`.
@@ -131,6 +144,7 @@ src/main/resources/data/warpbound/
 - **Легионы и ордена — каноничные, и доспех каждого отличается формой, а не только цветом:** например, у
   Повелителей Ночи — перепончатые крылья на шлеме, у Гвардии Смерти — наросты, отростки и рога на броне
   (решение 25.10.2026).
+- **Контракт моделей** (имена файлов, костей и анимаций, чтобы модель автора заменила заглушку) — `docs/content/models.md`.
 - **Каталог контента** (руды, материалы, предметы, блоки, сущности, порядок моделей для автора) — `docs/content/catalog.md`.
   Крафты, статы, урон, лут — по-прежнему позже, в JSON.
 

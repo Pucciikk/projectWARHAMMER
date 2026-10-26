@@ -5,6 +5,26 @@
     "warpbound:scorched_hull_plating",
     "warpbound:brass_trim",
     "warpbound:dock_girder",
-    "warpbound:shipyard_console"
+    "warpbound:shipyard_console",
+    "warpbound:plasteel_panel",
+    "warpbound:riveted_plasteel_panel",
+    "warpbound:hazard_panel",
+    "warpbound:plasteel_vent",
+    "warpbound:deck_grating",
+    "warpbound:hull_plating_stairs",
+    "warpbound:hull_plating_slab",
+    "warpbound:plasteel_panel_stairs",
+    "warpbound:plasteel_panel_slab",
+    "warpbound:cogitator_bank",
+    "warpbound:vox_grille",
+    "warpbound:lead_ore",
+    "warpbound:deepslate_lead_ore",
+    "warpbound:lead_block",
+    "warpbound:radium_ore",
+    "warpbound:warpstone_ore",
+    "warpbound:coolant_pipe",
+    "warpbound:geller_conduit",
+    "warpbound:bulkhead_door",
+    "warpbound:boarding_hatch"
   ]
 }

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "warpbound:ash_stone"
+    }
+  },
+  "result": {
+    "id": "warpbound:ash_stone_bricks",
+    "count": 4
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "warpbound:plasteel_panel"
+    }
+  },
+  "result": {
+    "id": "warpbound:plasteel_panel_slab",
+    "count": 6
+  }
+}

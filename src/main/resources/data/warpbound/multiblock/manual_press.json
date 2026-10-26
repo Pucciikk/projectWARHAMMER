@@ -1,0 +1,14 @@
+{
+ "name": "block.warpbound.manual_press",
+ "layers": [
+  ["SCS", "SSS"],
+  ["F F", "FPF"],
+  ["LLL", "LLL"]
+ ],
+ "key": {
+  "S": "minecraft:smooth_stone",
+  "F": "minecraft:iron_bars",
+  "P": "minecraft:piston",
+  "L": "#minecraft:logs"
+ }
+}

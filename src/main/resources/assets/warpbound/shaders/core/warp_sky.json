@@ -12,6 +12,9 @@
     { "name": "uEnter", "type": "float", "count": 1, "values": [0.0] },
     { "name": "uFlash", "type": "float", "count": 1, "values": [0.0] },
     { "name": "uSpeed", "type": "float", "count": 1, "values": [0.75] },
-    { "name": "uBoltSeed", "type": "float", "count": 1, "values": [1.0] }
+    { "name": "uBoltSeed", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "uCruise", "type": "float", "count": 1, "values": [0.0] },
+    { "name": "uPlanet", "type": "float", "count": 1, "values": [0.0] },
+    { "name": "uPlanetColor", "type": "float", "count": 3, "values": [0.25, 0.45, 0.6] }
   ]
 }

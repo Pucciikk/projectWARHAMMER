@@ -23,14 +23,14 @@ public abstract class MultiblockCoreBlock extends BaseEntityBlock {
 
     protected MultiblockCoreBlock(Properties properties) {
         super(properties);
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(MultiblockHost.FORMED, false));
     }
 
     protected abstract BlockEntityType<? extends MultiblockCoreBlockEntity> coreType();
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, MultiblockHost.FORMED);
     }
 
     @Override
@@ -38,15 +38,20 @@ public abstract class MultiblockCoreBlock extends BaseEntityBlock {
         return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
+    /** Прятать модель ядра, когда машина собрана (цельную машину рисует рендер ядра). */
+    protected boolean hidesWhenFormed() {
+        return false;
+    }
+
     @Override
     protected RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
+        return hidesWhenFormed() && state.getValue(MultiblockHost.FORMED) ? RenderShape.ENTITYBLOCK_ANIMATED : RenderShape.MODEL;
     }
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MultiblockCoreBlockEntity core) {
-            core.onCoreRemoved();
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof MultiblockHost core) {
+            core.multiblock().onCoreRemoved();
         }
         super.onRemove(state, level, pos, newState, moved);
     }

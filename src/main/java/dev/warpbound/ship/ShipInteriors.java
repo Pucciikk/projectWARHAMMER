@@ -53,6 +53,7 @@ public final class ShipInteriors {
 
     /** Точка появления на борту, лицом к носу: из раскладки, а у старых кораблей v0 — на корме. */
     public static BlockPos spawn(Ship ship) {
+        if (ship.spawnRel != null) return origin(ship.plot).offset(ship.spawnRel);
         if (ship.layout != null) {
             var layout = ShipLayout.REGISTRY.get(ship.layout);
             if (layout.isPresent()) return origin(ship.plot).offset(layout.get().spawn());

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "warpbound:block/hull_plating",
+    "top": "warpbound:block/hull_plating",
+    "side": "warpbound:block/hull_plating"
+  }
+}

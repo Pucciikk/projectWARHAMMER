@@ -1,0 +1,19 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "warpbound:block/command_throne"
+  },
+  "facing=east": {
+   "model": "warpbound:block/command_throne",
+   "y": 90
+  },
+  "facing=south": {
+   "model": "warpbound:block/command_throne",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "warpbound:block/command_throne",
+   "y": 270
+  }
+ }
+}

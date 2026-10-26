@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "BPB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:iron_bars"
+    },
+    "P": {
+      "item": "warpbound:plasteel_plate"
+    }
+  },
+  "result": {
+    "id": "warpbound:deck_grating",
+    "count": 4
+  }
+}

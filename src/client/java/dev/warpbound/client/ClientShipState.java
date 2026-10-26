@@ -17,6 +17,11 @@ public final class ClientShipState {
     private static float progress;
     private static float field = 1f;
     private static float storm = 0.3f;
+    private static int flight;
+    /** Ход корабля 0..1: плавно растёт после запуска двигателей — по нему текут звёзды и трясёт палубу. */
+    private static float cruise;
+    /** Толчок запуска двигателей / раскрытия разлома 0..1, быстро гаснет. */
+    private static float jolt;
 
     private static float enter;
     private static float fieldSmooth = 1f;
@@ -33,6 +38,10 @@ public final class ClientShipState {
         progress = p.progress();
         field = p.field();
         storm = p.storm();
+        int was = flight;
+        flight = p.flight();
+        if ((flight & 1) != 0 && (was & 1) == 0) jolt = 1f;       // двигатели запущены
+        if (state == ShipState.ENTERING && p.progress() < 0.1f) jolt = 1f;
         if (!wasAboard && aboard) {
             // Поднялись на борт посреди варпа: сразу показываем нужное небо
             enter = targetEnter();
@@ -41,8 +50,30 @@ public final class ClientShipState {
         }
     }
 
+    /** Разлом раскрывается: молнии бьют чаще. */
+    public static boolean entering() {
+        return aboard && state == ShipState.ENTERING;
+    }
+
+    public static boolean enginesOn() {
+        return aboard && (flight & 1) != 0;
+    }
+
+    public static float cruise() {
+        return cruise;
+    }
+
+    /** Насколько трясёт палубу сейчас: ход, толчки, раскрытие разлома. */
+    public static float shake() {
+        if (!aboard) return 0f;
+        float warp = state == ShipState.ENTERING ? 0.8f : state == ShipState.TRANSIT ? 0.15f + 0.3f * (1f - field) : 0f;
+        return Math.min(1f, 0.12f * cruise + 0.9f * jolt + warp);
+    }
+
     static void reset() {
         aboard = false;
+        flight = 0;
+        cruise = 0f;
         state = ShipState.ORBIT;
         enter = 0f;
         fieldSmooth = 1f;
@@ -66,6 +97,9 @@ public final class ClientShipState {
         if (enter < target) enter = Math.min(target, enter + step);
         if (enter > target) enter = Math.max(target, enter - step);
 
+        float wantCruise = aboard && (flight & 1) != 0 ? 1f : 0f;
+        cruise += (wantCruise - cruise) * (1f - (float) Math.exp(-dt * 0.25));
+        jolt *= (float) Math.exp(-dt * 0.8);
         float k = 1f - (float) Math.exp(-dt * 2.0);
         fieldSmooth += (field - fieldSmooth) * k;
         stormSmooth += (storm - stormSmooth) * k;

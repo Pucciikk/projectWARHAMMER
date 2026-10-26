@@ -1,0 +1,161 @@
+{
+  "name": "ship_class.warpbound.light_cruiser",
+  "stages": [
+    {
+      "name": "shipyard.warpbound.stage.keel",
+      "requirements": [
+        {
+          "item": "warpbound:plasteel_plate",
+          "count": 8
+        },
+        {
+          "item": "minecraft:iron_ingot",
+          "count": 48
+        },
+        {
+          "item": "minecraft:stone",
+          "count": 64
+        }
+      ],
+      "structure": "warpbound:cruiser/keel",
+      "offset": [
+        -22,
+        1,
+        3
+      ],
+      "build_seconds": 60
+    },
+    {
+      "name": "shipyard.warpbound.stage.hull",
+      "requirements": [
+        {
+          "item": "warpbound:plasteel_plate",
+          "count": 16
+        },
+        {
+          "item": "minecraft:iron_ingot",
+          "count": 64
+        },
+        {
+          "item": "minecraft:deepslate",
+          "count": 64
+        }
+      ],
+      "structure": "warpbound:cruiser/hull",
+      "offset": [
+        -22,
+        1,
+        3
+      ],
+      "build_seconds": 90
+    },
+    {
+      "name": "shipyard.warpbound.stage.reactor",
+      "requirements": [
+        {
+          "item": "warpbound:brass_gear",
+          "count": 16
+        },
+        {
+          "item": "minecraft:redstone",
+          "count": 48
+        },
+        {
+          "item": "minecraft:gold_ingot",
+          "count": 8
+        },
+        {
+          "item": "minecraft:blaze_rod",
+          "count": 4
+        }
+      ],
+      "structure": "warpbound:cruiser/reactor",
+      "offset": [
+        -22,
+        1,
+        3
+      ],
+      "build_seconds": 90
+    },
+    {
+      "name": "shipyard.warpbound.stage.warp_engine",
+      "requirements": [
+        {
+          "item": "warpbound:brass_gear",
+          "count": 8
+        },
+        {
+          "item": "minecraft:obsidian",
+          "count": 16
+        },
+        {
+          "item": "minecraft:diamond",
+          "count": 4
+        },
+        {
+          "item": "minecraft:soul_sand",
+          "count": 16
+        }
+      ],
+      "structure": "warpbound:cruiser/warp_engine",
+      "offset": [
+        -22,
+        1,
+        3
+      ],
+      "build_seconds": 120
+    },
+    {
+      "name": "shipyard.warpbound.stage.geller_field",
+      "requirements": [
+        {
+          "item": "minecraft:amethyst_shard",
+          "count": 16
+        },
+        {
+          "item": "minecraft:gold_ingot",
+          "count": 16
+        },
+        {
+          "item": "minecraft:iron_bars",
+          "count": 16
+        }
+      ],
+      "structure": "warpbound:cruiser/geller_field",
+      "offset": [
+        -22,
+        1,
+        3
+      ],
+      "build_seconds": 90
+    },
+    {
+      "name": "shipyard.warpbound.stage.modules",
+      "requirements": [
+        {
+          "item": "warpbound:plasteel_plate",
+          "count": 8
+        },
+        {
+          "item": "warpbound:brass_gear",
+          "count": 8
+        },
+        {
+          "item": "minecraft:glass",
+          "count": 32
+        },
+        {
+          "item": "minecraft:lantern",
+          "count": 8
+        }
+      ],
+      "structure": "warpbound:cruiser/modules",
+      "offset": [
+        -22,
+        1,
+        3
+      ],
+      "build_seconds": 60
+    }
+  ]
+}

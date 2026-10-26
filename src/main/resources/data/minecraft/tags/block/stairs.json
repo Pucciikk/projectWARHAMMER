@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "warpbound:hull_plating_stairs",
+    "warpbound:plasteel_panel_stairs",
+    "warpbound:ash_stone_brick_stairs"
+  ]
+}

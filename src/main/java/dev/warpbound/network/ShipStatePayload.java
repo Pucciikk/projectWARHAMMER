@@ -15,8 +15,9 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
  * @param progress прогресс текущего состояния 0..1
  * @param field    прочность Поля Геллера 0..1
  * @param storm    сила варп-шторма 0..1
+ * @param flight   подготовка к полёту: 1 — двигатели, 2 — Поле Геллера, 4 — ставни (движение, тряска, гул на клиенте)
  */
-public record ShipStatePayload(boolean aboard, int state, float progress, float field, float storm)
+public record ShipStatePayload(boolean aboard, int state, float progress, float field, float storm, int flight)
         implements CustomPacketPayload {
     public static final Type<ShipStatePayload> TYPE = new Type<>(Warpbound.id("ship_state"));
     public static final StreamCodec<RegistryFriendlyByteBuf, ShipStatePayload> STREAM_CODEC = StreamCodec.composite(
@@ -25,9 +26,10 @@ public record ShipStatePayload(boolean aboard, int state, float progress, float 
             ByteBufCodecs.FLOAT, ShipStatePayload::progress,
             ByteBufCodecs.FLOAT, ShipStatePayload::field,
             ByteBufCodecs.FLOAT, ShipStatePayload::storm,
+            ByteBufCodecs.VAR_INT, ShipStatePayload::flight,
             ShipStatePayload::new);
 
-    public static final ShipStatePayload NOT_ABOARD = new ShipStatePayload(false, 0, 0, 1, 0);
+    public static final ShipStatePayload NOT_ABOARD = new ShipStatePayload(false, 0, 0, 1, 0, 0);
 
     @Override
     public Type<? extends CustomPacketPayload> type() {

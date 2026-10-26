@@ -1,0 +1,60 @@
+# Собранные мультиблоки: горн обломков, ручной пресс, Кузня Механикус (груда по шаблону → освящение → цельная модель)
+cmd time set noon
+cmd weather clear
+cmd gamemode spectator
+cmd difficulty normal
+cmd execute in minecraft:overworld run tp @s 0 150 -10 0 0
+wait 40
+cmd fill -18 149 -14 18 149 14 minecraft:smooth_stone
+cmd fill -18 150 -14 18 157 14 minecraft:air
+cmd fill -18 158 -14 18 165 14 minecraft:air
+cmd kill @e[type=!minecraft:player]
+cmd setblock -11 150 0 warpbound:salvage_forge[facing=north]
+cmd setblock -3 150 0 warpbound:manual_press[facing=north]
+cmd setblock 8 150 0 warpbound:mechanicus_forge[facing=north]
+# второй пресс лицом на восток — проверка поворота модели
+cmd setblock -4 150 9 warpbound:manual_press[facing=east]
+wait 10
+cmd tp @s 0 151 -4 0 0
+cmd wb machine build
+wait 30
+hud off
+cmd tp @s -1 156 -16 0 22
+wait 20
+shot 01_overview
+wait 3
+cmd tp @s -11 152.5 -5.5 0 18
+wait 15
+shot 02_salvage_forge
+wait 3
+cmd tp @s -3 152 -4.5 0 15
+wait 15
+shot 03_manual_press
+wait 3
+cmd tp @s 8 153 -9 0 12
+wait 15
+shot 04_mechanicus_forge
+wait 3
+cmd tp @s 8 152 -3.5 0 10
+wait 15
+shot 05_forge_inside
+wait 3
+# техножрец рядом — кузня оживает: горн, молоты
+cmd summon warpbound:tech_priest 8 150 -2 {NoAI:1b,Rotation:[180f,0f]}
+wait 60
+shot 06_forge_working
+wait 3
+cmd tp @s 12.5 153 -6.5 30 15
+wait 12
+shot 07_forge_working_side
+wait 3
+cmd tp @s 4 152 9 -90 15
+wait 15
+shot 08_press_east
+wait 3
+cmd tp @s 15 158 16 140 30
+wait 15
+shot 09_forge_back
+wait 3
+cmd gamemode creative
+hud on
