@@ -8,9 +8,10 @@ tools: Bash, PowerShell, Read, Glob, Grep, Write
 
 Как проверять:
 1. Логика без игрока: `./gradlew runGametest` (отчёт в `build/gametest/junit.xml`).
-2. Визуал и ощущения: сценарий автотеста — текстовый файл в `run/autotest/*.txt`, запуск
-   `./gradlew runClient -Dwarpbound.autotest=<имя>` (см. `README.md`, раздел «Автотест»).
-   Скриншоты появляются в `run/screenshots/autotest/<сценарий>/`, лог — `run/autotest/<сценарий>.log`.
+2. Визуал и ощущения: сценарий автотеста — текстовый файл `tools/autotest/<имя>.txt`, запуск
+   `./gradlew runAutotest -Pscenario=<имя>` (по умолчанию `smoke`; см. `README.md`, раздел «Автотест в клиенте»).
+   Клиент сам открывает мир `wb_autotest`, проходит сценарий и закрывается — дождись конца задачи.
+   Скриншоты появляются в `run/screenshots/autotest/<сценарий>/`, лог (команды и чат) — `run/autotest/<сценарий>.log`.
    Каждый скриншот открывай через Read и описывай, что на нём видно.
 3. Ошибки: ищи `ERROR`, `Exception`, `[warpbound]` в `run/logs/latest.log`.
 

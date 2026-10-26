@@ -24,7 +24,8 @@ import java.util.Locale;
 
 /**
  * Автотест в живом клиенте: без участия человека открывает тестовый мир, выполняет сценарий
- * run/autotest/&lt;имя&gt;.txt и закрывает игру. Включается только свойством -Dwarpbound.autotest=&lt;имя&gt;
+ * tools/autotest/&lt;имя&gt;.txt (папка — свойство -Dwarpbound.autotest.dir, без него run/autotest/)
+ * и закрывает игру. Включается только свойством -Dwarpbound.autotest=&lt;имя&gt;
  * (задача ./gradlew runAutotest -Pscenario=&lt;имя&gt;), в обычной игре ничего не делает.
  *
  * Строки сценария:
