@@ -1,0 +1,16 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "warpbound:block/warp_sampler"
+  },
+  "facing=east": {
+   "model": "warpbound:block/warp_sampler"
+  },
+  "facing=south": {
+   "model": "warpbound:block/warp_sampler"
+  },
+  "facing=west": {
+   "model": "warpbound:block/warp_sampler"
+  }
+ }
+}

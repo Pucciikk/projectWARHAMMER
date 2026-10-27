@@ -1,0 +1,17 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "equipment",
+ "pattern": [
+  "F F",
+  "F F"
+ ],
+ "key": {
+  "F": {
+   "item": "warpbound:flak_plate"
+  }
+ },
+ "result": {
+  "id": "warpbound:flak_boots",
+  "count": 1
+ }
+}

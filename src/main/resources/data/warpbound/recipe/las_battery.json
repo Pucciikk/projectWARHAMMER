@@ -1,0 +1,19 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "pattern": [
+  "LCL"
+ ],
+ "key": {
+  "L": {
+   "item": "warpbound:lead_ingot"
+  },
+  "C": {
+   "item": "warpbound:capacitor"
+  }
+ },
+ "result": {
+  "id": "warpbound:las_battery",
+  "count": 2
+ }
+}

@@ -4,13 +4,16 @@ import dev.warpbound.Warpbound;
 import dev.warpbound.industry.ManualPressBlock;
 import dev.warpbound.ship.block.CommandConsoleBlock;
 import dev.warpbound.ship.block.FixturePartBlock;
+import dev.warpbound.ship.block.GravLiftBlock;
 import dev.warpbound.industry.MechanicusForgeBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import dev.warpbound.industry.SalvageForgeBlock;
 import dev.warpbound.multiblock.MachinePartBlock;
 import dev.warpbound.ship.block.NavTableBlock;
 import dev.warpbound.ship.block.ShipFixtureBlock;
+import dev.warpbound.ship.block.StarChartBlock;
 import dev.warpbound.ship.block.TeleportariumPadBlock;
+import dev.warpbound.ship.block.WarpSamplerBlock;
 import dev.warpbound.shipyard.ShipyardConsoleBlock;
 import dev.warpbound.start.VoxBeaconBlock;
 import net.minecraft.core.Registry;
@@ -68,6 +71,18 @@ public final class WarpboundBlocks {
     /** Командный пульт мостика: состояние корабля, навигация, Поле Геллера, реактор. */
     public static final Block COMMAND_CONSOLE = register("command_console",
             new CommandConsoleBlock(fixture(MapColor.COLOR_BLACK).lightLevel(s -> 7)).bigModel());
+    /** Варп-двигатель: врата с воронкой у кормы машинного отделения (11×13×5). */
+    public static final Block WARP_DRIVE = register("warp_drive", new ShipFixtureBlock(fixture(MapColor.COLOR_PURPLE).lightLevel(s -> 12)).bigModel());
+    /** Штандарт с аквилой на стену: полотнище 2×3.5 блока свисает от кронштейна. */
+    public static final Block IMPERIAL_STANDARD = register("imperial_standard", new ShipFixtureBlock(fixture(MapColor.COLOR_RED).noCollission()).bigModel());
+    /** Штандарт на древке. */
+    public static final Block IMPERIAL_STANDARD_POLE = register("imperial_standard_pole", new ShipFixtureBlock(fixture(MapColor.COLOR_RED)).bigModel());
+    /** Гравилифт: площадка в полу, ПКМ — на палубу выше или ниже (анклав ↔ мостик). */
+    public static final Block GRAV_LIFT = register("grav_lift", new GravLiftBlock(fixture(MapColor.COLOR_CYAN).lightLevel(s -> 8).noOcclusion()));
+    /** Варп-пробоотборник анклава: стол со стенкой и портом в варп, механическая рука набирает пробы. */
+    public static final Block WARP_SAMPLER = register("warp_sampler", new WarpSamplerBlock(fixture(MapColor.COLOR_RED).lightLevel(s -> 7).noOcclusion()));
+    /** Карта Империума на стене мостика: табло 7×4, ПКМ — выбор мира для курса. */
+    public static final Block STAR_CHART = register("star_chart", new StarChartBlock(fixture(MapColor.COLOR_BLACK).lightLevel(s -> 9).noOcclusion()));
     /** Капитанский трон мостика (М7). Позже — точка возрождения после смерти на Кинерисе. */
     public static final Block COMMAND_THRONE = register("command_throne", new ShipFixtureBlock(fixture(MapColor.COLOR_RED),
             Shapes.or(Block.box(2, 0, 2, 14, 8, 14), Block.box(3, 8, 12, 13, 24, 14))));

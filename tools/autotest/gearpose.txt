@@ -1,0 +1,46 @@
+# Позы снаряжения: оружие в руках от первого и третьего лица, луч лазгана
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd difficulty easy
+cmd tp @s 64.5 200 -19.5 180 2
+wait 40
+cmd kill @e[type=minecraft:husk]
+cmd item replace entity @s armor.head with warpbound:flak_helmet
+cmd item replace entity @s armor.chest with warpbound:flak_chestplate
+cmd item replace entity @s armor.legs with warpbound:flak_leggings
+cmd item replace entity @s armor.feet with warpbound:flak_boots
+cmd item replace entity @s weapon.mainhand with warpbound:lasgun
+cmd summon minecraft:husk 64.5 200 -28 {NoAI:1b,PersistenceRequired:1b,Silent:1b,Health:200f,Attributes:[{id:"minecraft:generic.max_health",base:200}]}
+wait 20
+clearchat
+hud on
+shot 01_fp_lasgun
+use
+wait 2
+shot 02_fp_fire
+wait 10
+camera back
+wait 10
+use
+wait 2
+shot 03_back_fire
+wait 10
+camera front
+wait 10
+shot 04_front_lasgun
+cmd tp @s 64.5 200 -19.5 90 2
+wait 10
+shot 05_side_lasgun
+cmd tp @s 64.5 200 -19.5 180 2
+camera first
+cmd item replace entity @s weapon.mainhand with warpbound:chainsword
+wait 20
+shot 06_fp_chainsword
+camera front
+wait 10
+shot 07_front_chainsword
+cmd tp @s 64.5 200 -19.5 90 2
+wait 10
+shot 08_side_chainsword
+camera first

@@ -22,6 +22,7 @@ import dev.warpbound.shipyard.ShipyardBlockEntity;
 import dev.warpbound.start.CrashSite;
 import dev.warpbound.ship.Ship;
 import dev.warpbound.ship.ShipConsole;
+import dev.warpbound.ship.ShipNavigation;
 import dev.warpbound.ship.ShipRegistry;
 import dev.warpbound.ship.ShipService;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -146,6 +147,22 @@ public final class WarpboundCommands {
                             if (own.isEmpty()) return fail(ctx, "У тебя нет корабля.");
                             registry.remove(own.get());
                             ok(ctx, "Корабль забыт: можно строить и выводить новый.");
+                            return 1;
+                        }))
+                        .then(Commands.literal("sample").executes(ctx -> {
+                            // отладка: запустить ближайший варп-пробоотборник так, будто корабль в варпе
+                            ServerPlayer p = ctx.getSource().getPlayerOrException();
+                            for (BlockPos q : BlockPos.betweenClosed(p.blockPosition().offset(-8, -4, -8), p.blockPosition().offset(8, 4, 8))) {
+                                if (p.level().getBlockEntity(q) instanceof dev.warpbound.ship.block.WarpSamplerBlockEntity be && !be.busy()) {
+                                    be.start(p, true);
+                                    ok(ctx, "Пробоотборник запущен (как в варпе).");
+                                    return 1;
+                                }
+                            }
+                            return fail(ctx, "Рядом нет свободного пробоотборника.");
+                        }))
+                        .then(Commands.literal("chart").executes(ctx -> {
+                            ShipNavigation.openChart(ctx.getSource().getPlayerOrException());
                             return 1;
                         }))
                         .then(Commands.literal("target").executes(ctx -> {

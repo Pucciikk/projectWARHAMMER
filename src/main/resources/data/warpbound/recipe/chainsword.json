@@ -1,0 +1,24 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "equipment",
+ "pattern": [
+  " B ",
+  " B ",
+  "GSG"
+ ],
+ "key": {
+  "B": {
+   "item": "warpbound:chain_blade"
+  },
+  "S": {
+   "item": "warpbound:servo_motor"
+  },
+  "G": {
+   "item": "warpbound:brass_gear"
+  }
+ },
+ "result": {
+  "id": "warpbound:chainsword",
+  "count": 1
+ }
+}

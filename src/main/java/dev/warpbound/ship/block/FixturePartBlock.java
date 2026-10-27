@@ -30,7 +30,8 @@ public class FixturePartBlock extends Block {
         BlockPos best = null;
         double bestDist = Double.MAX_VALUE;
         for (BlockPos p : BlockPos.betweenClosed(pos.offset(-REACH, -REACH, -REACH), pos.offset(REACH, REACH, REACH))) {
-            if (level.getBlockState(p).getBlock() instanceof ShipFixtureBlock fixture && fixture.isBig()) {
+            var block = level.getBlockState(p).getBlock();
+            if (block instanceof ShipFixtureBlock fixture && fixture.isBig() || block instanceof StarChartBlock || block instanceof WarpSamplerBlock) {
                 double d = p.distSqr(pos);
                 if (d < bestDist) {
                     bestDist = d;

@@ -6,6 +6,8 @@ import dev.warpbound.industry.MechanicusForgeBlockEntity;
 import dev.warpbound.industry.SalvageForgeBlockEntity;
 import dev.warpbound.multiblock.MachinePartBlockEntity;
 import dev.warpbound.ship.block.ShipFixtureBlockEntity;
+import dev.warpbound.ship.block.StarChartBlockEntity;
+import dev.warpbound.ship.block.WarpSamplerBlockEntity;
 import dev.warpbound.shipyard.ShipyardBlockEntity;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -27,7 +29,14 @@ public final class WarpboundBlockEntities {
     public static final BlockEntityType<ShipFixtureBlockEntity> SHIP_FIXTURE = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
             Warpbound.id("ship_fixture"), BlockEntityType.Builder.of(ShipFixtureBlockEntity::new, WarpboundBlocks.REACTOR_CORE,
                     WarpboundBlocks.GELLER_NODE, WarpboundBlocks.NAV_TABLE, WarpboundBlocks.AUSPEX, WarpboundBlocks.TELEPORTARIUM_PAD,
-                    WarpboundBlocks.COMMAND_CONSOLE).build(null));
+                    WarpboundBlocks.COMMAND_CONSOLE, WarpboundBlocks.WARP_DRIVE, WarpboundBlocks.IMPERIAL_STANDARD,
+                    WarpboundBlocks.IMPERIAL_STANDARD_POLE).build(null));
+
+    public static final BlockEntityType<StarChartBlockEntity> STAR_CHART = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
+            Warpbound.id("star_chart"), BlockEntityType.Builder.of(StarChartBlockEntity::new, WarpboundBlocks.STAR_CHART).build(null));
+
+    public static final BlockEntityType<WarpSamplerBlockEntity> WARP_SAMPLER = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
+            Warpbound.id("warp_sampler"), BlockEntityType.Builder.of(WarpSamplerBlockEntity::new, WarpboundBlocks.WARP_SAMPLER).build(null));
 
     public static final BlockEntityType<MachinePartBlockEntity> MACHINE_PART = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
             Warpbound.id("machine_part"), BlockEntityType.Builder.of(MachinePartBlockEntity::new, WarpboundBlocks.MACHINE_PART).build(null));

@@ -1,0 +1,20 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "pattern": [
+  "PCP",
+  "PCP"
+ ],
+ "key": {
+  "P": {
+   "item": "warpbound:plasteel_plate"
+  },
+  "C": {
+   "item": "minecraft:chain"
+  }
+ },
+ "result": {
+  "id": "warpbound:chain_blade",
+  "count": 1
+ }
+}

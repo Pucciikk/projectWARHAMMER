@@ -38,6 +38,7 @@ public final class WarpboundBuildingBlocks {
     public static final Block LUMEN_CEILING = block("lumen_ceiling", new DecorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(1f).sound(SoundType.LANTERN).noOcclusion().lightLevel(s -> 15), Block.box(4, 2, 4, 12, 16, 12)));
     public static final Block RADIATION_SIGN = block("radiation_sign", new FacingDecorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(1f).sound(SoundType.LANTERN).noOcclusion(), true, Block.box(1, 1, 15, 15, 15, 16)));
     public static final Block EMERGENCY_LUMEN = block("emergency_lumen", new FacingDecorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(1f).sound(SoundType.LANTERN).noOcclusion().lightLevel(s -> 10), true, Block.box(4, 3, 9, 12, 13, 16)));
+    public static final Block PURITY_SEAL = block("purity_seal", new FacingDecorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(1f).sound(SoundType.LANTERN).noOcclusion(), true, Block.box(4, 0, 14, 12, 15, 16)));
     public static final Block COOLANT_PIPE = block("coolant_pipe", new RotatedPillarBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops()));
     public static final Block GELLER_CONDUIT = block("geller_conduit", new RotatedPillarBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops().lightLevel(s -> 9)));
     public static final Block BULKHEAD_DOOR = block("bulkhead_door", new BulkheadDoorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops().noOcclusion()));
@@ -70,10 +71,10 @@ public final class WarpboundBuildingBlocks {
     public static final Item PSYCRYSTAL = item("psycrystal");
 
     /** Все блоки набора — для вкладки творческого режима. */
-    public static final List<Block> ALL = List.of(HULL_SCRAP, PLASTEEL_PANEL, RIVETED_PLASTEEL_PANEL, HAZARD_PANEL, PLASTEEL_VENT, DECK_GRATING, HULL_PLATING_STAIRS, HULL_PLATING_SLAB, PLASTEEL_PANEL_STAIRS, PLASTEEL_PANEL_SLAB, COGITATOR_BANK, VOX_GRILLE, LUMEN_WALL, LUMEN_CEILING, RADIATION_SIGN, EMERGENCY_LUMEN, COOLANT_PIPE, GELLER_CONDUIT, BULKHEAD_DOOR, BOARDING_HATCH, LEAD_ORE, DEEPSLATE_LEAD_ORE, LEAD_BLOCK, RADIUM_ORE, ADAMANTIUM_ORE, WARPSTONE_ORE, PSYCRYSTAL_CLUSTER, ASH_BLOCK, ASH_STONE, ASH_STONE_BRICKS, ASH_STONE_BRICK_STAIRS, ASH_STONE_BRICK_SLAB, ASH_STONE_BRICK_WALL, ASH_CLAY, VITRIFIED_GLASS, AMBER_VITRIFIED_GLASS, SMOKE_VITRIFIED_GLASS, CHARRED_LOG, BONE_PILE);
+    public static final List<Block> ALL = List.of(HULL_SCRAP, PLASTEEL_PANEL, RIVETED_PLASTEEL_PANEL, HAZARD_PANEL, PLASTEEL_VENT, DECK_GRATING, HULL_PLATING_STAIRS, HULL_PLATING_SLAB, PLASTEEL_PANEL_STAIRS, PLASTEEL_PANEL_SLAB, COGITATOR_BANK, VOX_GRILLE, LUMEN_WALL, LUMEN_CEILING, RADIATION_SIGN, EMERGENCY_LUMEN, PURITY_SEAL, COOLANT_PIPE, GELLER_CONDUIT, BULKHEAD_DOOR, BOARDING_HATCH, LEAD_ORE, DEEPSLATE_LEAD_ORE, LEAD_BLOCK, RADIUM_ORE, ADAMANTIUM_ORE, WARPSTONE_ORE, PSYCRYSTAL_CLUSTER, ASH_BLOCK, ASH_STONE, ASH_STONE_BRICKS, ASH_STONE_BRICK_STAIRS, ASH_STONE_BRICK_SLAB, ASH_STONE_BRICK_WALL, ASH_CLAY, VITRIFIED_GLASS, AMBER_VITRIFIED_GLASS, SMOKE_VITRIFIED_GLASS, CHARRED_LOG, BONE_PILE);
     public static final List<Item> ITEMS = List.of(RAW_LEAD, LEAD_INGOT, RAW_RADIUM, RAW_ADAMANTIUM, WARPSTONE_SHARD, PSYCRYSTAL);
     /** Блоки с прозрачными пикселями (cutout) и полупрозрачные (стекло) — для слоёв рендера на клиенте. */
-    public static final List<Block> CUTOUT = List.of(DECK_GRATING, LUMEN_WALL, LUMEN_CEILING, RADIATION_SIGN, EMERGENCY_LUMEN, PSYCRYSTAL_CLUSTER, BONE_PILE);
+    public static final List<Block> CUTOUT = List.of(DECK_GRATING, LUMEN_WALL, LUMEN_CEILING, RADIATION_SIGN, EMERGENCY_LUMEN, PURITY_SEAL, PSYCRYSTAL_CLUSTER, BONE_PILE);
     public static final List<Block> TRANSLUCENT = List.of(VITRIFIED_GLASS, AMBER_VITRIFIED_GLASS, SMOKE_VITRIFIED_GLASS);
 
     private WarpboundBuildingBlocks() {

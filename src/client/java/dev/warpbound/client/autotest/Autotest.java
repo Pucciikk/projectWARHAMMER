@@ -44,6 +44,9 @@ import java.util.Locale;
  *   close                закрыть открытый экран
  *   log &lt;текст&gt;          записать строку в лог
  *   quit                 выйти из игры (иначе выходим после последней строки)
+ *   handover             отдать управление игроку и не выходить (осмотр вживую)
+ *   use                  ПКМ предметом в главной руке (выстрел лазганом и т. п.)
+ *   camera first|back|front  вид от первого лица или со спины / спереди
  *   # ...                комментарий
  * Лог (команды, все сообщения чата, ошибки) — run/autotest/&lt;сценарий&gt;.log.
  */
@@ -158,6 +161,12 @@ public final class Autotest {
                 case "wait" -> waitTicks = Math.max(1, Integer.parseInt(arg));
                 case "press" -> press(mc, arg);
                 case "close" -> mc.setScreen(null);
+                case "use" -> mc.gameMode.useItem(mc.player, net.minecraft.world.InteractionHand.MAIN_HAND);
+                case "camera" -> mc.options.setCameraType(switch (arg) {
+                    case "back" -> net.minecraft.client.CameraType.THIRD_PERSON_BACK;
+                    case "front" -> net.minecraft.client.CameraType.THIRD_PERSON_FRONT;
+                    default -> net.minecraft.client.CameraType.FIRST_PERSON;
+                });
                 case "cmd" -> command(mc, arg.startsWith("/") ? arg.substring(1) : arg);
                 case "look" -> {
                     String[] angles = arg.split("\\s+");
@@ -171,6 +180,11 @@ public final class Autotest {
                 case "shot" -> screenshot(mc, arg);
                 case "log" -> log(arg);
                 case "quit" -> quit(mc);
+                case "handover" -> {
+                    // сценарий подготовил мир — дальше играет человек, игра не закрывается
+                    finished = true;
+                    log("управление передано игроку");
+                }
                 default -> log("ОШИБКА: неизвестная строка «" + line + "»");
             }
         } catch (RuntimeException e) {

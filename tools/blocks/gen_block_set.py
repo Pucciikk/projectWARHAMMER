@@ -91,6 +91,8 @@ BLOCKS = [
          shape=(1, 1, 15, 15, 15, 16)),
     dict(id="emergency_lumen", ru="Аварийный люмен", en="Emergency Lumen", kind="parts", mat="lamp", light=10, wall=True,
          shape=(4, 3, 9, 12, 13, 16)),
+    dict(id="purity_seal", ru="Печать чистоты", en="Purity Seal", kind="parts", mat="lamp", wall=True,
+         shape=(4, 0, 14, 12, 15, 16)),
     dict(id="coolant_pipe", ru="Труба охладителя", en="Coolant Pipe", kind="pillar", mat="metal",
          tex=dict(side="coolant_pipe", end="coolant_pipe_end")),
     dict(id="geller_conduit", ru="Проводник Поля Геллера", en="Geller Conduit", kind="pillar", mat="metal", light=9,
@@ -327,6 +329,21 @@ def lumen_parts(name):
             ([5.5, 4.5, 9.5], [5, 7, 0.5], "metal", red),
             ([4.5, 3, 9], [7, 1, 5], "brass"), ([4.5, 12, 9], [7, 1, 5], "brass"),
             ([7.5, 3.5, 9], [1, 9, 0.5], "dark"),
+        ]
+        build_parts(name, name + "_model", parts, MECH)
+        return
+    if name == "purity_seal":
+        fill = lambda c: {"deco": {"north": lambda r, S, p: r.__setitem__((Ellipsis, slice(0, 3)), c)}}
+
+        def wax(r, S, p):
+            h, w = r.shape[:2]
+            r[..., :3] = (120, 18, 22)
+            r[1:-1, 1:-1, :3] = (150, 26, 30)
+            r[h // 2 - 1:h // 2 + 1, w // 2 - 1:w // 2 + 1, :3] = (210, 170, 70)
+        parts = [
+            ([5.5, 1, 15.3], [2, 9, 0.5], "metal", fill((214, 200, 160))),
+            ([8.5, 2.5, 15.3], [2, 7.5, 0.5], "metal", fill((200, 186, 146))),
+            ([5, 9, 14.5], [6, 6, 1.5], "red", {"deco": {"north": wax}}),
         ]
         build_parts(name, name + "_model", parts, MECH)
         return

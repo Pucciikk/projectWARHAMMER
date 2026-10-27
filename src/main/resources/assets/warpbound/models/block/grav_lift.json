@@ -1,0 +1,67 @@
+{
+ "parent": "minecraft:block/block",
+ "textures": {
+  "top": "warpbound:block/grav_lift_top",
+  "side": "warpbound:block/grav_lift_side",
+  "particle": "warpbound:block/grav_lift_side"
+ },
+ "elements": [
+  {
+   "from": [
+    0,
+    0,
+    0
+   ],
+   "to": [
+    16,
+    2,
+    16
+   ],
+   "faces": {
+    "up": {
+     "texture": "#top"
+    },
+    "down": {
+     "texture": "#side",
+     "cullface": "down"
+    },
+    "north": {
+     "texture": "#side",
+     "uv": [
+      0,
+      14,
+      16,
+      16
+     ]
+    },
+    "south": {
+     "texture": "#side",
+     "uv": [
+      0,
+      14,
+      16,
+      16
+     ]
+    },
+    "east": {
+     "texture": "#side",
+     "uv": [
+      0,
+      14,
+      16,
+      16
+     ]
+    },
+    "west": {
+     "texture": "#side",
+     "uv": [
+      0,
+      14,
+      16,
+      16
+     ]
+    }
+   }
+  }
+ ]
+}

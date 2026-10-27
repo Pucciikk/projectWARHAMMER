@@ -1,0 +1,19 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "pattern": [
+  "WPW"
+ ],
+ "key": {
+  "W": {
+   "tag": "minecraft:wool"
+  },
+  "P": {
+   "item": "warpbound:plasteel_plate"
+  }
+ },
+ "result": {
+  "id": "warpbound:flak_plate",
+  "count": 2
+ }
+}

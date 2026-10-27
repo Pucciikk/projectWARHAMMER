@@ -1,0 +1,16 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "warpbound:block/imperial_standard"
+  },
+  "facing=east": {
+   "model": "warpbound:block/imperial_standard"
+  },
+  "facing=south": {
+   "model": "warpbound:block/imperial_standard"
+  },
+  "facing=west": {
+   "model": "warpbound:block/imperial_standard"
+  }
+ }
+}

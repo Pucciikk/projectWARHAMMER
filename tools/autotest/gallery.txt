@@ -1,0 +1,92 @@
+# Витрина предметов Сезона 1: материалы, компоненты, оружие и броня
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd difficulty easy
+cmd tp @s 64 210 -10 180 20
+wait 40
+cmd fill 54 199 -32 74 199 -14 minecraft:polished_deepslate
+cmd fill 54 200 -31 74 210 -14 minecraft:air
+cmd fill 54 200 -32 74 207 -32 minecraft:polished_blackstone_bricks
+cmd fill 54 208 -32 74 208 -32 warpbound:brass_trim
+cmd kill @e[type=minecraft:glow_item_frame]
+cmd kill @e[type=minecraft:armor_stand]
+wait 5
+cmd summon minecraft:glow_item_frame 57 205 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:raw_lead",count:1}}
+cmd summon minecraft:glow_item_frame 59 205 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:lead_ingot",count:1}}
+cmd summon minecraft:glow_item_frame 61 205 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:brass_ingot",count:1}}
+cmd summon minecraft:glow_item_frame 63 205 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:plasteel_blend",count:1}}
+cmd summon minecraft:glow_item_frame 65 205 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:plasteel_ingot",count:1}}
+cmd summon minecraft:glow_item_frame 67 205 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:plasteel_plate",count:1}}
+cmd summon minecraft:glow_item_frame 69 205 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:brass_gear",count:1}}
+cmd summon minecraft:glow_item_frame 56 203 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:focusing_lens",count:1}}
+cmd summon minecraft:glow_item_frame 58 203 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:capacitor",count:1}}
+cmd summon minecraft:glow_item_frame 60 203 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:las_battery",count:1}}
+cmd summon minecraft:glow_item_frame 62 203 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:las_battery_depleted",count:1}}
+cmd summon minecraft:glow_item_frame 64 203 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:servo_motor",count:1}}
+cmd summon minecraft:glow_item_frame 66 203 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:chain_blade",count:1}}
+cmd summon minecraft:glow_item_frame 68 203 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:flak_plate",count:1}}
+cmd summon minecraft:glow_item_frame 70 203 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:respirator_filter",count:1}}
+cmd summon minecraft:glow_item_frame 57 201 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:lasgun",count:1}}
+cmd summon minecraft:glow_item_frame 59 201 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:chainsword",count:1}}
+cmd summon minecraft:glow_item_frame 61 201 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:flak_helmet",count:1}}
+cmd summon minecraft:glow_item_frame 63 201 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:flak_chestplate",count:1}}
+cmd summon minecraft:glow_item_frame 65 201 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:flak_leggings",count:1}}
+cmd summon minecraft:glow_item_frame 67 201 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:flak_boots",count:1}}
+cmd summon minecraft:glow_item_frame 69 201 -31 {Facing:3b,Fixed:1b,Item:{id:"warpbound:respirator",count:1}}
+cmd summon minecraft:armor_stand 60.5 200 -26 {ShowArms:1b,NoBasePlate:1b,Rotation:[20f,0f],ArmorItems:[{id:"warpbound:flak_boots",count:1},{id:"warpbound:flak_leggings",count:1},{id:"warpbound:flak_chestplate",count:1},{id:"warpbound:respirator",count:1}],HandItems:[{id:"warpbound:lasgun",count:1},{}],Pose:{RightArm:[-90f,0f,0f]}}
+cmd summon minecraft:armor_stand 68.5 200 -26 {ShowArms:1b,NoBasePlate:1b,Rotation:[-20f,0f],ArmorItems:[{id:"warpbound:flak_boots",count:1},{id:"warpbound:flak_leggings",count:1},{id:"warpbound:flak_chestplate",count:1},{id:"warpbound:flak_helmet",count:1}],HandItems:[{id:"warpbound:chainsword",count:1},{}],Pose:{RightArm:[-40f,0f,0f]}}
+cmd item replace entity @s weapon.mainhand with warpbound:lasgun
+cmd give @s warpbound:chainsword
+cmd give @s warpbound:las_battery 8
+wait 20
+clearchat
+cmd tp @s 64.5 200 -19 180 12
+wait 40
+shot 01_gallery
+cmd tp @s 64.5 201 -27 180 0
+wait 30
+shot 02_wall_close
+cmd tp @s 64.5 200 -21 160 6
+wait 30
+shot 03_guardsmen
+cmd tp @s 64.5 200.5 -22.5 180 8
+wait 30
+shot 04_stands_nohud
+hud on
+cmd item replace entity @s armor.head with warpbound:flak_helmet
+cmd item replace entity @s armor.chest with warpbound:flak_chestplate
+cmd item replace entity @s armor.legs with warpbound:flak_leggings
+cmd item replace entity @s armor.feet with warpbound:flak_boots
+cmd item replace entity @s weapon.mainhand with warpbound:lasgun
+cmd summon minecraft:husk 64.5 200 -28 {NoAI:1b,PersistenceRequired:1b,Silent:1b}
+cmd tp @s 64.5 200 -20 180 2
+wait 20
+clearchat
+shot 05_first_person_lasgun
+use
+shot 06_first_person_fire
+wait 10
+camera front
+cmd tp @s 64.5 200 -20 180 2
+wait 20
+shot 07_guardsman_front
+camera back
+wait 10
+use
+shot 08_third_person_fire
+wait 10
+camera first
+cmd item replace entity @s weapon.mainhand with warpbound:chainsword
+wait 20
+shot 09_first_person_chainsword
+camera front
+wait 20
+shot 10_guardsman_chainsword
+camera first
+cmd tp @s 61.2 200 -23.6 165 8
+wait 30
+shot 11_stand_lasgun
+cmd tp @s 67.8 200 -23.6 195 8
+wait 30
+shot 12_stand_chainsword

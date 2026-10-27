@@ -23,7 +23,7 @@ except NameError:
     ASSETS = r"C:/Users/Name/projectWARHAMMER/src/main/resources/assets/warpbound"
 
 
-_KIND = ["entity"]  # block: — модели машин (geo/block, textures/block)
+_KIND = ["entity"]  # block: — модели машин (geo/block, textures/block); item: — снаряжение (geo/item)
 
 
 def _rot(r, pivot):
@@ -113,7 +113,8 @@ def _faces(uv, size):
 
 def build(model, texture=None, offset=(0, 0, 0)):
     """Строит модель в текущей сцене; offset — сдвиг в блоках."""
-    _KIND[0], model = ("block", model[6:]) if model.startswith("block:") else ("entity", model)
+    _KIND[0], model = (("block", model[6:]) if model.startswith("block:") else ("item", model[5:]) if model.startswith("item:")
+                       else ("entity", model))
     with open(os.path.join(ASSETS, "geo", _KIND[0], model + ".geo.json"), encoding="utf-8") as f:
         geo = json.load(f)["minecraft:geometry"][0]
     tw, th = geo["description"]["texture_width"], geo["description"]["texture_height"]

@@ -13,20 +13,23 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
  * Пункт назначения из data/&lt;ns&gt;/ship_destination/*.json: мир, на орбиту которого выходит корабль,
  * и куда телепортариум высаживает экипаж. Мир, которого нет на сервере, на навигационном столе не показывается.
+ * map — место на карте Империума мостика: [x, y] от 0 до 1 (пусто — мира на карте нет).
  */
-public record ShipDestination(String name, ResourceLocation dimension, String landing, int x, int z, int radius) {
+public record ShipDestination(String name, ResourceLocation dimension, String landing, int x, int z, int radius, List<Float> map) {
     public static final Codec<ShipDestination> CODEC = RecordCodecBuilder.create(i -> i.group(
             Codec.STRING.fieldOf("name").forGetter(ShipDestination::name),
             ResourceLocation.CODEC.fieldOf("dimension").forGetter(ShipDestination::dimension),
             Codec.STRING.optionalFieldOf("landing", "spawn").forGetter(ShipDestination::landing),
             Codec.INT.optionalFieldOf("x", 0).forGetter(ShipDestination::x),
             Codec.INT.optionalFieldOf("z", 0).forGetter(ShipDestination::z),
-            Codec.INT.optionalFieldOf("radius", 48).forGetter(ShipDestination::radius)
+            Codec.INT.optionalFieldOf("radius", 48).forGetter(ShipDestination::radius),
+            Codec.FLOAT.listOf().optionalFieldOf("map", List.of()).forGetter(ShipDestination::map)
     ).apply(i, ShipDestination::new));
 
     public static final DataRegistry<ShipDestination> REGISTRY = new DataRegistry<>("ship_destination", CODEC);

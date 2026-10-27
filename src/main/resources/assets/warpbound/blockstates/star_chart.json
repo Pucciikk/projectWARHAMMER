@@ -1,0 +1,16 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "warpbound:block/star_chart"
+  },
+  "facing=east": {
+   "model": "warpbound:block/star_chart"
+  },
+  "facing=south": {
+   "model": "warpbound:block/star_chart"
+  },
+  "facing=west": {
+   "model": "warpbound:block/star_chart"
+  }
+ }
+}

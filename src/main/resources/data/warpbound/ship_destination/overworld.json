@@ -1,5 +1,9 @@
 {
   "name": "destination.warpbound.overworld",
   "dimension": "minecraft:overworld",
-  "landing": "dock"
+  "landing": "dock",
+  "map": [
+    0.575,
+    0.43
+  ]
 }

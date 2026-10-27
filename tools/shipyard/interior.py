@@ -74,6 +74,11 @@ def door():
     return "warpbound:bulkhead_door[open=false,locked=false]"
 
 
+def standard(facing):
+    """Штандарт с аквилой (GeckoLib): ставится в клетку у стены высоко, полотнище свисает на 4 блока."""
+    return f"warpbound:imperial_standard[facing={facing}]"
+
+
 def banner(facing):
     return f"minecraft:red_wall_banner[facing={facing}]"
 
@@ -131,6 +136,7 @@ class Interior:
                     # внешний слой со стороны отсека — облицовка поверх (снаружи тот же блок не виден)
                     pass
                 lining.setdefault(n, (pal, d))
+        self.lining = {n: v for n, v in lining.items() if n not in self.outer}
         for n, (pal, d) in lining.items():
             if n in self.outer:
                 continue                      # внешний слой не трогаем: его видно снаружи
@@ -248,38 +254,10 @@ PAL_TORPEDO = pal(machine_wall, lambda p: B["hazard"] if p[2] % 6 == 0 else B["d
 # ---------------------------------------------------------------- отсеки
 
 def enginarium(it):
-    """Корма: зал на всю высоту. Реактор в свинцовом кольце, варп-двигатель у кормы, мостки, трубы, алтарь."""
+    """Корма: зал на всю высоту. Варп-двигатель у кормовой стены, реактор 7×7 до потолка в свинцовом кольце,
+    четыре генератора Поля Геллера по углам, мостки, трубы, алтарь Омниссии, проход в анклав."""
     x0, x1, yf, yt, z0, z1 = 13, 31, 15, 34, 3, 31
     it.carve(x0, x1, yf, yt, z0, z1, PAL_ENGINE)
-    # варп-двигатель: синяя стена пламени за решётками у кормы
-    for x in range(16, 29):
-        for y in range(yf, yf + 11):
-            z = z0
-            if it.is_air(x, y, z):
-                it.put(x, y, z, B["soul"] if (x + y) % 3 == 0 and y % 2 == 0 else B["bars"])
-        it.put(x, yf + 11, z0 + 1, B["gothic"])
-    # плазменный реактор: ядро 3×3×4 + части, свинцовое кольцо, трубы охладителя к потолку
-    rx, rz = CX, 16
-    for dx in (-1, 0, 1):
-        for dy in range(4):
-            for dz in (-1, 0, 1):
-                it.put(rx + dx, yf + dy, rz + dz, B["part"])
-    it.put(rx, yf, rz, "warpbound:reactor_core[facing=north]")
-    it.reactor = (rx, yf, rz)
-    for x in range(rx - 4, rx + 5):
-        for z in range(rz - 4, rz + 5):
-            ring = max(abs(x - rx), abs(z - rz)) == 4
-            if ring and abs(z - rz) > 1:
-                it.put(x, yf, z, B["lead"])
-                it.put(x, yf + 1, z, B["bars"] if (x + z) % 2 else B["lead"])
-            elif max(abs(x - rx), abs(z - rz)) == 5:
-                it.put(x, yf - 1, z, B["hazard"], force=True)
-    for x, z in ((rx - 4, rz - 4), (rx + 4, rz - 4), (rx - 4, rz + 4), (rx + 4, rz + 4)):
-        for y in range(yf + 2, yt + 1):
-            it.put(x, y, z, pipe("y"))
-    for y in (yt - 1, yt - 3):
-        it.ceiling_run(rx - 4, y, z0 + 1, z1 - 1, pipe("z"))
-        it.ceiling_run(rx + 4, y, z0 + 1, z1 - 1, pipe("z"))
     # мостки по бортам на втором ярусе, перила, лестницы
     gy = yf + 8
     for z in range(z0 + 1, z1):
@@ -290,11 +268,38 @@ def enginarium(it):
     for k in range(8):                                      # лестница на мостки у носовой стены
         it.put(x0 + 1, yf + k, z1 - 2 - k, stairs("north", kind=TSTAIRS))
         it.put(x1 - 1, yf + k, z1 - 2 - k, stairs("north", kind=TSTAIRS))
+    # плазменный реактор 7×7×19: основание, сосуд 5×5, вытяжка до потолка; свинцовое кольцо, кромка опасности
+    rx, rz = CX, 16
+    it.reactor = (rx, yf, rz)
+    for x in range(rx - 6, rx + 7):
+        for z in range(rz - 6, rz + 7):
+            r = max(abs(x - rx), abs(z - rz))
+            if r == 5 and abs(z - rz) > 1:
+                it.put(x, yf, z, B["lead"])
+                it.put(x, yf + 1, z, B["bars"] if (x + z) % 2 else B["lead"])
+            elif r == 6:
+                it.put(x, yf - 1, z, B["hazard"], force=True)
+    for x in range(rx - 3, rx + 4):
+        for z in range(rz - 3, rz + 4):
+            it.put(x, yf, z, B["part"])
+            if max(abs(x - rx), abs(z - rz)) <= 2:
+                for y in range(yf + 1, yf + 11):
+                    it.put(x, y, z, B["part"])
+            if abs(x - rx) <= 1 and abs(z - rz) <= 1:
+                for y in range(yf + 11, yt + 1):
+                    it.put(x, y, z, B["part"])
+    it.put(rx, yf, rz, "warpbound:reactor_core[facing=north]")
+    for x, z in ((rx - 5, rz - 5), (rx + 5, rz - 5), (rx - 5, rz + 5), (rx + 5, rz + 5)):
+        for y in range(yf + 2, yt + 1):
+            it.put(x, y, z, pipe("y"))
+    for y in (yt - 1, yt - 3):
+        it.ceiling_run(rx - 5, y, z0 + 1, z1 - 1, pipe("z"))
+        it.ceiling_run(rx + 5, y, z0 + 1, z1 - 1, pipe("z"))
     # знаки радиации и красные лампы на стенах у реактора, пульты техножрецов
     for z in (rz - 3, rz + 3):
         it.put(x0, yf + 3, z, rad("east"))
         it.put(x1, yf + 3, z, rad("west"))
-    for z in range(z0 + 3, z1, 6):
+    for z in range(z0 + 9, z1, 6):
         it.put(x0 + 1, yf + 5, z, red_lamp("east"))
         it.put(x1 - 1, yf + 5, z, red_lamp("west"))
         it.put(x0 + 1, gy + 3, z, lumen("east"))
@@ -302,14 +307,7 @@ def enginarium(it):
     for z in (rz - 6, rz + 6):
         it.put(x0 + 1, yf, z, cog("east"))
         it.put(x1 - 1, yf, z, cog("west"))
-    # кормовые генераторы Поля Геллера по углам
-    for x in (x0 + 2, x1 - 2):
-        for dy in (1, 2):
-            it.put(x, yf + dy, z0 + 4, B["part"])
-        it.put(x, yf, z0 + 4, "warpbound:geller_node[facing=south]")
-        for y in range(yf + 3, gy):
-            it.put(x, y, z0 + 4, conduit("y"))
-    # алтарь Омниссии у носовой стены: шестерня из меди, свечи, череп
+    # алтарь Омниссии у носовой стены: шестерня из меди, свечи, череп; штандарты по бокам
     az = z1 - 1
     for x in range(CX - 2, CX + 3):
         it.put(x, yf, az, B["gothic"])
@@ -318,7 +316,28 @@ def enginarium(it):
     it.put(CX - 1, yf + 3, az, B["copper2"])
     it.put(CX + 1, yf + 3, az, B["copper2"])
     it.put(CX, yf + 4, az, B["copper2"])
-    it.hanging_lamps((CX - 6, CX + 6), yt, z0, z1, every=7, drop=(3, 5))
+    for x in (CX - 4, CX + 4):
+        it.put(x, yf + 9, az, standard("north"))
+    it.hanging_lamps((CX - 7, CX + 7), yt, z0, z1, every=7, drop=(3, 5))
+    # варп-двигатель 11×13×5 у кормовой стены: врата с воронкой, лицом к реактору
+    for x in range(CX - 5, CX + 6):
+        for y in range(yf, yf + 13):
+            for z in range(z0, z0 + 5):
+                it.put(x, y, z, B["part"])
+    it.put(CX, yf, z0 + 2, "warpbound:warp_drive[facing=south]")
+    # генераторы Поля Геллера 3×3×7: два у кормы рядом с двигателем, два у носовой стены
+    for gx, gz in ((x0 + 2, z0 + 3), (x1 - 2, z0 + 3), (x0 + 3, z1 - 5), (x1 - 3, z1 - 5)):
+        for x in range(gx - 1, gx + 2):
+            for z in range(gz - 1, gz + 2):
+                for y in range(yf, yf + 7):
+                    it.put(x, y, z, B["part"])
+        it.put(gx, yf, gz, "warpbound:geller_node[facing=" + ("south" if gz < 16 else "north") + "]")
+    # проход в анклав: арка в носовой стене и две ступени вверх
+    it.carve(17, 19, yf, yf + 4, z1 + 1, z1 + 2, PAL_SERVICE)
+    for x in range(17, 20):
+        it.put(x, yf, z1 + 1, stairs("south", kind=TSTAIRS))
+        it.put(x, yf + 1, z1 + 2, stairs("south", kind=TSTAIRS))
+        it.put(x, yf, z1 + 2, B["gothic"])
 
 
 def nave(it):
@@ -371,6 +390,9 @@ def nave(it):
     for z in range(z0 + 6, z1, 12):
         it.put(CX - 2, yf + 4, z, "warpbound:vox_grille[facing=east]")
         it.put(CX + 2, yf + 4, z, banner("west"))
+    # штандарты над гермодверями в обоих концах нефа
+    it.put(CX, yf + 7, z0 + 1, standard("south"))
+    it.put(CX, yf + 7, z1 - 1, standard("north"))
     # гермодвери в обоих концах
     for z in (z0, z1):
         for x in range(CX - 1, CX + 2):
@@ -424,7 +446,8 @@ def bridge(it):
 
 
 def hub(it):
-    """Под мостиком: анклав Механикус, телепортариум и лестница вверх на мостик."""
+    """Под мостиком: анклав Механикус — телепортариум, мастерская, остров когитаторов, хранилище данных,
+    ниши сервиторов, гравилифт на мостик, лестница в неф и арка в машинное отделение."""
     x0, x1, yf, yt, z0, z1 = 14, 30, 17, 25, 34, 50
     it.carve(x0, x1, yf, yt, z0, z1, PAL_SERVICE)
     # телепортариум: площадка 3×3 в полу
@@ -441,15 +464,66 @@ def hub(it):
         it.put(x1, yf, z, cog("west"))
         it.put(x1, yf + 1, z, B["skull"])
         it.put(x1, yf + 3, z, lumen("west"))
-    # шахта с лестницей на мостик — внутри левой опоры надстройки (середина между опорами открыта наружу)
-    sx, sz = 16, 44
-    it.carve(sx, sx, yf, 40, sz, sz, PAL_SERVICE)
-    for y in range(yf, 40):
-        it.put(sx, y, sz, "minecraft:ladder[facing=east]")
-    # проход в неф
+    # гравилифт на мостик (пара — в полу мостика, bridge_hall.LIFT), вокруг — кромка опасности
+    lx, lz = 26, 43
+    it.put(lx, yf, lz, "warpbound:grav_lift")
+    for dx, dz in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+        it.put(lx + dx, yf - 1, lz + dz, B["hazard"], force=True)
+    it.put(lx + 1, yf + 2, lz, lumen("west"))
+    # варп-пробоотборник у западной стены: стол 5×2 со стенкой и портом в варп (модель warp_sampler)
+    for z in range(43, 48):
+        for x in (x0, x0 + 1):
+            it.put(x, yf, z, B["part"])
+        for y in range(yf + 1, yf + 4):
+            it.put(x0, y, z, B["part"])
+    it.put(x0, yf, 45, "warpbound:warp_sampler[facing=east]")
+    for z in (48, 49):
+        for y in (yf, yf + 1):
+            it.put(x0, y, z, "minecraft:barrel[facing=up]")
+    # мастерская Механикус у восточной стены, под медной шестернёй: горн, наковальня, точило
+    for z, blk in ((47, "minecraft:blast_furnace[facing=west,lit=true]"), (48, "minecraft:anvil[facing=north]"),
+                   (49, "minecraft:grindstone[face=floor,facing=west]")):
+        it.put(x1, yf, z, blk)
+    # хранилище данных: стеллажи инфопланшетов в два яруса
+    for z in (36, 37, 38):
+        for y in (yf, yf + 1, yf + 2):
+            it.put(x0, y, z, "minecraft:chiseled_bookshelf[facing=east]")
+    # остров когитаторов: два ряда спина к спине, кресла перед экранами
+    for x in range(24, 28):
+        it.put(x, yf, 38, cog("north"))
+        it.put(x, yf + 1, 38, B["copper"] if x % 2 else B["vent"])
+        it.put(x, yf, 37, stairs("north", kind="minecraft:dark_oak_stairs"))
+        it.put(x, yf, 39, cog("south"))
+        it.put(x, yf, 40, stairs("south", kind="minecraft:dark_oak_stairs"))
+    for x in (23, 28):
+        it.put(x, yf, 38, B["gothic"])
+        it.put(x, yf, 39, B["gothic"])
+        it.put(x, yf + 1, 38, B["candle"])
+    # шестерня Омниссии из меди на восточной стене над нишами
+    for dy, dz, b in ((0, 0, "copper2"), (1, 0, "copper"), (-1, 0, "copper"), (0, 1, "copper"), (0, -1, "copper"),
+                      (1, 1, "cgrate"), (1, -1, "cgrate"), (-1, 1, "cgrate"), (-1, -1, "cgrate"),
+                      (2, 0, "copper2"), (-2, 0, "copper2"), (0, 2, "copper2"), (0, -2, "copper2")):
+        it.put(x1, yf + 5 + dy, 47 + dz, B[b])
+    it.hanging_lamps((CX - 4, CX + 4), yt, z0, z1, every=5, drop=(2, 2))
+    for z in range(z0 + 2, z1, 4):
+        if not 42 <= z <= 48:                               # над пробоотборником — его стенка
+            it.put(x0, yf + 4, z, lumen("east"))
+    # ящики по углам
+    for p in ((15, yf, 50), (16, yf, 50), (15, yf + 1, 50), (29, yf, 50), (29, yf + 1, 50), (28, yf, 50)):
+        it.put(*p, "minecraft:barrel[facing=up]")
+    # проход в неф: неф на 4 блока выше — лестница вдоль носовой стены, площадка, гермодверь
+    for k in range(4):
+        for x in range(CX - 1, CX + 2):
+            it.put(x, yf + k, z1 - 4 + k, stairs("south", kind=TSTAIRS))
+            for y in range(yf, yf + k):
+                it.put(x, y, z1 - 4 + k, B["gothic"])
+    it.carve(CX - 1, CX + 1, yf + 4, yf + 6, z1 + 1, z1 + 1, PAL_SERVICE)
     for x in range(CX - 1, CX + 2):
-        for y in range(yf, yf + 3):
-            it.put(x, y, z1, door())
+        for y in range(yf, yf + 4):
+            it.put(x, y, z1, B["gothic"])
+        for y in range(yf + 4, yf + 7):
+            it.put(x, y, z1 + 1, door())
+    it.put(CX, yf + 6, z0, standard("south"))
 
 
 def prow(it):
@@ -472,6 +546,37 @@ def prow(it):
     for z in range(z0, z1):
         it.put(CX - 2, yf, z, "minecraft:rail")
         it.put(CX + 2, yf, z, "minecraft:rail")
+    # торпеды на ложементах по оси отсека: корпус, латунный пояс, боеголовка
+    for za, zb in ((104, 116), (119, 129)):
+        for z in range(za, zb + 1):
+            if (z - za) % 4 == 0:
+                it.put(CX, yf, z, "minecraft:polished_blackstone_wall")
+            it.put(CX, yf + 1, z, "minecraft:polished_basalt[axis=z]")
+        it.put(CX, yf + 1, zb - 2, B["brass"])
+        it.put(CX, yf + 1, zb + 1, "minecraft:lightning_rod[facing=south]")
+    # казённик торпедного аппарата в носовой стене: кольцо из железа, тёмный люк, гидравлика
+    for x in range(CX - 3, CX + 4):
+        for y in range(yf, yf + 7):
+            r = ((x - CX) ** 2 + (y - (yf + 3)) ** 2) ** 0.5
+            if 1.6 < r < 3.2:
+                it.put(x, y, z1, "minecraft:iron_block")
+            elif r <= 1.6:
+                it.put(x, y, z1, "minecraft:black_concrete")
+    for x in (CX - 4, CX + 4):
+        for y in range(yf, yf + 5):
+            it.put(x, y, z1 - 1, pipe("y"))
+        it.put(x, yf + 5, z1 - 1, B["brass"])
+    for x, f in ((CX - 3, "south"), (CX + 3, "south")):
+        it.put(x, yf, z1 - 3, cog(f))
+    for z in range(z0 + 4, z1, 5):
+        for x in (CX - 3, CX + 3):
+            it.put(x, yt, z, "warpbound:lumen_ceiling")
+    # ящики со снарядами между стеллажами
+    for z in range(z0 + 5, z1 - 6, 8):
+        for x in (x0 + 2, x1 - 2):
+            it.put(x, yf, z, "minecraft:barrel[facing=up]")
+            it.put(x, yf + 1, z, "minecraft:barrel[facing=up]")
+            it.put(x, yf, z + 1, "minecraft:barrel[facing=up]")
     # часовня
     x0, x1, yf, yt, z0, z1 = 16, 28, 19, 32, 97, 124
     it.carve(x0, x1, yf, yt, z0, z1, PAL_CHAPEL)
@@ -499,6 +604,11 @@ def prow(it):
                 if (x, y, z) in it.outer:
                     it.cells[(x, y, z)] = (B["stained"], "modules")
     it.hanging_lamps((CX - 3, CX + 3), yt, z0, z1, every=5, drop=(3, 4))
+    for z in range(z0 + 3, z1 - 4, 6):                      # штандарты вдоль бортов, на древках у алтаря
+        it.put(x0, yf + 7, z, standard("east"))
+        it.put(x1, yf + 7, z, standard("west"))
+    for x in (CX - 4, CX + 4):
+        it.put(x, yf, az - 1, "warpbound:imperial_standard_pole[facing=north]")
     for z in (z0, ):                                        # проход из нефа
         for x in range(CX - 1, CX + 2):
             for y in range(yf, yf + 3):
@@ -527,6 +637,72 @@ def entry(it):
                 it.cells[p] = ("warpbound:boarding_hatch[open=true,locked=false]", "modules")
 
 
+# ---------------------------------------------------------------- износ: корабль служит веками
+
+CRACKED = {
+    "minecraft:polished_blackstone_bricks": ("minecraft:cracked_polished_blackstone_bricks", 0.14),
+    "minecraft:deepslate_bricks": ("minecraft:cracked_deepslate_bricks", 0.14),
+    "minecraft:deepslate_tiles": ("minecraft:cracked_deepslate_tiles", 0.12),
+    "warpbound:hull_plating": ("warpbound:scorched_hull_plating", 0.10),
+    "warpbound:plasteel_panel": ("warpbound:hull_scrap", 0.05),
+    "minecraft:waxed_cut_copper": ("minecraft:waxed_weathered_cut_copper", 0.30),
+    "minecraft:waxed_copper_grate": ("minecraft:waxed_weathered_copper_grate", 0.30),
+    "minecraft:polished_deepslate": ("minecraft:deepslate", 0.06),
+}
+# вмятина — стена теми же ступенями, выемкой в отсек; выпуклость — лист обшивки выпирает из стены
+DENT = {
+    "minecraft:polished_blackstone_bricks": "minecraft:polished_blackstone_brick_stairs",
+    "minecraft:deepslate_bricks": "minecraft:deepslate_brick_stairs",
+    "minecraft:deepslate_tiles": "minecraft:deepslate_tile_stairs",
+    "warpbound:hull_plating": "warpbound:hull_plating_stairs",
+    "warpbound:plasteel_panel": "warpbound:plasteel_panel_stairs",
+}
+FACE = {(1, 0, 0): "east", (-1, 0, 0): "west", (0, 0, 1): "south", (0, 0, -1): "north"}
+BACK = {"east": "west", "west": "east", "south": "north", "north": "south"}
+
+
+def weather(it, seed=1977):
+    """Трещины, копоть, патина, вмятины и выпуклости стен, печати чистоты, кабели, пятна масла, свечи, кости."""
+    import random
+    rng = random.Random(seed)
+    free = lambda p: p in it.air and p not in it.cells
+    lining = sorted(it.lining.items())
+    for n, (pal, d) in lining:
+        block = it.cells.get(n, (None,))[0]
+        if block in CRACKED and rng.random() < CRACKED[block][1]:
+            it.cells[n] = (CRACKED[block][0], "modules")
+            block = CRACKED[block][0]
+        if d[1] != 0:
+            continue
+        p = (n[0] - d[0], n[1], n[2] - d[2])               # клетка отсека перед стеной
+        below = [(p[0], p[1] - k, p[2]) for k in (1, 2, 3)]
+        high = all(free(q) for q in below) and free((p[0], p[1] + 1, p[2]))
+        r = rng.random()
+        if r < 0.03 and block in DENT:
+            it.cells[n] = (f"{DENT[block]}[facing={FACE[d]},half={rng.choice(('top', 'bottom'))}]", "modules")
+        elif r < 0.05 and high and free(p):
+            it.cells[p] = (f"warpbound:hull_plating_stairs[facing={FACE[d]},half={rng.choice(('top', 'bottom'))}]", "modules")
+        elif r < 0.075 and free(p) and not free((p[0], p[1] - 2, p[2])) and free((p[0], p[1] - 1, p[2])):
+            it.cells[p] = (f"warpbound:purity_seal[facing={BACK[FACE[d]]}]", "modules")
+    for p in sorted(it.air):
+        if not free(p):
+            continue
+        pal = it.room_of[p]
+        up, down = (p[0], p[1] + 1, p[2]), (p[0], p[1] - 1, p[2])
+        r = rng.random()
+        if up in it.lining and it.lining[up][1][1] == 1 and r < 0.012 and all(free((p[0], p[1] - k, p[2])) for k in (1, 2, 3, 4)):
+            for k in range(rng.randint(1, 3)):              # оборванный кабель
+                it.cells[(p[0], p[1] - k, p[2])] = (B["chain"], "modules")
+        elif down in it.lining and it.lining[down][1][1] == -1:
+            near_wall = any((p[0] + dx, p[1], p[2] + dz) in it.lining for dx, dz in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+            if pal in (PAL_ENGINE, PAL_TORPEDO, PAL_SERVICE) and r < 0.02:
+                it.cells[p] = ("minecraft:black_carpet", "modules")              # масло
+            elif pal is PAL_CHAPEL and near_wall and r < 0.10:
+                it.cells[p] = (f"minecraft:candle[candles={rng.randint(1, 4)},lit=true]", "modules")
+            elif near_wall and r < 0.008:
+                it.cells[p] = ("warpbound:bone_pile", "modules")
+
+
 def build(cells, solid, outer):
     it = Interior(cells, solid, outer)
     enginarium(it)
@@ -536,4 +712,5 @@ def build(cells, solid, outer):
     prow(it)
     entry(it)
     it.finish()
+    weather(it)
     return it

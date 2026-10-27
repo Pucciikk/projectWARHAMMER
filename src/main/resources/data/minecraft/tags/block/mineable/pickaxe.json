@@ -43,6 +43,7 @@
     "warpbound:coolant_pipe",
     "warpbound:geller_conduit",
     "warpbound:bulkhead_door",
-    "warpbound:boarding_hatch"
+    "warpbound:boarding_hatch",
+    "warpbound:purity_seal"
   ]
 }

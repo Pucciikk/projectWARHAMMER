@@ -1,0 +1,144 @@
+{
+ "parent": "builtin/entity",
+ "display": {
+  "thirdperson_righthand": {
+   "rotation": [
+    0,
+    180,
+    0
+   ],
+   "translation": [
+    0,
+    3,
+    1
+   ],
+   "scale": [
+    0.45,
+    0.45,
+    0.45
+   ]
+  },
+  "thirdperson_lefthand": {
+   "rotation": [
+    0,
+    180,
+    0
+   ],
+   "translation": [
+    0,
+    3,
+    1
+   ],
+   "scale": [
+    0.45,
+    0.45,
+    0.45
+   ]
+  },
+  "firstperson_righthand": {
+   "rotation": [
+    0,
+    177,
+    0
+   ],
+   "translation": [
+    -2,
+    1,
+    1
+   ],
+   "scale": [
+    0.35,
+    0.35,
+    0.35
+   ]
+  },
+  "firstperson_lefthand": {
+   "rotation": [
+    0,
+    183,
+    0
+   ],
+   "translation": [
+    -2,
+    1,
+    1
+   ],
+   "scale": [
+    0.35,
+    0.35,
+    0.35
+   ]
+  },
+  "gui": {
+   "rotation": [
+    20,
+    115,
+    0
+   ],
+   "translation": [
+    1.5,
+    -1,
+    0
+   ],
+   "scale": [
+    0.42,
+    0.42,
+    0.42
+   ]
+  },
+  "ground": {
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "translation": [
+    0,
+    2,
+    0
+   ],
+   "scale": [
+    0.35,
+    0.35,
+    0.35
+   ]
+  },
+  "fixed": {
+   "rotation": [
+    0,
+    90,
+    0
+   ],
+   "translation": [
+    0,
+    0,
+    0
+   ],
+   "scale": [
+    0.5,
+    0.5,
+    0.5
+   ]
+  },
+  "head": {
+   "rotation": [
+    0,
+    180,
+    0
+   ],
+   "translation": [
+    0,
+    6,
+    0
+   ],
+   "scale": [
+    0.6,
+    0.6,
+    0.6
+   ]
+  }
+ },
+ "textures": {
+  "particle": "warpbound:item/lasgun"
+ }
+}

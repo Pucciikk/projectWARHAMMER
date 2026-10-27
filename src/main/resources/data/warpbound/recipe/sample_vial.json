@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "pattern": [
+  " N ",
+  "G G",
+  " G "
+ ],
+ "key": {
+  "N": {
+   "item": "minecraft:iron_nugget"
+  },
+  "G": {
+   "item": "minecraft:glass_pane"
+  }
+ },
+ "result": {
+  "id": "warpbound:sample_vial",
+  "count": 2
+ }
+}

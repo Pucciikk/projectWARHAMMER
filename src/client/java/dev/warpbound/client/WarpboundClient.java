@@ -26,6 +26,11 @@ import dev.warpbound.client.quest.ClientQuestState;
 import dev.warpbound.client.ship.ConsoleScreen;
 import dev.warpbound.client.ship.ShipEngineSound;
 import dev.warpbound.client.ship.NavScreen;
+import dev.warpbound.client.ship.StarChartRenderer;
+import dev.warpbound.client.ship.StarChartScreen;
+import dev.warpbound.client.ship.WarpSamplerRenderer;
+import dev.warpbound.client.gear.GearRenderers;
+import dev.warpbound.client.gear.LasBeams;
 import dev.warpbound.network.ShipConsolePayload;
 import dev.warpbound.client.shipyard.ShipyardScreen;
 import dev.warpbound.client.quest.QuestKeys;
@@ -37,6 +42,7 @@ import dev.warpbound.entity.WarpboundEntities;
 import dev.warpbound.network.ChaosSyncPayload;
 import dev.warpbound.network.MultiblockErrorsPayload;
 import dev.warpbound.network.NavStatePayload;
+import dev.warpbound.network.StarChartPayload;
 import dev.warpbound.network.ShipyardStatePayload;
 import dev.warpbound.network.ProgressSyncPayload;
 import dev.warpbound.network.QuestDataPayload;
@@ -70,6 +76,8 @@ public class WarpboundClient implements ClientModInitializer {
                 (payload, context) -> ShipyardScreen.receive(payload));
         ClientPlayNetworking.registerGlobalReceiver(NavStatePayload.TYPE,
                 (payload, context) -> Minecraft.getInstance().setScreen(new NavScreen(payload)));
+        ClientPlayNetworking.registerGlobalReceiver(StarChartPayload.TYPE,
+                (payload, context) -> Minecraft.getInstance().setScreen(new StarChartScreen(payload)));
         ClientPlayNetworking.registerGlobalReceiver(ShipConsolePayload.TYPE,
                 (payload, context) -> ConsoleScreen.receive(payload));
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
@@ -99,6 +107,10 @@ public class WarpboundClient implements ClientModInitializer {
         BlockEntityRenderers.register(WarpboundBlockEntities.MANUAL_PRESS, ctx -> new MachineRenderer<>("manual_press"));
         BlockEntityRenderers.register(WarpboundBlockEntities.MECHANICUS_FORGE, ctx -> new MachineRenderer<>("mechanicus_forge"));
         BlockEntityRenderers.register(WarpboundBlockEntities.SHIP_FIXTURE, ctx -> new FixtureRenderer());
+        BlockEntityRenderers.register(WarpboundBlockEntities.STAR_CHART, ctx -> new StarChartRenderer());
+        BlockEntityRenderers.register(WarpboundBlockEntities.WARP_SAMPLER, ctx -> new WarpSamplerRenderer());
+        GearRenderers.register();
+        LasBeams.register();
     }
 
     /** Модели GeckoLib (М1–М9). Пока заглушки из tools/models/gen_entities.py, потом — модели автора. */

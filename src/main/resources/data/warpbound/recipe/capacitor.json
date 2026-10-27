@@ -1,0 +1,24 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "pattern": [
+  " C ",
+  "RLR",
+  " C "
+ ],
+ "key": {
+  "C": {
+   "item": "minecraft:copper_ingot"
+  },
+  "R": {
+   "item": "minecraft:redstone"
+  },
+  "L": {
+   "item": "warpbound:lead_ingot"
+  }
+ },
+ "result": {
+  "id": "warpbound:capacitor",
+  "count": 2
+ }
+}

@@ -30,6 +30,11 @@ cmd fill -27 240 -6 27 242 170 minecraft:air
 cmd fill -27 243 -6 27 245 170 minecraft:air
 cmd fill -27 246 -6 27 248 170 minecraft:air
 cmd fill -27 249 -6 27 251 170 minecraft:air
+cmd fill -27 252 -6 27 254 170 minecraft:air
+cmd fill -27 255 -6 27 257 170 minecraft:air
+cmd fill -27 258 -6 27 260 170 minecraft:air
+cmd fill -27 261 -6 27 263 170 minecraft:air
+cmd fill -27 264 -6 27 266 170 minecraft:air
 cmd fill -27 179 -6 27 179 170 minecraft:smooth_stone
 cmd kill @e[type=!minecraft:player]
 cmd setblock 0 180 0 warpbound:shipyard_console[facing=north]
@@ -62,26 +67,36 @@ cmd tp @s 0 182 54 180 -10
 wait 30
 shot 02_boarding_hatch
 wait 3
-cmd tp @s 0 222 40 0 -8
+cmd tp @s 0 221 45 0 -8
 wait 30
 shot 03_bridge_windows
 wait 3
-cmd tp @s 0 226 57 180 12
+cmd tp @s 0 222 57 180 12
 wait 30
 shot 03b_bridge_throne
 wait 3
-cmd tp @s 6 226 52 150 25
+cmd tp @s 4 222 49 90 -12
 wait 30
 shot 03c_bridge_crew
 wait 3
-cmd tp @s 30 262 20 49 38
+cmd gamemode spectator
+cmd tp @s 0 221 45 0 0
+wait 10
+cmd tp @s ~30 ~14 ~30 135 16
 wait 40
 shot 03d_bridge_outside
 wait 3
-cmd tp @s 0 225 35 0 8
+cmd gamemode creative
+cmd tp @s 0 224 37 0 8
 wait 25
 shot 04_bridge_from_throne
 wait 3
+cmd wb ship chart
+wait 30
+shot 04b_star_chart
+wait 3
+close
+wait 5
 cmd tp @s 0 205 58 0 5
 wait 25
 shot 05_nave
@@ -106,7 +121,7 @@ cmd tp @s -3 200 40 0 5
 wait 25
 shot 10_hub
 wait 3
-cmd tp @s 0 221 40 180 10
+cmd tp @s 0 221 44 180 10
 wait 20
 hud on
 cmd wb ship console
@@ -116,7 +131,7 @@ wait 3
 press Seal
 wait 5
 close
-cmd tp @s 0 221 41 0 -5
+cmd tp @s 0 221 44 0 -5
 wait 50
 shot 12_launch_fire
 wait 3
@@ -144,6 +159,14 @@ wait 3
 close
 wait 100
 shot 17_cruising
+wait 3
+cmd wb ship chart
+wait 30
+shot 17b_star_chart_space
+wait 3
+press Kineris
+wait 20
+shot 17c_kineris_clicked
 wait 3
 cmd wb ship console
 wait 20

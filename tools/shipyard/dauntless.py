@@ -183,6 +183,17 @@ def build():
     # интерьер: отсеки вырезаются в сплошном корпусе (tools/shipyard/interior.py)
     import interior
     solid = set(occ) | {tuple(c) for c in core}
+    # основание башни мостика: в модели между опорами надстройки — просвет до самой палубы; заполняем его корпусом,
+    # иначе анклав под мостиком вырезается кусками, без пола посередине
+    for z in range(31, 57):
+        row = [y for x in range(13, 32) for y in range(0, 39) if (x, y, z) in solid]
+        if not row:
+            continue
+        for x in range(13, 32):
+            for y in range(min(row), 39):
+                if (x, y, z) not in solid:
+                    solid.add((x, y, z))
+                    cells[(x, y, z)] = (GOTHIC if (y + z) % 4 else HULL2, "hull")
     nb = ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
     outer = {p for p in solid if any((p[0] + a, p[1] + b, p[2] + c) not in solid for a, b, c in nb)}
     global META

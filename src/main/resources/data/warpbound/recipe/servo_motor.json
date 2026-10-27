@@ -1,0 +1,26 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "pattern": [
+  "GRG",
+  "PIP"
+ ],
+ "key": {
+  "G": {
+   "item": "warpbound:brass_gear"
+  },
+  "R": {
+   "item": "minecraft:redstone"
+  },
+  "P": {
+   "item": "warpbound:plasteel_plate"
+  },
+  "I": {
+   "item": "minecraft:iron_ingot"
+  }
+ },
+ "result": {
+  "id": "warpbound:servo_motor",
+  "count": 1
+ }
+}

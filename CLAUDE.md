@@ -56,10 +56,18 @@ python3 tools/blocks/gen_block_set.py   # набор блоков (обшивк�
 python3 tools/shipyard/gen.py           # стапель, фрегат и лёгкий крейсер (крейсер — tools/shipyard/dauntless.py из STL автора)
 python3 tools/ship/gen_cruiser_interior.py  # 10 отсеков крейсера и раскладка light_cruiser
 python3 tools/textures/gen_console_gui.py   # фон экрана командного пульта
+python3 tools/textures/gen_star_map.py      # карта Империума (экран и табло на мостике)
+python3 tools/textures/gen_s1_items.py      # предметы Сезона 1: лазган, цепной меч, флак, респиратор, компоненты (иконки и слои брони)
+python3 tools/recipes/gen_s1_recipes.py     # рецепты предметов Сезона 1 (список — docs/content/season1-items.md)
+python3 tools/models/gen_gear.py            # 3D-снаряжение GeckoLib: лазган, цепной меч, флак-броня гвардейца, респиратор
 ./gradlew runGametest                 # автотесты без игрока (верфь и т. д.)
 ./gradlew runAutotest -Pscenario=smoke  # клиент сам проходит tools/autotest/smoke.txt, скриншоты в run/screenshots/autotest/
 ./gradlew runAutotest -Pscenario=arrival   # прибытие операторов: челнок, капсула, ритуал
 ./gradlew runAutotest -Pscenario=cruiser   # крейсер на верфи; interior — отсеки и экран пульта; multiblocks — горн, пресс, Кузня
+./gradlew runAutotest -Pscenario=launch    # крейсер: мостик, выход в космос, подготовка и разлом; bridge_ext — башня мостика снаружи
+./gradlew runAutotest -Pscenario=sampler   # варп-пробоотборник анклава: цикл руки по кадрам; visit — построить крейсер и отдать управление автору
+./gradlew runAutotest -Pscenario=gallery   # витрина предметов Сезона 1, гвардейцы во флаке, выстрел лазгана
+./gradlew runAutotest -Pscenario=gearpose  # оружие в руках от первого и третьего лица, луч лазгана (команды camera, use)
 ./gradlew runAutotest -Pscenario=models    # галерея сущностей; machines — галерея машин. Скрины для автора — в previews/ (не в git)
 ```
 

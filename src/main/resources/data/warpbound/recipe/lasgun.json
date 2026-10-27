@@ -1,0 +1,30 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "equipment",
+ "pattern": [
+  " PF",
+  "PCG",
+  "W  "
+ ],
+ "key": {
+  "P": {
+   "item": "warpbound:plasteel_plate"
+  },
+  "F": {
+   "item": "warpbound:focusing_lens"
+  },
+  "C": {
+   "item": "warpbound:capacitor"
+  },
+  "G": {
+   "item": "warpbound:brass_gear"
+  },
+  "W": {
+   "tag": "minecraft:planks"
+  }
+ },
+ "result": {
+  "id": "warpbound:lasgun",
+  "count": 1
+ }
+}

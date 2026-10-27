@@ -42,7 +42,7 @@ public class ShipyardGameTest implements FabricGameTest {
         var level = helper.getLevel();
         BlockPos core = placeConsole(helper);
         // Тестовая площадка обнесена барьерами — расчистить место под док
-        for (BlockPos p : BlockPos.betweenClosed(core.offset(-26, 0, 1), core.offset(26, 70, 162))) {
+        for (BlockPos p : BlockPos.betweenClosed(core.offset(-26, 0, 1), core.offset(26, 90, 162))) {
             level.setBlock(p, Blocks.AIR.defaultBlockState(), 2);
         }
         var yard = (ShipyardBlockEntity) level.getBlockEntity(core);
@@ -78,7 +78,7 @@ public class ShipyardGameTest implements FabricGameTest {
     public void rotatedShipyardBuildsBehindConsole(GameTestHelper helper) {
         var level = helper.getLevel();
         BlockPos core = helper.absolutePos(new BlockPos(0, 1, 0));
-        for (BlockPos p : BlockPos.betweenClosed(core.offset(-162, 0, -26), core.offset(-1, 70, 26))) {
+        for (BlockPos p : BlockPos.betweenClosed(core.offset(-162, 0, -26), core.offset(-1, 90, 26))) {
             level.setBlock(p, Blocks.AIR.defaultBlockState(), 2);
         }
         level.setBlockAndUpdate(core, WarpboundBlocks.SHIPYARD_CONSOLE.defaultBlockState()

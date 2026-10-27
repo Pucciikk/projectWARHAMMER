@@ -105,8 +105,8 @@ public final class ShipLaunch {
             BlockState s = space.getBlockState(p);
             if (s.is(WarpboundBlocks.COMMAND_CONSOLE)) {
                 console = p.immutable();
-                // мостик: на шаг к носу от пульта — туда ставим вошедших на борт
-                ship.spawnRel = p.offset(0, 0, 3).subtract(origin);
+                // мостик: пульт смотрит на трон, вошедших ставим между ними, на помост
+                ship.spawnRel = p.offset(0, 0, -1).subtract(origin);
             } else if (s.is(WarpboundBlocks.REACTOR_CORE)) {
                 ship.reactorRel = p.immutable().subtract(origin);
             }

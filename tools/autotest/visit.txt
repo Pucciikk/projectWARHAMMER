@@ -1,0 +1,67 @@
+# Осмотр крейсера вживую: постройка на верфи, игрок у входного люка; дальше играет человек
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd difficulty peaceful
+cmd execute in minecraft:overworld run tp @s 0 200 -20 0 20
+wait 40
+cmd wb ship forget
+cmd fill -27 180 -6 27 182 170 minecraft:air
+cmd fill -27 183 -6 27 185 170 minecraft:air
+cmd fill -27 186 -6 27 188 170 minecraft:air
+cmd fill -27 189 -6 27 191 170 minecraft:air
+cmd fill -27 192 -6 27 194 170 minecraft:air
+cmd fill -27 195 -6 27 197 170 minecraft:air
+cmd fill -27 198 -6 27 200 170 minecraft:air
+cmd fill -27 201 -6 27 203 170 minecraft:air
+cmd fill -27 204 -6 27 206 170 minecraft:air
+cmd fill -27 207 -6 27 209 170 minecraft:air
+cmd fill -27 210 -6 27 212 170 minecraft:air
+cmd fill -27 213 -6 27 215 170 minecraft:air
+cmd fill -27 216 -6 27 218 170 minecraft:air
+cmd fill -27 219 -6 27 221 170 minecraft:air
+cmd fill -27 222 -6 27 224 170 minecraft:air
+cmd fill -27 225 -6 27 227 170 minecraft:air
+cmd fill -27 228 -6 27 230 170 minecraft:air
+cmd fill -27 231 -6 27 233 170 minecraft:air
+cmd fill -27 234 -6 27 236 170 minecraft:air
+cmd fill -27 237 -6 27 239 170 minecraft:air
+cmd fill -27 240 -6 27 242 170 minecraft:air
+cmd fill -27 243 -6 27 245 170 minecraft:air
+cmd fill -27 246 -6 27 248 170 minecraft:air
+cmd fill -27 249 -6 27 251 170 minecraft:air
+cmd fill -27 252 -6 27 254 170 minecraft:air
+cmd fill -27 255 -6 27 257 170 minecraft:air
+cmd fill -27 258 -6 27 260 170 minecraft:air
+cmd fill -27 261 -6 27 263 170 minecraft:air
+cmd fill -27 264 -6 27 266 170 minecraft:air
+cmd fill -27 179 -6 27 179 170 minecraft:smooth_stone
+cmd kill @e[type=!minecraft:player]
+cmd setblock 0 180 0 warpbound:shipyard_console[facing=north]
+wait 5
+cmd tp @s 0 181 -2 0 0
+cmd wb shipyard frame
+cmd wb machine build
+wait 10
+cmd wb shipyard advance
+wait 8
+cmd wb shipyard advance
+wait 8
+cmd wb shipyard advance
+wait 8
+cmd wb shipyard advance
+wait 8
+cmd wb shipyard advance
+wait 8
+cmd wb shipyard advance
+wait 8
+wait 60
+close
+wait 5
+close
+cmd time set noon
+cmd gamemode creative
+cmd tp @s -4 180 56 -90 0
+wait 20
+clearchat
+handover

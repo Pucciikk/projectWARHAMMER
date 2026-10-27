@@ -4,5 +4,9 @@
   "landing": "surface",
   "x": 0,
   "z": 0,
-  "radius": 96
+  "radius": 96,
+  "map": [
+    0.615,
+    0.365
+  ]
 }

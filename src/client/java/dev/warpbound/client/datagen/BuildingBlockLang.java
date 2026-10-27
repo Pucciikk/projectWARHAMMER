@@ -24,6 +24,7 @@ final class BuildingBlockLang {
         builder.add("block.warpbound.lumen_ceiling", "Подвесной люмен");
         builder.add("block.warpbound.radiation_sign", "Знак радиационной опасности");
         builder.add("block.warpbound.emergency_lumen", "Аварийный люмен");
+        builder.add("block.warpbound.purity_seal", "Печать чистоты");
         builder.add("block.warpbound.coolant_pipe", "Труба охладителя");
         builder.add("block.warpbound.geller_conduit", "Проводник Поля Геллера");
         builder.add("block.warpbound.bulkhead_door", "Гермодверь");
@@ -72,6 +73,7 @@ final class BuildingBlockLang {
         builder.add("block.warpbound.lumen_ceiling", "Hanging Lumen");
         builder.add("block.warpbound.radiation_sign", "Radiation Warning Sign");
         builder.add("block.warpbound.emergency_lumen", "Emergency Lumen");
+        builder.add("block.warpbound.purity_seal", "Purity Seal");
         builder.add("block.warpbound.coolant_pipe", "Coolant Pipe");
         builder.add("block.warpbound.geller_conduit", "Geller Conduit");
         builder.add("block.warpbound.bulkhead_door", "Bulkhead Door");

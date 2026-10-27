@@ -1,0 +1,12 @@
+{
+ "type": "minecraft:campfire_cooking",
+ "category": "misc",
+ "ingredient": {
+  "item": "warpbound:las_battery_depleted"
+ },
+ "result": {
+  "id": "warpbound:las_battery"
+ },
+ "experience": 0.1,
+ "cookingtime": 600
+}

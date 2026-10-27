@@ -2,6 +2,7 @@ package dev.warpbound.ship;
 
 import dev.warpbound.config.WarpboundConfig;
 import dev.warpbound.network.NavStatePayload;
+import dev.warpbound.network.StarChartPayload;
 import dev.warpbound.team.TeamRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.ChatFormatting;
@@ -69,12 +70,41 @@ public final class ShipNavigation {
         ServerPlayNetworking.send(player, new NavStatePayload(ids, names, ship.location.toString()));
     }
 
+    /**
+     * ПКМ по карте Империума: миры корабля с местом на карте. Смотреть можно и у причала;
+     * проложить курс — только экипажу корабля на орбите.
+     */
+    public static void openChart(ServerPlayer player) {
+        Ship ship = ShipService.shipAboard(player).orElse(null);
+        boolean canJump = ship != null && isCrew(player, ship) && ship.state == ShipState.ORBIT;
+        List<String> ids = new ArrayList<>(), names = new ArrayList<>();
+        List<Float> xs = new ArrayList<>(), ys = new ArrayList<>();
+        List<Boolean> available = new ArrayList<>();
+        for (var e : ShipDestination.REGISTRY.all().entrySet()) {
+            List<Float> map = e.getValue().map();
+            if (map.size() < 2) continue;
+            ids.add(e.getKey().toString());
+            names.add(e.getValue().name());
+            xs.add(map.get(0));
+            ys.add(map.get(1));
+            available.add(e.getValue().level(player.server).isPresent());
+        }
+        String current = ship != null ? ship.location.toString() : ShipDestination.HOME.toString();
+        String destination = ship != null && ship.destination != null ? ship.destination.toString() : "";
+        ServerPlayNetworking.send(player, new StarChartPayload(ids, names, xs, ys, available, current, destination, canJump));
+    }
+
     /** Выбор цели на столе: начать переход. */
     public static void jump(ServerPlayer player, ResourceLocation target) {
         Ship ship = ShipService.shipAboard(player).orElse(null);
         if (ship == null || !isCrew(player, ship) || ship.state != ShipState.ORBIT) return;
         var dest = ShipDestination.REGISTRY.get(target).orElse(null);
-        if (dest == null || dest.level(player.server).isEmpty()) return;
+        if (dest == null) return;
+        if (dest.level(player.server).isEmpty()) {
+            player.displayClientMessage(Component.translatable("chart.warpbound.unreachable", Component.translatable(dest.name()))
+                    .withStyle(ChatFormatting.DARK_RED), false);
+            return;
+        }
         if (ship.spawnRel != null) {
             // корабль-постройка: курс только прокладывается, переход открывает капитан с пульта (вкладка «Полёт»)
             if (target.equals(ship.location)) return;
