@@ -1,0 +1,4237 @@
+{
+ "structures": {
+  "pick": {
+   "id": "pick",
+   "name": "Кирка игрока",
+   "size": "—",
+   "ch": 1,
+   "group": "Добыча",
+   "desc": "Ручная добыча: всё, что лежит в мире, можно копать как в ванилле."
+  },
+  "deep_drill": {
+   "id": "deep_drill",
+   "name": "Глубинный бур",
+   "size": "5×5×12",
+   "ch": 4,
+   "group": "Добыча",
+   "desc": "Вышка, которая жрёт прометий как не в себя: руда по таблице мира без копания и без загрузки соседних чанков. Головки — расходник."
+  },
+  "pumpjack": {
+   "id": "pumpjack",
+   "name": "Насос-качалка",
+   "size": "3×5×6",
+   "ch": 4,
+   "group": "Добыча",
+   "desc": "Ставится на залежь, найденную буровой разведки. Качает сырой прометий."
+  },
+  "water_intake": {
+   "id": "water_intake",
+   "name": "Водозабор",
+   "size": "3×3×3",
+   "ch": 2,
+   "group": "Добыча",
+   "desc": "Насос в любой воде или колодец. Вода — в трубы."
+  },
+  "air_condenser": {
+   "id": "air_condenser",
+   "name": "Атмосферный конденсатор",
+   "size": "3×3×5",
+   "ch": 5,
+   "group": "Добыча",
+   "desc": "Разделяет воздух мира: азот и кислород. На мёртвых мирах ещё и ядовитые газы."
+  },
+  "lumber": {
+   "id": "lumber",
+   "name": "Лесопилка-культиватор",
+   "size": "5×5×4",
+   "ch": 3,
+   "group": "Добыча",
+   "desc": "Саженцы растут под люменами, сервитор рубит. Брёвна, доски, опилки."
+  },
+  "hydroponics": {
+   "id": "hydroponics",
+   "name": "Гидропонный отсек",
+   "size": "5×3×4",
+   "ch": 3,
+   "group": "Добыча",
+   "desc": "Любые ванильные растения без солнца; травы для ладана."
+  },
+  "corpse_mill": {
+   "id": "corpse_mill",
+   "name": "Трупоперерабатывающий завод",
+   "size": "5×5×5",
+   "ch": 6,
+   "group": "Добыча",
+   "desc": "Тела мобов → трупный крахмал и костная мука. Сырьё для растворов и пасты сервиторов."
+  },
+  "crusher": {
+   "id": "crusher",
+   "name": "Рудодробильня",
+   "size": "3×3×4",
+   "ch": 2,
+   "group": "Металлургия",
+   "desc": "Обогащение ×2: руда → дроблёная руда, побочно гравий."
+  },
+  "wash_vat": {
+   "id": "wash_vat",
+   "name": "Промывочный чан",
+   "size": "3×3×3",
+   "ch": 3,
+   "group": "Металлургия",
+   "desc": "Обогащение ×3: дроблёная руда в освящённой воде; побочно шлам и цинковая пыль."
+  },
+  "coke_oven": {
+   "id": "coke_oven",
+   "name": "Коксовая печь",
+   "size": "3×3×3",
+   "ch": 2,
+   "group": "Металлургия",
+   "desc": "Уголь → кокс для домны; побочно каменноугольная смола."
+  },
+  "blast_furnace": {
+   "id": "blast_furnace",
+   "name": "Домна Механикус",
+   "size": "5×5×7",
+   "ch": 3,
+   "group": "Металлургия",
+   "desc": "Руда + кокс → чугун; побочно шлак (в цемент)."
+  },
+  "converter": {
+   "id": "converter",
+   "name": "Кислородный конвертер",
+   "size": "3×3×5",
+   "ch": 3,
+   "group": "Металлургия",
+   "desc": "Чугун + кислород → сталь. Без кислорода сталь не варится."
+  },
+  "forge_smelter": {
+   "id": "forge_smelter",
+   "name": "Плавильня Кузни",
+   "size": "пристройка",
+   "ch": 2,
+   "group": "Металлургия",
+   "desc": "Пачечная плавка цветных металлов и сплавов (латунь, свинец, медь)."
+  },
+  "induction": {
+   "id": "induction",
+   "name": "Индукционная печь",
+   "size": "3×3×3",
+   "ch": 6,
+   "group": "Металлургия",
+   "desc": "Быстрая плавка от сети без топлива; синтетические кристаллы."
+  },
+  "rolling_mill": {
+   "id": "rolling_mill",
+   "name": "Прокатный стан",
+   "size": "7×3×3",
+   "ch": 3,
+   "group": "Металлургия",
+   "desc": "Слиток → лист, пруток, труба; пруток → проволока."
+  },
+  "autoclave": {
+   "id": "autoclave",
+   "name": "Полимерный автоклав",
+   "size": "3×3×4",
+   "ch": 4,
+   "group": "Металлургия",
+   "desc": "Смола, армаплас, синтез пластали из стали и смолы."
+  },
+  "sinter": {
+   "id": "sinter",
+   "name": "Печь спекания",
+   "size": "5×5×5",
+   "ch": 5,
+   "group": "Металлургия",
+   "desc": "Керамит: пласталь + пепельная керамика Кинериса при сильном жаре."
+  },
+  "ritual_forge": {
+   "id": "ritual_forge",
+   "name": "Ритуальная кузня адамантия",
+   "size": "7×7×6",
+   "ch": 7,
+   "group": "Металлургия",
+   "desc": "Фазовая ковка: нагрев → проковка → закалка в священном масле → литания. Сбой фазы — шлак."
+  },
+  "cement_mill": {
+   "id": "cement_mill",
+   "name": "Цементная мельница",
+   "size": "3×3×4",
+   "ch": 4,
+   "group": "Металлургия",
+   "desc": "Рокрит и ферробетон из шлака, камня и гипса."
+  },
+  "radium_plant": {
+   "id": "radium_plant",
+   "name": "Обогатительная фабрика радия",
+   "size": "5×5×5",
+   "ch": 5,
+   "group": "Металлургия",
+   "desc": "Радий Кинериса → радиевые ячейки; отходы — только в хранилище."
+  },
+  "distiller": {
+   "id": "distiller",
+   "name": "Перегонная колонна",
+   "size": "3×3×9+",
+   "ch": 4,
+   "group": "Химия и прометий",
+   "desc": "Сырой прометий → 4 фракции. Если фракцию не забирать, колонна встаёт."
+  },
+  "cracker": {
+   "id": "cracker",
+   "name": "Крекинг-установка",
+   "size": "3×3×5",
+   "ch": 4,
+   "group": "Химия и прометий",
+   "desc": "Тяжёлая фракция + водород → лёгкий прометий и битум."
+  },
+  "desulfurizer": {
+   "id": "desulfurizer",
+   "name": "Сероочистка",
+   "size": "3×3×4",
+   "ch": 4,
+   "group": "Химия и прометий",
+   "desc": "Сернистый прометий + водород → чистый прометий и сера."
+  },
+  "electrolyzer": {
+   "id": "electrolyzer",
+   "name": "Электролизёр",
+   "size": "3×3×3",
+   "ch": 4,
+   "group": "Химия и прометий",
+   "desc": "Вода → водород + кислород. Тяжёлая вода → дейтерий."
+  },
+  "centrifuge": {
+   "id": "centrifuge",
+   "name": "Центрифуга",
+   "size": "3×3×3",
+   "ch": 5,
+   "group": "Химия и прометий",
+   "desc": "Разделение: тяжёлая вода из воды; плазма и стволовые клетки из крови."
+  },
+  "chem_reactor": {
+   "id": "chem_reactor",
+   "name": "Химический реактор",
+   "size": "3×3×4",
+   "ch": 4,
+   "group": "Химия и прометий",
+   "desc": "Кислоты, целлюлоза, регенерация отработанной кислоты."
+  },
+  "powder_works": {
+   "id": "powder_works",
+   "name": "Пороховой цех",
+   "size": "5×3×4",
+   "ch": 4,
+   "group": "Химия и прометий",
+   "desc": "Нитроцеллюлоза, метательный заряд болта, фицелин. Взрывоопасно рядом с огнём."
+  },
+  "scriptorium": {
+   "id": "scriptorium",
+   "name": "Скрипторий",
+   "size": "5×5×5",
+   "ch": 2,
+   "group": "Служебные",
+   "desc": "Печати чистоты, ладан, освящённая вода, священное масло."
+  },
+  "forge": {
+   "id": "forge",
+   "name": "Кузня Механикус",
+   "size": "5×5×6",
+   "ch": 2,
+   "group": "Компоненты",
+   "desc": "Центральный сборщик компонентов, растёт пристройками: волочильня, гравировальня, шлифовальня."
+  },
+  "cogitatorium": {
+   "id": "cogitatorium",
+   "name": "Когитаторий",
+   "size": "5×5×4",
+   "ch": 2,
+   "group": "Компоненты",
+   "desc": "Платы, логические двигатели, ядра духа машины. Расшифровка СТК."
+  },
+  "press": {
+   "id": "press",
+   "name": "Ручной пресс",
+   "size": "1×2×1",
+   "ch": 1,
+   "group": "Компоненты",
+   "desc": "Ранний способ: шестерни и пластины вручную."
+  },
+  "armoury": {
+   "id": "armoury",
+   "name": "Оружейная мастерская",
+   "size": "5×5×4",
+   "ch": 3,
+   "group": "Оружие и боеприпасы",
+   "desc": "Сборка ручного оружия: лазганы, болтеры, цепные мечи, плазма."
+  },
+  "barrel_shop": {
+   "id": "barrel_shop",
+   "name": "Ствольная мастерская",
+   "size": "7×3×3",
+   "ch": 3,
+   "group": "Оружие и боеприпасы",
+   "desc": "Нарезка стволов: труба + священное масло для резца."
+  },
+  "ammo_line": {
+   "id": "ammo_line",
+   "name": "Снаряжательная линия",
+   "size": "7×3×3",
+   "ch": 3,
+   "group": "Оружие и боеприпасы",
+   "desc": "Лазпакеты, гильзы, болт-снаряды, магазины, ленты, баллоны прометия."
+  },
+  "heavy_armoury": {
+   "id": "heavy_armoury",
+   "name": "Цех тяжёлого вооружения",
+   "size": "7×7×6",
+   "ch": 6,
+   "group": "Оружие и боеприпасы",
+   "desc": "Тяжёлый болтер, силовой кулак, лаз-пушка, плазменная пушка."
+  },
+  "plasma_works": {
+   "id": "plasma_works",
+   "name": "Плазменный цех",
+   "size": "5×5×5",
+   "ch": 7,
+   "group": "Оружие и боеприпасы",
+   "desc": "Плазменные колбы: дейтерий в магнитной ловушке."
+  },
+  "weavery": {
+   "id": "weavery",
+   "name": "Флак-мастерская",
+   "size": "5×3×3",
+   "ch": 3,
+   "group": "Броня",
+   "desc": "Ткань, флак-пластины, флак и карапакс."
+  },
+  "armour_line": {
+   "id": "armour_line",
+   "name": "Конвейер силовой брони",
+   "size": "11×5×6",
+   "ch": 7,
+   "group": "Броня",
+   "desc": "Сборка силовой и терминаторской брони по этапам."
+  },
+  "armorium": {
+   "id": "armorium",
+   "name": "Арматорий",
+   "size": "5×5×7",
+   "ch": 7,
+   "group": "Броня",
+   "desc": "Облачение: серво-руки надевают доспех на Астартес и подключают его к Чёрному панцирю."
+  },
+  "solution_synth": {
+   "id": "solution_synth",
+   "name": "Синтезатор растворов",
+   "size": "3×3×4",
+   "ch": 5,
+   "group": "Генетика",
+   "desc": "Смешивает растворы; ванильные зелья заливаются по трубам как реагенты."
+  },
+  "analyzer": {
+   "id": "analyzer",
+   "name": "Когитатор-анализатор",
+   "size": "3×3×3",
+   "ch": 5,
+   "group": "Генетика",
+   "desc": "Генный профиль образца; мини-игра совместимости."
+  },
+  "sequencer": {
+   "id": "sequencer",
+   "name": "Генный секвенатор",
+   "size": "5×5×4",
+   "ch": 6,
+   "group": "Генетика",
+   "desc": "Геносемя легиона по рецепту гробницы; мини-игра сплайсинга."
+  },
+  "bio_vat": {
+   "id": "bio_vat",
+   "name": "Био-чан",
+   "size": "3×3×5",
+   "ch": 5,
+   "group": "Генетика",
+   "desc": "Выращивание органа: держать температуру, свет и подачу раствора. Сбой условий — орган гибнет."
+  },
+  "cryo": {
+   "id": "cryo",
+   "name": "Криохранилище",
+   "size": "3×3×3",
+   "ch": 5,
+   "group": "Генетика",
+   "desc": "Органы портятся за игровой день; в холоде — хранятся."
+  },
+  "apothecarion": {
+   "id": "apothecarion",
+   "name": "Ложе апотекариона",
+   "size": "5×3×3",
+   "ch": 5,
+   "group": "Генетика",
+   "desc": "Призыв апотекария; операция — мини-игра показателей. После операции модель игрока подрастает."
+  },
+  "coal_gen": {
+   "id": "coal_gen",
+   "name": "Угольный генераториум",
+   "size": "3×3×4",
+   "ch": 2,
+   "group": "Служебные",
+   "desc": "Первая мотивная сила."
+  },
+  "promethium_gen": {
+   "id": "promethium_gen",
+   "name": "Прометиевый генераториум",
+   "size": "5×3×4",
+   "ch": 4,
+   "group": "Служебные",
+   "desc": "Энергия из прометия или прометиевого газа."
+  },
+  "radium_reactor": {
+   "id": "radium_reactor",
+   "name": "Радиевый реактор",
+   "size": "5×5×6",
+   "ch": 5,
+   "group": "Служебные",
+   "desc": "Мощная энергия; облучает без свинцового экрана."
+  }
+ },
+ "items": {
+  "iron_ore": {
+   "id": "iron_ore",
+   "name": "Железная руда",
+   "kind": "сырьё",
+   "src": "кирка / глубинный бур"
+  },
+  "copper_ore": {
+   "id": "copper_ore",
+   "name": "Медная руда",
+   "kind": "сырьё",
+   "src": "кирка / глубинный бур"
+  },
+  "gold_ore": {
+   "id": "gold_ore",
+   "name": "Золотая руда",
+   "kind": "сырьё",
+   "src": "кирка / глубинный бур"
+  },
+  "coal": {
+   "id": "coal",
+   "name": "Уголь",
+   "kind": "сырьё",
+   "src": "кирка / глубинный бур"
+  },
+  "redstone": {
+   "id": "redstone",
+   "name": "Редстоун",
+   "kind": "сырьё",
+   "src": "кирка / глубинный бур"
+  },
+  "quartz": {
+   "id": "quartz",
+   "name": "Кварц",
+   "kind": "сырьё",
+   "src": "Незер / глубинный бур"
+  },
+  "lead_ore": {
+   "id": "lead_ore",
+   "name": "Свинцовая руда",
+   "kind": "сырьё",
+   "src": "кирка / глубинный бур"
+  },
+  "sulfur_ore": {
+   "id": "sulfur_ore",
+   "name": "Серная руда",
+   "kind": "сырьё",
+   "src": "у лавы, глубоко"
+  },
+  "saltpeter": {
+   "id": "saltpeter",
+   "name": "Селитра",
+   "kind": "сырьё",
+   "src": "наросты в пещерах и пустынях"
+  },
+  "lapis": {
+   "id": "lapis",
+   "name": "Лазурит",
+   "kind": "сырьё",
+   "src": "кирка / глубинный бур"
+  },
+  "gravel": {
+   "id": "gravel",
+   "name": "Гравий",
+   "kind": "сырьё",
+   "src": "лопата / каменоломня"
+  },
+  "sand": {
+   "id": "sand",
+   "name": "Песок",
+   "kind": "сырьё",
+   "src": "лопата / каменоломня"
+  },
+  "stone": {
+   "id": "stone",
+   "name": "Камень",
+   "kind": "сырьё",
+   "src": "кирка"
+  },
+  "log": {
+   "id": "log",
+   "name": "Бревно",
+   "kind": "сырьё",
+   "src": "топор / лесопилка"
+  },
+  "string": {
+   "id": "string",
+   "name": "Нить",
+   "kind": "сырьё",
+   "src": "пауки / лесопилка (лён)"
+  },
+  "leather": {
+   "id": "leather",
+   "name": "Кожа",
+   "kind": "сырьё",
+   "src": "животные"
+  },
+  "rotten_flesh": {
+   "id": "rotten_flesh",
+   "name": "Гнилая плоть",
+   "kind": "сырьё",
+   "src": "мобы"
+  },
+  "bone": {
+   "id": "bone",
+   "name": "Кость",
+   "kind": "сырьё",
+   "src": "мобы"
+  },
+  "spider_eye": {
+   "id": "spider_eye",
+   "name": "Паучий глаз",
+   "kind": "сырьё",
+   "src": "мобы"
+  },
+  "raw_radium": {
+   "id": "raw_radium",
+   "name": "Сырой радий",
+   "kind": "сырьё",
+   "src": "Кинерис"
+  },
+  "ash_ceramic": {
+   "id": "ash_ceramic",
+   "name": "Пепельная керамика",
+   "kind": "сырьё",
+   "src": "Кинерис"
+  },
+  "raw_adamantium": {
+   "id": "raw_adamantium",
+   "name": "Сырой адамантий",
+   "kind": "сырьё",
+   "src": "Кинерис, мир-кузница"
+  },
+  "blood_sample": {
+   "id": "blood_sample",
+   "name": "Образец крови",
+   "kind": "сырьё",
+   "src": "шприц: игрок, мобы, пленные"
+  },
+  "progenoid": {
+   "id": "progenoid",
+   "name": "Прогеноидная железа",
+   "kind": "сырьё",
+   "src": "гробница Громового воина; павшие Астартес (редуктор)"
+  },
+  "potion_regen": {
+   "id": "potion_regen",
+   "name": "Зелье регенерации",
+   "kind": "сырьё",
+   "src": "варка / по трубе"
+  },
+  "potion_strength": {
+   "id": "potion_strength",
+   "name": "Зелье силы",
+   "kind": "сырьё",
+   "src": "варка / по трубе"
+  },
+  "potion_healing": {
+   "id": "potion_healing",
+   "name": "Зелье исцеления",
+   "kind": "сырьё",
+   "src": "варка / по трубе"
+  },
+  "potion_weakness": {
+   "id": "potion_weakness",
+   "name": "Зелье слабости",
+   "kind": "сырьё",
+   "src": "варка / по трубе"
+  },
+  "potion_water": {
+   "id": "potion_water",
+   "name": "Зелье подводного дыхания",
+   "kind": "сырьё",
+   "src": "варка / по трубе"
+  },
+  "potion_night": {
+   "id": "potion_night",
+   "name": "Зелье ночного зрения",
+   "kind": "сырьё",
+   "src": "варка / по трубе"
+  },
+  "potion_fire": {
+   "id": "potion_fire",
+   "name": "Зелье огнестойкости",
+   "kind": "сырьё",
+   "src": "варка / по трубе"
+  },
+  "legion_slate": {
+   "id": "legion_slate",
+   "name": "Инфопланшет рецепта легиона",
+   "kind": "сырьё",
+   "src": "гробница Громового воина (сюжет гл. 5)"
+  },
+  "water": {
+   "id": "water",
+   "name": "Вода",
+   "kind": "жидкость",
+   "src": "водозабор"
+  },
+  "crude_promethium": {
+   "id": "crude_promethium",
+   "name": "Сырой прометий",
+   "kind": "жидкость",
+   "src": "насос-качалка"
+  },
+  "air": {
+   "id": "air",
+   "name": "Воздух",
+   "kind": "жидкость",
+   "src": "атмосферный конденсатор"
+  },
+  "crushed_iron": {
+   "id": "crushed_iron",
+   "name": "Дроблёная железная руда",
+   "kind": "материал",
+   "src": null
+  },
+  "washed_iron": {
+   "id": "washed_iron",
+   "name": "Промытая железная руда",
+   "kind": "материал",
+   "src": null
+  },
+  "crushed_copper": {
+   "id": "crushed_copper",
+   "name": "Дроблёная медная руда",
+   "kind": "материал",
+   "src": null
+  },
+  "washed_copper": {
+   "id": "washed_copper",
+   "name": "Промытая медная руда",
+   "kind": "материал",
+   "src": null
+  },
+  "crushed_lead": {
+   "id": "crushed_lead",
+   "name": "Дроблёная свинцовая руда",
+   "kind": "материал",
+   "src": null
+  },
+  "coke": {
+   "id": "coke",
+   "name": "Кокс",
+   "kind": "материал",
+   "src": null
+  },
+  "pig_iron": {
+   "id": "pig_iron",
+   "name": "Чугун",
+   "kind": "материал",
+   "src": null
+  },
+  "slag": {
+   "id": "slag",
+   "name": "Шлак",
+   "kind": "материал",
+   "src": null
+  },
+  "steel_ingot": {
+   "id": "steel_ingot",
+   "name": "Стальной слиток",
+   "kind": "материал",
+   "src": null
+  },
+  "steel_plate": {
+   "id": "steel_plate",
+   "name": "Стальной лист",
+   "kind": "материал",
+   "src": null
+  },
+  "steel_rod": {
+   "id": "steel_rod",
+   "name": "Стальной пруток",
+   "kind": "материал",
+   "src": null
+  },
+  "steel_wire": {
+   "id": "steel_wire",
+   "name": "Стальная проволока",
+   "kind": "материал",
+   "src": null
+  },
+  "steel_tube": {
+   "id": "steel_tube",
+   "name": "Стальная труба",
+   "kind": "материал",
+   "src": null
+  },
+  "copper_ingot": {
+   "id": "copper_ingot",
+   "name": "Медный слиток",
+   "kind": "материал",
+   "src": null
+  },
+  "copper_wire": {
+   "id": "copper_wire",
+   "name": "Медная проволока",
+   "kind": "материал",
+   "src": null
+  },
+  "zinc_dust": {
+   "id": "zinc_dust",
+   "name": "Цинковая пыль",
+   "kind": "материал",
+   "src": null
+  },
+  "brass_ingot": {
+   "id": "brass_ingot",
+   "name": "Латунный слиток",
+   "kind": "материал",
+   "src": null
+  },
+  "lead_ingot": {
+   "id": "lead_ingot",
+   "name": "Свинцовый слиток",
+   "kind": "материал",
+   "src": null
+  },
+  "gold_ingot": {
+   "id": "gold_ingot",
+   "name": "Золотой слиток",
+   "kind": "материал",
+   "src": null
+  },
+  "sulfur": {
+   "id": "sulfur",
+   "name": "Сера",
+   "kind": "материал",
+   "src": null
+  },
+  "gypsum": {
+   "id": "gypsum",
+   "name": "Гипс",
+   "kind": "материал",
+   "src": null
+  },
+  "polymer_resin": {
+   "id": "polymer_resin",
+   "name": "Полимерная смола",
+   "kind": "материал",
+   "src": null
+  },
+  "armaplas": {
+   "id": "armaplas",
+   "name": "Армаплас",
+   "kind": "материал",
+   "src": null
+  },
+  "plasteel_ingot": {
+   "id": "plasteel_ingot",
+   "name": "Пласталевый слиток",
+   "kind": "материал",
+   "src": null
+  },
+  "plasteel_plate": {
+   "id": "plasteel_plate",
+   "name": "Пласталевый лист",
+   "kind": "материал",
+   "src": null
+  },
+  "plasteel_tube": {
+   "id": "plasteel_tube",
+   "name": "Пласталевая труба",
+   "kind": "материал",
+   "src": null
+  },
+  "ceramite_plate": {
+   "id": "ceramite_plate",
+   "name": "Керамитовая пластина",
+   "kind": "материал",
+   "src": null
+  },
+  "adamantium_ingot": {
+   "id": "adamantium_ingot",
+   "name": "Адамантиевый слиток",
+   "kind": "материал",
+   "src": null
+  },
+  "rockrete": {
+   "id": "rockrete",
+   "name": "Рокрит",
+   "kind": "материал",
+   "src": null
+  },
+  "ferrocrete": {
+   "id": "ferrocrete",
+   "name": "Ферробетон",
+   "kind": "материал",
+   "src": null
+  },
+  "planks": {
+   "id": "planks",
+   "name": "Доски",
+   "kind": "материал",
+   "src": null
+  },
+  "sawdust": {
+   "id": "sawdust",
+   "name": "Опилки",
+   "kind": "материал",
+   "src": null
+  },
+  "cellulose": {
+   "id": "cellulose",
+   "name": "Целлюлоза",
+   "kind": "материал",
+   "src": null
+  },
+  "fabric": {
+   "id": "fabric",
+   "name": "Плотная ткань",
+   "kind": "материал",
+   "src": null
+  },
+  "synthetic_crystal": {
+   "id": "synthetic_crystal",
+   "name": "Синтетический кристалл",
+   "kind": "материал",
+   "src": null
+  },
+  "herbs": {
+   "id": "herbs",
+   "name": "Травы",
+   "kind": "материал",
+   "src": null
+  },
+  "incense": {
+   "id": "incense",
+   "name": "Ладан",
+   "kind": "материал",
+   "src": null
+  },
+  "purity_seal": {
+   "id": "purity_seal",
+   "name": "Печать чистоты",
+   "kind": "материал",
+   "src": null
+  },
+  "parchment": {
+   "id": "parchment",
+   "name": "Пергамент",
+   "kind": "материал",
+   "src": null
+  },
+  "bone_meal": {
+   "id": "bone_meal",
+   "name": "Костная мука",
+   "kind": "материал",
+   "src": null
+  },
+  "corpse_starch": {
+   "id": "corpse_starch",
+   "name": "Трупный крахмал",
+   "kind": "материал",
+   "src": null
+  },
+  "radium_cell": {
+   "id": "radium_cell",
+   "name": "Радиевая ячейка",
+   "kind": "материал",
+   "src": null
+  },
+  "rad_waste": {
+   "id": "rad_waste",
+   "name": "Радиоактивные отходы",
+   "kind": "материал",
+   "src": null
+  },
+  "nitrocellulose": {
+   "id": "nitrocellulose",
+   "name": "Нитроцеллюлоза",
+   "kind": "материал",
+   "src": null
+  },
+  "bolt_propellant": {
+   "id": "bolt_propellant",
+   "name": "Метательный заряд болта",
+   "kind": "материал",
+   "src": null
+  },
+  "fyceline": {
+   "id": "fyceline",
+   "name": "Фицелин (взрывчатка)",
+   "kind": "материал",
+   "src": null
+  },
+  "holy_water": {
+   "id": "holy_water",
+   "name": "Освящённая вода",
+   "kind": "жидкость",
+   "src": null
+  },
+  "sludge": {
+   "id": "sludge",
+   "name": "Шлам",
+   "kind": "жидкость",
+   "src": null
+  },
+  "coal_tar": {
+   "id": "coal_tar",
+   "name": "Каменноугольная смола",
+   "kind": "жидкость",
+   "src": null
+  },
+  "oxygen": {
+   "id": "oxygen",
+   "name": "Кислород",
+   "kind": "жидкость",
+   "src": null
+  },
+  "hydrogen": {
+   "id": "hydrogen",
+   "name": "Водород",
+   "kind": "жидкость",
+   "src": null
+  },
+  "nitrogen": {
+   "id": "nitrogen",
+   "name": "Азот",
+   "kind": "жидкость",
+   "src": null
+  },
+  "heavy_water": {
+   "id": "heavy_water",
+   "name": "Тяжёлая вода",
+   "kind": "жидкость",
+   "src": null
+  },
+  "deuterium": {
+   "id": "deuterium",
+   "name": "Дейтерий",
+   "kind": "жидкость",
+   "src": null
+  },
+  "heavy_fraction": {
+   "id": "heavy_fraction",
+   "name": "Тяжёлая фракция",
+   "kind": "жидкость",
+   "src": null
+  },
+  "sour_promethium": {
+   "id": "sour_promethium",
+   "name": "Сернистый прометий",
+   "kind": "жидкость",
+   "src": null
+  },
+  "aromatics": {
+   "id": "aromatics",
+   "name": "Ароматическая фракция",
+   "kind": "жидкость",
+   "src": null
+  },
+  "promethium_gas": {
+   "id": "promethium_gas",
+   "name": "Прометиевый газ («заряженные испарения»)",
+   "kind": "жидкость",
+   "src": null
+  },
+  "promethium": {
+   "id": "promethium",
+   "name": "Прометий",
+   "kind": "жидкость",
+   "src": null
+  },
+  "bitumen": {
+   "id": "bitumen",
+   "name": "Битум",
+   "kind": "жидкость",
+   "src": null
+  },
+  "sulfuric_acid": {
+   "id": "sulfuric_acid",
+   "name": "Серная кислота",
+   "kind": "жидкость",
+   "src": null
+  },
+  "nitric_acid": {
+   "id": "nitric_acid",
+   "name": "Азотная кислота",
+   "kind": "жидкость",
+   "src": null
+  },
+  "spent_acid": {
+   "id": "spent_acid",
+   "name": "Отработанная кислота",
+   "kind": "жидкость",
+   "src": null
+  },
+  "sacred_oil": {
+   "id": "sacred_oil",
+   "name": "Священное масло",
+   "kind": "жидкость",
+   "src": null
+  },
+  "brass_gear": {
+   "id": "brass_gear",
+   "name": "Латунная шестерня",
+   "kind": "компонент",
+   "src": null
+  },
+  "motive_coil": {
+   "id": "motive_coil",
+   "name": "Катушка мотивной силы",
+   "kind": "компонент",
+   "src": null
+  },
+  "servo_1": {
+   "id": "servo_1",
+   "name": "Сервопривод I",
+   "kind": "компонент",
+   "src": null
+  },
+  "servo_2": {
+   "id": "servo_2",
+   "name": "Сервопривод II",
+   "kind": "компонент",
+   "src": null
+  },
+  "cogitator_board": {
+   "id": "cogitator_board",
+   "name": "Когитаторная плата",
+   "kind": "компонент",
+   "src": null
+  },
+  "logic_engine": {
+   "id": "logic_engine",
+   "name": "Логический двигатель",
+   "kind": "компонент",
+   "src": null
+  },
+  "capacitor": {
+   "id": "capacitor",
+   "name": "Капаситор",
+   "kind": "компонент",
+   "src": null
+  },
+  "focusing_lens": {
+   "id": "focusing_lens",
+   "name": "Фокусирующая линза",
+   "kind": "компонент",
+   "src": null
+  },
+  "vox_module": {
+   "id": "vox_module",
+   "name": "Вокс-модуль",
+   "kind": "компонент",
+   "src": null
+  },
+  "mr_fuse": {
+   "id": "mr_fuse",
+   "name": "Масс-реактивный взрыватель",
+   "kind": "компонент",
+   "src": null
+  },
+  "bolt_casing": {
+   "id": "bolt_casing",
+   "name": "Гильза болта",
+   "kind": "компонент",
+   "src": null
+  },
+  "rifled_barrel": {
+   "id": "rifled_barrel",
+   "name": "Нарезной ствол",
+   "kind": "компонент",
+   "src": null
+  },
+  "heavy_barrel": {
+   "id": "heavy_barrel",
+   "name": "Тяжёлый ствол",
+   "kind": "компонент",
+   "src": null
+  },
+  "bolter_receiver": {
+   "id": "bolter_receiver",
+   "name": "Затворная группа болтера",
+   "kind": "компонент",
+   "src": null
+  },
+  "ammo_feed": {
+   "id": "ammo_feed",
+   "name": "Ленточный подаватель",
+   "kind": "компонент",
+   "src": null
+  },
+  "suspensor": {
+   "id": "suspensor",
+   "name": "Суспензор",
+   "kind": "компонент",
+   "src": null
+  },
+  "chain_teeth": {
+   "id": "chain_teeth",
+   "name": "Зубья цепи",
+   "kind": "компонент",
+   "src": null
+  },
+  "chain_blade": {
+   "id": "chain_blade",
+   "name": "Цепное полотно",
+   "kind": "компонент",
+   "src": null
+  },
+  "field_generator": {
+   "id": "field_generator",
+   "name": "Генератор силового поля",
+   "kind": "компонент",
+   "src": null
+  },
+  "containment_coil": {
+   "id": "containment_coil",
+   "name": "Катушка удержания",
+   "kind": "компонент",
+   "src": null
+  },
+  "fibre_bundle": {
+   "id": "fibre_bundle",
+   "name": "Электроволоконный пучок",
+   "kind": "компонент",
+   "src": null
+  },
+  "neural_interface": {
+   "id": "neural_interface",
+   "name": "Нейроразъём",
+   "kind": "компонент",
+   "src": null
+  },
+  "auto_senses": {
+   "id": "auto_senses",
+   "name": "Блок авточувств",
+   "kind": "компонент",
+   "src": null
+  },
+  "power_pack": {
+   "id": "power_pack",
+   "name": "Ранцевый силовой блок",
+   "kind": "компонент",
+   "src": null
+  },
+  "crux_terminatus": {
+   "id": "crux_terminatus",
+   "name": "Крукс Терминатус",
+   "kind": "компонент",
+   "src": null
+  },
+  "teleport_homer": {
+   "id": "teleport_homer",
+   "name": "Телепорт-маяк",
+   "kind": "компонент",
+   "src": null
+  },
+  "flak_plate": {
+   "id": "flak_plate",
+   "name": "Флак-пластина",
+   "kind": "компонент",
+   "src": null
+  },
+  "drill_head": {
+   "id": "drill_head",
+   "name": "Буровая головка",
+   "kind": "компонент",
+   "src": null
+  },
+  "lasgun": {
+   "id": "lasgun",
+   "name": "Лазган",
+   "kind": "изделие",
+   "src": null
+  },
+  "las_cell": {
+   "id": "las_cell",
+   "name": "Лазпакет",
+   "kind": "изделие",
+   "src": null
+  },
+  "bolt_round": {
+   "id": "bolt_round",
+   "name": "Болт-снаряд",
+   "kind": "изделие",
+   "src": null
+  },
+  "bolt_magazine": {
+   "id": "bolt_magazine",
+   "name": "Магазин болтера",
+   "kind": "изделие",
+   "src": null
+  },
+  "heavy_bolt_belt": {
+   "id": "heavy_bolt_belt",
+   "name": "Лента тяжёлого болтера",
+   "kind": "изделие",
+   "src": null
+  },
+  "bolt_pistol": {
+   "id": "bolt_pistol",
+   "name": "Болт-пистолет",
+   "kind": "изделие",
+   "src": null
+  },
+  "bolter_guard": {
+   "id": "bolter_guard",
+   "name": "Болтер «Гвардия» (человек)",
+   "kind": "изделие",
+   "src": null
+  },
+  "bolter_astartes": {
+   "id": "bolter_astartes",
+   "name": "Болтер Астартес",
+   "kind": "изделие",
+   "src": null
+  },
+  "storm_bolter": {
+   "id": "storm_bolter",
+   "name": "Штормболтер",
+   "kind": "изделие",
+   "src": null
+  },
+  "heavy_bolter": {
+   "id": "heavy_bolter",
+   "name": "Тяжёлый болтер",
+   "kind": "изделие",
+   "src": null
+  },
+  "chainsword": {
+   "id": "chainsword",
+   "name": "Цепной меч",
+   "kind": "изделие",
+   "src": null
+  },
+  "power_fist": {
+   "id": "power_fist",
+   "name": "Силовой кулак",
+   "kind": "изделие",
+   "src": null
+  },
+  "promethium_canister": {
+   "id": "promethium_canister",
+   "name": "Баллон прометия",
+   "kind": "изделие",
+   "src": null
+  },
+  "flamer": {
+   "id": "flamer",
+   "name": "Огнемёт",
+   "kind": "изделие",
+   "src": null
+  },
+  "plasma_flask": {
+   "id": "plasma_flask",
+   "name": "Плазменная колба",
+   "kind": "изделие",
+   "src": null
+  },
+  "plasma_gun": {
+   "id": "plasma_gun",
+   "name": "Плазмаган",
+   "kind": "изделие",
+   "src": null
+  },
+  "flak_armour": {
+   "id": "flak_armour",
+   "name": "Флак-броня (комплект)",
+   "kind": "изделие",
+   "src": null
+  },
+  "carapace_armour": {
+   "id": "carapace_armour",
+   "name": "Карапакс (комплект)",
+   "kind": "изделие",
+   "src": null
+  },
+  "power_armour": {
+   "id": "power_armour",
+   "name": "Силовая броня Mk VII (комплект)",
+   "kind": "изделие",
+   "src": null
+  },
+  "terminator_armour": {
+   "id": "terminator_armour",
+   "name": "Тактический доспех дредноута (комплект)",
+   "kind": "изделие",
+   "src": null
+  },
+  "blood_plasma": {
+   "id": "blood_plasma",
+   "name": "Плазма крови",
+   "kind": "биоматериал",
+   "src": null
+  },
+  "stem_cells": {
+   "id": "stem_cells",
+   "name": "Стволовые клетки",
+   "kind": "биоматериал",
+   "src": null
+  },
+  "nutrient_medium": {
+   "id": "nutrient_medium",
+   "name": "Питательная среда",
+   "kind": "биоматериал",
+   "src": null
+  },
+  "immunosuppressant": {
+   "id": "immunosuppressant",
+   "name": "Иммуноподавитель",
+   "kind": "биоматериал",
+   "src": null
+  },
+  "growth_factor": {
+   "id": "growth_factor",
+   "name": "Фактор роста",
+   "kind": "биоматериал",
+   "src": null
+  },
+  "stabilizer": {
+   "id": "stabilizer",
+   "name": "Стабилизатор генома",
+   "kind": "биоматериал",
+   "src": null
+  },
+  "gene_profile": {
+   "id": "gene_profile",
+   "name": "Генный профиль (данные)",
+   "kind": "биоматериал",
+   "src": null
+  },
+  "geneseed_vial": {
+   "id": "geneseed_vial",
+   "name": "Колба геносемени легиона",
+   "kind": "биоматериал",
+   "src": null
+  },
+  "organ_heart": {
+   "id": "organ_heart",
+   "name": "Орган: второе сердце",
+   "kind": "биоматериал",
+   "src": null
+  },
+  "organ_lung": {
+   "id": "organ_lung",
+   "name": "Орган: многолёгкое",
+   "kind": "биоматериал",
+   "src": null
+  },
+  "organ_eye": {
+   "id": "organ_eye",
+   "name": "Орган: окулоба",
+   "kind": "биоматериал",
+   "src": null
+  },
+  "black_carapace": {
+   "id": "black_carapace",
+   "name": "Орган: Чёрный панцирь",
+   "kind": "биоматериал",
+   "src": null
+  }
+ },
+ "recipes": [
+  {
+   "id": "r0",
+   "s": "crusher",
+   "t": 4,
+   "i": [
+    [
+     "iron_ore",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "crushed_iron",
+     2
+    ],
+    [
+     "gravel",
+     0.25
+    ]
+   ],
+   "note": "обогащение ×2"
+  },
+  {
+   "id": "r1",
+   "s": "wash_vat",
+   "t": 6,
+   "i": [
+    [
+     "crushed_iron",
+     2
+    ],
+    [
+     "holy_water",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "washed_iron",
+     3
+    ],
+    [
+     "sludge",
+     0.5
+    ]
+   ],
+   "note": "обогащение ×3"
+  },
+  {
+   "id": "r2",
+   "s": "coke_oven",
+   "t": 12,
+   "i": [
+    [
+     "coal",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "coke",
+     1
+    ],
+    [
+     "coal_tar",
+     0.5
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r3",
+   "s": "blast_furnace",
+   "t": 8,
+   "i": [
+    [
+     "washed_iron",
+     2
+    ],
+    [
+     "coke",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "pig_iron",
+     2
+    ],
+    [
+     "slag",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r4",
+   "s": "converter",
+   "t": 10,
+   "i": [
+    [
+     "pig_iron",
+     3
+    ],
+    [
+     "oxygen",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "steel_ingot",
+     3
+    ],
+    [
+     "slag",
+     0.5
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r5",
+   "s": "rolling_mill",
+   "t": 3,
+   "i": [
+    [
+     "steel_ingot",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "steel_plate",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r6",
+   "s": "rolling_mill",
+   "t": 3,
+   "i": [
+    [
+     "steel_ingot",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "steel_rod",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r7",
+   "s": "rolling_mill",
+   "t": 4,
+   "i": [
+    [
+     "steel_rod",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "steel_wire",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r8",
+   "s": "rolling_mill",
+   "t": 6,
+   "i": [
+    [
+     "steel_ingot",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "steel_tube",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r9",
+   "s": "crusher",
+   "t": 4,
+   "i": [
+    [
+     "copper_ore",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "crushed_copper",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r10",
+   "s": "wash_vat",
+   "t": 6,
+   "i": [
+    [
+     "crushed_copper",
+     2
+    ],
+    [
+     "holy_water",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "washed_copper",
+     3
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r11",
+   "s": "forge_smelter",
+   "t": 4,
+   "i": [
+    [
+     "washed_copper",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "copper_ingot",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r12",
+   "s": "rolling_mill",
+   "t": 3,
+   "i": [
+    [
+     "copper_ingot",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "copper_wire",
+     3
+    ]
+   ],
+   "note": "волочение"
+  },
+  {
+   "id": "r13",
+   "s": "wash_vat",
+   "t": 6,
+   "i": [
+    [
+     "gravel",
+     4
+    ],
+    [
+     "water",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "zinc_dust",
+     1
+    ],
+    [
+     "sand",
+     2
+    ]
+   ],
+   "note": "промывка гравия"
+  },
+  {
+   "id": "r14",
+   "s": "forge_smelter",
+   "t": 6,
+   "i": [
+    [
+     "copper_ingot",
+     3
+    ],
+    [
+     "zinc_dust",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "brass_ingot",
+     4
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r15",
+   "s": "crusher",
+   "t": 4,
+   "i": [
+    [
+     "lead_ore",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "crushed_lead",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r16",
+   "s": "forge_smelter",
+   "t": 4,
+   "i": [
+    [
+     "crushed_lead",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "lead_ingot",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r17",
+   "s": "forge_smelter",
+   "t": 4,
+   "i": [
+    [
+     "gold_ore",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "gold_ingot",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r18",
+   "s": "distiller",
+   "t": 10,
+   "i": [
+    [
+     "crude_promethium",
+     10
+    ]
+   ],
+   "o": [
+    [
+     "sour_promethium",
+     4
+    ],
+    [
+     "heavy_fraction",
+     3
+    ],
+    [
+     "aromatics",
+     2
+    ],
+    [
+     "promethium_gas",
+     1
+    ]
+   ],
+   "note": "4 фракции"
+  },
+  {
+   "id": "r19",
+   "s": "desulfurizer",
+   "t": 6,
+   "i": [
+    [
+     "sour_promethium",
+     4
+    ],
+    [
+     "hydrogen",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "promethium",
+     4
+    ],
+    [
+     "sulfur",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r20",
+   "s": "cracker",
+   "t": 8,
+   "i": [
+    [
+     "heavy_fraction",
+     4
+    ],
+    [
+     "hydrogen",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "sour_promethium",
+     2
+    ],
+    [
+     "bitumen",
+     1
+    ]
+   ],
+   "note": "крекинг"
+  },
+  {
+   "id": "r21",
+   "s": "autoclave",
+   "t": 8,
+   "i": [
+    [
+     "bitumen",
+     2
+    ],
+    [
+     "water",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "polymer_resin",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r22",
+   "s": "autoclave",
+   "t": 10,
+   "i": [
+    [
+     "polymer_resin",
+     2
+    ],
+    [
+     "string",
+     4
+    ]
+   ],
+   "o": [
+    [
+     "armaplas",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r23",
+   "s": "autoclave",
+   "t": 12,
+   "i": [
+    [
+     "steel_ingot",
+     2
+    ],
+    [
+     "polymer_resin",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "plasteel_ingot",
+     2
+    ]
+   ],
+   "note": "синтез пластали"
+  },
+  {
+   "id": "r24",
+   "s": "rolling_mill",
+   "t": 3,
+   "i": [
+    [
+     "plasteel_ingot",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "plasteel_plate",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r25",
+   "s": "rolling_mill",
+   "t": 6,
+   "i": [
+    [
+     "plasteel_ingot",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "plasteel_tube",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r26",
+   "s": "electrolyzer",
+   "t": 6,
+   "i": [
+    [
+     "water",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "hydrogen",
+     2
+    ],
+    [
+     "oxygen",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r27",
+   "s": "air_condenser",
+   "t": 8,
+   "i": [
+    [
+     "air",
+     4
+    ]
+   ],
+   "o": [
+    [
+     "nitrogen",
+     3
+    ],
+    [
+     "oxygen",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r28",
+   "s": "centrifuge",
+   "t": 20,
+   "i": [
+    [
+     "water",
+     20
+    ]
+   ],
+   "o": [
+    [
+     "heavy_water",
+     1
+    ]
+   ],
+   "note": "изотопы"
+  },
+  {
+   "id": "r29",
+   "s": "electrolyzer",
+   "t": 8,
+   "i": [
+    [
+     "heavy_water",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "deuterium",
+     2
+    ],
+    [
+     "oxygen",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r30",
+   "s": "chem_reactor",
+   "t": 6,
+   "i": [
+    [
+     "sulfur",
+     1
+    ],
+    [
+     "water",
+     2
+    ],
+    [
+     "oxygen",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "sulfuric_acid",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r31",
+   "s": "crusher",
+   "t": 4,
+   "i": [
+    [
+     "sulfur_ore",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "sulfur",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r32",
+   "s": "chem_reactor",
+   "t": 8,
+   "i": [
+    [
+     "saltpeter",
+     2
+    ],
+    [
+     "sulfuric_acid",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "nitric_acid",
+     2
+    ],
+    [
+     "gypsum",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r33",
+   "s": "chem_reactor",
+   "t": 10,
+   "i": [
+    [
+     "spent_acid",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "sulfuric_acid",
+     1
+    ],
+    [
+     "water",
+     1
+    ]
+   ],
+   "note": "регенерация (замкнуть цикл)"
+  },
+  {
+   "id": "r34",
+   "s": "lumber",
+   "t": 6,
+   "i": [
+    [
+     "log",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "planks",
+     4
+    ],
+    [
+     "sawdust",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r35",
+   "s": "chem_reactor",
+   "t": 8,
+   "i": [
+    [
+     "sawdust",
+     4
+    ],
+    [
+     "water",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "cellulose",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r36",
+   "s": "powder_works",
+   "t": 10,
+   "i": [
+    [
+     "cellulose",
+     2
+    ],
+    [
+     "nitric_acid",
+     1
+    ],
+    [
+     "sulfuric_acid",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "nitrocellulose",
+     2
+    ],
+    [
+     "spent_acid",
+     1
+    ]
+   ],
+   "note": "нитрация"
+  },
+  {
+   "id": "r37",
+   "s": "powder_works",
+   "t": 8,
+   "i": [
+    [
+     "nitrocellulose",
+     2
+    ],
+    [
+     "aromatics",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "bolt_propellant",
+     4
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r38",
+   "s": "powder_works",
+   "t": 12,
+   "i": [
+    [
+     "aromatics",
+     2
+    ],
+    [
+     "nitric_acid",
+     2
+    ],
+    [
+     "sulfuric_acid",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "fyceline",
+     2
+    ],
+    [
+     "spent_acid",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r39",
+   "s": "hydroponics",
+   "t": 20,
+   "i": [
+    [
+     "water",
+     2
+    ],
+    [
+     "bone_meal",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "herbs",
+     4
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r40",
+   "s": "scriptorium",
+   "t": 6,
+   "i": [
+    [
+     "herbs",
+     2
+    ],
+    [
+     "coal_tar",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "incense",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r41",
+   "s": "scriptorium",
+   "t": 4,
+   "i": [
+    [
+     "water",
+     4
+    ],
+    [
+     "incense",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "holy_water",
+     4
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r42",
+   "s": "scriptorium",
+   "t": 6,
+   "i": [
+    [
+     "promethium",
+     1
+    ],
+    [
+     "incense",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "sacred_oil",
+     2
+    ]
+   ],
+   "note": "трижды благословлённое"
+  },
+  {
+   "id": "r43",
+   "s": "scriptorium",
+   "t": 4,
+   "i": [
+    [
+     "sawdust",
+     4
+    ],
+    [
+     "water",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "parchment",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r44",
+   "s": "scriptorium",
+   "t": 6,
+   "i": [
+    [
+     "parchment",
+     1
+    ],
+    [
+     "coal_tar",
+     0.5
+    ]
+   ],
+   "o": [
+    [
+     "purity_seal",
+     2
+    ]
+   ],
+   "note": "воск из смолы"
+  },
+  {
+   "id": "r45",
+   "s": "corpse_mill",
+   "t": 10,
+   "i": [
+    [
+     "rotten_flesh",
+     4
+    ],
+    [
+     "bone",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "corpse_starch",
+     2
+    ],
+    [
+     "bone_meal",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r46",
+   "s": "cement_mill",
+   "t": 8,
+   "i": [
+    [
+     "slag",
+     2
+    ],
+    [
+     "stone",
+     2
+    ],
+    [
+     "gypsum",
+     1
+    ],
+    [
+     "water",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "rockrete",
+     6
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r47",
+   "s": "cement_mill",
+   "t": 8,
+   "i": [
+    [
+     "rockrete",
+     4
+    ],
+    [
+     "steel_rod",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "ferrocrete",
+     4
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r48",
+   "s": "sinter",
+   "t": 20,
+   "i": [
+    [
+     "plasteel_plate",
+     1
+    ],
+    [
+     "ash_ceramic",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "ceramite_plate",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r49",
+   "s": "radium_plant",
+   "t": 15,
+   "i": [
+    [
+     "raw_radium",
+     4
+    ],
+    [
+     "lead_ingot",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "radium_cell",
+     2
+    ],
+    [
+     "rad_waste",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r50",
+   "s": "ritual_forge",
+   "t": 40,
+   "i": [
+    [
+     "raw_adamantium",
+     2
+    ],
+    [
+     "sacred_oil",
+     1
+    ],
+    [
+     "purity_seal",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "adamantium_ingot",
+     1
+    ],
+    [
+     "slag",
+     1
+    ]
+   ],
+   "note": "фазовая ковка"
+  },
+  {
+   "id": "r51",
+   "s": "forge",
+   "t": 3,
+   "i": [
+    [
+     "brass_ingot",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "brass_gear",
+     2
+    ]
+   ],
+   "note": "или ручной пресс"
+  },
+  {
+   "id": "r52",
+   "s": "forge",
+   "t": 6,
+   "i": [
+    [
+     "copper_wire",
+     4
+    ],
+    [
+     "steel_rod",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "motive_coil",
+     1
+    ]
+   ],
+   "note": "волочильня"
+  },
+  {
+   "id": "r53",
+   "s": "forge",
+   "t": 8,
+   "i": [
+    [
+     "brass_gear",
+     2
+    ],
+    [
+     "motive_coil",
+     1
+    ],
+    [
+     "steel_plate",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "servo_1",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r54",
+   "s": "forge",
+   "t": 12,
+   "i": [
+    [
+     "servo_1",
+     1
+    ],
+    [
+     "plasteel_plate",
+     1
+    ],
+    [
+     "cogitator_board",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "servo_2",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r55",
+   "s": "cogitatorium",
+   "t": 8,
+   "i": [
+    [
+     "copper_wire",
+     3
+    ],
+    [
+     "redstone",
+     2
+    ],
+    [
+     "quartz",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "cogitator_board",
+     1
+    ]
+   ],
+   "note": "гравировальня"
+  },
+  {
+   "id": "r56",
+   "s": "cogitatorium",
+   "t": 20,
+   "i": [
+    [
+     "cogitator_board",
+     4
+    ],
+    [
+     "gold_ingot",
+     1
+    ],
+    [
+     "sulfuric_acid",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "logic_engine",
+     1
+    ]
+   ],
+   "note": "травление"
+  },
+  {
+   "id": "r57",
+   "s": "forge",
+   "t": 6,
+   "i": [
+    [
+     "copper_wire",
+     2
+    ],
+    [
+     "lead_ingot",
+     1
+    ],
+    [
+     "armaplas",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "capacitor",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r58",
+   "s": "induction",
+   "t": 10,
+   "i": [
+    [
+     "quartz",
+     2
+    ],
+    [
+     "sand",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "synthetic_crystal",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r59",
+   "s": "forge",
+   "t": 8,
+   "i": [
+    [
+     "synthetic_crystal",
+     1
+    ],
+    [
+     "brass_ingot",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "focusing_lens",
+     1
+    ]
+   ],
+   "note": "шлифовальня"
+  },
+  {
+   "id": "r60",
+   "s": "forge",
+   "t": 6,
+   "i": [
+    [
+     "copper_wire",
+     2
+    ],
+    [
+     "cogitator_board",
+     1
+    ],
+    [
+     "brass_ingot",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "vox_module",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r61",
+   "s": "forge",
+   "t": 6,
+   "i": [
+    [
+     "brass_ingot",
+     1
+    ],
+    [
+     "redstone",
+     1
+    ],
+    [
+     "quartz",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "mr_fuse",
+     4
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r62",
+   "s": "forge",
+   "t": 10,
+   "i": [
+    [
+     "motive_coil",
+     4
+    ],
+    [
+     "ceramite_plate",
+     1
+    ],
+    [
+     "logic_engine",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "containment_coil",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r63",
+   "s": "forge",
+   "t": 15,
+   "i": [
+    [
+     "motive_coil",
+     2
+    ],
+    [
+     "logic_engine",
+     1
+    ],
+    [
+     "gold_ingot",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "suspensor",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r64",
+   "s": "forge",
+   "t": 12,
+   "i": [
+    [
+     "radium_cell",
+     1
+    ],
+    [
+     "motive_coil",
+     2
+    ],
+    [
+     "ceramite_plate",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "field_generator",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r65",
+   "s": "forge",
+   "t": 4,
+   "i": [
+    [
+     "plasteel_plate",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "chain_teeth",
+     8
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r66",
+   "s": "forge",
+   "t": 6,
+   "i": [
+    [
+     "chain_teeth",
+     16
+    ],
+    [
+     "steel_rod",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "chain_blade",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r67",
+   "s": "forge",
+   "t": 10,
+   "i": [
+    [
+     "servo_1",
+     1
+    ],
+    [
+     "steel_plate",
+     2
+    ],
+    [
+     "brass_gear",
+     4
+    ]
+   ],
+   "o": [
+    [
+     "ammo_feed",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r68",
+   "s": "forge",
+   "t": 20,
+   "i": [
+    [
+     "logic_engine",
+     1
+    ],
+    [
+     "gold_ingot",
+     1
+    ],
+    [
+     "fibre_bundle",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "neural_interface",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r69",
+   "s": "forge",
+   "t": 20,
+   "i": [
+    [
+     "focusing_lens",
+     2
+    ],
+    [
+     "logic_engine",
+     1
+    ],
+    [
+     "vox_module",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "auto_senses",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r70",
+   "s": "forge",
+   "t": 30,
+   "i": [
+    [
+     "ceramite_plate",
+     2
+    ],
+    [
+     "motive_coil",
+     4
+    ],
+    [
+     "radium_cell",
+     1
+    ],
+    [
+     "logic_engine",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "power_pack",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r71",
+   "s": "forge",
+   "t": 15,
+   "i": [
+    [
+     "vox_module",
+     1
+    ],
+    [
+     "radium_cell",
+     1
+    ],
+    [
+     "logic_engine",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "teleport_homer",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r72",
+   "s": "forge",
+   "t": 8,
+   "i": [
+    [
+     "steel_plate",
+     2
+    ],
+    [
+     "adamantium_ingot",
+     0.25
+    ]
+   ],
+   "o": [
+    [
+     "drill_head",
+     1
+    ]
+   ],
+   "note": "расходник бура"
+  },
+  {
+   "id": "r73",
+   "s": "ritual_forge",
+   "t": 30,
+   "i": [
+    [
+     "adamantium_ingot",
+     1
+    ],
+    [
+     "gold_ingot",
+     2
+    ],
+    [
+     "purity_seal",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "crux_terminatus",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r74",
+   "s": "barrel_shop",
+   "t": 20,
+   "i": [
+    [
+     "steel_tube",
+     1
+    ],
+    [
+     "sacred_oil",
+     0.5
+    ]
+   ],
+   "o": [
+    [
+     "rifled_barrel",
+     1
+    ]
+   ],
+   "note": "масло для резца"
+  },
+  {
+   "id": "r75",
+   "s": "barrel_shop",
+   "t": 30,
+   "i": [
+    [
+     "plasteel_tube",
+     1
+    ],
+    [
+     "sacred_oil",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "heavy_barrel",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r76",
+   "s": "armoury",
+   "t": 15,
+   "i": [
+    [
+     "steel_plate",
+     2
+    ],
+    [
+     "servo_1",
+     1
+    ],
+    [
+     "brass_gear",
+     2
+    ],
+    [
+     "mr_fuse",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "bolter_receiver",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r77",
+   "s": "ammo_line",
+   "t": 3,
+   "i": [
+    [
+     "brass_ingot",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "bolt_casing",
+     4
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r78",
+   "s": "ammo_line",
+   "t": 6,
+   "i": [
+    [
+     "bolt_casing",
+     4
+    ],
+    [
+     "bolt_propellant",
+     4
+    ],
+    [
+     "fyceline",
+     1
+    ],
+    [
+     "mr_fuse",
+     4
+    ],
+    [
+     "steel_rod",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "bolt_round",
+     4
+    ]
+   ],
+   "note": ".75 калибр, масс-реактивный"
+  },
+  {
+   "id": "r79",
+   "s": "ammo_line",
+   "t": 4,
+   "i": [
+    [
+     "bolt_round",
+     20
+    ],
+    [
+     "steel_plate",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "bolt_magazine",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r80",
+   "s": "ammo_line",
+   "t": 6,
+   "i": [
+    [
+     "bolt_round",
+     40
+    ],
+    [
+     "steel_wire",
+     2
+    ],
+    [
+     "armaplas",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "heavy_bolt_belt",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r81",
+   "s": "ammo_line",
+   "t": 4,
+   "i": [
+    [
+     "capacitor",
+     1
+    ],
+    [
+     "lead_ingot",
+     1
+    ],
+    [
+     "armaplas",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "las_cell",
+     2
+    ]
+   ],
+   "note": "зарядка — в сети"
+  },
+  {
+   "id": "r82",
+   "s": "ammo_line",
+   "t": 3,
+   "i": [
+    [
+     "steel_plate",
+     1
+    ],
+    [
+     "promethium",
+     4
+    ]
+   ],
+   "o": [
+    [
+     "promethium_canister",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r83",
+   "s": "armoury",
+   "t": 20,
+   "i": [
+    [
+     "focusing_lens",
+     1
+    ],
+    [
+     "capacitor",
+     1
+    ],
+    [
+     "steel_tube",
+     1
+    ],
+    [
+     "planks",
+     2
+    ],
+    [
+     "cogitator_board",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "lasgun",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r84",
+   "s": "armoury",
+   "t": 20,
+   "i": [
+    [
+     "rifled_barrel",
+     1
+    ],
+    [
+     "bolter_receiver",
+     1
+    ],
+    [
+     "steel_plate",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "bolt_pistol",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r85",
+   "s": "armoury",
+   "t": 30,
+   "i": [
+    [
+     "rifled_barrel",
+     1
+    ],
+    [
+     "bolter_receiver",
+     1
+    ],
+    [
+     "steel_plate",
+     3
+    ],
+    [
+     "planks",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "bolter_guard",
+     1
+    ]
+   ],
+   "note": "тяжёлое для человека"
+  },
+  {
+   "id": "r86",
+   "s": "armoury",
+   "t": 40,
+   "i": [
+    [
+     "heavy_barrel",
+     1
+    ],
+    [
+     "bolter_receiver",
+     1
+    ],
+    [
+     "ceramite_plate",
+     2
+    ],
+    [
+     "cogitator_board",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "bolter_astartes",
+     1
+    ]
+   ],
+   "note": "образец Годвин"
+  },
+  {
+   "id": "r87",
+   "s": "armoury",
+   "t": 45,
+   "i": [
+    [
+     "heavy_barrel",
+     2
+    ],
+    [
+     "bolter_receiver",
+     2
+    ],
+    [
+     "ammo_feed",
+     1
+    ],
+    [
+     "ceramite_plate",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "storm_bolter",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r88",
+   "s": "heavy_armoury",
+   "t": 90,
+   "i": [
+    [
+     "heavy_barrel",
+     1
+    ],
+    [
+     "bolter_receiver",
+     2
+    ],
+    [
+     "servo_2",
+     1
+    ],
+    [
+     "ammo_feed",
+     1
+    ],
+    [
+     "suspensor",
+     1
+    ],
+    [
+     "ceramite_plate",
+     3
+    ],
+    [
+     "logic_engine",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "heavy_bolter",
+     1
+    ]
+   ],
+   "note": "у Астартес — без суспензора не поднять"
+  },
+  {
+   "id": "r89",
+   "s": "armoury",
+   "t": 20,
+   "i": [
+    [
+     "chain_blade",
+     1
+    ],
+    [
+     "servo_1",
+     1
+    ],
+    [
+     "brass_gear",
+     2
+    ],
+    [
+     "steel_plate",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "chainsword",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r90",
+   "s": "heavy_armoury",
+   "t": 80,
+   "i": [
+    [
+     "field_generator",
+     1
+    ],
+    [
+     "servo_2",
+     3
+    ],
+    [
+     "ceramite_plate",
+     3
+    ],
+    [
+     "adamantium_ingot",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "power_fist",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r91",
+   "s": "armoury",
+   "t": 25,
+   "i": [
+    [
+     "steel_tube",
+     2
+    ],
+    [
+     "servo_1",
+     1
+    ],
+    [
+     "promethium_canister",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "flamer",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r92",
+   "s": "plasma_works",
+   "t": 30,
+   "i": [
+    [
+     "deuterium",
+     2
+    ],
+    [
+     "containment_coil",
+     1
+    ],
+    [
+     "plasteel_plate",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "plasma_flask",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r93",
+   "s": "armoury",
+   "t": 60,
+   "i": [
+    [
+     "containment_coil",
+     2
+    ],
+    [
+     "plasteel_tube",
+     1
+    ],
+    [
+     "ceramite_plate",
+     1
+    ],
+    [
+     "logic_engine",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "plasma_gun",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r94",
+   "s": "weavery",
+   "t": 6,
+   "i": [
+    [
+     "string",
+     4
+    ]
+   ],
+   "o": [
+    [
+     "fabric",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r95",
+   "s": "weavery",
+   "t": 8,
+   "i": [
+    [
+     "fabric",
+     2
+    ],
+    [
+     "armaplas",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "flak_plate",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r96",
+   "s": "weavery",
+   "t": 30,
+   "i": [
+    [
+     "flak_plate",
+     8
+    ],
+    [
+     "fabric",
+     6
+    ],
+    [
+     "leather",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "flak_armour",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r97",
+   "s": "weavery",
+   "t": 40,
+   "i": [
+    [
+     "armaplas",
+     6
+    ],
+    [
+     "plasteel_plate",
+     4
+    ],
+    [
+     "fabric",
+     4
+    ]
+   ],
+   "o": [
+    [
+     "carapace_armour",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r98",
+   "s": "armour_line",
+   "t": 300,
+   "i": [
+    [
+     "ceramite_plate",
+     12
+    ],
+    [
+     "fibre_bundle",
+     8
+    ],
+    [
+     "power_pack",
+     1
+    ],
+    [
+     "auto_senses",
+     1
+    ],
+    [
+     "neural_interface",
+     2
+    ],
+    [
+     "servo_2",
+     4
+    ],
+    [
+     "adamantium_ingot",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "power_armour",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r99",
+   "s": "armour_line",
+   "t": 600,
+   "i": [
+    [
+     "ceramite_plate",
+     20
+    ],
+    [
+     "adamantium_ingot",
+     8
+    ],
+    [
+     "fibre_bundle",
+     12
+    ],
+    [
+     "power_pack",
+     2
+    ],
+    [
+     "crux_terminatus",
+     1
+    ],
+    [
+     "teleport_homer",
+     1
+    ],
+    [
+     "servo_2",
+     6
+    ],
+    [
+     "storm_bolter",
+     1
+    ],
+    [
+     "power_fist",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "terminator_armour",
+     1
+    ]
+   ],
+   "note": "со штормболтером и силовым кулаком"
+  },
+  {
+   "id": "r100",
+   "s": "solution_synth",
+   "t": 10,
+   "i": [
+    [
+     "water",
+     4
+    ],
+    [
+     "corpse_starch",
+     2
+    ],
+    [
+     "potion_regen",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "nutrient_medium",
+     4
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r101",
+   "s": "solution_synth",
+   "t": 10,
+   "i": [
+    [
+     "potion_weakness",
+     1
+    ],
+    [
+     "spider_eye",
+     1
+    ],
+    [
+     "water",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "immunosuppressant",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r102",
+   "s": "solution_synth",
+   "t": 12,
+   "i": [
+    [
+     "potion_strength",
+     1
+    ],
+    [
+     "bone_meal",
+     2
+    ],
+    [
+     "nutrient_medium",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "growth_factor",
+     2
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r103",
+   "s": "solution_synth",
+   "t": 12,
+   "i": [
+    [
+     "potion_healing",
+     1
+    ],
+    [
+     "lapis",
+     1
+    ],
+    [
+     "water",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "stabilizer",
+     2
+    ]
+   ],
+   "note": "Громовой воин"
+  },
+  {
+   "id": "r104",
+   "s": "centrifuge",
+   "t": 10,
+   "i": [
+    [
+     "blood_sample",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "blood_plasma",
+     1
+    ],
+    [
+     "stem_cells",
+     1
+    ]
+   ],
+   "note": ""
+  },
+  {
+   "id": "r105",
+   "s": "analyzer",
+   "t": 30,
+   "i": [
+    [
+     "progenoid",
+     1
+    ],
+    [
+     "blood_plasma",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "gene_profile",
+     1
+    ]
+   ],
+   "note": "мини-игра совместимости"
+  },
+  {
+   "id": "r106",
+   "s": "sequencer",
+   "t": 120,
+   "i": [
+    [
+     "progenoid",
+     1
+    ],
+    [
+     "gene_profile",
+     1
+    ],
+    [
+     "legion_slate",
+     0
+    ],
+    [
+     "growth_factor",
+     1
+    ],
+    [
+     "stabilizer",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "geneseed_vial",
+     1
+    ]
+   ],
+   "note": "мини-игра сплайсинга"
+  },
+  {
+   "id": "r107",
+   "s": "bio_vat",
+   "t": 900,
+   "i": [
+    [
+     "geneseed_vial",
+     0.25
+    ],
+    [
+     "stem_cells",
+     2
+    ],
+    [
+     "nutrient_medium",
+     6
+    ],
+    [
+     "growth_factor",
+     2
+    ],
+    [
+     "immunosuppressant",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "organ_heart",
+     1
+    ]
+   ],
+   "note": "держать 37°, свет, раствор"
+  },
+  {
+   "id": "r108",
+   "s": "bio_vat",
+   "t": 900,
+   "i": [
+    [
+     "geneseed_vial",
+     0.25
+    ],
+    [
+     "stem_cells",
+     2
+    ],
+    [
+     "nutrient_medium",
+     6
+    ],
+    [
+     "growth_factor",
+     2
+    ],
+    [
+     "potion_water",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "organ_lung",
+     1
+    ]
+   ],
+   "note": "многолёгкое — дышать ядом"
+  },
+  {
+   "id": "r109",
+   "s": "bio_vat",
+   "t": 900,
+   "i": [
+    [
+     "geneseed_vial",
+     0.25
+    ],
+    [
+     "stem_cells",
+     2
+    ],
+    [
+     "nutrient_medium",
+     6
+    ],
+    [
+     "growth_factor",
+     2
+    ],
+    [
+     "potion_night",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "organ_eye",
+     1
+    ]
+   ],
+   "note": "окулоба — ночное зрение"
+  },
+  {
+   "id": "r110",
+   "s": "bio_vat",
+   "t": 1800,
+   "i": [
+    [
+     "geneseed_vial",
+     0.5
+    ],
+    [
+     "stem_cells",
+     4
+    ],
+    [
+     "nutrient_medium",
+     10
+    ],
+    [
+     "fibre_bundle",
+     4
+    ],
+    [
+     "neural_interface",
+     2
+    ],
+    [
+     "potion_fire",
+     1
+    ]
+   ],
+   "o": [
+    [
+     "black_carapace",
+     1
+    ]
+   ],
+   "note": "последний орган: связь с силовой бронёй"
+  },
+  {
+   "id": "r111",
+   "s": "bio_vat",
+   "t": 120,
+   "i": [
+    [
+     "nutrient_medium",
+     2
+    ],
+    [
+     "string",
+     4
+    ],
+    [
+     "copper_wire",
+     2
+    ]
+   ],
+   "o": [
+    [
+     "fibre_bundle",
+     1
+    ]
+   ],
+   "note": "искусственные мышцы"
+  }
+ ],
+ "procedures": [
+  {
+   "name": "Путь Астартес",
+   "steps": [
+    [
+     "Образцы",
+     "кровь шприцем, прогеноиды из гробницы Громового воина или с павших Астартес"
+    ],
+    [
+     "Центрифуга",
+     "кровь → плазма и стволовые клетки"
+    ],
+    [
+     "Когитатор-анализатор",
+     "генный профиль прогеноида: мини-игра совместимости"
+    ],
+    [
+     "Генный секвенатор",
+     "геносемя легиона по инфопланшету: мини-игра сплайсинга"
+    ],
+    [
+     "Синтезатор растворов",
+     "питательная среда, фактор роста, иммуноподавитель; зелья — по трубам"
+    ],
+    [
+     "Био-чан",
+     "орган растёт 15–30 минут; держать температуру, свет люменов и подачу раствора"
+    ],
+    [
+     "Криохранилище",
+     "готовый орган портится за игровой день, в холоде хранится"
+    ],
+    [
+     "Ложе апотекариона",
+     "вызвать апотекария (челнок по маяку); операция — мини-игра показателей"
+    ],
+    [
+     "Генокарта",
+     "орган светится, даёт способность; модель игрока подрастает"
+    ],
+    [
+     "Арматорий",
+     "после Чёрного панциря: серво-руки надевают силовую броню"
+    ]
+   ]
+  }
+ ],
+ "groups": [
+  "Добыча",
+  "Металлургия",
+  "Химия и прометий",
+  "Компоненты",
+  "Оружие и боеприпасы",
+  "Броня",
+  "Генетика",
+  "Служебные"
+ ],
+ "targets": [
+  "heavy_bolter",
+  "bolt_magazine",
+  "bolter_astartes",
+  "bolt_pistol",
+  "storm_bolter",
+  "terminator_armour",
+  "power_armour",
+  "lasgun",
+  "chainsword",
+  "flamer",
+  "plasma_gun",
+  "flak_armour",
+  "carapace_armour",
+  "organ_heart",
+  "black_carapace",
+  "geneseed_vial",
+  "steel_ingot",
+  "plasteel_plate",
+  "ceramite_plate",
+  "adamantium_ingot",
+  "promethium",
+  "sacred_oil",
+  "fyceline",
+  "bolt_propellant"
+ ]
+}
