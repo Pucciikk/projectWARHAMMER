@@ -1,0 +1,29 @@
+{
+ "machine": "warpbound:converter",
+ "seconds": 10,
+ "items_in": [
+  {
+   "item": "warpbound:pig_iron",
+   "count": 3
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:steel_ingot",
+   "count": 3,
+   "chance": 1.0
+  },
+  {
+   "item": "warpbound:slag",
+   "count": 1,
+   "chance": 0.5
+  }
+ ],
+ "fluids_in": [
+  {
+   "fluid": "warpbound:oxygen",
+   "mb": 1000
+  }
+ ],
+ "fluids_out": []
+}

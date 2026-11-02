@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "building",
+ "pattern": [
+  " F ",
+  "III",
+  " I "
+ ],
+ "key": {
+  "I": {
+   "item": "minecraft:iron_ingot"
+  },
+  "F": {
+   "item": "minecraft:flint_and_steel"
+  }
+ },
+ "result": {
+  "id": "warpbound:flare_stack",
+  "count": 1
+ }
+}

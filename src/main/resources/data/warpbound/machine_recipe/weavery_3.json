@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:weavery",
+ "seconds": 40,
+ "items_in": [
+  {
+   "item": "warpbound:armaplas",
+   "count": 6
+  },
+  {
+   "item": "warpbound:plasteel_plate",
+   "count": 4
+  },
+  {
+   "item": "warpbound:fabric",
+   "count": 4
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:carapace_armour",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

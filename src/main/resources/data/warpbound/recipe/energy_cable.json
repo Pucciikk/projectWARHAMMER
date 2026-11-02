@@ -1,0 +1,18 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "building",
+ "pattern": [
+  "MMM",
+  "   ",
+  "MMM"
+ ],
+ "key": {
+  "M": {
+   "item": "minecraft:copper_ingot"
+  }
+ },
+ "result": {
+  "id": "warpbound:energy_cable",
+  "count": 8
+ }
+}

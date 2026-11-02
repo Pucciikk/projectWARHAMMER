@@ -64,6 +64,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     // Анимированные модели сущностей и блоков (формат Blockbench «GeckoLib Animated Model»)
     modImplementation "software.bernie.geckolib:geckolib-fabric-${project.minecraft_version}:${project.geckolib_version}"
+    // Энергия машин: совместимость с другими модами на сервере (одобрено 24.10.2026)
+    modApi include("teamreborn:energy:4.1.0")
 }
 
 processResources {

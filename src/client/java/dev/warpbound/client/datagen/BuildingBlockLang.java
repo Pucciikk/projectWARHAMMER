@@ -12,6 +12,10 @@ final class BuildingBlockLang {
         builder.add("block.warpbound.plasteel_panel", "Пласталевая панель");
         builder.add("block.warpbound.riveted_plasteel_panel", "Клёпаная пласталевая панель");
         builder.add("block.warpbound.hazard_panel", "Панель с полосой опасности");
+        builder.add("block.warpbound.heavy_casing", "Тяжёлый кожух");
+        builder.add("block.warpbound.support_frame", "Несущая рама");
+        builder.add("block.warpbound.drive_block", "Приводной блок");
+        builder.add("block.warpbound.well_casing", "Обсадная секция");
         builder.add("block.warpbound.plasteel_vent", "Вентиляционная решётка");
         builder.add("block.warpbound.deck_grating", "Палубная решётка");
         builder.add("block.warpbound.hull_plating_stairs", "Ступени из обшивки");
@@ -61,6 +65,10 @@ final class BuildingBlockLang {
         builder.add("block.warpbound.plasteel_panel", "Plasteel Panel");
         builder.add("block.warpbound.riveted_plasteel_panel", "Riveted Plasteel Panel");
         builder.add("block.warpbound.hazard_panel", "Hazard Panel");
+        builder.add("block.warpbound.heavy_casing", "Heavy Machine Casing");
+        builder.add("block.warpbound.support_frame", "Support Frame");
+        builder.add("block.warpbound.drive_block", "Drive Block");
+        builder.add("block.warpbound.well_casing", "Well Casing");
         builder.add("block.warpbound.plasteel_vent", "Plasteel Vent");
         builder.add("block.warpbound.deck_grating", "Deck Grating");
         builder.add("block.warpbound.hull_plating_stairs", "Hull Plating Stairs");

@@ -1,0 +1,35 @@
+{
+ "machine": "warpbound:armoury",
+ "seconds": 20,
+ "items_in": [
+  {
+   "item": "warpbound:focusing_lens",
+   "count": 1
+  },
+  {
+   "item": "warpbound:capacitor",
+   "count": 1
+  },
+  {
+   "item": "warpbound:steel_tube",
+   "count": 1
+  },
+  {
+   "item": "minecraft:oak_planks",
+   "count": 2
+  },
+  {
+   "item": "warpbound:cogitator_board",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:lasgun",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

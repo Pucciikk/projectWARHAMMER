@@ -1,0 +1,19 @@
+{
+ "machine": "warpbound:mechanicus_forge",
+ "seconds": 4,
+ "items_in": [
+  {
+   "item": "warpbound:plasteel_plate",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:chain_teeth",
+   "count": 8,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

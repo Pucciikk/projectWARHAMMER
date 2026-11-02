@@ -143,6 +143,73 @@ def plasteel_vent(rng):
     return reg
 
 
+def heavy_casing(rng):
+    """Тяжёлый кожух: толстая рамка, косая жёлто-чёрная вставка в углу, заклёпки."""
+    base = (64, 68, 78)
+    reg = canvas(base, rng, amp=6, cell=4)
+    reg[:3, :, :3] = shade(base, 0.6)
+    reg[-3:, :, :3] = shade(base, 0.55)
+    reg[:, :3, :3] = shade(base, 0.6)
+    reg[:, -3:, :3] = shade(base, 0.55)
+    reg[3, 3:-3, :3] = shade(base, 1.3)
+    reg[3:-3, 3, :3] = shade(base, 1.25)
+    for y in (6, N - 7):
+        for x in (6, N - 7):
+            reg[y:y + 2, x:x + 2, :3] = shade(base, 1.7)
+    for i in range(10, 22):
+        reg[i, i:i + 3, :3] = shade(base, 0.8)
+    return reg
+
+
+def support_frame(rng):
+    """Несущая рама: стальные балки по краям и косая распорка, просвет."""
+    base = (92, 96, 104)
+    reg = canvas(base, rng, amp=6, cell=4)
+    reg[..., 3] = 0
+    for t in range(0, 5):
+        reg[t, :, 3] = reg[-1 - t, :, 3] = reg[:, t, 3] = reg[:, -1 - t, 3] = 255
+    for i in range(N):
+        for d in range(-2, 3):
+            if 0 <= i + d < N:
+                reg[i, i + d, 3] = 255
+    reg[0, :, :3] = shade(base, 1.3)
+    reg[:, 0, :3] = shade(base, 1.2)
+    reg[-1, :, :3] = shade(base, 0.6)
+    return reg
+
+
+def drive_block(rng):
+    """Приводной блок: кожух с окном, в окне латунная шестерня."""
+    base = (58, 60, 68)
+    reg = canvas(base, rng, amp=5, cell=4)
+    reg[:3, :, :3] = reg[-3:, :, :3] = shade(base, 0.6)
+    reg[:, :3, :3] = reg[:, -3:, :3] = shade(base, 0.6)
+    c = (N - 1) / 2
+    for y in range(N):
+        for x in range(N):
+            r = ((x - c) ** 2 + (y - c) ** 2) ** 0.5
+            if r < 11:
+                reg[y, x, :3] = (22, 22, 26)
+            ang = (int(__import__("math").degrees(__import__("math").atan2(y - c, x - c))) + 360) % 45
+            if r < 7 or (r < 10 and ang < 18):
+                reg[y, x, :3] = (190, 148, 58) if (x + y) % 5 else (150, 112, 40)
+            if r < 2.5:
+                reg[y, x, :3] = (70, 50, 20)
+    return reg
+
+
+def well_casing(rng):
+    """Обсадная секция: вертикальная труба с латунными фланцами."""
+    base = (82, 74, 66)
+    reg = canvas(base, rng, amp=9, cell=3)
+    for x in range(N):
+        f = 0.55 + 0.75 * (1 - abs(x - N / 2) / (N / 2))
+        reg[:, x, :3] = (reg[:, x, :3] * f).clip(0, 255)
+    for y in (2, 3, N // 2, N // 2 + 1, N - 4, N - 3):
+        reg[y, :, :3] = (186, 146, 54)
+    return reg
+
+
 def deck_grating(rng):
     base = (96, 100, 108)
     reg = canvas(base, rng, amp=6, cell=4)

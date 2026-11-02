@@ -1,0 +1,27 @@
+{
+ "name": "block.warpbound.ammo_line",
+ "layers": [
+  [
+   "HHHCHHH",
+   "HHHHHHH",
+   "HHHHHHH"
+  ],
+  [
+   "TF F FT",
+   "TF F FT",
+   "EEEEEEE"
+  ],
+  [
+   "TF F F ",
+   "TF F F ",
+   "SSSSSSS"
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

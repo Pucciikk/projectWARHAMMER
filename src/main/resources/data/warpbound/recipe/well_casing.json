@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "BIB",
+    "I I",
+    "BIB"
+  ],
+  "key": {
+    "B": {
+      "item": "warpbound:brass_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "id": "warpbound:well_casing",
+    "count": 4
+  }
+}

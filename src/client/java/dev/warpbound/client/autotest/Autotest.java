@@ -153,6 +153,7 @@ public final class Autotest {
     }
 
     private static void run(Minecraft mc, String line) {
+        mc.options.pauseOnLostFocus = false; // сценарий не должен вставать, если окно потеряло фокус
         if (line.isEmpty() || line.startsWith("#")) return;
         String[] parts = line.split("\\s+", 2);
         String arg = parts.length > 1 ? parts[1] : "";
@@ -179,6 +180,14 @@ public final class Autotest {
                 case "clearchat" -> mc.gui.getChat().clearMessages(false);
                 case "shot" -> screenshot(mc, arg);
                 case "log" -> log(arg);
+                case "useblock" -> {
+                    // нажать ПКМ по блоку: useblock x y z
+                    String[] c = arg.trim().split("\\s+");
+                    var pos = new net.minecraft.core.BlockPos(Integer.parseInt(c[0]), Integer.parseInt(c[1]), Integer.parseInt(c[2]));
+                    mc.gameMode.useItemOn(mc.player, net.minecraft.world.InteractionHand.MAIN_HAND,
+                            new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(pos), net.minecraft.core.Direction.NORTH, pos, false));
+                }
+                case "fps" -> log("FPS " + arg + ": " + mc.getFps());
                 case "quit" -> quit(mc);
                 case "handover" -> {
                     // сценарий подготовил мир — дальше играет человек, игра не закрывается

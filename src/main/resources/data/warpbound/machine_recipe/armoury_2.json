@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:armoury",
+ "seconds": 20,
+ "items_in": [
+  {
+   "item": "warpbound:rifled_barrel",
+   "count": 1
+  },
+  {
+   "item": "warpbound:bolter_receiver",
+   "count": 1
+  },
+  {
+   "item": "warpbound:steel_plate",
+   "count": 2
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:bolt_pistol",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

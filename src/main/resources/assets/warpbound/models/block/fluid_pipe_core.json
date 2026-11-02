@@ -1,0 +1,78 @@
+{
+ "textures": {
+  "particle": "warpbound:block/fluid_pipe",
+  "body": "warpbound:block/fluid_pipe",
+  "flange": "warpbound:block/fluid_pipe_flange",
+  "band": "warpbound:block/fluid_pipe_band"
+ },
+ "elements": [
+  {
+   "from": [
+    5,
+    5,
+    5
+   ],
+   "to": [
+    11,
+    11,
+    11
+   ],
+   "faces": {
+    "north": {
+     "texture": "#body",
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ]
+    },
+    "south": {
+     "texture": "#body",
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ]
+    },
+    "east": {
+     "texture": "#body",
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ]
+    },
+    "west": {
+     "texture": "#body",
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ]
+    },
+    "up": {
+     "texture": "#body",
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ]
+    },
+    "down": {
+     "texture": "#body",
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ]
+    }
+   }
+  }
+ ]
+}

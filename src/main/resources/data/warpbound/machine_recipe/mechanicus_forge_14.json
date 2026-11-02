@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:mechanicus_forge",
+ "seconds": 10,
+ "items_in": [
+  {
+   "item": "warpbound:servo_motor",
+   "count": 1
+  },
+  {
+   "item": "warpbound:steel_plate",
+   "count": 2
+  },
+  {
+   "item": "warpbound:brass_gear",
+   "count": 4
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:ammo_feed",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

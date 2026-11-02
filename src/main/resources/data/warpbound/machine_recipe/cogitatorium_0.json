@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:cogitatorium",
+ "seconds": 8,
+ "items_in": [
+  {
+   "item": "warpbound:copper_wire",
+   "count": 3
+  },
+  {
+   "item": "minecraft:redstone",
+   "count": 2
+  },
+  {
+   "item": "minecraft:quartz",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:cogitator_board",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

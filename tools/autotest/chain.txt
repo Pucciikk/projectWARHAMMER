@@ -1,0 +1,68 @@
+# Машины цепочки на мешах: экстрактор, дробильня, чан, печь, домна; цикл и общий вид
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd tp @s 2000 208 0 0 0
+wait 60
+cmd fill 1974 199 -30 2026 199 40 minecraft:polished_deepslate
+cmd fill 1974 200 -30 2026 207 40 minecraft:air
+hud off
+cmd setblock 1980 200 -14 warpbound:ore_crusher[facing=north]
+cmd tp @s 1980 200 -16 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 1988 200 -14 warpbound:wash_vat[facing=north]
+cmd tp @s 1988 200 -16 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 1996 200 -14 warpbound:coke_oven[facing=north]
+cmd tp @s 1996 200 -16 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 2006 200 -14 warpbound:blast_furnace[facing=north]
+cmd tp @s 2006 200 -16 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 2018 200 -14 warpbound:promethium_extractor[facing=north]
+cmd tp @s 2018 200 -16 0 0
+wait 8
+cmd wb machine build
+wait 8
+clearchat
+cmd tp @s 1998 210 -30 0 24
+wait 40
+shot 01_all
+cmd tp @s 1976 203 -20 -35 12
+wait 30
+shot 02_crusher
+cmd tp @s 1984 204 -19 -28 25
+wait 30
+shot 03_vat
+wait 16
+shot 04_vat
+cmd tp @s 1992 203 -19 -28 14
+wait 20
+shot 05_oven_a
+wait 70
+shot 06_oven_b
+cmd tp @s 2002 205 -23 -22 8
+wait 20
+shot 07_furnace_a
+wait 60
+shot 08_furnace_b
+cmd tp @s 2012 208 -2 150 22
+wait 10
+shot 09_furnace_back
+cmd tp @s 2007 208 -22 -30 16
+wait 30
+shot 10_extractor
+cmd tp @s 2027 207 2 90 10
+wait 40
+shot 11_extractor_side
+wait 30
+shot 12_extractor_side
+quit

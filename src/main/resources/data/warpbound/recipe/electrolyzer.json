@@ -1,0 +1,24 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "building",
+ "pattern": [
+  "HGH",
+  "GDG",
+  "HGH"
+ ],
+ "key": {
+  "H": {
+   "item": "warpbound:heavy_casing"
+  },
+  "G": {
+   "item": "warpbound:brass_gear"
+  },
+  "D": {
+   "item": "warpbound:drive_block"
+  }
+ },
+ "result": {
+  "id": "warpbound:electrolyzer",
+  "count": 1
+ }
+}

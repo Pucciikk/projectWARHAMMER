@@ -1,0 +1,132 @@
+# Прометий и конвейер: проверка в игре
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd tp @s 14012 210 -2 0 40
+wait 100
+cmd fill 13992 199 -13 14036 199 30 minecraft:polished_deepslate
+hud off
+wait 240
+cmd setblock 14000 200 -10 warpbound:promethium_extractor[facing=north]
+cmd tp @s 14000 200 -12 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 14008 200 0 warpbound:distiller[facing=north]
+cmd tp @s 14008 200 -2 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 14014 200 6 warpbound:coal_gen[facing=north]
+cmd tp @s 14014 200 4 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 14024 200 6 warpbound:ore_crusher[facing=north]
+cmd tp @s 14024 200 4 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 14000 200 16 warpbound:forge_smelter[facing=north]
+cmd tp @s 14000 200 14 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 14010 200 16 warpbound:cogitatorium[facing=north]
+cmd tp @s 14010 200 14 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 14020 200 16 warpbound:mechanicus_forge[facing=north]
+cmd tp @s 14020 200 14 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd tp @s 14012 206 -2 0 25
+wait 6
+cmd fill 14003 200 3 14007 200 3 warpbound:fluid_pipe
+cmd fill 14009 200 3 14011 200 3 warpbound:fluid_pipe
+cmd setblock 14012 200 3 warpbound:fluid_tank
+cmd setblock 14010 200 4 warpbound:flare_stack
+cmd fill 14008 200 3 14008 200 9 warpbound:energy_cable
+cmd fill 14008 200 9 14024 200 9 warpbound:energy_cable
+cmd setblock 14024 200 9 warpbound:energy_cable
+cmd setblock 14012 200 7 minecraft:hopper[facing=east]
+cmd setblock 14012 201 7 minecraft:chest
+cmd item replace block 14012 201 7 container.0 with minecraft:coal 64
+cmd setblock 14018 200 7 minecraft:hopper[facing=east]
+cmd setblock 14018 201 7 minecraft:chest
+cmd item replace block 14018 201 7 container.0 with minecraft:raw_iron 32
+cmd fill 14019 200 7 14022 200 7 warpbound:conveyor[facing=east]
+cmd fill 14026 200 7 14029 200 7 warpbound:conveyor[facing=east]
+cmd setblock 14030 200 7 minecraft:chest
+clearchat
+wait 30
+cmd tp @s 14019.8 201.05 7.5 -90 14
+wait 12
+shot h_in_0
+wait 7
+shot h_in_1
+wait 7
+shot h_in_2
+wait 7
+shot h_in_3
+wait 7
+wait 200
+cmd tp @s 14028.2 201.05 7.5 90 14
+wait 12
+shot h_out_0
+wait 12
+shot h_out_1
+wait 12
+shot h_out_2
+wait 12
+shot h_out_3
+wait 12
+shot h_out_4
+wait 12
+shot h_out_5
+wait 12
+shot h_out_6
+wait 12
+shot h_out_7
+wait 12
+wait 1500
+shot 01_all
+cmd tp @s 14005 201.1 1.4000000000000004 0 25
+wait 10
+shot 09_pipe
+wait 6
+shot 10_pipe
+cmd tp @s 14010.5 201.4 1.6 0 40
+wait 10
+shot 11_tee
+cmd tp @s 14008 204 9 0 12
+wait 20
+shot 04_row
+wait 12
+shot 05_row
+cmd tp @s 14022 202.5 9 0 8
+wait 20
+shot 06_forge
+cmd data get block 14030 200 7 Items
+wait 2
+cmd data get block 14012 200 3 amount
+wait 2
+cmd data get block 14012 200 3 variant
+wait 2
+cmd tp @s 14008 201 -3 0 0
+wait 10
+useblock 14008 200 0
+wait 10
+shot 07_distiller_gui
+close
+wait 4
+cmd tp @s 14020 201 13 0 0
+wait 10
+useblock 14020 200 16
+wait 10
+shot 08_forge_gui
+close
+wait 4
+quit

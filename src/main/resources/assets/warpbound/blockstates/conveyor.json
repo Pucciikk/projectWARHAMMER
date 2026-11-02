@@ -1,0 +1,20 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "warpbound:block/conveyor",
+   "y": 0
+  },
+  "facing=east": {
+   "model": "warpbound:block/conveyor",
+   "y": 90
+  },
+  "facing=south": {
+   "model": "warpbound:block/conveyor",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "warpbound:block/conveyor",
+   "y": 270
+  }
+ }
+}

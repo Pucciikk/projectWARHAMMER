@@ -1,0 +1,29 @@
+{
+ "energy_use": 0,
+ "slots_in": 1,
+ "slots_out": 0,
+ "tanks_in": 0,
+ "tanks_out": 0,
+ "kind": "generator",
+ "energy_output": 60,
+ "ports": [
+  {
+   "kind": "item",
+   "output": false,
+   "x": -1,
+   "y": 0,
+   "z": 1,
+   "face": "west"
+  },
+  {
+   "kind": "energy",
+   "output": true,
+   "x": 0,
+   "y": 0,
+   "z": 2,
+   "face": "south"
+  }
+ ],
+ "source_fluid": "",
+ "source_rate_mb": 0
+}

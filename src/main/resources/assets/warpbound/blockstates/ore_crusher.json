@@ -1,0 +1,52 @@
+{
+ "variants": {
+  "formed=true,facing=north,lit=true": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=true,facing=north,lit=false": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=true,facing=south,lit=true": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=true,facing=south,lit=false": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=true,facing=east,lit=true": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=true,facing=east,lit=false": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=true,facing=west,lit=true": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=true,facing=west,lit=false": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=false,facing=north,lit=true": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=false,facing=north,lit=false": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=false,facing=south,lit=true": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=false,facing=south,lit=false": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=false,facing=east,lit=true": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=false,facing=east,lit=false": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=false,facing=west,lit=true": {
+   "model": "warpbound:block/ore_crusher"
+  },
+  "formed=false,facing=west,lit=false": {
+   "model": "warpbound:block/ore_crusher"
+  }
+ }
+}

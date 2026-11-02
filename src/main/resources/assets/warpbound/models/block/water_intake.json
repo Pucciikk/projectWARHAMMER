@@ -1,0 +1,8 @@
+{
+ "parent": "minecraft:block/cube_bottom_top",
+ "textures": {
+  "side": "warpbound:block/drive_block",
+  "top": "warpbound:block/heavy_casing",
+  "bottom": "warpbound:block/heavy_casing"
+ }
+}

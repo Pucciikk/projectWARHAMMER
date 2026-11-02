@@ -1,0 +1,23 @@
+{
+ "machine": "warpbound:scriptorium",
+ "seconds": 4,
+ "items_in": [
+  {
+   "item": "warpbound:incense",
+   "count": 1
+  }
+ ],
+ "items_out": [],
+ "fluids_in": [
+  {
+   "fluid": "minecraft:water",
+   "mb": 4000
+  }
+ ],
+ "fluids_out": [
+  {
+   "fluid": "warpbound:holy_water",
+   "mb": 4000
+  }
+ ]
+}

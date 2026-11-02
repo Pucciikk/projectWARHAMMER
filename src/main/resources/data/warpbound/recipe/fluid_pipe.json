@@ -1,0 +1,18 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "building",
+ "pattern": [
+  "MMM",
+  "   ",
+  "MMM"
+ ],
+ "key": {
+  "M": {
+   "item": "minecraft:iron_ingot"
+  }
+ },
+ "result": {
+  "id": "warpbound:fluid_pipe",
+  "count": 8
+ }
+}

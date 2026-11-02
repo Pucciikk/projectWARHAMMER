@@ -72,6 +72,11 @@ BLOCKS = [
     dict(id="riveted_plasteel_panel", ru="Клёпаная пласталевая панель", en="Riveted Plasteel Panel", kind="cube", mat="metal",
          tex="riveted_plasteel_panel"),
     dict(id="hazard_panel", ru="Панель с полосой опасности", en="Hazard Panel", kind="cube", mat="metal", tex="hazard_panel"),
+    # --- структурные блоки мультиблоков: из них собирают машины (как у Immersive Engineering)
+    dict(id="heavy_casing", ru="Тяжёлый кожух", en="Heavy Machine Casing", kind="cube", mat="metal", tex="heavy_casing"),
+    dict(id="support_frame", ru="Несущая рама", en="Support Frame", kind="cutout_cube", mat="metal", tex="support_frame"),
+    dict(id="drive_block", ru="Приводной блок", en="Drive Block", kind="cube", mat="metal", tex="drive_block"),
+    dict(id="well_casing", ru="Обсадная секция", en="Well Casing", kind="cube", mat="metal", tex="well_casing"),
     dict(id="plasteel_vent", ru="Вентиляционная решётка", en="Plasteel Vent", kind="cube", mat="metal", tex="plasteel_vent"),
     dict(id="deck_grating", ru="Палубная решётка", en="Deck Grating", kind="cutout_cube", mat="metal", tex="deck_grating"),
     dict(id="hull_plating_stairs", ru="Ступени из обшивки", en="Hull Plating Stairs", kind="stairs", mat="metal", base="hull_plating"),
@@ -162,6 +167,10 @@ def block_textures():
         "riveted_plasteel_panel": T.plasteel_panel(r("rpanel"), rivets=True),
         "hazard_panel": T.hazard_panel(r("hazard")),
         "plasteel_vent": T.plasteel_vent(r("vent")),
+        "heavy_casing": T.heavy_casing(r("hcase")),
+        "support_frame": T.support_frame(r("sframe")),
+        "drive_block": T.drive_block(r("drive")),
+        "well_casing": T.well_casing(r("well")),
         "deck_grating": T.deck_grating(r("grating")),
         "cogitator_bank_side": T.cogitator_side(r("cogside")),
         "vox_grille": T.vox_grille(r("vox")),
@@ -496,6 +505,11 @@ def recipes():
     shaped("plasteel_panel", ["PP", "PP"], {"P": w + "plasteel_plate"}, w + "plasteel_panel", 4)
     for v in ("riveted_plasteel_panel", "plasteel_vent"):
         cutting(v, w + "plasteel_panel", w + v)
+    shaped("heavy_casing", ["PIP", "I I", "PIP"], {"P": w + "plasteel_plate", "I": "minecraft:iron_ingot"}, w + "heavy_casing", 4)
+    shaped("support_frame", ["I I", " P ", "I I"], {"P": w + "plasteel_plate", "I": "minecraft:iron_ingot"}, w + "support_frame", 4)
+    shaped("drive_block", ["GRG", "PSP", "GRG"], {"G": w + "brass_gear", "R": "minecraft:redstone", "P": w + "plasteel_plate",
+                                                 "S": w + "servo_motor"}, w + "drive_block", 2)
+    shaped("well_casing", ["BIB", "I I", "BIB"], {"B": w + "brass_ingot", "I": "minecraft:iron_ingot"}, w + "well_casing", 4)
     shapeless("hazard_panel", [w + "plasteel_panel", "minecraft:yellow_dye", "minecraft:black_dye"], w + "hazard_panel")
     shaped("deck_grating", ["BPB"], {"B": "minecraft:iron_bars", "P": w + "plasteel_plate"}, w + "deck_grating", 4)
     shaped("cogitator_bank", ["PRP", "GCG", "PRP"], {"P": w + "plasteel_plate", "R": "minecraft:redstone",

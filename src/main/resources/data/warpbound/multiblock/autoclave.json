@@ -1,0 +1,32 @@
+{
+ "name": "block.warpbound.autoclave",
+ "layers": [
+  [
+   "HCH",
+   "HHH",
+   "HHH"
+  ],
+  [
+   "TTT",
+   "TTT",
+   "TET"
+  ],
+  [
+   "TTT",
+   "TTT",
+   "TET"
+  ],
+  [
+   "FSF",
+   "S S",
+   "FSF"
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

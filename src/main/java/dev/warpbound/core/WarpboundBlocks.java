@@ -6,6 +6,13 @@ import dev.warpbound.ship.block.CommandConsoleBlock;
 import dev.warpbound.ship.block.FixturePartBlock;
 import dev.warpbound.ship.block.GravLiftBlock;
 import dev.warpbound.industry.MechanicusForgeBlock;
+import dev.warpbound.industry.ChainMachineBlock;
+import dev.warpbound.industry.machine.ConduitBlock;
+import dev.warpbound.industry.machine.ConveyorBlock;
+import dev.warpbound.industry.machine.FluidHolderBlock;
+import dev.warpbound.industry.machine.FluidPipeBlock;
+import dev.warpbound.industry.machine.MachineSpec;
+import dev.warpbound.industry.PromethiumExtractorBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import dev.warpbound.industry.SalvageForgeBlock;
 import dev.warpbound.multiblock.MachinePartBlock;
@@ -20,6 +27,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -53,6 +61,63 @@ public final class WarpboundBlocks {
     public static final Block MECHANICUS_FORGE = register("mechanicus_forge", new MechanicusForgeBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.COLOR_RED).strength(5f, 12f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops().noOcclusion()
             .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 14 : 4)));
+    /** Прометиевый экстрактор 7×13×9: исполинская качалка, собирается из тяжёлого кожуха, рам и привода. */
+    public static final Block PROMETHIUM_EXTRACTOR = register("promethium_extractor", new PromethiumExtractorBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_BLACK).strength(5f, 12f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops().noOcclusion()
+            .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 8 : 0)));
+    // ---- провода: только к своим и к портам машин ----
+    public static final Block FLUID_PIPE = register("fluid_pipe", new FluidPipeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(1.5f, 6f)
+            .sound(SoundType.COPPER).noOcclusion().forceSolidOn()));
+    public static final Block ENERGY_CABLE = conduit("energy_cable", MachineSpec.Kind.ENERGY);
+    public static final Block ITEM_TUBE = conduit("item_tube", MachineSpec.Kind.ITEM);
+    // ---- машины цепочки: точки эффектов в блоках от ядра (x, высота, глубина) ----
+    public static final Block ORE_CRUSHER = chainMachine("ore_crusher", new ChainMachineBlock.Effects(
+            new double[][]{{-0.54, 4.2, 2.24}, {0.54, 4.2, 2.24}}, new double[][]{{0, 0.6, -0.3}}, SoundEvents.GRINDSTONE_USE, 0.6f));
+    public static final Block WASH_VAT = chainMachine("wash_vat", new ChainMachineBlock.Effects(
+            new double[][]{{-1.2, 2.3, -0.15}}, new double[0][], SoundEvents.BOAT_PADDLE_WATER, 0.7f));
+    public static final Block COKE_OVEN = chainMachine("coke_oven", new ChainMachineBlock.Effects(
+            new double[][]{{0.82, 3.7, 1.92}}, new double[][]{{0, 0.5, -0.4}}, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, 0.8f));
+    public static final Block BLAST_FURNACE = chainMachine("blast_furnace", new ChainMachineBlock.Effects(
+            new double[][]{{0, 6.2, 1.9}, {1.82, 6.2, 3.45}}, new double[][]{{0, 0.7, -0.3}}, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, 0.5f));
+    public static final Block CONVERTER = chainMachine("converter", new ChainMachineBlock.Effects(
+            new double[][]{{0.82, 5.3, 2.1}}, new double[][]{{0, 1.0, -0.2}}, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, 0.6f));
+    public static final Block ROLLING_MILL = chainMachine("rolling_mill", new ChainMachineBlock.Effects(
+            new double[][]{{-2.8, 4.1, 1.15}}, new double[0][], SoundEvents.ANVIL_LAND, 0.5f));
+    public static final Block ELECTROLYZER = chainMachine("electrolyzer", new ChainMachineBlock.Effects(
+            new double[0][], new double[0][], SoundEvents.BEACON_AMBIENT, 1.4f));
+    public static final Block WATER_INTAKE = chainMachine("water_intake", new ChainMachineBlock.Effects(
+            new double[0][], new double[0][], SoundEvents.BOAT_PADDLE_WATER, 0.5f));
+    public static final Block COAL_GEN = chainMachine("coal_gen", new ChainMachineBlock.Effects(
+            new double[][]{{0.9, 4.3, 1.95}}, new double[][]{{0.25, 0.8, -0.3}}, SoundEvents.PISTON_EXTEND, 0.6f));
+    public static final Block SCRIPTORIUM = chainMachine("scriptorium", new ChainMachineBlock.Effects(
+            new double[][]{{-1.2, 1.9, 1.34}, {1.2, 1.9, 1.34}}, new double[0][], SoundEvents.VILLAGER_WORK_CARTOGRAPHER, 0.8f));
+    public static final Block ARMOURY = chainMachine("armoury", new ChainMachineBlock.Effects(
+            new double[0][], new double[][]{{0.34, 1.1, 1.8}}, SoundEvents.ANVIL_USE, 1.2f));
+    public static final Block BARREL_SHOP = chainMachine("barrel_shop", new ChainMachineBlock.Effects(
+            new double[0][], new double[0][], SoundEvents.GRINDSTONE_USE, 1.3f));
+    public static final Block AMMO_LINE = chainMachine("ammo_line", new ChainMachineBlock.Effects(
+            new double[0][], new double[0][], SoundEvents.PISTON_EXTEND, 1.1f));
+    public static final Block WEAVERY = chainMachine("weavery", new ChainMachineBlock.Effects(
+            new double[0][], new double[0][], SoundEvents.VILLAGER_WORK_SHEPHERD, 0.9f));
+    public static final Block DISTILLER = chainMachine("distiller", new ChainMachineBlock.Effects(
+            new double[][]{{1.2, 8.8, 0.8}}, new double[][]{{-0.1, 0.8, -0.1}}, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, 0.7f));
+    public static final Block DESULFURIZER = chainMachine("desulfurizer", new ChainMachineBlock.Effects(
+            new double[0][], new double[0][], SoundEvents.BREWING_STAND_BREW, 0.7f));
+    public static final Block AUTOCLAVE = chainMachine("autoclave", new ChainMachineBlock.Effects(
+            new double[][]{{0.75, 3.9, 1.55}}, new double[0][], SoundEvents.FIRE_EXTINGUISH, 0.6f));
+    public static final Block FORGE_SMELTER = chainMachine("forge_smelter", new ChainMachineBlock.Effects(
+            new double[][]{{0.72, 3.0, 1.98}}, new double[][]{{0, 1.3, 1.1}}, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, 0.8f));
+    public static final Block COGITATORIUM = chainMachine("cogitatorium", new ChainMachineBlock.Effects(
+            new double[0][], new double[0][], SoundEvents.UI_LOOM_TAKE_RESULT, 1.3f));
+    public static final Block CONVEYOR = register("conveyor", new ConveyorBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.METAL).strength(1.5f, 6f).sound(SoundType.COPPER).noOcclusion()));
+    public static final Block FLUID_TANK = register("fluid_tank", new FluidHolderBlock(false, BlockBehaviour.Properties.of()
+            .mapColor(MapColor.METAL).strength(3f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops().noOcclusion()));
+    public static final Block FLARE_STACK = register("flare_stack", new FluidHolderBlock(true, BlockBehaviour.Properties.of()
+            .mapColor(MapColor.METAL).strength(3f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops().noOcclusion().lightLevel(s -> 0)));
+    public static final java.util.List<Block> CHAIN_MACHINES = java.util.List.of(ORE_CRUSHER, WASH_VAT, COKE_OVEN, BLAST_FURNACE,
+            CONVERTER, ROLLING_MILL, ELECTROLYZER, WATER_INTAKE, COAL_GEN, SCRIPTORIUM, ARMOURY, BARREL_SHOP, AMMO_LINE, WEAVERY,
+            DISTILLER, DESULFURIZER, AUTOCLAVE, FORGE_SMELTER, COGITATORIUM);
     // ---- оборудование отсеков корабля ----
     /** Навигационный стол мостика: выбор цели и старт перехода. */
     public static final Block NAV_TABLE = register("nav_table", new NavTableBlock(fixture(MapColor.COLOR_BLACK).lightLevel(s -> 6)).bigModel());
@@ -112,5 +177,16 @@ public final class WarpboundBlocks {
     }
 
     public static void register() {
+    }
+
+    private static Block conduit(String name, MachineSpec.Kind kind) {
+        return register(name, new ConduitBlock(kind, BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(1.5f, 6f)
+                .sound(SoundType.COPPER).noOcclusion().forceSolidOn()));
+    }
+
+    private static Block chainMachine(String name, ChainMachineBlock.Effects effects) {
+        return register(name, new ChainMachineBlock(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.COLOR_BLACK).strength(5f, 12f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops().noOcclusion()
+                .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 6 : 0), effects));
     }
 }

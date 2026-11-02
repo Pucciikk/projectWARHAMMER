@@ -1,0 +1,29 @@
+{
+ "machine": "warpbound:wash_vat",
+ "seconds": 6,
+ "items_in": [
+  {
+   "item": "warpbound:crushed_iron",
+   "count": 2
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:washed_iron",
+   "count": 3,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [
+  {
+   "fluid": "warpbound:holy_water",
+   "mb": 1000
+  }
+ ],
+ "fluids_out": [
+  {
+   "fluid": "warpbound:sludge",
+   "mb": 500
+  }
+ ]
+}

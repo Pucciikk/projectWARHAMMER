@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:ammo_line",
+ "seconds": 4,
+ "items_in": [
+  {
+   "item": "warpbound:capacitor",
+   "count": 1
+  },
+  {
+   "item": "warpbound:lead_ingot",
+   "count": 1
+  },
+  {
+   "item": "warpbound:armaplas",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:las_battery",
+   "count": 2,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

@@ -1,0 +1,43 @@
+# Короткая проверка: предметы на ленте и люки. Камера сверху
+cmd time set noon
+cmd gamemode creative
+cmd tp @s 16010 206 -9 0 80
+wait 60
+cmd fill 15994 199 -16 16022 199 0 minecraft:polished_deepslate
+hud off
+wait 160
+cmd setblock 16000 200 -10 warpbound:coal_gen[facing=north]
+cmd setblock 16010 200 -10 warpbound:ore_crusher[facing=north]
+cmd tp @s 16005 200 -12 0 0
+wait 8
+cmd wb machine build
+wait 10
+cmd fill 16000 200 -7 16010 200 -7 warpbound:energy_cable
+cmd setblock 15998 200 -9 minecraft:hopper[facing=east]
+cmd setblock 15998 201 -9 minecraft:chest
+cmd item replace block 15998 201 -9 container.0 with minecraft:coal 64
+cmd setblock 16004 200 -9 minecraft:hopper[facing=east]
+cmd setblock 16004 201 -9 minecraft:chest
+cmd fill 16005 200 -9 16008 200 -9 warpbound:conveyor[facing=east]
+cmd fill 16012 200 -9 16015 200 -9 warpbound:conveyor[facing=east]
+cmd setblock 16016 200 -9 minecraft:chest
+cmd tp @s 16005.8 202.1 -6.6 -135 38
+wait 10
+cmd item replace block 16004 201 -9 container.0 with minecraft:raw_iron 64
+wait 40
+clearchat
+shot in_0
+wait 5
+shot in_1
+wait 5
+shot in_2
+wait 5
+cmd tp @s 16014.2 202.1 -6.6 135 38
+wait 200
+shot out_0
+wait 8
+shot out_1
+wait 8
+shot out_2
+wait 8
+quit

@@ -23,10 +23,12 @@
     "fabric-gametest": [
       "dev.warpbound.test.ShipyardGameTest",
       "dev.warpbound.test.IndustryGameTest",
+      "dev.warpbound.test.ChainMachineGameTest",
       "dev.warpbound.test.ShipGameTest"
     ]
   },
   "depends": {
+    "team_reborn_energy": "*",
     "fabricloader": ">=0.16.0",
     "minecraft": "~1.21.1",
     "java": ">=21",

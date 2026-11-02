@@ -1,0 +1,32 @@
+{
+ "name": "block.warpbound.coal_gen",
+ "layers": [
+  [
+   "HCH",
+   "HHH",
+   "HHH"
+  ],
+  [
+   "TTE",
+   "TTE",
+   "TTE"
+  ],
+  [
+   "TTF",
+   "TTF",
+   "SFF"
+  ],
+  [
+   "FS ",
+   "   ",
+   "S  "
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

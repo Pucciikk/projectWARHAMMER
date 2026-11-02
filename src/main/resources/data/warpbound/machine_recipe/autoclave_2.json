@@ -1,0 +1,23 @@
+{
+ "machine": "warpbound:autoclave",
+ "seconds": 10,
+ "items_in": [
+  {
+   "item": "warpbound:polymer_resin",
+   "count": 2
+  },
+  {
+   "item": "minecraft:string",
+   "count": 4
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:armaplas",
+   "count": 2,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

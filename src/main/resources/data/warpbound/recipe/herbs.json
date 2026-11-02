@@ -1,0 +1,13 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "category": "misc",
+ "ingredients": [
+  {
+   "tag": "minecraft:flowers"
+  }
+ ],
+ "result": {
+  "id": "warpbound:herbs",
+  "count": 2
+ }
+}

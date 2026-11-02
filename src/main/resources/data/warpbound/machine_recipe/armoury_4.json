@@ -1,0 +1,31 @@
+{
+ "machine": "warpbound:armoury",
+ "seconds": 40,
+ "items_in": [
+  {
+   "item": "warpbound:heavy_barrel",
+   "count": 1
+  },
+  {
+   "item": "warpbound:bolter_receiver",
+   "count": 1
+  },
+  {
+   "item": "warpbound:ceramite_plate",
+   "count": 2
+  },
+  {
+   "item": "warpbound:cogitator_board",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:bolter_astartes",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

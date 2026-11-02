@@ -1,0 +1,37 @@
+{
+ "kind": "processor",
+ "energy_use": 12,
+ "slots_in": 1,
+ "slots_out": 2,
+ "tanks_in": 0,
+ "tanks_out": 0,
+ "ports": [
+  {
+   "kind": "item",
+   "output": false,
+   "x": -1,
+   "y": 0,
+   "z": 1,
+   "face": "west"
+  },
+  {
+   "kind": "item",
+   "output": true,
+   "x": 1,
+   "y": 0,
+   "z": 1,
+   "face": "east"
+  },
+  {
+   "kind": "energy",
+   "output": false,
+   "x": 0,
+   "y": 0,
+   "z": 2,
+   "face": "south"
+  }
+ ],
+ "energy_output": 0,
+ "source_fluid": "",
+ "source_rate_mb": 0
+}

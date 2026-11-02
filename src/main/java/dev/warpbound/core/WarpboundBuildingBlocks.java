@@ -26,6 +26,10 @@ public final class WarpboundBuildingBlocks {
     public static final Block PLASTEEL_PANEL = block("plasteel_panel", new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops()));
     public static final Block RIVETED_PLASTEEL_PANEL = block("riveted_plasteel_panel", new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops()));
     public static final Block HAZARD_PANEL = block("hazard_panel", new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops()));
+    public static final Block HEAVY_CASING = block("heavy_casing", new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops()));
+    public static final Block SUPPORT_FRAME = block("support_frame", new TransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops().noOcclusion()));
+    public static final Block DRIVE_BLOCK = block("drive_block", new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops()));
+    public static final Block WELL_CASING = block("well_casing", new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops()));
     public static final Block PLASTEEL_VENT = block("plasteel_vent", new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops()));
     public static final Block DECK_GRATING = block("deck_grating", new TransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops().noOcclusion()));
     public static final Block HULL_PLATING_STAIRS = block("hull_plating_stairs", new StairBlock(WarpboundBlocks.HULL_PLATING.defaultBlockState(), BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(4f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops()));
@@ -71,10 +75,10 @@ public final class WarpboundBuildingBlocks {
     public static final Item PSYCRYSTAL = item("psycrystal");
 
     /** Все блоки набора — для вкладки творческого режима. */
-    public static final List<Block> ALL = List.of(HULL_SCRAP, PLASTEEL_PANEL, RIVETED_PLASTEEL_PANEL, HAZARD_PANEL, PLASTEEL_VENT, DECK_GRATING, HULL_PLATING_STAIRS, HULL_PLATING_SLAB, PLASTEEL_PANEL_STAIRS, PLASTEEL_PANEL_SLAB, COGITATOR_BANK, VOX_GRILLE, LUMEN_WALL, LUMEN_CEILING, RADIATION_SIGN, EMERGENCY_LUMEN, PURITY_SEAL, COOLANT_PIPE, GELLER_CONDUIT, BULKHEAD_DOOR, BOARDING_HATCH, LEAD_ORE, DEEPSLATE_LEAD_ORE, LEAD_BLOCK, RADIUM_ORE, ADAMANTIUM_ORE, WARPSTONE_ORE, PSYCRYSTAL_CLUSTER, ASH_BLOCK, ASH_STONE, ASH_STONE_BRICKS, ASH_STONE_BRICK_STAIRS, ASH_STONE_BRICK_SLAB, ASH_STONE_BRICK_WALL, ASH_CLAY, VITRIFIED_GLASS, AMBER_VITRIFIED_GLASS, SMOKE_VITRIFIED_GLASS, CHARRED_LOG, BONE_PILE);
+    public static final List<Block> ALL = List.of(HULL_SCRAP, PLASTEEL_PANEL, RIVETED_PLASTEEL_PANEL, HAZARD_PANEL, HEAVY_CASING, SUPPORT_FRAME, DRIVE_BLOCK, WELL_CASING, PLASTEEL_VENT, DECK_GRATING, HULL_PLATING_STAIRS, HULL_PLATING_SLAB, PLASTEEL_PANEL_STAIRS, PLASTEEL_PANEL_SLAB, COGITATOR_BANK, VOX_GRILLE, LUMEN_WALL, LUMEN_CEILING, RADIATION_SIGN, EMERGENCY_LUMEN, PURITY_SEAL, COOLANT_PIPE, GELLER_CONDUIT, BULKHEAD_DOOR, BOARDING_HATCH, LEAD_ORE, DEEPSLATE_LEAD_ORE, LEAD_BLOCK, RADIUM_ORE, ADAMANTIUM_ORE, WARPSTONE_ORE, PSYCRYSTAL_CLUSTER, ASH_BLOCK, ASH_STONE, ASH_STONE_BRICKS, ASH_STONE_BRICK_STAIRS, ASH_STONE_BRICK_SLAB, ASH_STONE_BRICK_WALL, ASH_CLAY, VITRIFIED_GLASS, AMBER_VITRIFIED_GLASS, SMOKE_VITRIFIED_GLASS, CHARRED_LOG, BONE_PILE);
     public static final List<Item> ITEMS = List.of(RAW_LEAD, LEAD_INGOT, RAW_RADIUM, RAW_ADAMANTIUM, WARPSTONE_SHARD, PSYCRYSTAL);
     /** Блоки с прозрачными пикселями (cutout) и полупрозрачные (стекло) — для слоёв рендера на клиенте. */
-    public static final List<Block> CUTOUT = List.of(DECK_GRATING, LUMEN_WALL, LUMEN_CEILING, RADIATION_SIGN, EMERGENCY_LUMEN, PURITY_SEAL, PSYCRYSTAL_CLUSTER, BONE_PILE);
+    public static final List<Block> CUTOUT = List.of(SUPPORT_FRAME, DECK_GRATING, LUMEN_WALL, LUMEN_CEILING, RADIATION_SIGN, EMERGENCY_LUMEN, PURITY_SEAL, PSYCRYSTAL_CLUSTER, BONE_PILE);
     public static final List<Block> TRANSLUCENT = List.of(VITRIFIED_GLASS, AMBER_VITRIFIED_GLASS, SMOKE_VITRIFIED_GLASS);
 
     private WarpboundBuildingBlocks() {

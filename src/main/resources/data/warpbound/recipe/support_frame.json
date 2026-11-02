@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "I I",
+    " P ",
+    "I I"
+  ],
+  "key": {
+    "P": {
+      "item": "warpbound:plasteel_plate"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "id": "warpbound:support_frame",
+    "count": 4
+  }
+}

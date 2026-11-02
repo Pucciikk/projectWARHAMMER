@@ -62,11 +62,7 @@ public class MechanicusForgeBlock extends MachineCoreBlock {
 
     @Override
     protected InteractionResult useFormed(BlockState state, Level level, BlockPos pos, Player player, MachineCoreBlockEntity core) {
-        if (!level.isClientSide) {
-            player.displayClientMessage(Component.translatable(state.getValue(BlockStateProperties.LIT)
-                    ? "block.warpbound.mechanicus_forge.working" : "block.warpbound.mechanicus_forge.waiting")
-                    .withStyle(ChatFormatting.GOLD), true);
-        }
+        if (!level.isClientSide && core instanceof ChainMachineBlockEntity machine) player.openMenu(machine);
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
@@ -114,5 +110,11 @@ public class MechanicusForgeBlock extends MachineCoreBlock {
             }
         }
         return new Vec3(pos.getX() + 0.5 + rx, pos.getY() + local[1], pos.getZ() + 0.5 + rz);
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof ChainMachineBlockEntity machine) machine.dropContents();
+        super.onRemove(state, level, pos, newState, moved);
     }
 }

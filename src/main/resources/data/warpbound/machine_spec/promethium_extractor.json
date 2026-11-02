@@ -1,0 +1,21 @@
+{
+ "energy_use": 0,
+ "slots_in": 0,
+ "slots_out": 0,
+ "tanks_in": 0,
+ "tanks_out": 1,
+ "kind": "custom",
+ "ports": [
+  {
+   "kind": "fluid",
+   "output": true,
+   "x": 3,
+   "y": 0,
+   "z": 12,
+   "face": "south"
+  }
+ ],
+ "energy_output": 0,
+ "source_fluid": "",
+ "source_rate_mb": 0
+}

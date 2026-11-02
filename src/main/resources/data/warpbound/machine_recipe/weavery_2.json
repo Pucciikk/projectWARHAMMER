@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:weavery",
+ "seconds": 30,
+ "items_in": [
+  {
+   "item": "warpbound:flak_plate",
+   "count": 8
+  },
+  {
+   "item": "warpbound:fabric",
+   "count": 6
+  },
+  {
+   "item": "minecraft:leather",
+   "count": 2
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:flak_chestplate",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

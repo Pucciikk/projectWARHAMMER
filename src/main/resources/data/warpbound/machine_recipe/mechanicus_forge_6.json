@@ -1,0 +1,23 @@
+{
+ "machine": "warpbound:mechanicus_forge",
+ "seconds": 8,
+ "items_in": [
+  {
+   "item": "warpbound:synthetic_crystal",
+   "count": 1
+  },
+  {
+   "item": "warpbound:brass_ingot",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:focusing_lens",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

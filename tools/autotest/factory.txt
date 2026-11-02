@@ -1,0 +1,150 @@
+# Все машины цепочки: общий вид и FPS. Площадка новая, сверху пусто, поэтому очищать воздух не нужно (лимит fill 32768)
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd tp @s 7000 215 -30 0 30
+wait 60
+cmd fill 6950 199 -40 7050 199 45 minecraft:polished_deepslate
+hud off
+wait 300
+cmd setblock 6960 200 -12 warpbound:ore_crusher[facing=north]
+cmd tp @s 6960 200 -14 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 6970 200 -12 warpbound:wash_vat[facing=north]
+cmd tp @s 6970 200 -14 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 6980 200 -12 warpbound:coke_oven[facing=north]
+cmd tp @s 6980 200 -14 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 6990 200 -12 warpbound:blast_furnace[facing=north]
+cmd tp @s 6990 200 -14 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 7000 200 -12 warpbound:converter[facing=north]
+cmd tp @s 7000 200 -14 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 7010 200 -12 warpbound:rolling_mill[facing=north]
+cmd tp @s 7010 200 -14 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 7020 200 -12 warpbound:electrolyzer[facing=north]
+cmd tp @s 7020 200 -14 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 7030 200 -12 warpbound:water_intake[facing=north]
+cmd tp @s 7030 200 -14 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 7040 200 -12 warpbound:coal_gen[facing=north]
+cmd tp @s 7040 200 -14 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 6960 200 10 warpbound:scriptorium[facing=north]
+cmd tp @s 6960 200 8 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 6970 200 10 warpbound:armoury[facing=north]
+cmd tp @s 6970 200 8 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 6980 200 10 warpbound:barrel_shop[facing=north]
+cmd tp @s 6980 200 8 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 6990 200 10 warpbound:ammo_line[facing=north]
+cmd tp @s 6990 200 8 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 7000 200 10 warpbound:weavery[facing=north]
+cmd tp @s 7000 200 8 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 7010 200 10 warpbound:distiller[facing=north]
+cmd tp @s 7010 200 8 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 7020 200 10 warpbound:desulfurizer[facing=north]
+cmd tp @s 7020 200 8 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 7030 200 10 warpbound:autoclave[facing=north]
+cmd tp @s 7030 200 8 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 7040 200 10 warpbound:promethium_extractor[facing=north]
+cmd tp @s 7040 200 8 0 0
+wait 8
+cmd wb machine build
+wait 8
+clearchat
+cmd tp @s 7000 218 -34 0 24
+wait 120
+shot all
+fps все 18 машин в кадре
+cmd tp @s 7000 212 60 180 20
+wait 100
+fps все машины в кадре с другой стороны
+cmd tp @s 7000 280 -34 180 -50
+wait 100
+fps машины за спиной
+cmd tp @s 7028 203 4.5 -15 15
+wait 10
+shot au_0
+wait 20
+shot au_1
+wait 20
+shot au_2
+wait 20
+shot au_3
+wait 20
+shot au_4
+wait 20
+shot au_5
+wait 20
+shot au_6
+wait 20
+shot au_7
+wait 20
+cmd tp @s 7043.5 202.6 -15.5 40 12
+wait 10
+shot cg_0
+wait 10
+shot cg_1
+wait 10
+shot cg_2
+wait 10
+shot cg_3
+wait 10
+cmd tp @s 7027 203 -15.5 -35 18
+wait 10
+shot wi_0
+wait 10
+shot wi_1
+wait 10
+cmd tp @s 7050 206 16 90 5
+wait 20
+shot ex_0
+wait 20
+shot ex_1
+quit

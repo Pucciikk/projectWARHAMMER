@@ -1,0 +1,6 @@
+{
+ "parent": "minecraft:item/generated",
+ "textures": {
+  "layer0": "warpbound:item/crude_promethium_bucket"
+ }
+}

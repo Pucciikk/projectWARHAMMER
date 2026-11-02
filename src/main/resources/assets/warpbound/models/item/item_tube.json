@@ -1,0 +1,17 @@
+{
+ "parent": "warpbound:block/item_tube_arm",
+ "display": {
+  "gui": {
+   "rotation": [
+    30,
+    45,
+    0
+   ],
+   "scale": [
+    1.1,
+    1.1,
+    1.1
+   ]
+  }
+ }
+}

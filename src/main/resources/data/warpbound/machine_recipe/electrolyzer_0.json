@@ -1,0 +1,22 @@
+{
+ "machine": "warpbound:electrolyzer",
+ "seconds": 6,
+ "items_in": [],
+ "items_out": [],
+ "fluids_in": [
+  {
+   "fluid": "minecraft:water",
+   "mb": 2000
+  }
+ ],
+ "fluids_out": [
+  {
+   "fluid": "warpbound:hydrogen",
+   "mb": 2000
+  },
+  {
+   "fluid": "warpbound:oxygen",
+   "mb": 1000
+  }
+ ]
+}

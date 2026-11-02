@@ -1,0 +1,19 @@
+{
+ "machine": "warpbound:rolling_mill",
+ "seconds": 6,
+ "items_in": [
+  {
+   "item": "warpbound:plasteel_ingot",
+   "count": 2
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:plasteel_tube",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

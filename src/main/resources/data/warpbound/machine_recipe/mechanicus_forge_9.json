@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:mechanicus_forge",
+ "seconds": 10,
+ "items_in": [
+  {
+   "item": "warpbound:motive_coil",
+   "count": 4
+  },
+  {
+   "item": "warpbound:ceramite_plate",
+   "count": 1
+  },
+  {
+   "item": "warpbound:logic_engine",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:containment_coil",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

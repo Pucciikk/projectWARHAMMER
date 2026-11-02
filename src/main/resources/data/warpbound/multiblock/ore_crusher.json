@@ -1,0 +1,32 @@
+{
+ "name": "block.warpbound.ore_crusher",
+ "layers": [
+  [
+   "HCH",
+   "HHH",
+   "HHH"
+  ],
+  [
+   "FEF",
+   "FEF",
+   "TTT"
+  ],
+  [
+   "FEF",
+   "F F",
+   "T T"
+  ],
+  [
+   "SSS",
+   "S S",
+   "SSS"
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

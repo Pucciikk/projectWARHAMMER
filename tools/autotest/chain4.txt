@@ -1,0 +1,64 @@
+# Оружие и броня: крупные планы и кадры цикла для сетки
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd tp @s 5000 207 0 0 0
+wait 60
+cmd fill 4975 199 -25 5025 199 12 minecraft:polished_deepslate
+cmd fill 4975 200 -25 5025 206 12 minecraft:air
+hud off
+wait 100
+cmd setblock 4982 200 -8 warpbound:armoury[facing=north]
+cmd tp @s 4982 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 4993 200 -8 warpbound:barrel_shop[facing=north]
+cmd tp @s 4993 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 5003 200 -8 warpbound:ammo_line[facing=north]
+cmd tp @s 5003 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 5013 200 -8 warpbound:weavery[facing=north]
+cmd tp @s 5013 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+clearchat
+cmd tp @s 4982 203.2 -14.5 0 16
+wait 20
+shot ar_0
+wait 12
+shot ar_1
+wait 12
+shot ar_2
+wait 12
+cmd tp @s 4993 202.6 -12.6 0 14
+wait 20
+shot ba_0
+wait 12
+shot ba_1
+wait 12
+shot ba_2
+wait 12
+cmd tp @s 5003 202.6 -12.6 0 14
+wait 20
+shot am_0
+wait 12
+shot am_1
+wait 12
+shot am_2
+wait 12
+cmd tp @s 5013 203 -12 0 18
+wait 20
+shot we_0
+wait 12
+shot we_1
+wait 12
+shot we_2
+wait 12
+quit

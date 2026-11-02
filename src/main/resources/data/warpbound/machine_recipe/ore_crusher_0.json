@@ -1,0 +1,19 @@
+{
+ "machine": "warpbound:ore_crusher",
+ "seconds": 2,
+ "items_in": [
+  {
+   "item": "minecraft:oak_log",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:sawdust",
+   "count": 4,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

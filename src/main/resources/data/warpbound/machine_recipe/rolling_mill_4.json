@@ -1,0 +1,19 @@
+{
+ "machine": "warpbound:rolling_mill",
+ "seconds": 3,
+ "items_in": [
+  {
+   "item": "minecraft:copper_ingot",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:copper_wire",
+   "count": 3,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

@@ -1,0 +1,121 @@
+# Рудодробильня на мешах из Blender: вид, цикл анимации, замер FPS без машин, с одной и с шестнадцатью
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd tp @s 1000 205 0 0 0
+wait 60
+cmd fill 970 199 -40 1030 199 40 minecraft:polished_deepslate
+cmd fill 970 200 -40 1030 204 40 minecraft:air
+hud off
+cmd tp @s 1000 203 -12 0 8
+wait 100
+fps 0 машин
+cmd setblock 1000 200 -6 warpbound:ore_crusher[facing=north]
+cmd tp @s 1000 200 -8 0 0
+wait 6
+cmd wb machine build
+wait 6
+clearchat
+cmd tp @s 996 202.5 -10.5 -22 12
+wait 40
+shot 01_front
+wait 5
+shot 02_cycle
+wait 5
+shot 03_cycle
+cmd tp @s 1005.5 202 -4.5 90 8
+wait 20
+shot 04_flywheel
+cmd tp @s 994.5 202.5 -4.5 -90 8
+wait 20
+shot 05_gears
+cmd tp @s 1003.5 205 1.5 150 28
+wait 20
+shot 06_back
+cmd tp @s 999 200.6 -9.2 10 -6
+wait 20
+shot 07_skull
+cmd tp @s 1000 203 -12 0 8
+wait 100
+fps 1 машина
+cmd setblock 984 200 -22 warpbound:ore_crusher[facing=north]
+cmd tp @s 984 200 -24 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 990 200 -22 warpbound:ore_crusher[facing=north]
+cmd tp @s 990 200 -24 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 996 200 -22 warpbound:ore_crusher[facing=north]
+cmd tp @s 996 200 -24 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 1002 200 -22 warpbound:ore_crusher[facing=north]
+cmd tp @s 1002 200 -24 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 1008 200 -22 warpbound:ore_crusher[facing=north]
+cmd tp @s 1008 200 -24 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 1014 200 -22 warpbound:ore_crusher[facing=north]
+cmd tp @s 1014 200 -24 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 984 200 -16 warpbound:ore_crusher[facing=north]
+cmd tp @s 984 200 -18 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 990 200 -16 warpbound:ore_crusher[facing=north]
+cmd tp @s 990 200 -18 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 996 200 -16 warpbound:ore_crusher[facing=north]
+cmd tp @s 996 200 -18 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 1002 200 -16 warpbound:ore_crusher[facing=north]
+cmd tp @s 1002 200 -18 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 1008 200 -16 warpbound:ore_crusher[facing=north]
+cmd tp @s 1008 200 -18 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 1014 200 -16 warpbound:ore_crusher[facing=north]
+cmd tp @s 1014 200 -18 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 990 200 -28 warpbound:ore_crusher[facing=north]
+cmd tp @s 990 200 -30 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 996 200 -28 warpbound:ore_crusher[facing=north]
+cmd tp @s 996 200 -30 0 0
+wait 6
+cmd wb machine build
+wait 6
+cmd setblock 1002 200 -28 warpbound:ore_crusher[facing=north]
+cmd tp @s 1002 200 -30 0 0
+wait 6
+cmd wb machine build
+wait 6
+clearchat
+cmd tp @s 999 208 -36 0 25
+wait 100
+shot 08_row
+fps 16 машин
+quit

@@ -1,0 +1,19 @@
+{
+ "machine": "warpbound:forge_smelter",
+ "seconds": 4,
+ "items_in": [
+  {
+   "item": "warpbound:crushed_lead",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:lead_ingot",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

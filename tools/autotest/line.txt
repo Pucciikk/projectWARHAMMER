@@ -1,0 +1,79 @@
+# Рабочая линия: проверка в игре. Сундуки: руда, уголь, гравий; результат смотрим командой data get (ответ идёт в журнал)
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd tp @s 8010 208 -18 0 30
+wait 80
+cmd fill 7994 199 -18 8029 199 -2 minecraft:polished_deepslate
+hud off
+wait 200
+cmd setblock 8000 200 -10 warpbound:coal_gen[facing=north]
+cmd tp @s 8000 200 -12 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 8006 200 -10 warpbound:ore_crusher[facing=north]
+cmd tp @s 8006 200 -12 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 8015 200 -10 warpbound:water_intake[facing=north]
+cmd tp @s 8015 200 -12 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 8021 200 -10 warpbound:wash_vat[facing=north]
+cmd tp @s 8021 200 -12 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd tp @s 8010 203 -16 0 10
+wait 4
+cmd fill 8000 200 -7 8015 200 -7 warpbound:energy_cable
+cmd fill 8015 200 -6 8021 200 -6 warpbound:energy_cable
+cmd setblock 8021 200 -7 warpbound:energy_cable
+cmd fill 8016 200 -7 8020 200 -7 warpbound:fluid_pipe
+cmd setblock 7998 200 -9 minecraft:hopper[facing=east]
+cmd setblock 7998 201 -9 minecraft:chest
+cmd item replace block 7998 201 -9 container.0 with minecraft:coal 16
+cmd setblock 8004 200 -9 minecraft:hopper[facing=east]
+cmd setblock 8004 201 -9 minecraft:chest
+cmd item replace block 8004 201 -9 container.0 with minecraft:raw_iron 16
+cmd setblock 8019 200 -9 minecraft:hopper[facing=east]
+cmd setblock 8019 201 -9 minecraft:chest
+cmd item replace block 8019 201 -9 container.0 with minecraft:gravel 32
+cmd fill 8008 200 -9 8009 200 -9 warpbound:item_tube
+cmd setblock 8010 200 -9 minecraft:chest
+cmd setblock 8023 200 -9 minecraft:chest
+clearchat
+wait 300
+shot 01_line
+cmd tp @s 8008 205 1 180 25
+wait 20
+shot 02_back
+cmd data get block 8010 200 -9 Items
+wait 2
+cmd data get block 8023 200 -9 Items
+wait 2
+cmd tp @s 8006 201 -13 0 0
+wait 10
+useblock 8006 200 -10
+wait 10
+shot 03_crusher_gui
+close
+wait 4
+cmd tp @s 8021 201 -13 0 0
+wait 10
+useblock 8021 200 -10
+wait 10
+shot 04_vat_gui
+close
+wait 4
+cmd tp @s 8000 201 -13 0 0
+wait 10
+useblock 8000 200 -10
+wait 10
+shot 05_gen_gui
+close
+wait 4
+quit

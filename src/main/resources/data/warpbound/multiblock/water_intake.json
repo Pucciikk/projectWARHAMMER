@@ -1,0 +1,27 @@
+{
+ "name": "block.warpbound.water_intake",
+ "layers": [
+  [
+   "HCH",
+   "HHH",
+   "HHH"
+  ],
+  [
+   "F E",
+   "F E",
+   "TTT"
+  ],
+  [
+   "FFF",
+   "   ",
+   "   "
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

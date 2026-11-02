@@ -1,0 +1,29 @@
+{
+ "machine": "warpbound:wash_vat",
+ "seconds": 6,
+ "items_in": [
+  {
+   "item": "minecraft:gravel",
+   "count": 4
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:zinc_dust",
+   "count": 1,
+   "chance": 1.0
+  },
+  {
+   "item": "minecraft:sand",
+   "count": 2,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [
+  {
+   "fluid": "minecraft:water",
+   "mb": 1000
+  }
+ ],
+ "fluids_out": []
+}

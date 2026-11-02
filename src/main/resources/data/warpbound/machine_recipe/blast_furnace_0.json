@@ -1,0 +1,28 @@
+{
+ "machine": "warpbound:blast_furnace",
+ "seconds": 8,
+ "items_in": [
+  {
+   "item": "warpbound:washed_iron",
+   "count": 2
+  },
+  {
+   "item": "warpbound:coke",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:pig_iron",
+   "count": 2,
+   "chance": 1.0
+  },
+  {
+   "item": "warpbound:slag",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

@@ -3,6 +3,8 @@ package dev.warpbound.core;
 import dev.warpbound.Warpbound;
 import dev.warpbound.industry.ManualPressBlockEntity;
 import dev.warpbound.industry.MechanicusForgeBlockEntity;
+import dev.warpbound.industry.ChainMachineBlockEntity;
+import dev.warpbound.industry.PromethiumExtractorBlockEntity;
 import dev.warpbound.industry.SalvageForgeBlockEntity;
 import dev.warpbound.multiblock.MachinePartBlockEntity;
 import dev.warpbound.ship.block.ShipFixtureBlockEntity;
@@ -25,6 +27,13 @@ public final class WarpboundBlockEntities {
 
     public static final BlockEntityType<MechanicusForgeBlockEntity> MECHANICUS_FORGE = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
             Warpbound.id("mechanicus_forge"), BlockEntityType.Builder.of(MechanicusForgeBlockEntity::new, WarpboundBlocks.MECHANICUS_FORGE).build(null));
+
+    public static final BlockEntityType<PromethiumExtractorBlockEntity> PROMETHIUM_EXTRACTOR = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
+            Warpbound.id("promethium_extractor"), BlockEntityType.Builder.of(PromethiumExtractorBlockEntity::new, WarpboundBlocks.PROMETHIUM_EXTRACTOR).build(null));
+
+    public static final BlockEntityType<ChainMachineBlockEntity> CHAIN_MACHINE = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
+            Warpbound.id("chain_machine"), BlockEntityType.Builder.of(ChainMachineBlockEntity::new,
+                    WarpboundBlocks.CHAIN_MACHINES.toArray(new net.minecraft.world.level.block.Block[0])).build(null));
 
     public static final BlockEntityType<ShipFixtureBlockEntity> SHIP_FIXTURE = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,
             Warpbound.id("ship_fixture"), BlockEntityType.Builder.of(ShipFixtureBlockEntity::new, WarpboundBlocks.REACTOR_CORE,

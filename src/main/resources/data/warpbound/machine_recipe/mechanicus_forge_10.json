@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:mechanicus_forge",
+ "seconds": 15,
+ "items_in": [
+  {
+   "item": "warpbound:motive_coil",
+   "count": 2
+  },
+  {
+   "item": "warpbound:logic_engine",
+   "count": 1
+  },
+  {
+   "item": "minecraft:gold_ingot",
+   "count": 2
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:suspensor",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

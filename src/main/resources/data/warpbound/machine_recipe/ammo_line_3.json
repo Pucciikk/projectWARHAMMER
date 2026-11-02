@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:ammo_line",
+ "seconds": 6,
+ "items_in": [
+  {
+   "item": "warpbound:bolt_round",
+   "count": 40
+  },
+  {
+   "item": "warpbound:steel_wire",
+   "count": 2
+  },
+  {
+   "item": "warpbound:armaplas",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:heavy_bolt_belt",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

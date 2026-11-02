@@ -1,0 +1,19 @@
+{
+ "machine": "warpbound:forge_smelter",
+ "seconds": 4,
+ "items_in": [
+  {
+   "item": "minecraft:raw_gold",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "minecraft:gold_ingot",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

@@ -1,0 +1,67 @@
+# Водозабор, генераториум, скрипторий и конвертер: кадры цикла для сетки
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd tp @s 4000 207 0 0 0
+wait 60
+cmd fill 3982 199 -25 4018 199 12 minecraft:polished_deepslate
+cmd fill 3982 200 -25 4018 207 12 minecraft:air
+hud off
+cmd setblock 3987 200 -8 warpbound:water_intake[facing=north]
+cmd tp @s 3987 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 3995 200 -8 warpbound:coal_gen[facing=north]
+cmd tp @s 3995 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 4004 200 -8 warpbound:scriptorium[facing=north]
+cmd tp @s 4004 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 4013 200 -8 warpbound:converter[facing=north]
+cmd tp @s 4013 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+clearchat
+cmd tp @s 3984 203.5 -13 -28 15
+wait 20
+shot wi_1
+wait 10
+shot wi_2
+cmd tp @s 3991 203.5 -13 -22 12
+wait 20
+shot cg_1
+wait 10
+shot cg_2
+cmd tp @s 3999 204 -16 -14 8
+wait 20
+shot sc_1
+wait 30
+shot sc_2
+cmd tp @s 4008 208 8 150 30
+wait 20
+shot sc_back
+cmd tp @s 4009 204 -13 -22 10
+wait 10
+shot cv_0
+wait 20
+shot cv_1
+wait 20
+shot cv_2
+wait 20
+shot cv_3
+wait 20
+shot cv_4
+wait 20
+shot cv_5
+wait 20
+shot cv_6
+wait 20
+shot cv_7
+wait 20
+quit

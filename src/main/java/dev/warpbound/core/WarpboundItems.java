@@ -69,6 +69,8 @@ public final class WarpboundItems {
     /** Респиратор: слот шлема (отдельного слота лица пока нет), на Кинерисе защищает от ядовитого воздуха. */
     public static final Item RESPIRATOR = register("respirator", new GeoArmorItem(WarpboundArmor.RESPIRATOR, ArmorItem.Type.HELMET,
             new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(12)), true));
+    /** Ведро сырого прометия: пока нет труб, прометий с экстрактора забирают вёдрами. */
+    public static final Item CRUDE_PROMETHIUM_BUCKET = register("crude_promethium_bucket", new TooltipItem(new Item.Properties().stacksTo(1)));
     /** Пустая колба для пробы: её заправляют в варп-пробоотборник анклава. */
     public static final Item SAMPLE_VIAL = register("sample_vial", new TooltipItem(new Item.Properties().stacksTo(16)));
     /** Образец варп-материи: красная взвесь из порта пробоотборника, взятая в варпе. Сырьё для исследований. */
@@ -110,6 +112,18 @@ public final class WarpboundItems {
                         out.accept(WarpboundBlocks.SALVAGE_FORGE);
                         out.accept(WarpboundBlocks.MANUAL_PRESS);
                         out.accept(WarpboundBlocks.MECHANICUS_FORGE);
+                        out.accept(WarpboundBlocks.PROMETHIUM_EXTRACTOR);
+                        WarpboundBlocks.CHAIN_MACHINES.forEach(out::accept);
+                        out.accept(WarpboundBlocks.FLUID_PIPE);
+                        out.accept(WarpboundBlocks.ENERGY_CABLE);
+                        out.accept(WarpboundBlocks.CONVEYOR);
+                        out.accept(WarpboundBlocks.ITEM_TUBE);
+                        out.accept(WarpboundBlocks.FLUID_TANK);
+                        out.accept(WarpboundBlocks.FLARE_STACK);
+                        for (String name : ChainContentList.ITEMS) {
+                            out.accept(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(dev.warpbound.Warpbound.id(name)));
+                        }
+                        out.accept(CRUDE_PROMETHIUM_BUCKET);
                         WarpboundBuildingBlocks.ALL.forEach(out::accept);
                         WarpboundBuildingBlocks.ITEMS.forEach(out::accept);
                         out.accept(PLASTEEL_INGOT);

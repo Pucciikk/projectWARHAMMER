@@ -1,0 +1,27 @@
+{
+ "name": "block.warpbound.weavery",
+ "layers": [
+  [
+   "HHCHH",
+   "HHHHH",
+   "HHHHH"
+  ],
+  [
+   "EFF F",
+   "EFF E",
+   "TFFFE"
+  ],
+  [
+   " F F ",
+   " F F ",
+   " FFF "
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

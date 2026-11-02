@@ -1,0 +1,23 @@
+{
+ "machine": "warpbound:mechanicus_forge",
+ "seconds": 8,
+ "items_in": [
+  {
+   "item": "warpbound:steel_plate",
+   "count": 2
+  },
+  {
+   "item": "warpbound:adamantium_ingot",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:drill_head",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

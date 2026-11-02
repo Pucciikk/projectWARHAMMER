@@ -1,0 +1,19 @@
+{
+ "machine": "warpbound:ammo_line",
+ "seconds": 3,
+ "items_in": [
+  {
+   "item": "warpbound:brass_ingot",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:bolt_casing",
+   "count": 4,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

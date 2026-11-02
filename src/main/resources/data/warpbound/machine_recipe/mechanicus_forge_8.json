@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:mechanicus_forge",
+ "seconds": 6,
+ "items_in": [
+  {
+   "item": "warpbound:brass_ingot",
+   "count": 1
+  },
+  {
+   "item": "minecraft:redstone",
+   "count": 1
+  },
+  {
+   "item": "minecraft:quartz",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:mr_fuse",
+   "count": 4,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

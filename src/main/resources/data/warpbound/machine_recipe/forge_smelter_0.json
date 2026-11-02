@@ -1,0 +1,19 @@
+{
+ "machine": "warpbound:forge_smelter",
+ "seconds": 4,
+ "items_in": [
+  {
+   "item": "warpbound:washed_copper",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "minecraft:copper_ingot",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

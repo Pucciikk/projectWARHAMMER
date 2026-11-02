@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:mechanicus_forge",
+ "seconds": 12,
+ "items_in": [
+  {
+   "item": "warpbound:radium_cell",
+   "count": 1
+  },
+  {
+   "item": "warpbound:motive_coil",
+   "count": 2
+  },
+  {
+   "item": "warpbound:ceramite_plate",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:field_generator",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

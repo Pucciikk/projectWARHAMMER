@@ -60,7 +60,15 @@ python3 tools/textures/gen_star_map.py      # карта Империума (э�
 python3 tools/textures/gen_s1_items.py      # предметы Сезона 1: лазган, цепной меч, флак, респиратор, компоненты (иконки и слои брони)
 python3 tools/recipes/gen_s1_recipes.py     # рецепты предметов Сезона 1 (список — docs/content/season1-items.md)
 python3 tools/models/gen_gear.py            # 3D-снаряжение GeckoLib: лазган, цепной меч, флак-броня гвардейца, респиратор
+python3 tools/models/gen_extractor.py       # УСТАРЕЛ, не запускать: старая кубическая модель экстрактора затрёт меш (теперь tools/models/blender/extractor.py)
+python3 tools/models/blender/register_chain.py  # ресурсы машин цепочки: состояния, предмет, лут, шаблон, теги
+# Машины — настоящие меши из Blender: tools/models/blender/<машина>.py + export_machine.py (запускать внутри Blender), MeshModelFactory читает poly_mesh
+python3 tools/recipes/gen_chain_content.py  # из цепочки: описания машин с портами, рецепты, новые предметы и жидкости (потом runDatagen)
+python3 tools/models/gen_conduits.py        # трубы, кабели, пневмопроводы и рамка порта
+python3 tools/industry/loyalist_chain.py [html]  # цепочка лоялиста: docs/industry/loyalist-chain.json и карта производства
 ./gradlew runGametest                 # автотесты без игрока (верфь и т. д.)
+./gradlew runAutotest -Pscenario=line  # рабочая линия: уголь, кабель, дробильня, вода, чан, окна машин (сценарий пишет tools/autotest/gen_line.py)
+./gradlew runAutotest -Pscenario=factory  # все машины цепочки на мешах и замер FPS (сценарий пишет tools/autotest/gen_factory.py); chain, chain2..5 — по партиям
 ./gradlew runAutotest -Pscenario=smoke  # клиент сам проходит tools/autotest/smoke.txt, скриншоты в run/screenshots/autotest/
 ./gradlew runAutotest -Pscenario=arrival   # прибытие операторов: челнок, капсула, ритуал
 ./gradlew runAutotest -Pscenario=cruiser   # крейсер на верфи; interior — отсеки и экран пульта; multiblocks — горн, пресс, Кузня

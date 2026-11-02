@@ -1,0 +1,19 @@
+{
+ "machine": "warpbound:rolling_mill",
+ "seconds": 3,
+ "items_in": [
+  {
+   "item": "warpbound:steel_ingot",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:steel_plate",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

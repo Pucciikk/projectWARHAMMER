@@ -16,6 +16,7 @@ import dev.warpbound.ship.ShipConsole;
 import dev.warpbound.industry.ManualPressBlock;
 import dev.warpbound.industry.WarpboundRecipes;
 import dev.warpbound.core.WarpboundItems;
+import dev.warpbound.industry.machine.ChainMachines;
 import dev.warpbound.multiblock.Multiblocks;
 import dev.warpbound.player.PlayerAttachments;
 import dev.warpbound.quest.QuestManager;
@@ -53,7 +54,10 @@ public class Warpbound implements ModInitializer {
         WarpboundBlocks.register();
         WarpboundBuildingBlocks.register();
         WarpboundWorldgen.register();
+        ChainMachines.registerContent();
         WarpboundBlockEntities.register();
+        ChainMachines.register();
+        dev.warpbound.industry.machine.FluidHolders.register();
         WarpboundMenus.register();
         WarpboundRecipes.register();
         ManualPressBlock.register();

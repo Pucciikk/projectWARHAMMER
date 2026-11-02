@@ -1,0 +1,27 @@
+{
+ "name": "block.warpbound.forge_smelter",
+ "layers": [
+  [
+   "HCH",
+   "HHH",
+   "HHH"
+  ],
+  [
+   "TTF",
+   "TTF",
+   "EET"
+  ],
+  [
+   "F F",
+   " F ",
+   "  S"
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

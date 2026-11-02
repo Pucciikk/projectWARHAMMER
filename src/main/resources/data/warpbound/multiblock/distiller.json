@@ -1,0 +1,57 @@
+{
+ "name": "block.warpbound.distiller",
+ "layers": [
+  [
+   "HCH",
+   "HHH",
+   "HHH"
+  ],
+  [
+   "TTT",
+   "TTT",
+   "TTT"
+  ],
+  [
+   "FTF",
+   "TTT",
+   "FTF"
+  ],
+  [
+   "FTF",
+   "TTT",
+   "FTF"
+  ],
+  [
+   "FTF",
+   "TTT",
+   "FTF"
+  ],
+  [
+   "FTF",
+   "TTT",
+   "FTF"
+  ],
+  [
+   "FTF",
+   "TTT",
+   "FTF"
+  ],
+  [
+   "FTF",
+   "TTT",
+   "FTF"
+  ],
+  [
+   "SFS",
+   "FTF",
+   "SFS"
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

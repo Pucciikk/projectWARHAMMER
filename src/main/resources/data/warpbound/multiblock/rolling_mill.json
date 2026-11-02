@@ -1,0 +1,27 @@
+{
+ "name": "block.warpbound.rolling_mill",
+ "layers": [
+  [
+   "HHHCHHH",
+   "HHHHHHH",
+   "HHHHHHH"
+  ],
+  [
+   "TTFEF  ",
+   "TTFEF F",
+   "TTFEEEF"
+  ],
+  [
+   "TT F F ",
+   "TT F F ",
+   "T  EEE "
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

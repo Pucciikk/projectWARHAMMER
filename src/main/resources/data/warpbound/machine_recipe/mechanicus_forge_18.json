@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:mechanicus_forge",
+ "seconds": 15,
+ "items_in": [
+  {
+   "item": "warpbound:vox_module",
+   "count": 1
+  },
+  {
+   "item": "warpbound:radium_cell",
+   "count": 1
+  },
+  {
+   "item": "warpbound:logic_engine",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:teleport_homer",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

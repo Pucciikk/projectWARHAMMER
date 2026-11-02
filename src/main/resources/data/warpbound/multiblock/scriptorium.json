@@ -1,0 +1,47 @@
+{
+ "name": "block.warpbound.scriptorium",
+ "layers": [
+  [
+   "HHCHH",
+   "HHHHH",
+   "HHHHH",
+   "HHHHH",
+   "HHHHH"
+  ],
+  [
+   "F   F",
+   "T   T",
+   "T   T",
+   "T   T",
+   "FTTTF"
+  ],
+  [
+   "F   F",
+   "T   T",
+   "T   T",
+   "T   T",
+   "FTTTF"
+  ],
+  [
+   "FTTTF",
+   "T   T",
+   "T   T",
+   "T   T",
+   "FTTTF"
+  ],
+  [
+   "SSSSS",
+   "S   S",
+   "S   S",
+   "S   S",
+   "SSSSS"
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

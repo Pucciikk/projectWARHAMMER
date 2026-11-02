@@ -1,0 +1,29 @@
+{
+ "energy_use": 4,
+ "slots_in": 0,
+ "slots_out": 0,
+ "tanks_in": 0,
+ "tanks_out": 1,
+ "kind": "source",
+ "source_fluid": "minecraft:water",
+ "source_rate_mb": 50,
+ "ports": [
+  {
+   "kind": "energy",
+   "output": false,
+   "x": 0,
+   "y": 0,
+   "z": 2,
+   "face": "south"
+  },
+  {
+   "kind": "fluid",
+   "output": true,
+   "x": 1,
+   "y": 0,
+   "z": 2,
+   "face": "south"
+  }
+ ],
+ "energy_output": 0
+}

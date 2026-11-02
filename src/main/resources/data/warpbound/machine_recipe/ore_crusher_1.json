@@ -1,0 +1,24 @@
+{
+ "machine": "warpbound:ore_crusher",
+ "seconds": 4,
+ "items_in": [
+  {
+   "item": "minecraft:raw_iron",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:crushed_iron",
+   "count": 2,
+   "chance": 1.0
+  },
+  {
+   "item": "minecraft:gravel",
+   "count": 1,
+   "chance": 0.25
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

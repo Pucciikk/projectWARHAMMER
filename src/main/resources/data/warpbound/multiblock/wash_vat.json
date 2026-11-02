@@ -1,0 +1,27 @@
+{
+ "name": "block.warpbound.wash_vat",
+ "layers": [
+  [
+   "HCH",
+   "HHH",
+   "HHH"
+  ],
+  [
+   "TTT",
+   "T T",
+   "TET"
+  ],
+  [
+   "FEF",
+   "   ",
+   "F F"
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

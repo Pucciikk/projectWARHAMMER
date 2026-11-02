@@ -1,0 +1,21 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "building",
+ "pattern": [
+  "III",
+  "IBI",
+  "III"
+ ],
+ "key": {
+  "I": {
+   "item": "minecraft:iron_ingot"
+  },
+  "B": {
+   "item": "minecraft:bucket"
+  }
+ },
+ "result": {
+  "id": "warpbound:fluid_tank",
+  "count": 1
+ }
+}

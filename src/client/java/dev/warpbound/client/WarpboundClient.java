@@ -61,6 +61,8 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 public class WarpboundClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        // модели мода: кубы и настоящие меши из Blender (poly_mesh)
+        software.bernie.geckolib.loading.object.BakedModelFactory.register(dev.warpbound.Warpbound.MOD_ID, new dev.warpbound.client.multiblock.MeshModelFactory());
         // Обработчики пакетов в 1.20.5+ вызываются в потоке клиента, синхронизация не нужна
         ClientPlayNetworking.registerGlobalReceiver(ChaosSyncPayload.TYPE,
                 (payload, context) -> ClientChaosState.set(payload.data()));
@@ -93,6 +95,7 @@ public class WarpboundClient implements ClientModInitializer {
         WarpSkyRenderer.register();
         WarpHud.register();
         MultiblockHighlight.register();
+        MenuScreens.register(WarpboundMenus.CHAIN_MACHINE, dev.warpbound.client.industry.ChainMachineScreen::new);
         MenuScreens.register(WarpboundMenus.SALVAGE_FORGE, SalvageForgeScreen::new);
         BlockRenderLayerMap.INSTANCE.putBlock(WarpboundBlocks.MANUAL_PRESS, RenderType.cutout());
         WarpboundBuildingBlocks.CUTOUT.forEach(b -> BlockRenderLayerMap.INSTANCE.putBlock(b, RenderType.cutout()));
@@ -106,6 +109,10 @@ public class WarpboundClient implements ClientModInitializer {
         BlockEntityRenderers.register(WarpboundBlockEntities.SALVAGE_FORGE, ctx -> new MachineRenderer<>("salvage_forge"));
         BlockEntityRenderers.register(WarpboundBlockEntities.MANUAL_PRESS, ctx -> new MachineRenderer<>("manual_press"));
         BlockEntityRenderers.register(WarpboundBlockEntities.MECHANICUS_FORGE, ctx -> new MachineRenderer<>("mechanicus_forge"));
+        BlockEntityRenderers.register(WarpboundBlockEntities.PROMETHIUM_EXTRACTOR, ctx -> new MachineRenderer<>("promethium_extractor"));
+        BlockEntityRenderers.register(dev.warpbound.industry.machine.FluidHolders.PIPE, ctx -> new dev.warpbound.client.multiblock.FluidPipeRenderer());
+        BlockEntityRenderers.register(dev.warpbound.industry.machine.FluidHolders.CONVEYOR, ctx -> new dev.warpbound.client.multiblock.ConveyorRenderer());
+        BlockEntityRenderers.register(WarpboundBlockEntities.CHAIN_MACHINE, ctx -> new dev.warpbound.client.multiblock.ChainMachineRenderer());
         BlockEntityRenderers.register(WarpboundBlockEntities.SHIP_FIXTURE, ctx -> new FixtureRenderer());
         BlockEntityRenderers.register(WarpboundBlockEntities.STAR_CHART, ctx -> new StarChartRenderer());
         BlockEntityRenderers.register(WarpboundBlockEntities.WARP_SAMPLER, ctx -> new WarpSamplerRenderer());

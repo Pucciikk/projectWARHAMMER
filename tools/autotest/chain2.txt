@@ -1,0 +1,47 @@
+# Конвертер, прокатный стан, электролизёр: цикл и вид. Площадка новая, чтобы старые машины не мешали сборке
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd tp @s 3000 206 0 0 0
+wait 60
+cmd fill 2985 199 -25 3015 199 15 minecraft:polished_deepslate
+cmd fill 2985 200 -25 3015 206 15 minecraft:air
+hud off
+cmd setblock 2992 200 -8 warpbound:converter[facing=north]
+cmd tp @s 2992 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 3002 200 -8 warpbound:rolling_mill[facing=north]
+cmd tp @s 3002 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 3011 200 -8 warpbound:electrolyzer[facing=north]
+cmd tp @s 3011 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+clearchat
+cmd tp @s 2988 203.5 -14 -32 12
+wait 20
+shot 01_converter_blow
+wait 100
+shot 02_converter_pour
+cmd tp @s 3002 204 -15 0 18
+wait 30
+shot 03_mill_a
+wait 25
+shot 04_mill_b
+wait 25
+shot 05_mill_c
+cmd tp @s 3002 205 1 180 25
+wait 20
+shot 06_mill_back
+cmd tp @s 3007.5 203 -13 -28 12
+wait 20
+shot 07_electrolyzer
+cmd tp @s 3015 204 0 145 22
+wait 20
+shot 08_electrolyzer_back
+quit

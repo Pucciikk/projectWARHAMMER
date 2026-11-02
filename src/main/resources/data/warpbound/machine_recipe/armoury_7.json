@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:armoury",
+ "seconds": 25,
+ "items_in": [
+  {
+   "item": "warpbound:steel_tube",
+   "count": 2
+  },
+  {
+   "item": "warpbound:servo_motor",
+   "count": 1
+  },
+  {
+   "item": "warpbound:promethium_canister",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:flamer",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

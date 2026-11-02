@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "GRG",
+    "PSP",
+    "GRG"
+  ],
+  "key": {
+    "G": {
+      "item": "warpbound:brass_gear"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "P": {
+      "item": "warpbound:plasteel_plate"
+    },
+    "S": {
+      "item": "warpbound:servo_motor"
+    }
+  },
+  "result": {
+    "id": "warpbound:drive_block",
+    "count": 2
+  }
+}

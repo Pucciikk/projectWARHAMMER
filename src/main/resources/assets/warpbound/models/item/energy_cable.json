@@ -1,0 +1,17 @@
+{
+ "parent": "warpbound:block/energy_cable_arm",
+ "display": {
+  "gui": {
+   "rotation": [
+    30,
+    45,
+    0
+   ],
+   "scale": [
+    1.1,
+    1.1,
+    1.1
+   ]
+  }
+ }
+}

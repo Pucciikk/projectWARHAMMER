@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:mechanicus_forge",
+ "seconds": 20,
+ "items_in": [
+  {
+   "item": "warpbound:focusing_lens",
+   "count": 2
+  },
+  {
+   "item": "warpbound:logic_engine",
+   "count": 1
+  },
+  {
+   "item": "warpbound:vox_module",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:auto_senses",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

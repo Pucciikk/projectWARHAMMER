@@ -1,0 +1,51 @@
+# Прометий: колонна, сероочистка, автоклав. Первая часть ждёт освещение; автоклав снят по всему циклу
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd tp @s 6000 208 0 0 0
+wait 60
+cmd fill 5985 199 -25 6015 199 12 minecraft:polished_deepslate
+cmd fill 5985 200 -25 6015 210 12 minecraft:air
+hud off
+wait 200
+cmd setblock 5992 200 -8 warpbound:distiller[facing=north]
+cmd tp @s 5992 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 6000 200 -8 warpbound:desulfurizer[facing=north]
+cmd tp @s 6000 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 6008 200 -8 warpbound:autoclave[facing=north]
+cmd tp @s 6008 200 -10 0 0
+wait 8
+cmd wb machine build
+wait 8
+clearchat
+cmd tp @s 5988 205 -15 -28 8
+wait 20
+shot di_0
+cmd tp @s 5998 203 -13 -5 14
+wait 20
+shot de_0
+wait 15
+shot de_1
+wait 15
+shot de_2
+cmd tp @s 6005 203.2 -13 -18 14
+wait 8
+shot au_0
+wait 25
+shot au_1
+wait 25
+shot au_2
+wait 25
+shot au_3
+wait 25
+shot au_4
+wait 25
+shot au_5
+wait 25
+quit

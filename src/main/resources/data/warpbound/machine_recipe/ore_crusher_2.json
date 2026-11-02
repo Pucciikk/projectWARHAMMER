@@ -1,0 +1,19 @@
+{
+ "machine": "warpbound:ore_crusher",
+ "seconds": 4,
+ "items_in": [
+  {
+   "item": "minecraft:raw_copper",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:crushed_copper",
+   "count": 2,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

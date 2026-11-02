@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "PIP",
+    "I I",
+    "PIP"
+  ],
+  "key": {
+    "P": {
+      "item": "warpbound:plasteel_plate"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "id": "warpbound:heavy_casing",
+    "count": 4
+  }
+}

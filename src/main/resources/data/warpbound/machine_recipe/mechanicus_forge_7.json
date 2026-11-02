@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:mechanicus_forge",
+ "seconds": 6,
+ "items_in": [
+  {
+   "item": "warpbound:copper_wire",
+   "count": 2
+  },
+  {
+   "item": "warpbound:cogitator_board",
+   "count": 1
+  },
+  {
+   "item": "warpbound:brass_ingot",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:vox_module",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

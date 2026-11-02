@@ -1,0 +1,31 @@
+{
+ "machine": "warpbound:armoury",
+ "seconds": 20,
+ "items_in": [
+  {
+   "item": "warpbound:chain_blade",
+   "count": 1
+  },
+  {
+   "item": "warpbound:servo_motor",
+   "count": 1
+  },
+  {
+   "item": "warpbound:brass_gear",
+   "count": 2
+  },
+  {
+   "item": "warpbound:steel_plate",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:chainsword",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}
