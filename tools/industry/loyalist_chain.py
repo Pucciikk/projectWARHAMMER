@@ -243,11 +243,15 @@ rc("crusher", 4, [("sulfur_ore", 1)], [("sulfur", 2)])
 rc("chem_reactor", 8, [("saltpeter", 2), ("sulfuric_acid", 1)], [("nitric_acid", 2), ("gypsum", 1)])
 rc("chem_reactor", 10, [("spent_acid", 2)], [("sulfuric_acid", 1), ("water", 1)], "регенерация (замкнуть цикл)")
 rc("lumber", 6, [("log", 1)], [("planks", 4), ("sawdust", 2)])
+# Глубинный бур: одна головка и 4 ведра прометия на 32 руды; какую руду бурить, выбирает игрок в окне машины
+for _ore in ("iron_ore", "copper_ore", "coal", "gold_ore", "redstone", "lead_ore", "lapis", "quartz"):
+    rc("deep_drill", 30, [("drill_head", 1), ("promethium", 4)], [(_ore, 32)], "руда без шахты")
 rc("chem_reactor", 8, [("sawdust", 4), ("water", 1)], [("cellulose", 2)])
 rc("powder_works", 10, [("cellulose", 2), ("nitric_acid", 1), ("sulfuric_acid", 1)], [("nitrocellulose", 2), ("spent_acid", 1)],
    "нитрация")
 rc("powder_works", 8, [("nitrocellulose", 2), ("aromatics", 1)], [("bolt_propellant", 4)])
-rc("powder_works", 12, [("aromatics", 2), ("nitric_acid", 2), ("sulfuric_acid", 1)], [("fyceline", 2), ("spent_acid", 1)])
+# У машины два бака на вход, поэтому без серной кислоты: азотной больше
+rc("powder_works", 12, [("aromatics", 2), ("nitric_acid", 3)], [("fyceline", 2), ("spent_acid", 1)])
 # скрипторий и обряды
 rc("hydroponics", 20, [("water", 2), ("bone_meal", 1)], [("herbs", 4)])
 rc("scriptorium", 6, [("herbs", 2), ("coal_tar", 1)], [("incense", 2)])
@@ -286,7 +290,7 @@ rc("forge", 20, [("logic_engine", 1), ("gold_ingot", 1), ("fibre_bundle", 1)], [
 rc("forge", 20, [("focusing_lens", 2), ("logic_engine", 1), ("vox_module", 1)], [("auto_senses", 1)])
 rc("forge", 30, [("ceramite_plate", 2), ("motive_coil", 4), ("radium_cell", 1), ("logic_engine", 1)], [("power_pack", 1)])
 rc("forge", 15, [("vox_module", 1), ("radium_cell", 1), ("logic_engine", 1)], [("teleport_homer", 1)])
-rc("forge", 8, [("steel_plate", 2), ("adamantium_ingot", 0.25)], [("drill_head", 1)], "расходник бура")
+rc("forge", 8, [("steel_plate", 4), ("plasteel_plate", 1)], [("drill_head", 1)], "расходник бура: глава 4, адамантий появляется только в главе 7")
 rc("ritual_forge", 30, [("adamantium_ingot", 1), ("gold_ingot", 2), ("purity_seal", 2)], [("crux_terminatus", 1)])
 # оружие и боеприпасы
 rc("barrel_shop", 20, [("steel_tube", 1), ("sacred_oil", 0.5)], [("rifled_barrel", 1)], "масло для резца")

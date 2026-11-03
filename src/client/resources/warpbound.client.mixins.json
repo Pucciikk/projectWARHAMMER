@@ -5,6 +5,9 @@
   "client": [
     "AbstractContainerScreenAccessor",
     "CameraMixin",
+    "GunFovMixin",
+    "GunGuiMixin",
+    "GunRenderMixins",
     "PlayerArmPoseMixin"
   ],
   "injectors": {

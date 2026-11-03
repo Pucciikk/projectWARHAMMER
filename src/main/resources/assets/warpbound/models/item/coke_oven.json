@@ -1,3 +1,6 @@
 {
- "parent": "warpbound:block/coke_oven"
+ "parent": "minecraft:item/generated",
+ "textures": {
+  "layer0": "warpbound:item/machine_coke_oven"
+ }
 }

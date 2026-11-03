@@ -1,0 +1,27 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "building",
+ "pattern": [
+  "HGH",
+  "GXG",
+  "HDH"
+ ],
+ "key": {
+  "H": {
+   "item": "warpbound:heavy_casing"
+  },
+  "G": {
+   "item": "warpbound:brass_gear"
+  },
+  "D": {
+   "item": "warpbound:drive_block"
+  },
+  "X": {
+   "item": "warpbound:motive_coil"
+  }
+ },
+ "result": {
+  "id": "warpbound:promethium_gen",
+  "count": 1
+ }
+}

@@ -1,3 +1,6 @@
 {
- "parent": "warpbound:block/scriptorium"
+ "parent": "minecraft:item/generated",
+ "textures": {
+  "layer0": "warpbound:item/machine_scriptorium"
+ }
 }

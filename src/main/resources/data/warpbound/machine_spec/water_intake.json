@@ -25,5 +25,6 @@
    "face": "south"
   }
  ],
- "energy_output": 0
+ "energy_output": 0,
+ "fuel_fluids": {}
 }

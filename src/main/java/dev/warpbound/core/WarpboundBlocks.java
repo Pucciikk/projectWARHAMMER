@@ -109,6 +109,29 @@ public final class WarpboundBlocks {
             new double[][]{{0.72, 3.0, 1.98}}, new double[][]{{0, 1.3, 1.1}}, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, 0.8f));
     public static final Block COGITATORIUM = chainMachine("cogitatorium", new ChainMachineBlock.Effects(
             new double[0][], new double[0][], SoundEvents.UI_LOOM_TAKE_RESULT, 1.3f));
+    /** Прометиевый выход: битумная лужа над залежью, метка для экстрактора. */
+    public static final Block PROMETHIUM_SEEP = register("promethium_seep", new dev.warpbound.industry.PromethiumSeepBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_BLUE).strength(0.5f).sound(SoundType.MUD).noOcclusion().noCollission().speedFactor(0.4f).jumpFactor(0.5f)
+            .replaceable().pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY).noLootTable()));
+    /** Прометиевая трещина: то, что игрок ищет на поверхности. Светится слабо, чтобы её было видно и ночью. */
+    public static final Block PROMETHIUM_FISSURE = register("promethium_fissure", new dev.warpbound.industry.PromethiumFissureBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_BLUE).strength(1.5f, 6f).sound(SoundType.STONE).lightLevel(s -> 3)));
+    public static final Block CHEM_REACTOR = chainMachine("chem_reactor", new ChainMachineBlock.Effects(
+            new double[][]{{-1.05, 3.9, 1.42}, {1.05, 3.9, 1.42}}, new double[0][], SoundEvents.BREWING_STAND_BREW, 0.9f));
+    public static final Block POWDER_WORKS = chainMachine("powder_works", new ChainMachineBlock.Effects(
+            new double[][]{{-1.65, 4.0, 1.6}}, new double[0][], SoundEvents.PISTON_EXTEND, 0.8f));
+    public static final Block CEMENT_MILL = chainMachine("cement_mill", new ChainMachineBlock.Effects(
+            new double[][]{{-0.62, 1.2, 0.0}}, new double[0][], SoundEvents.GRINDSTONE_USE, 0.5f));
+    public static final Block CRACKER = chainMachine("cracker", new ChainMachineBlock.Effects(
+            new double[][]{{1.02, 4.9, 2.02}}, new double[][]{{-0.25, 0.8, 0.15}}, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, 0.7f));
+    public static final Block PROMETHIUM_GEN = chainMachine("promethium_gen", new ChainMachineBlock.Effects(
+            new double[][]{{0.95, 4.2, 1.2}}, new double[0][], SoundEvents.PISTON_CONTRACT, 1.4f));
+    public static final Block HYDROPONICS = chainMachine("hydroponics", new ChainMachineBlock.Effects(
+            new double[0][], new double[0][], SoundEvents.BUCKET_FILL, 1.5f));
+    public static final Block LUMBER = chainMachine("lumber", new ChainMachineBlock.Effects(
+            new double[0][], new double[0][], SoundEvents.AXE_STRIP, 0.8f));
+    public static final Block DEEP_DRILL = chainMachine("deep_drill", new ChainMachineBlock.Effects(
+            new double[][]{{2.22, 3.8, 0.95}}, new double[0][], SoundEvents.GRINDSTONE_USE, 0.4f));
     public static final Block CONVEYOR = register("conveyor", new ConveyorBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.METAL).strength(1.5f, 6f).sound(SoundType.COPPER).noOcclusion()));
     public static final Block FLUID_TANK = register("fluid_tank", new FluidHolderBlock(false, BlockBehaviour.Properties.of()
@@ -117,7 +140,8 @@ public final class WarpboundBlocks {
             .mapColor(MapColor.METAL).strength(3f, 9f).sound(SoundType.NETHERITE_BLOCK).requiresCorrectToolForDrops().noOcclusion().lightLevel(s -> 0)));
     public static final java.util.List<Block> CHAIN_MACHINES = java.util.List.of(ORE_CRUSHER, WASH_VAT, COKE_OVEN, BLAST_FURNACE,
             CONVERTER, ROLLING_MILL, ELECTROLYZER, WATER_INTAKE, COAL_GEN, SCRIPTORIUM, ARMOURY, BARREL_SHOP, AMMO_LINE, WEAVERY,
-            DISTILLER, DESULFURIZER, AUTOCLAVE, FORGE_SMELTER, COGITATORIUM);
+            DISTILLER, DESULFURIZER, AUTOCLAVE, FORGE_SMELTER, COGITATORIUM,
+            CHEM_REACTOR, POWDER_WORKS, CEMENT_MILL, CRACKER, PROMETHIUM_GEN, HYDROPONICS, LUMBER, DEEP_DRILL);
     // ---- оборудование отсеков корабля ----
     /** Навигационный стол мостика: выбор цели и старт перехода. */
     public static final Block NAV_TABLE = register("nav_table", new NavTableBlock(fixture(MapColor.COLOR_BLACK).lightLevel(s -> 6)).bigModel());

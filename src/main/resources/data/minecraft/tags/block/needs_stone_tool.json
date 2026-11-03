@@ -49,6 +49,17 @@
   "warpbound:desulfurizer",
   "warpbound:autoclave",
   "warpbound:forge_smelter",
-  "warpbound:cogitatorium"
+  "warpbound:cogitatorium",
+  "warpbound:sulfur_ore",
+  "warpbound:deepslate_sulfur_ore",
+  "warpbound:saltpeter_ore",
+  "warpbound:chem_reactor",
+  "warpbound:cement_mill",
+  "warpbound:cracker",
+  "warpbound:powder_works",
+  "warpbound:promethium_gen",
+  "warpbound:hydroponics",
+  "warpbound:lumber",
+  "warpbound:deep_drill"
  ]
 }

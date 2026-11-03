@@ -2,9 +2,14 @@
  "format_version": "1.8.0",
  "animations": {
   "misc.idle": {
+   "loop": true,
+   "animation_length": 2.0,
+   "bones": {}
+  },
+  "work.active": {
+   "loop": true,
    "animation_length": 1.0,
-   "bones": {},
-   "loop": true
+   "bones": {}
   }
  }
 }

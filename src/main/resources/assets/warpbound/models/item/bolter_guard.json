@@ -1,6 +1,141 @@
 {
- "parent": "minecraft:item/generated",
- "textures": {
-  "layer0": "warpbound:item/bolter_guard"
+ "parent": "builtin/entity",
+ "display": {
+  "thirdperson_righthand": {
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "translation": [
+    -0.5,
+    3.5,
+    -4.5
+   ],
+   "scale": [
+    0.72,
+    0.72,
+    0.72
+   ]
+  },
+  "thirdperson_lefthand": {
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "translation": [
+    0.5,
+    3.5,
+    -4.5
+   ],
+   "scale": [
+    0.72,
+    0.72,
+    0.72
+   ]
+  },
+  "firstperson_righthand": {
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "translation": [
+    0,
+    0,
+    0
+   ],
+   "scale": [
+    0.5,
+    0.5,
+    0.5
+   ]
+  },
+  "firstperson_lefthand": {
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "translation": [
+    0,
+    0,
+    0
+   ],
+   "scale": [
+    0.5,
+    0.5,
+    0.5
+   ]
+  },
+  "ground": {
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "translation": [
+    0,
+    2,
+    0
+   ],
+   "scale": [
+    0.5,
+    0.5,
+    0.5
+   ]
+  },
+  "gui": {
+   "rotation": [
+    20,
+    112,
+    0
+   ],
+   "translation": [
+    0.8,
+    0.6,
+    0
+   ],
+   "scale": [
+    0.62,
+    0.62,
+    0.62
+   ]
+  },
+  "fixed": {
+   "rotation": [
+    0,
+    90,
+    0
+   ],
+   "translation": [
+    0,
+    0,
+    0
+   ],
+   "scale": [
+    0.8,
+    0.8,
+    0.8
+   ]
+  },
+  "head": {
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "translation": [
+    0,
+    10,
+    0
+   ],
+   "scale": [
+    0.8,
+    0.8,
+    0.8
+   ]
+  }
  }
 }

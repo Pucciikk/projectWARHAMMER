@@ -30,7 +30,6 @@ import dev.warpbound.client.ship.StarChartRenderer;
 import dev.warpbound.client.ship.StarChartScreen;
 import dev.warpbound.client.ship.WarpSamplerRenderer;
 import dev.warpbound.client.gear.GearRenderers;
-import dev.warpbound.client.gear.LasBeams;
 import dev.warpbound.network.ShipConsolePayload;
 import dev.warpbound.client.shipyard.ShipyardScreen;
 import dev.warpbound.client.quest.QuestKeys;
@@ -117,7 +116,10 @@ public class WarpboundClient implements ClientModInitializer {
         BlockEntityRenderers.register(WarpboundBlockEntities.STAR_CHART, ctx -> new StarChartRenderer());
         BlockEntityRenderers.register(WarpboundBlockEntities.WARP_SAMPLER, ctx -> new WarpSamplerRenderer());
         GearRenderers.register();
-        LasBeams.register();
+        dev.warpbound.client.gun.GunClient.register();
+        dev.warpbound.client.gun.GunHud.register();
+        EntityRendererRegistry.register(dev.warpbound.gun.GunProjectiles.LAS_BOLT, dev.warpbound.client.gun.GunProjectileRenderers.Las::new);
+        EntityRendererRegistry.register(dev.warpbound.gun.GunProjectiles.BOLT_ROUND, dev.warpbound.client.gun.GunProjectileRenderers.Bolt::new);
     }
 
     /** Модели GeckoLib (М1–М9). Пока заглушки из tools/models/gen_entities.py, потом — модели автора. */
@@ -162,6 +164,7 @@ public class WarpboundClient implements ClientModInitializer {
         ShuttleSounds.register();
         ShipEngineSound.register();
         ParticleFactoryRegistry.getInstance().register(WarpboundParticles.WARP_FLAME, WarpFlameParticle.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(WarpboundParticles.GUN_CASING, dev.warpbound.client.gun.GunCasingParticle.Provider::new);
         ParticleFactoryRegistry.getInstance().register(WarpboundParticles.WARP_RUNE, WarpRuneParticle.Provider::new);
     }
 }

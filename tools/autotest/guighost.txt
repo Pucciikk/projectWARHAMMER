@@ -1,0 +1,22 @@
+# Машина с одним рецептом: в пустых слотах и баках видно, что нужно
+cmd time set noon
+cmd gamemode creative
+cmd tp @s 18000 205 -3 0 30
+wait 60
+cmd fill 17990 199 -8 18010 199 8 minecraft:polished_deepslate
+hud off
+wait 120
+cmd setblock 18000 200 0 warpbound:hydroponics[facing=north]
+cmd tp @s 18000 200 -2 0 0
+wait 8
+cmd wb machine build
+wait 8
+clearchat
+cmd kill @e[type=item]
+cmd tp @s 18000 201 -3 0 0
+wait 10
+useblock 18000 200 0
+wait 12
+shot ghost
+close
+quit

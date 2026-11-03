@@ -116,6 +116,10 @@ public class ChainMachineBlockEntity extends MachineCoreBlockEntity
     private boolean dirty = true;
     private double progress;
     private int burn, burnTotal;
+    /** Дробная часть сожжённых мБ: расход меньше 1 мБ за тик не должен пропадать. */
+    private double fuelDebt;
+    /** Что показать на экране машины: см. ChainMachineMenu.STATUS_*. На сервере не сохраняется, считается каждый тик. */
+    private int status = ChainMachineMenu.STATUS_IDLE;
     /** Выбранный рецепт: -1 — первый подходящий. Нужен, когда из одного входа можно сделать разное (прокатный стан). */
     private int selected = -1;
     private int cycles;
@@ -130,6 +134,8 @@ public class ChainMachineBlockEntity extends MachineCoreBlockEntity
                 case ChainMachineMenu.D_SELECTED -> selected;
                 case ChainMachineMenu.D_RECIPES -> ChainMachines.recipes(definitionId()).size();
                 case ChainMachineMenu.D_OUTPUT -> selectedOutput();
+                case ChainMachineMenu.D_STATUS -> status;
+                case ChainMachineMenu.D_ACTIVE -> recipe == null ? -1 : ChainMachines.recipes(definitionId()).indexOf(recipe);
                 default -> tanks.dataAt(i - ChainMachineMenu.D_TANKS);
             };
         }
@@ -188,6 +194,7 @@ public class ChainMachineBlockEntity extends MachineCoreBlockEntity
     private boolean acceptsFluid(int tank, FluidVariant variant) {
         MachineSpec s = spec();
         if (s == null || tank >= s.tanksIn()) return false;
+        if (s.kind().equals("fluid_generator")) return s.fuelFluids().containsKey(BuiltInRegistries.FLUID.getKey(variant.getFluid()).toString());
         for (MachineRecipe r : ChainMachines.recipes(definitionId())) {
             for (MachineRecipe.FluidAmount in : r.fluidsIn()) if (variant.isOf(in.fluid())) return true;
         }
@@ -210,6 +217,7 @@ public class ChainMachineBlockEntity extends MachineCoreBlockEntity
         if (s == null) return;
         boolean running = switch (s.kind()) {
             case "generator" -> tickGenerator(s);
+            case "fluid_generator" -> tickFluidGenerator(s);
             case "source" -> tickSource(s, level);
             default -> tickProcessor(s, level);
         };
@@ -218,6 +226,8 @@ public class ChainMachineBlockEntity extends MachineCoreBlockEntity
     }
 
     private boolean tickGenerator(MachineSpec s) {
+        status = burn > 0 ? ChainMachineMenu.STATUS_RUNNING
+                : energyStore.getAmount() >= ENERGY_BUFFER ? ChainMachineMenu.STATUS_BUFFER_FULL : ChainMachineMenu.STATUS_NO_FUEL;
         if (burn <= 0 && energyStore.getAmount() < ENERGY_BUFFER) {
             ItemStack fuel = items.getItem(0);
             Integer time = AbstractFurnaceBlockEntity.getFuel().get(fuel.getItem());
@@ -225,6 +235,7 @@ public class ChainMachineBlockEntity extends MachineCoreBlockEntity
                 burn = burnTotal = time;
                 fuel.shrink(1);
                 items.setChanged();
+                status = ChainMachineMenu.STATUS_RUNNING;
             }
         }
         if (burn <= 0) return false;
@@ -234,9 +245,32 @@ public class ChainMachineBlockEntity extends MachineCoreBlockEntity
         return true;
     }
 
+    /** Прометиевый генераториум: мощность постоянная, расход зависит от топлива. Буфер полон — топливо не тратится. */
+    private boolean tickFluidGenerator(MachineSpec s) {
+        if (energyStore.getAmount() >= ENERGY_BUFFER) {
+            status = ChainMachineMenu.STATUS_BUFFER_FULL;
+            return false;
+        }
+        status = ChainMachineMenu.STATUS_NO_FUEL;
+        for (var fuel : s.fuelFluids().entrySet()) {
+            net.minecraft.world.level.material.Fluid fluid = BuiltInRegistries.FLUID.get(net.minecraft.resources.ResourceLocation.parse(fuel.getKey()));
+            double due = fuelDebt + fuel.getValue() / 20.0;
+            int whole = (int) due;
+            if (!tanks.hasIn(fluid, Math.max(1, whole))) continue;
+            if (whole > 0) tanks.drainIn(fluid, whole);
+            fuelDebt = due - whole;
+            status = ChainMachineMenu.STATUS_RUNNING;
+            energyStore.amount = Math.min(ENERGY_BUFFER, energyStore.getAmount() + s.energyOutput());
+            setChanged();
+            return true;
+        }
+        return false;
+    }
+
     /** Водозабор: у воды работает в полную силу, в сухом месте — как колодец, вчетверо слабее. */
     private boolean tickSource(MachineSpec s, ServerLevel level) {
         double speed = powerFraction(s);
+        status = tanks.outFull(0) ? ChainMachineMenu.STATUS_OUTPUT_FULL : speed <= 0 ? ChainMachineMenu.STATUS_NO_POWER : ChainMachineMenu.STATUS_RUNNING;
         if (speed <= 0 || tanks.outFull(0)) return false;
         boolean nearWater = false;
         for (BlockPos p : BlockPos.betweenClosed(worldPosition.offset(-3, -1, -3), worldPosition.offset(3, 0, 3))) {
@@ -258,8 +292,12 @@ public class ChainMachineBlockEntity extends MachineCoreBlockEntity
             recipe = found;
             dirty = false;
         }
-        if (recipe == null) return false;
+        if (recipe == null) {
+            status = blockedByOutput() ? ChainMachineMenu.STATUS_OUTPUT_FULL : ChainMachineMenu.STATUS_IDLE;
+            return false;
+        }
         double speed = powerFraction(s);
+        status = speed <= 0 ? ChainMachineMenu.STATUS_NO_POWER : ChainMachineMenu.STATUS_RUNNING;
         if (speed <= 0) return false;
         drawPower(s, speed);
         progress += speed * speedBonus(level);
@@ -323,6 +361,14 @@ public class ChainMachineBlockEntity extends MachineCoreBlockEntity
             if (hasInputs(r) && outputsFit(r)) return r;
         }
         return null;
+    }
+
+    /** Сырьё есть, но выход занят: игрок должен забрать продукцию. */
+    private boolean blockedByOutput() {
+        List<MachineRecipe> all = ChainMachines.recipes(definitionId());
+        if (selected >= 0 && selected < all.size()) return hasInputs(all.get(selected)) && !outputsFit(all.get(selected));
+        for (MachineRecipe r : all) if (hasInputs(r) && !outputsFit(r)) return true;
+        return false;
     }
 
     private boolean hasInputs(MachineRecipe r) {
@@ -445,8 +491,9 @@ public class ChainMachineBlockEntity extends MachineCoreBlockEntity
     @Override
     public ChainMachineMenu.Init getScreenOpeningData(ServerPlayer player) {
         MachineSpec s = spec();
-        return s == null ? new ChainMachineMenu.Init(0, 0, 0, 0, false, false)
-                : new ChainMachineMenu.Init(s.slotsIn(), s.slotsOut(), s.tanksIn(), s.tanksOut(), s.energyUse() > 0 || s.energyOutput() > 0, s.energyOutput() > 0);
+        return s == null ? new ChainMachineMenu.Init(0, 0, 0, 0, false, false, 0, List.of())
+                : new ChainMachineMenu.Init(s.slotsIn(), s.slotsOut(), s.tanksIn(), s.tanksOut(), s.energyUse() > 0 || s.energyOutput() > 0, s.energyOutput() > 0,
+                Math.max(s.energyUse(), s.energyOutput()), ChainMachines.recipes(definitionId()));
     }
 
     @Override

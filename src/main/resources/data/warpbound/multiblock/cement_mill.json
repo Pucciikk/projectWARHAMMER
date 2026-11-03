@@ -1,0 +1,32 @@
+{
+ "name": "block.warpbound.cement_mill",
+ "layers": [
+  [
+   "HCH",
+   "HHH",
+   "HHH"
+  ],
+  [
+   "TFE",
+   "EEE",
+   "TTT"
+  ],
+  [
+   "FEF",
+   "EEE",
+   "F F"
+  ],
+  [
+   "SSS",
+   "SSS",
+   "SSS"
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

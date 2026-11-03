@@ -5,6 +5,9 @@
     "warpbound:deepslate_lead_ore",
     "warpbound:radium_ore",
     "warpbound:adamantium_ore",
-    "warpbound:warpstone_ore"
+    "warpbound:warpstone_ore",
+    "warpbound:sulfur_ore",
+    "warpbound:deepslate_sulfur_ore",
+    "warpbound:saltpeter_ore"
   ]
 }

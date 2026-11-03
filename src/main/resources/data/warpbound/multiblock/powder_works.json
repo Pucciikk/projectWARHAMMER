@@ -1,0 +1,32 @@
+{
+ "name": "block.warpbound.powder_works",
+ "layers": [
+  [
+   "HHCHH",
+   "HHHHH",
+   "HHHHH"
+  ],
+  [
+   "TFFFF",
+   "TFEFF",
+   "TTTTT"
+  ],
+  [
+   "F F F",
+   "    F",
+   "TTTTT"
+  ],
+  [
+   "TTTTT",
+   "TTTTT",
+   "TTTTT"
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

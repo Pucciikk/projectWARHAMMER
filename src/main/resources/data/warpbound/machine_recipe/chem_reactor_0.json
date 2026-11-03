@@ -1,0 +1,27 @@
+{
+ "machine": "warpbound:chem_reactor",
+ "seconds": 6,
+ "items_in": [
+  {
+   "item": "warpbound:sulfur",
+   "count": 1
+  }
+ ],
+ "items_out": [],
+ "fluids_in": [
+  {
+   "fluid": "minecraft:water",
+   "mb": 2000
+  },
+  {
+   "fluid": "warpbound:oxygen",
+   "mb": 1000
+  }
+ ],
+ "fluids_out": [
+  {
+   "fluid": "warpbound:sulfuric_acid",
+   "mb": 2000
+  }
+ ]
+}

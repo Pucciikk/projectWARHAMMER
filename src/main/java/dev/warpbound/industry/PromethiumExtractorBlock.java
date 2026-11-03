@@ -72,9 +72,14 @@ public class PromethiumExtractorBlock extends MachineCoreBlock {
                 if (!player.getInventory().add(full)) player.drop(full, false);
                 sl.playSound(null, pos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1f, 0.8f);
             }
+            int rich = be.richness(sl);
+            if (rich <= 0) {
+                player.displayClientMessage(Component.translatable("block.warpbound.promethium_extractor.no_deposit").withStyle(ChatFormatting.RED), true);
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
             player.displayClientMessage(Component.translatable("block.warpbound.promethium_extractor.status",
                     be.stored() / PromethiumExtractorBlockEntity.BUCKET, PromethiumExtractorBlockEntity.CAPACITY / PromethiumExtractorBlockEntity.BUCKET,
-                    be.richness(sl)).withStyle(ChatFormatting.GOLD), true);
+                    rich).withStyle(ChatFormatting.GOLD), true);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }

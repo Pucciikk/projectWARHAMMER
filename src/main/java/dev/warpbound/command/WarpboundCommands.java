@@ -75,6 +75,36 @@ public final class WarpboundCommands {
                 .then(Commands.literal("shipyard")
                         .then(Commands.literal("frame").executes(WarpboundCommands::shipyardFrame))
                         .then(Commands.literal("advance").executes(WarpboundCommands::shipyardAdvance)))
+                .then(Commands.literal("deposit")
+                        .executes(WarpboundCommands::depositNearest)
+                        .then(Commands.literal("tp").executes(ctx -> {
+                            var player = ctx.getSource().getPlayerOrException();
+                            var level = ctx.getSource().getLevel();
+                            var here = player.chunkPosition();
+                            var field = dev.warpbound.industry.PromethiumDeposits.nearestField(level.getSeed(), here.x, here.z, c -> onLand(level, c));
+                            int x = field.getMiddleBlockX(), z = field.getMiddleBlockZ();
+                            level.getChunk(x >> 4, z >> 4);
+                            int y = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING, x, z);
+                            player.teleportTo(level, x - 7.5, y + 16, z - 7.5, -45f, 52f);
+                            // считаем лужи в центральном чанке: видно, поставила ли их генерация
+                            int seeps = 0;
+                            for (int dx = -8; dx < 8; dx++) {
+                                for (int dz = -8; dz < 8; dz++) {
+                                    int top = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING, x + dx, z + dz);
+                                    for (int dy = top + 1; dy > top - 24; dy--) {
+                                        if (level.getBlockState(new net.minecraft.core.BlockPos(x + dx, dy, z + dz)).is(dev.warpbound.core.WarpboundBlocks.PROMETHIUM_SEEP)) seeps++;
+                                    }
+                                }
+                            }
+                            int found = seeps;
+                            ctx.getSource().sendSuccess(() -> Component.literal("Поле залежи: " + x + " " + y + " " + z + ", луж в чанке: " + found), false);
+                            return 1;
+                        }))
+                        .then(Commands.literal("everywhere").executes(ctx -> {
+                            dev.warpbound.industry.PromethiumDeposits.everywhere = !dev.warpbound.industry.PromethiumDeposits.everywhere;
+                            ctx.getSource().sendSuccess(() -> Component.literal("Залежь везде: " + dev.warpbound.industry.PromethiumDeposits.everywhere), true);
+                            return 1;
+                        })))
                 .then(Commands.literal("machine")
                         .then(Commands.literal("build").executes(WarpboundCommands::machineBuild)))
                 .then(Commands.literal("ship")
@@ -297,6 +327,23 @@ public final class WarpboundCommands {
     }
 
     /** /wb machine build — достроить груду и освятить все несобранные машины в 16 блоках (для тестов и показа). */
+    /** На суше ли чанк: лужа видна только там. Биом считается без генерации чанка. */
+    private static boolean onLand(net.minecraft.server.level.ServerLevel level, net.minecraft.world.level.ChunkPos c) {
+        var biome = level.getBiome(new net.minecraft.core.BlockPos(c.getMiddleBlockX(), 64, c.getMiddleBlockZ()));
+        return !biome.is(net.minecraft.tags.BiomeTags.IS_OCEAN) && !biome.is(net.minecraft.tags.BiomeTags.IS_RIVER);
+    }
+
+    /** Ближайшее поле залежей: координаты и богатство на месте игрока. */
+    private static int depositNearest(CommandContext<CommandSourceStack> ctx) {
+        var src = ctx.getSource();
+        long seed = src.getLevel().getSeed();
+        net.minecraft.world.level.ChunkPos here = new net.minecraft.world.level.ChunkPos(net.minecraft.core.BlockPos.containing(src.getPosition()));
+        net.minecraft.world.level.ChunkPos field = dev.warpbound.industry.PromethiumDeposits.nearestField(seed, here.x, here.z, c -> onLand(src.getLevel(), c));
+        int rich = dev.warpbound.industry.PromethiumDeposits.richness(seed, here.x, here.z);
+        src.sendSuccess(() -> Component.literal("Ближайшее поле: x " + field.getMiddleBlockX() + ", z " + field.getMiddleBlockZ() + "; здесь богатство " + rich + "%"), false);
+        return 1;
+    }
+
     private static int machineBuild(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         ServerPlayer p = ctx.getSource().getPlayerOrException();
         var level = p.serverLevel();

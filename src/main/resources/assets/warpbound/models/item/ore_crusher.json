@@ -1,3 +1,6 @@
 {
- "parent": "warpbound:block/ore_crusher"
+ "parent": "minecraft:item/generated",
+ "textures": {
+  "layer0": "warpbound:item/machine_ore_crusher"
+ }
 }

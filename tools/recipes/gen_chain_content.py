@@ -27,18 +27,22 @@ MACHINES = {
     "armoury": ("armoury", 16), "barrel_shop": ("barrel_shop", 12), "ammo_line": ("ammo_line", 10), "weavery": ("weavery", 6),
     "forge": ("mechanicus_forge", 10), "forge_smelter": ("forge_smelter", 8), "cogitatorium": ("cogitatorium", 8),
     "distiller": ("distiller", 24), "desulfurizer": ("desulfurizer", 20), "autoclave": ("autoclave", 18),
+    "chem_reactor": ("chem_reactor", 14), "powder_works": ("powder_works", 12), "cement_mill": ("cement_mill", 10),
+    "cracker": ("cracker", 22), "hydroponics": ("hydroponics", 6), "lumber": ("lumber", 10), "deep_drill": ("deep_drill", 40),
 }
 # Машины без рецептов цепочки
 SPECIAL = {
     "water_intake": dict(kind="source", energy_use=4, source_fluid="minecraft:water", source_rate_mb=50),
     "coal_gen": dict(kind="generator", energy_output=60),
     "promethium_extractor": dict(kind="custom"),
+    # жжёт жидкость, мБ/с: ведро прометия на 20 секунд, газ слабее, но его всё равно некуда девать
+    "promethium_gen": dict(kind="fluid_generator", energy_output=240, fuel_fluids={"warpbound:promethium": 50, "warpbound:promethium_gas": 100}),
 }
 VANILLA = {"iron_ore": "raw_iron", "copper_ore": "raw_copper", "gold_ore": "raw_gold", "coal": "coal", "gravel": "gravel", "sand": "sand",
            "leather": "leather", "string": "string", "planks": "oak_planks", "copper_ingot": "copper_ingot", "gold_ingot": "gold_ingot",
-           "redstone": "redstone", "quartz": "quartz", "lapis": "lapis_lazuli", "stone": "stone", "bone": "bone", "log": "oak_log"}
+           "redstone": "redstone", "quartz": "quartz", "lapis": "lapis_lazuli", "stone": "stone", "bone": "bone", "log": "oak_log", "bone_meal": "bone_meal"}
 # изделия, что уже есть в моде под другим именем
-ALIAS = {"lead_ore": "raw_lead", "servo_1": "servo_motor", "las_cell": "las_battery", "flak_armour": "flak_chestplate"}
+ALIAS = {"lead_ore": "raw_lead", "sulfur_ore": "raw_sulfur", "servo_1": "servo_motor", "las_cell": "las_battery", "flak_armour": "flak_chestplate"}
 BLOCKS_NO_ICON = set()
 
 
@@ -114,6 +118,7 @@ for block, sp in SPECIAL.items():
 specs["water_intake"].update(tanks_out=1)
 specs["coal_gen"].update(slots_in=1)
 specs["promethium_extractor"].update(tanks_out=1)
+specs["promethium_gen"].update(tanks_in=1)
 
 
 def ports_for(block, sp):
@@ -147,6 +152,7 @@ for block, sp in specs.items():
     sp.setdefault("energy_output", 0)
     sp.setdefault("source_fluid", "")
     sp.setdefault("source_rate_mb", 0)
+    sp.setdefault("fuel_fluids", {})
     dump(f"{D}/machine_spec/{block}.json", sp)
 
 # ---------------------------------------------------------------- Java и ресурсы новых предметов
@@ -192,12 +198,15 @@ def icon(name):
 tex = os.path.join(A, "textures/item")
 os.makedirs(tex, exist_ok=True)
 for name in sorted(new_items):
-    icon(name).save(os.path.join(tex, name + ".png"))
+    # настоящие значки рисует tools/textures/gen_chain_icons.py; заглушка только для совсем нового предмета
+    if not os.path.exists(os.path.join(tex, name + ".png")):
+        icon(name).save(os.path.join(tex, name + ".png"))
     dump(f"{A}/models/item/{name}.json", {"parent": "minecraft:item/generated", "textures": {"layer0": f"warpbound:item/{name}"}})
 
 FLUID_COLOURS = {"holy_water": 0x9ad8ff, "sludge": 0x4a4032, "coal_tar": 0x20201c, "oxygen": 0xcfe8ff, "hydrogen": 0xf0f0ff, "heavy_water": 0x5a7fb0,
                  "deuterium": 0xc0a8ff, "crude_promethium": 0x2458b0, "heavy_fraction": 0x3a2a12, "sour_promethium": 0x2c8c8c, "aromatics": 0xb0702a,
-                 "promethium_gas": 0x8fc8ff, "promethium": 0x46a6ff, "bitumen": 0x101010, "sacred_oil": 0xd4b04a}
+                 "promethium_gas": 0x8fc8ff, "promethium": 0x46a6ff, "bitumen": 0x101010, "sacred_oil": 0xd4b04a,
+                 "sulfuric_acid": 0xc8d24a, "nitric_acid": 0xe8a23c, "spent_acid": 0x7c6a3a}
 lines = ["package dev.warpbound.core;", "", "import java.util.List;", "import java.util.Map;", "",
          "/** Предметы и жидкости цепочки. СГЕНЕРИРОВАНО tools/recipes/gen_chain_content.py — руками не править. */",
          "public final class ChainContentList {", "    public static final List<String> ITEMS = List.of("]

@@ -74,6 +74,19 @@
   "warpbound:cogitatorium",
   "warpbound:fluid_tank",
   "warpbound:flare_stack",
-  "warpbound:conveyor"
+  "warpbound:conveyor",
+  "warpbound:sulfur_ore",
+  "warpbound:deepslate_sulfur_ore",
+  "warpbound:saltpeter_ore",
+  "warpbound:bitumen_shale",
+  "warpbound:chem_reactor",
+  "warpbound:cement_mill",
+  "warpbound:cracker",
+  "warpbound:powder_works",
+  "warpbound:promethium_gen",
+  "warpbound:hydroponics",
+  "warpbound:lumber",
+  "warpbound:deep_drill",
+  "warpbound:promethium_fissure"
  ]
 }

@@ -10,6 +10,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 public final class WarpboundParticles {
     public static final SimpleParticleType WARP_FLAME = register("warp_flame");
     public static final SimpleParticleType WARP_RUNE = register("warp_rune");
+    public static final SimpleParticleType GUN_CASING = register("gun_casing");
 
     private WarpboundParticles() {
     }

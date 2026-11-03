@@ -1,0 +1,12 @@
+{
+ "type": "minecraft:smelting",
+ "category": "misc",
+ "ingredient": {
+  "item": "warpbound:raw_sulfur"
+ },
+ "result": {
+  "id": "warpbound:sulfur"
+ },
+ "experience": 0.2,
+ "cookingtime": 200
+}

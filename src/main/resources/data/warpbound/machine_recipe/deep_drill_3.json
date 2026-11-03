@@ -1,0 +1,24 @@
+{
+ "machine": "warpbound:deep_drill",
+ "seconds": 30,
+ "items_in": [
+  {
+   "item": "warpbound:drill_head",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "minecraft:raw_gold",
+   "count": 32,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [
+  {
+   "fluid": "warpbound:promethium",
+   "mb": 4000
+  }
+ ],
+ "fluids_out": []
+}

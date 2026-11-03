@@ -1,0 +1,26 @@
+{
+ "machine": "warpbound:cracker",
+ "seconds": 8,
+ "items_in": [],
+ "items_out": [],
+ "fluids_in": [
+  {
+   "fluid": "warpbound:heavy_fraction",
+   "mb": 4000
+  },
+  {
+   "fluid": "warpbound:hydrogen",
+   "mb": 1000
+  }
+ ],
+ "fluids_out": [
+  {
+   "fluid": "warpbound:sour_promethium",
+   "mb": 2000
+  },
+  {
+   "fluid": "warpbound:bitumen",
+   "mb": 1000
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+# Трещина и лужа вблизи на траве: как они выглядят рядом с обычным грунтом
+cmd time set noon
+cmd weather clear
+cmd gamemode creative
+cmd tp @s 16000 205 0 0 40
+wait 60
+cmd fill 15985 199 -15 16015 199 15 minecraft:grass_block
+hud off
+wait 200
+cmd setblock 16000 199 0 warpbound:promethium_fissure
+cmd setblock 16001 199 1 warpbound:promethium_fissure
+cmd setblock 16001 199 2 warpbound:promethium_fissure
+cmd setblock 16002 199 3 warpbound:promethium_fissure
+cmd setblock 16002 199 4 warpbound:promethium_fissure
+cmd setblock 16000 199 1 warpbound:bitumen_shale
+cmd setblock 16000 200 1 warpbound:promethium_seep
+cmd setblock 16002 199 2 warpbound:bitumen_shale
+cmd setblock 16002 200 2 warpbound:promethium_seep
+cmd tp @s 15996.5 201.2 -3.5 -45 32
+wait 40
+clearchat
+shot close
+wait 30
+shot close_b
+quit

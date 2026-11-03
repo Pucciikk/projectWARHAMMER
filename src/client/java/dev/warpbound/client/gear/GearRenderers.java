@@ -24,8 +24,16 @@ public final class GearRenderers {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static void register() {
         GeoGear.RENDER = (item, consumer) -> {
-            if (item == WarpboundItems.LASGUN || item == WarpboundItems.CHAINSWORD) {
-                String name = item == WarpboundItems.LASGUN ? "lasgun_3d" : "chainsword_3d";
+            if (item instanceof dev.warpbound.gun.GunItem) {
+                String name = item == WarpboundItems.LASGUN ? "lasgun_3d" : "bolter_3d";
+                consumer.accept(new GeoRenderProvider() {
+                    @Override
+                    public BlockEntityWithoutLevelRenderer getGeoItemRenderer() {
+                        return dev.warpbound.client.gun.GunRenderer.of(name);
+                    }
+                });
+            } else if (item == WarpboundItems.CHAINSWORD) {
+                String name = "chainsword_3d";
                 consumer.accept(new GeoRenderProvider() {
                     private GeoItemRenderer renderer;
 

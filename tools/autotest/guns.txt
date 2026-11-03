@@ -1,0 +1,147 @@
+# Оружие. Площадка своя, мишени — стойки для брони
+cmd time set noon
+cmd weather clear
+cmd gamerule doDaylightCycle false
+cmd gamemode creative
+cmd tp @s 20000 215 0 0 30
+wait 60
+cmd fill 19970 199 -10 20030 199 60 minecraft:polished_deepslate
+cmd fill 19970 200 -10 20030 215 60 minecraft:air
+cmd fill 19992 200 40 20008 210 41 minecraft:stone_bricks
+cmd summon minecraft:zombie 19998 200 18 {NoAI:1b,Health:200f,Attributes:[{id:"max_health",base:200}]}
+cmd summon minecraft:zombie 20003 200 22 {NoAI:1b,Health:200f,Attributes:[{id:"max_health",base:200}]}
+wait 200
+cmd tp @s 20000 200 0 0 0
+cmd clear @s
+cmd item replace entity @s weapon.mainhand with warpbound:lasgun[warpbound:gun_ammo=30]
+wait 30
+clearchat
+shot las_hip
+gun flash on
+gun fire 1
+wait 2
+shot las_fire0
+gun flash off
+wait 2
+shot las_fire1
+wait 18
+gun aim on
+wait 18
+shot las_aim
+gun flash on
+gun fire 1
+wait 2
+shot las_aimfire
+gun flash off
+wait 12
+gun aim off
+wait 14
+shot las_hud
+gun fire 8
+wait 6
+shot las_burst0
+wait 8
+shot las_burst1
+wait 40
+gun reload
+wait 5
+shot las_r0
+wait 5
+shot las_r1
+wait 4
+shot las_r2
+wait 5
+shot las_r3
+wait 5
+shot las_r4
+wait 6
+shot las_r5
+wait 5
+shot las_r6
+wait 5
+shot las_r7
+wait 5
+shot las_r8
+wait 3
+shot las_r9
+wait 30
+camera back
+cmd tp @s 20000 200 0 0 0
+wait 14
+shot las_third
+gun fire 2
+wait 3
+shot las_third_fire
+wait 10
+camera first
+wait 6
+cmd item replace entity @s weapon.mainhand with warpbound:bolter_guard[warpbound:gun_ammo=30]
+wait 30
+clearchat
+shot bolt_hip
+gun flash on
+gun fire 1
+wait 2
+shot bolt_fire0
+gun flash off
+wait 2
+shot bolt_fire1
+wait 18
+gun aim on
+wait 18
+shot bolt_aim
+gun flash on
+gun fire 1
+wait 2
+shot bolt_aimfire
+gun flash off
+wait 12
+gun aim off
+wait 14
+shot bolt_hud
+gun fire 8
+wait 6
+shot bolt_burst0
+wait 8
+shot bolt_burst1
+wait 40
+gun reload
+wait 6
+shot bolt_r0
+wait 6
+shot bolt_r1
+wait 4
+shot bolt_r2
+wait 6
+shot bolt_r3
+wait 6
+shot bolt_r4
+wait 6
+shot bolt_r5
+wait 6
+shot bolt_r6
+wait 5
+shot bolt_r7
+wait 6
+shot bolt_r8
+wait 4
+shot bolt_r9
+wait 30
+camera back
+cmd tp @s 20000 200 0 0 0
+wait 14
+shot bolt_third
+gun fire 2
+wait 3
+shot bolt_third_fire
+wait 10
+camera first
+wait 6
+cmd item replace entity @s weapon.mainhand with warpbound:lasgun[warpbound:gun_ammo=12]
+wait 4
+press inventory
+wait 10
+shot inventory
+close
+wait 4
+quit

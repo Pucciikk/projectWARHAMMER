@@ -33,6 +33,7 @@ s = f"""# Прометий и конвейер: проверка в игре
 cmd time set noon
 cmd weather clear
 cmd gamemode creative
+cmd wb deposit everywhere
 cmd tp @s {OX + 12} {Y + 10} {Z + 8} 0 40
 wait 100
 cmd fill {OX - 8} {Y - 1} {Z - 3} {OX + 36} {Y - 1} {Z + 40} minecraft:polished_deepslate

@@ -1,0 +1,32 @@
+{
+ "machine": "warpbound:cement_mill",
+ "seconds": 8,
+ "items_in": [
+  {
+   "item": "warpbound:slag",
+   "count": 2
+  },
+  {
+   "item": "minecraft:stone",
+   "count": 2
+  },
+  {
+   "item": "warpbound:gypsum",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:rockrete",
+   "count": 6,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [
+  {
+   "fluid": "minecraft:water",
+   "mb": 1000
+  }
+ ],
+ "fluids_out": []
+}

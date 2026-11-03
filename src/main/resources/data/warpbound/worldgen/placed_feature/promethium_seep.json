@@ -1,0 +1,12 @@
+{
+ "feature": "warpbound:promethium_seep",
+ "placement": [
+  {
+   "type": "minecraft:in_square"
+  },
+  {
+   "type": "minecraft:heightmap",
+   "heightmap": "OCEAN_FLOOR_WG"
+  }
+ ]
+}

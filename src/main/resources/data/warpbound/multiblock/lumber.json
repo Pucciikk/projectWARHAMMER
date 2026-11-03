@@ -1,0 +1,40 @@
+{
+ "name": "block.warpbound.lumber",
+ "layers": [
+  [
+   "HHCHH",
+   "HHHHH",
+   "HHHHH",
+   "HHHHH",
+   "HHHHH"
+  ],
+  [
+   "TFFFT",
+   "TFFFT",
+   "TFEFT",
+   "TF FT",
+   "T   T"
+  ],
+  [
+   "F F F",
+   "F F F",
+   "F E F",
+   "F   F",
+   "F   F"
+  ],
+  [
+   "FFFFF",
+   "F   F",
+   "F   F",
+   "F   F",
+   "FFFFF"
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

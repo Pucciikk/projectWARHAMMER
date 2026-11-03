@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "warpbound:block/saltpeter_ore"
+    }
+  }
+}

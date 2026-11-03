@@ -14,3 +14,7 @@ __pycache__/
 
 # Скриншоты для автора (не в git)
 previews/
+
+# Исходные 3D-модели автора (большие, не в git)
+references/
+tools/sounds/wav/

@@ -41,5 +41,6 @@
  ],
  "energy_output": 0,
  "source_fluid": "",
- "source_rate_mb": 0
+ "source_rate_mb": 0,
+ "fuel_fluids": {}
 }

@@ -20,7 +20,7 @@ BAKE_SIZE = [1024]    # размер атласа: у исполинских м�
 EXPOSURE = 1.5        # игра темнее рендера: нет бликов и света со всех сторон
 
 
-def _gather(scene, skip=("WB_Key", "WB_Fill")):
+def _gather(scene, skip=("WB_Key", "WB_Fill"), locators=()):
     """Все кости в одном меше в позе покоя; в слое граней — номер кости."""
     bones = [o for o in scene.objects if o.type == "MESH" and o.name not in skip]
     bm = bmesh.new()
@@ -28,7 +28,8 @@ def _gather(scene, skip=("WB_Key", "WB_Fill")):
     for i, ob in enumerate(bones):
         pivot = ob["pivot"]
         tmp = bmesh.new()
-        tmp.from_mesh(ob.data)
+        if ob.get("bone") not in locators:     # руки и точки: заглушка только для просмотра, в игру не идёт
+            tmp.from_mesh(ob.data)
         vmap = {v: bm.verts.new((v.co.x + pivot[0], v.co.y + pivot[1], v.co.z + pivot[2])) for v in tmp.verts}
         for f in tmp.faces:
             nf = bm.faces.new([vmap[v] for v in f.verts])
@@ -136,10 +137,11 @@ def _save(rgba, path):
     bpy.data.images.remove(img)
 
 
-def machine_export(name, tracks, length, core_offset_y=1.0, idle=None, size=1024):
+def machine_export(name, tracks, length, core_offset_y=1.0, idle=None, size=1024, work_name="work.active", work_loop=True, folder="block", locators=()):
+    """work_name и work_loop: ручной пресс бьёт одним ударом по триггеру (work.strike), а не крутит цикл."""
     BAKE_SIZE[0] = size
     scene = bpy.context.scene
-    bones, bm = _gather(scene)
+    bones, bm = _gather(scene, locators=locators)
     work = bpy.data.scenes.get("WB_Bake") or bpy.data.scenes.new("WB_Bake")
     for o in list(work.collection.objects):
         bpy.data.objects.remove(o, do_unlink=True)
@@ -174,7 +176,7 @@ def machine_export(name, tracks, length, core_offset_y=1.0, idle=None, size=1024
     peak = np.maximum(emit[..., :3].max(axis=2, keepdims=True), 1.0)
     glow_rgb = _to_srgb(emit[..., :3] / peak)
     glow = np.dstack((glow_rgb * mask[..., None], mask))
-    tex = os.path.join(ASSETS, "textures/block")
+    tex = os.path.join(ASSETS, "textures", folder)
     _save(base, os.path.join(tex, name + ".png"))
     _save(glow, os.path.join(tex, name + "_glow.png"))
 
@@ -213,11 +215,10 @@ def machine_export(name, tracks, length, core_offset_y=1.0, idle=None, size=1024
                 poly.append(poly[-1])
             polys.append(poly)
         faces_total += len(polys)
-        out.append({
-            "name": ob["bone"],
-            "pivot": [round(pivot[0] * 16, 3), round(pivot[2] * 16, 3), round((pivot[1] + core_offset_y) * 16, 3)],
-            "poly_mesh": {"normalized_uvs": True, "positions": positions, "normals": [0, 1, 0], "uvs": uvs, "polys": polys},
-        })
+        entry = {"name": ob["bone"], "pivot": [round(pivot[0] * 16, 3), round(pivot[2] * 16, 3), round((pivot[1] + core_offset_y) * 16, 3)]}
+        if polys:
+            entry["poly_mesh"] = {"normalized_uvs": True, "positions": positions, "normals": [0, 1, 0], "uvs": uvs, "polys": polys}
+        out.append(entry)
     bm.free()
     names = {b["name"] for b in out}
     for anim in [tracks, (idle or {}).get("bones", {})]:
@@ -227,12 +228,14 @@ def machine_export(name, tracks, length, core_offset_y=1.0, idle=None, size=1024
     geo = {"format_version": "1.12.0", "minecraft:geometry": [{
         "description": {"identifier": f"geometry.warpbound.{name}", "texture_width": size, "texture_height": size},
         "bones": out}]}
-    with open(os.path.join(ASSETS, "geo/block", name + ".geo.json"), "w", encoding="utf-8") as f:
+    os.makedirs(os.path.join(ASSETS, "geo", folder), exist_ok=True)
+    os.makedirs(os.path.join(ASSETS, "animations", folder), exist_ok=True)
+    with open(os.path.join(ASSETS, "geo", folder, name + ".geo.json"), "w", encoding="utf-8") as f:
         json.dump(geo, f, separators=(",", ":"))
 
     anims = {"misc.idle": idle or {"loop": True, "animation_length": 2.0, "bones": {}},
-             "work.active": {"loop": True, "animation_length": length, "bones": tracks}}
-    with open(os.path.join(ASSETS, "animations/block", name + ".animation.json"), "w", encoding="utf-8") as f:
+             work_name: {"loop": work_loop, "animation_length": length, "bones": tracks}}
+    with open(os.path.join(ASSETS, "animations", folder, name + ".animation.json"), "w", encoding="utf-8") as f:
         json.dump({"format_version": "1.8.0", "animations": anims}, f, indent=1)
     window.scene = keep
     print(f"{name}: граней {faces_total}, костей {len(out)}")

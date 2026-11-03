@@ -20,6 +20,9 @@ public final class ChainMachineRenderer implements BlockEntityRenderer<ChainMach
     @Override
     public void render(ChainMachineBlockEntity machine, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         renderer(machine).render(machine, partialTick, poseStack, bufferSource, packedLight, packedOverlay);
+        if (machine.isFormed() && machine.getBlockState().is(dev.warpbound.core.WarpboundBlocks.LUMBER)) {
+            LumberTrees.render(machine, poseStack, bufferSource, packedLight, packedOverlay);
+        }
     }
 
     @Override

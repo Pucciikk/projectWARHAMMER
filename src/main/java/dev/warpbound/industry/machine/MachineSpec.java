@@ -9,10 +9,11 @@ import java.util.List;
 
 /**
  * Описание машины цепочки из data/warpbound/machine_spec: сколько слотов и баков, энергия, порты.
- * kind: processor — рецепты; generator — жжёт топливо; source — сама даёт жидкость; custom — логика в своём классе.
+ * kind: processor — рецепты; generator — жжёт топливо; fluid_generator — жжёт жидкость из fuel_fluids (мБ/с);
+ * source — сама даёт жидкость; custom — логика в своём классе.
  */
 public record MachineSpec(String kind, int energyUse, int energyOutput, int slotsIn, int slotsOut, int tanksIn, int tanksOut,
-                          String sourceFluid, int sourceRateMb, List<Port> ports) {
+                          String sourceFluid, int sourceRateMb, java.util.Map<String, Integer> fuelFluids, List<Port> ports) {
     public static final Codec<MachineSpec> CODEC = RecordCodecBuilder.create(i -> i.group(
             Codec.STRING.fieldOf("kind").forGetter(MachineSpec::kind),
             Codec.INT.optionalFieldOf("energy_use", 0).forGetter(MachineSpec::energyUse),
@@ -23,6 +24,7 @@ public record MachineSpec(String kind, int energyUse, int energyOutput, int slot
             Codec.INT.optionalFieldOf("tanks_out", 0).forGetter(MachineSpec::tanksOut),
             Codec.STRING.optionalFieldOf("source_fluid", "").forGetter(MachineSpec::sourceFluid),
             Codec.INT.optionalFieldOf("source_rate_mb", 0).forGetter(MachineSpec::sourceRateMb),
+            Codec.unboundedMap(Codec.STRING, Codec.INT).optionalFieldOf("fuel_fluids", java.util.Map.of()).forGetter(MachineSpec::fuelFluids),
             Port.CODEC.listOf().optionalFieldOf("ports", List.of()).forGetter(MachineSpec::ports)
     ).apply(i, MachineSpec::new));
 

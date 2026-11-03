@@ -1,0 +1,32 @@
+{
+ "name": "block.warpbound.chem_reactor",
+ "layers": [
+  [
+   "HCH",
+   "HHH",
+   "HHH"
+  ],
+  [
+   "FTF",
+   "F F",
+   "TTT"
+  ],
+  [
+   "FTF",
+   "F F",
+   "TTT"
+  ],
+  [
+   "S S",
+   " S ",
+   "S S"
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

@@ -29,7 +29,7 @@ import java.util.List;
  * Нормаль грани считаем сами, поэтому грани плоские, как и задумано для техники.
  */
 public final class MeshModelFactory implements BakedModelFactory {
-    static final double MESH_PLAIN = -1, MESH_GLOW = -2;
+    public static final double MESH_PLAIN = -1, MESH_GLOW = -2;
 
     @Override
     public BakedGeoModel constructGeoModel(GeometryTree tree) {

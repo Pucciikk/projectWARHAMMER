@@ -11,6 +11,7 @@ s = f"""# Все машины цепочки: общий вид и FPS. Площ
 cmd time set noon
 cmd weather clear
 cmd gamemode creative
+cmd wb deposit everywhere
 cmd tp @s {OX} 215 -30 0 30
 wait 60
 cmd fill {OX - 50} 199 -40 {OX + 50} 199 45 minecraft:polished_deepslate

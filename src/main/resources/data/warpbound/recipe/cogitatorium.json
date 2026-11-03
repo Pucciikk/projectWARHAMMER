@@ -3,8 +3,8 @@
  "category": "building",
  "pattern": [
   "HGH",
-  "GDG",
-  "HGH"
+  "GXG",
+  "HDH"
  ],
  "key": {
   "H": {
@@ -15,6 +15,9 @@
   },
   "D": {
    "item": "warpbound:drive_block"
+  },
+  "X": {
+   "item": "warpbound:vox_module"
   }
  },
  "result": {

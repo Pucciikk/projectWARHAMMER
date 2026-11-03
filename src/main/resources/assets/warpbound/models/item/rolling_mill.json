@@ -1,3 +1,6 @@
 {
- "parent": "warpbound:block/rolling_mill"
+ "parent": "minecraft:item/generated",
+ "textures": {
+  "layer0": "warpbound:item/machine_rolling_mill"
+ }
 }

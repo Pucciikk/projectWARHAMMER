@@ -168,6 +168,7 @@ public final class Autotest {
                     case "front" -> net.minecraft.client.CameraType.THIRD_PERSON_FRONT;
                     default -> net.minecraft.client.CameraType.FIRST_PERSON;
                 });
+                case "gun" -> dev.warpbound.client.gun.GunClient.autotest(arg);
                 case "cmd" -> command(mc, arg.startsWith("/") ? arg.substring(1) : arg);
                 case "look" -> {
                     String[] angles = arg.split("\\s+");

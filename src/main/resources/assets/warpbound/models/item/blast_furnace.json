@@ -1,3 +1,6 @@
 {
- "parent": "warpbound:block/blast_furnace"
+ "parent": "minecraft:item/generated",
+ "textures": {
+  "layer0": "warpbound:item/machine_blast_furnace"
+ }
 }

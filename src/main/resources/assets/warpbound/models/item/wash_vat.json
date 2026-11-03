@@ -1,3 +1,6 @@
 {
- "parent": "warpbound:block/wash_vat"
+ "parent": "minecraft:item/generated",
+ "textures": {
+  "layer0": "warpbound:item/machine_wash_vat"
+ }
 }

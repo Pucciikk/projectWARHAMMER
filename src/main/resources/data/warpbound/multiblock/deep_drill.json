@@ -1,0 +1,96 @@
+{
+ "name": "block.warpbound.deep_drill",
+ "layers": [
+  [
+   "HHCHH",
+   "HHHHH",
+   "HHHHH",
+   "HHHHH",
+   "HHHHH"
+  ],
+  [
+   "TTFTT",
+   "FFFFF",
+   "FFEFF",
+   "FFFFF",
+   "TTFTT"
+  ],
+  [
+   "F   F",
+   "     ",
+   "  F  ",
+   "     ",
+   "F   F"
+  ],
+  [
+   "F   F",
+   "     ",
+   "  F  ",
+   "     ",
+   "F   F"
+  ],
+  [
+   "     ",
+   " F F ",
+   "  F  ",
+   " F F ",
+   "     "
+  ],
+  [
+   "     ",
+   " F F ",
+   "  F  ",
+   " F F ",
+   "     "
+  ],
+  [
+   "     ",
+   " F F ",
+   "  F  ",
+   " F F ",
+   "     "
+  ],
+  [
+   "     ",
+   " F F ",
+   "  F  ",
+   " F F ",
+   "     "
+  ],
+  [
+   "     ",
+   "     ",
+   "  F  ",
+   "     ",
+   "     "
+  ],
+  [
+   "     ",
+   "     ",
+   "  F  ",
+   "     ",
+   "     "
+  ],
+  [
+   "     ",
+   "     ",
+   "  F  ",
+   "     ",
+   "     "
+  ],
+  [
+   "     ",
+   "     ",
+   "  F  ",
+   "     ",
+   "     "
+  ]
+ ],
+ "key": {
+  "H": "warpbound:heavy_casing",
+  "F": "warpbound:support_frame",
+  "E": "warpbound:drive_block",
+  "T": "warpbound:riveted_plasteel_panel",
+  "S": "warpbound:plasteel_vent"
+ }
+}

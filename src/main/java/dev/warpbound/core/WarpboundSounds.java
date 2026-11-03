@@ -10,6 +10,10 @@ import net.minecraft.sounds.SoundEvent;
  * свой .ogg подменяет запись без правок кода.
  */
 public final class WarpboundSounds {
+    public static final SoundEvent GUN_LAS_FIRE = register("gun.las_fire");
+    public static final SoundEvent GUN_BOLTER_FIRE = register("gun.bolter_fire");
+    public static final SoundEvent GUN_LAS_HIT = register("gun.las_hit");
+    public static final SoundEvent GUN_BOLT_EXPLODE = register("gun.bolt_explode");
     public static final SoundEvent SHUTTLE_ENGINE = register("shuttle.engine");
     public static final SoundEvent SHUTTLE_ROAR = register("shuttle.roar");
     public static final SoundEvent SHUTTLE_TOUCHDOWN = register("shuttle.touchdown");

@@ -1,0 +1,11 @@
+{
+ "damage": 9.0,
+ "blast_damage": 5.0,
+ "blast_radius": 2.0,
+ "speed": 5.5,
+ "life_ticks": 40,
+ "spread_hip": 2.4,
+ "spread_aim": 0.5,
+ "head": 1.5,
+ "knockback": 0.35
+}

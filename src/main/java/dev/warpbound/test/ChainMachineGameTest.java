@@ -83,11 +83,18 @@ public class ChainMachineGameTest implements FabricGameTest {
             }
             runs.add(new Run(machine(level, core, block), ChainMachines.recipes(id)));
         }
+        helper.assertTrue(runs.size() >= 25, "мало машин с рецептами: " + runs.size() + "; рецепты не загрузились?");
+        int total = runs.stream().mapToInt(r -> r.recipes.size()).sum();
+        helper.assertTrue(total >= 90, "мало рецептов: " + total);
         helper.succeedWhen(() -> {
             List<String> left = new ArrayList<>();
             for (Run r : runs) {
                 r.step();
                 if (!r.done()) left.add(r.status());
+            }
+            if (left.isEmpty()) {
+                int cycles = runs.stream().mapToInt(r -> r.m.cycles()).sum();
+                org.slf4j.LoggerFactory.getLogger("warpbound-test").info("everyRecipeRuns: машин {}, рецептов {}, циклов {}, тиков теста {}", runs.size(), total, cycles, helper.getTick());
             }
             helper.assertTrue(left.isEmpty(), "не прошли: " + left + "; сбои: " + FAILS);
             helper.assertTrue(FAILS.isEmpty(), "сбои: " + FAILS);
@@ -155,6 +162,43 @@ public class ChainMachineGameTest implements FabricGameTest {
                 start();
             }
         }
+    }
+
+    /** Прометиевый генераториум: жжёт прометий из бака и копит энергию, а вода в бак не заходит. */
+    @GameTest(template = EMPTY_STRUCTURE, timeoutTicks = 200, batch = "chain_fuel")
+    public void promethiumGeneratorBurnsFuel(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var gen = machine(level, helper.absolutePos(new BlockPos(4, 1, 2)), WarpboundBlocks.PROMETHIUM_GEN);
+        var prom = net.minecraft.core.registries.BuiltInRegistries.FLUID.get(dev.warpbound.Warpbound.id("promethium"));
+        gen.tanks().fillIn(prom, 1000);
+        helper.succeedWhen(() -> {
+            helper.assertTrue(gen.energyStorage().getAmount() > 2000, "энергии мало: " + gen.energyStorage().getAmount());
+            helper.assertTrue(gen.tanks().dataAt(0) < 1000, "топливо не тратится: " + gen.tanks().dataAt(0));
+        });
+    }
+
+    /** Залежи: в каждом квадрате есть поле, центр поля — внутри поля, богатство в границах, вне поля пусто. */
+    @GameTest(template = EMPTY_STRUCTURE, batch = "chain_fuel")
+    public void depositsAreConsistent(GameTestHelper helper) {
+        long seed = 8675309L;
+        int inside = 0, total = 0;
+        for (int x = -64; x < 64; x++) {
+            for (int z = -64; z < 64; z++) {
+                total++;
+                int rich = dev.warpbound.industry.PromethiumDeposits.richness(seed, x, z);
+                if (dev.warpbound.industry.PromethiumDeposits.isDeposit(seed, x, z)) {
+                    inside++;
+                    helper.assertTrue(rich >= 30 && rich <= 100, "богатство вне границ: " + rich);
+                } else {
+                    helper.assertTrue(rich == 0, "вне поля богатство " + rich);
+                }
+            }
+        }
+        // 9 чанков поля на 64 чанка квадрата
+        helper.assertTrue(inside * 64 == total * 9, "полей не столько: " + inside + " из " + total);
+        var c = dev.warpbound.industry.PromethiumDeposits.nearestField(seed, 3, -5);
+        helper.assertTrue(dev.warpbound.industry.PromethiumDeposits.isFieldCenter(seed, c.x, c.z), "ближайшее поле не центр");
+        helper.succeed();
     }
 
     @GameTest(template = EMPTY_STRUCTURE, timeoutTicks = 400, batch = "chain_water")

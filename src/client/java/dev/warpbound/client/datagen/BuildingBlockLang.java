@@ -35,6 +35,10 @@ final class BuildingBlockLang {
         builder.add("block.warpbound.boarding_hatch", "Внешний люк");
         builder.add("block.warpbound.lead_ore", "Свинцовая руда");
         builder.add("block.warpbound.deepslate_lead_ore", "Глубинная свинцовая руда");
+        builder.add("block.warpbound.sulfur_ore", "Серная руда");
+        builder.add("block.warpbound.deepslate_sulfur_ore", "Глубинная серная руда");
+        builder.add("block.warpbound.saltpeter_ore", "Селитряный нарост");
+        builder.add("block.warpbound.bitumen_shale", "Битумный сланец");
         builder.add("block.warpbound.lead_block", "Свинцовый блок");
         builder.add("block.warpbound.radium_ore", "Радиевая руда");
         builder.add("block.warpbound.adamantium_ore", "Адамантиевый сырец");
@@ -88,6 +92,10 @@ final class BuildingBlockLang {
         builder.add("block.warpbound.boarding_hatch", "Boarding Hatch");
         builder.add("block.warpbound.lead_ore", "Lead Ore");
         builder.add("block.warpbound.deepslate_lead_ore", "Deepslate Lead Ore");
+        builder.add("block.warpbound.sulfur_ore", "Sulfur Ore");
+        builder.add("block.warpbound.deepslate_sulfur_ore", "Deepslate Sulfur Ore");
+        builder.add("block.warpbound.saltpeter_ore", "Saltpeter Deposit");
+        builder.add("block.warpbound.bitumen_shale", "Bitumen Shale");
         builder.add("block.warpbound.lead_block", "Block of Lead");
         builder.add("block.warpbound.radium_ore", "Radium Ore");
         builder.add("block.warpbound.adamantium_ore", "Adamantium Ore");

@@ -1,0 +1,30 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "building",
+ "pattern": [
+  "BFB",
+  "RSR",
+  "III"
+ ],
+ "key": {
+  "B": {
+   "item": "warpbound:brass_ingot"
+  },
+  "F": {
+   "item": "minecraft:furnace"
+  },
+  "R": {
+   "item": "minecraft:redstone"
+  },
+  "S": {
+   "item": "warpbound:forge_schematic"
+  },
+  "I": {
+   "item": "minecraft:iron_ingot"
+  }
+ },
+ "result": {
+  "id": "warpbound:mechanicus_forge",
+  "count": 1
+ }
+}

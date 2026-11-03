@@ -1,0 +1,22 @@
+{
+ "variants": {
+  "": [
+   {
+    "model": "warpbound:block/promethium_fissure",
+    "y": 0
+   },
+   {
+    "model": "warpbound:block/promethium_fissure",
+    "y": 90
+   },
+   {
+    "model": "warpbound:block/promethium_fissure",
+    "y": 180
+   },
+   {
+    "model": "warpbound:block/promethium_fissure",
+    "y": 270
+   }
+  ]
+ }
+}

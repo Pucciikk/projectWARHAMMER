@@ -2,6 +2,7 @@
 cmd time set noon
 cmd weather clear
 cmd gamemode creative
+cmd wb deposit everywhere
 cmd tp @s 7000 215 -30 0 30
 wait 60
 cmd fill 6950 199 -40 7050 199 45 minecraft:polished_deepslate

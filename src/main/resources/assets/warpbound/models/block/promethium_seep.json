@@ -1,0 +1,82 @@
+{
+ "ambientocclusion": false,
+ "textures": {
+  "particle": "warpbound:block/promethium_seep",
+  "tar": "warpbound:block/promethium_seep"
+ },
+ "elements": [
+  {
+   "from": [
+    0,
+    0,
+    0
+   ],
+   "to": [
+    16,
+    1,
+    16
+   ],
+   "faces": {
+    "up": {
+     "texture": "#tar",
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ]
+    },
+    "north": {
+     "texture": "#tar",
+     "uv": [
+      0,
+      15,
+      16,
+      16
+     ],
+     "cullface": "north"
+    },
+    "south": {
+     "texture": "#tar",
+     "uv": [
+      0,
+      15,
+      16,
+      16
+     ],
+     "cullface": "south"
+    },
+    "west": {
+     "texture": "#tar",
+     "uv": [
+      0,
+      15,
+      16,
+      16
+     ],
+     "cullface": "west"
+    },
+    "east": {
+     "texture": "#tar",
+     "uv": [
+      0,
+      15,
+      16,
+      16
+     ],
+     "cullface": "east"
+    },
+    "down": {
+     "texture": "#tar",
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "cullface": "down"
+    }
+   }
+  }
+ ]
+}

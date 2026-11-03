@@ -1,0 +1,29 @@
+{
+ "machine": "warpbound:chem_reactor",
+ "seconds": 8,
+ "items_in": [
+  {
+   "item": "warpbound:saltpeter",
+   "count": 2
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:gypsum",
+   "count": 1,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [
+  {
+   "fluid": "warpbound:sulfuric_acid",
+   "mb": 1000
+  }
+ ],
+ "fluids_out": [
+  {
+   "fluid": "warpbound:nitric_acid",
+   "mb": 2000
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+# Руды в свежих чанках: /fill replace пишет в чат, сколько блоков заменил, это и есть счётчик. Лимит fill 32768, поэтому кубы 32×32×32.
+cmd time set noon
+cmd gamemode spectator
+cmd tp @s 80000 100 80000
+wait 200
+clearchat
+cmd fill 79984 -60 79984 80015 -29 80015 minecraft:air replace warpbound:deepslate_sulfur_ore
+cmd fill 79984 -60 79984 80015 -29 80015 minecraft:air replace warpbound:deepslate_lead_ore
+cmd fill 79984 30 79984 80015 61 80015 minecraft:air replace warpbound:saltpeter_ore
+cmd fill 79984 -8 79984 80015 23 80015 minecraft:air replace warpbound:saltpeter_ore
+cmd fill 79984 -8 79984 80015 23 80015 minecraft:air replace warpbound:deepslate_sulfur_ore
+wait 40
+quit

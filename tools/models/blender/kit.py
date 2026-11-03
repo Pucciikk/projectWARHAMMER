@@ -80,6 +80,14 @@ PALETTE = {
     "fire": dict(color=(1.0, 0.2, 0.015), rough=0.5, metal=0.0, wear=0.0, emit=2.6),
     "eye": dict(color=(1.0, 0.03, 0.015), rough=0.5, metal=0.0, wear=0.0, emit=5.0),
     "glass": dict(color=(0.65, 0.9, 0.55), rough=0.3, metal=0.0, wear=0.0, emit=1.3),
+    # новые цвета только в конец: номер материала хранится в уже собранных сценах
+    "acid": dict(color=(0.42, 0.78, 0.06), rough=0.25, metal=0.0, wear=0.2, emit=0.9),
+    "leaf": dict(color=(0.10, 0.34, 0.07), rough=0.8, metal=0.0, wear=0.35),
+    "soil": dict(color=(0.07, 0.045, 0.028), rough=0.95, metal=0.0, wear=0.4),
+    "wood": dict(color=(0.15, 0.08, 0.04), rough=0.85, metal=0.0, wear=0.45),
+    "concrete": dict(color=(0.40, 0.39, 0.36), rough=0.95, metal=0.0, wear=0.4),
+    "lumen": dict(color=(1.0, 0.72, 0.34), rough=0.4, metal=0.0, wear=0.0, emit=2.2),
+    "prometh": dict(color=(0.08, 0.36, 1.0), rough=0.4, metal=0.0, wear=0.0, emit=2.6),
 }
 NAMES = list(PALETTE)
 

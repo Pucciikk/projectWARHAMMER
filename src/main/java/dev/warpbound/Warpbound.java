@@ -67,6 +67,7 @@ public class Warpbound implements ModInitializer {
         WarpboundEntities.register();
         WarpboundItems.register();
         WarpboundNetwork.registerPayloads();
+        dev.warpbound.gun.GunServer.register();
         ChaosLogic.registerEvents();
         ShipTicker.register();
         ShipConsole.register();

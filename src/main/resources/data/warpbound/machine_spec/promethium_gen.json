@@ -1,0 +1,33 @@
+{
+ "energy_use": 0,
+ "slots_in": 0,
+ "slots_out": 0,
+ "tanks_in": 1,
+ "tanks_out": 0,
+ "kind": "fluid_generator",
+ "energy_output": 240,
+ "fuel_fluids": {
+  "warpbound:promethium": 50,
+  "warpbound:promethium_gas": 100
+ },
+ "ports": [
+  {
+   "kind": "energy",
+   "output": true,
+   "x": 0,
+   "y": 0,
+   "z": 2,
+   "face": "south"
+  },
+  {
+   "kind": "fluid",
+   "output": false,
+   "x": -2,
+   "y": 0,
+   "z": 2,
+   "face": "south"
+  }
+ ],
+ "source_fluid": "",
+ "source_rate_mb": 0
+}

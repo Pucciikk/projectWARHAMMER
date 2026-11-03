@@ -1,0 +1,9 @@
+{
+ "damage": 6.0,
+ "speed": 9.0,
+ "life_ticks": 24,
+ "spread_hip": 1.6,
+ "spread_aim": 0.25,
+ "head": 1.5,
+ "knockback": 0.05
+}

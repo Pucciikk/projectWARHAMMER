@@ -4,10 +4,10 @@
  "items_in": [
   {
    "item": "warpbound:steel_plate",
-   "count": 2
+   "count": 4
   },
   {
-   "item": "warpbound:adamantium_ingot",
+   "item": "warpbound:plasteel_plate",
    "count": 1
   }
  ],

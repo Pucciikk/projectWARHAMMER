@@ -1,0 +1,23 @@
+{
+ "machine": "warpbound:cement_mill",
+ "seconds": 8,
+ "items_in": [
+  {
+   "item": "warpbound:rockrete",
+   "count": 4
+  },
+  {
+   "item": "warpbound:steel_rod",
+   "count": 1
+  }
+ ],
+ "items_out": [
+  {
+   "item": "warpbound:ferrocrete",
+   "count": 4,
+   "chance": 1.0
+  }
+ ],
+ "fluids_in": [],
+ "fluids_out": []
+}

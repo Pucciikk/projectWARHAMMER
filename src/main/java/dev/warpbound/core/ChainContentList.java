@@ -6,7 +6,6 @@ import java.util.Map;
 /** Предметы и жидкости цепочки. СГЕНЕРИРОВАНО tools/recipes/gen_chain_content.py — руками не править. */
 public final class ChainContentList {
     public static final List<String> ITEMS = List.of(
-            "adamantium_ingot",
             "ammo_feed",
             "armaplas",
             "auto_senses",
@@ -15,10 +14,9 @@ public final class ChainContentList {
             "bolt_pistol",
             "bolt_propellant",
             "bolt_round",
-            "bolter_astartes",
-            "bolter_guard",
             "bolter_receiver",
             "carapace_armour",
+            "cellulose",
             "ceramite_plate",
             "chain_teeth",
             "cogitator_board",
@@ -30,10 +28,12 @@ public final class ChainContentList {
             "crushed_lead",
             "drill_head",
             "fabric",
+            "ferrocrete",
             "fibre_bundle",
             "field_generator",
             "flamer",
             "fyceline",
+            "gypsum",
             "heavy_barrel",
             "heavy_bolt_belt",
             "herbs",
@@ -42,6 +42,7 @@ public final class ChainContentList {
             "motive_coil",
             "mr_fuse",
             "neural_interface",
+            "nitrocellulose",
             "parchment",
             "pig_iron",
             "plasma_gun",
@@ -50,7 +51,10 @@ public final class ChainContentList {
             "power_pack",
             "promethium_canister",
             "radium_cell",
+            "raw_sulfur",
             "rifled_barrel",
+            "rockrete",
+            "saltpeter",
             "sawdust",
             "servo_2",
             "slag",
@@ -61,7 +65,6 @@ public final class ChainContentList {
             "steel_wire",
             "storm_bolter",
             "sulfur",
-            "sulfur_ore",
             "suspensor",
             "synthetic_crystal",
             "washed_copper",
@@ -78,13 +81,15 @@ public final class ChainContentList {
             Map.entry("heavy_water", 0x5a7fb0),
             Map.entry("holy_water", 0x9ad8ff),
             Map.entry("hydrogen", 0xf0f0ff),
+            Map.entry("nitric_acid", 0xe8a23c),
             Map.entry("oxygen", 0xcfe8ff),
             Map.entry("promethium", 0x46a6ff),
             Map.entry("promethium_gas", 0x8fc8ff),
             Map.entry("sacred_oil", 0xd4b04a),
             Map.entry("sludge", 0x4a4032),
             Map.entry("sour_promethium", 0x2c8c8c),
-            Map.entry("sulfuric_acid", 0x808080));
+            Map.entry("spent_acid", 0x7c6a3a),
+            Map.entry("sulfuric_acid", 0xc8d24a));
 
     private ChainContentList() {
     }

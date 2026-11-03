@@ -4,86 +4,69 @@
   "thirdperson_righthand": {
    "rotation": [
     0,
-    180,
+    0,
     0
    ],
    "translation": [
-    0,
-    3,
-    1
+    -0.5,
+    3.5,
+    -4.5
    ],
    "scale": [
-    0.45,
-    0.45,
-    0.45
+    0.72,
+    0.72,
+    0.72
    ]
   },
   "thirdperson_lefthand": {
    "rotation": [
     0,
-    180,
+    0,
     0
    ],
    "translation": [
-    0,
-    3,
-    1
+    0.5,
+    3.5,
+    -4.5
    ],
    "scale": [
-    0.45,
-    0.45,
-    0.45
+    0.72,
+    0.72,
+    0.72
    ]
   },
   "firstperson_righthand": {
    "rotation": [
     0,
-    177,
+    0,
     0
    ],
    "translation": [
-    -2,
-    1,
-    1
+    0,
+    0,
+    0
    ],
    "scale": [
-    0.35,
-    0.35,
-    0.35
+    0.5,
+    0.5,
+    0.5
    ]
   },
   "firstperson_lefthand": {
    "rotation": [
     0,
-    183,
+    0,
     0
    ],
    "translation": [
-    -2,
-    1,
-    1
-   ],
-   "scale": [
-    0.35,
-    0.35,
-    0.35
-   ]
-  },
-  "gui": {
-   "rotation": [
-    20,
-    115,
-    0
-   ],
-   "translation": [
-    1.5,
-    -1,
+    0,
+    0,
     0
    ],
    "scale": [
-    0.42,
-    0.42,
-    0.42
+    0.5,
+    0.5,
+    0.5
    ]
   },
   "ground": {
@@ -98,9 +81,26 @@
     0
    ],
    "scale": [
-    0.35,
-    0.35,
-    0.35
+    0.5,
+    0.5,
+    0.5
+   ]
+  },
+  "gui": {
+   "rotation": [
+    20,
+    112,
+    0
+   ],
+   "translation": [
+    0.8,
+    0.6,
+    0
+   ],
+   "scale": [
+    0.62,
+    0.62,
+    0.62
    ]
   },
   "fixed": {
@@ -115,30 +115,27 @@
     0
    ],
    "scale": [
-    0.5,
-    0.5,
-    0.5
+    0.8,
+    0.8,
+    0.8
    ]
   },
   "head": {
    "rotation": [
     0,
-    180,
+    0,
     0
    ],
    "translation": [
     0,
-    6,
+    10,
     0
    ],
    "scale": [
-    0.6,
-    0.6,
-    0.6
+    0.8,
+    0.8,
+    0.8
    ]
   }
- },
- "textures": {
-  "particle": "warpbound:item/lasgun"
  }
 }

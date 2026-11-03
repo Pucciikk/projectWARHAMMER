@@ -4,7 +4,7 @@ import dev.warpbound.Warpbound;
 import dev.warpbound.entity.WarpboundEntities;
 import dev.warpbound.gear.ChainswordItem;
 import dev.warpbound.gear.GeoArmorItem;
-import dev.warpbound.gear.LasgunItem;
+import dev.warpbound.gun.GunItem;
 import dev.warpbound.gear.WarpboundArmor;
 import dev.warpbound.multiblock.OmnissianKeyItem;
 import dev.warpbound.ship.TeleportHomerItem;
@@ -60,7 +60,10 @@ public final class WarpboundItems {
     /** Фильтр респиратора. */
     public static final Item RESPIRATOR_FILTER = register("respirator_filter", new Item(new Item.Properties()));
     // ---- Сезон 1: оружие и броня
-    public static final Item LASGUN = register("lasgun", new LasgunItem(new Item.Properties().stacksTo(1).durability(31)));
+    // перезарядка равна длине клипа в tools/models/blender/guns: менять вместе
+    public static final Item LASGUN = register("lasgun", new GunItem(new Item.Properties(), new GunItem.Mechanics(GunItem.Kind.LAS, 30, 4, 48, Warpbound.id("las_battery"), true)));
+    public static final Item BOLTER_GUARD = register("bolter_guard", new GunItem(new Item.Properties(), new GunItem.Mechanics(GunItem.Kind.BOLT, 20, 5, 56, Warpbound.id("bolt_magazine"), true)));
+    public static final Item BOLTER_ASTARTES = register("bolter_astartes", new GunItem(new Item.Properties(), new GunItem.Mechanics(GunItem.Kind.BOLT, 30, 4, 56, Warpbound.id("bolt_magazine"), true)));
     public static final Item CHAINSWORD = register("chainsword", new ChainswordItem(new Item.Properties()));
     public static final Item FLAK_HELMET = register("flak_helmet", armor(WarpboundArmor.FLAK, ArmorItem.Type.HELMET, 18));
     public static final Item FLAK_CHESTPLATE = register("flak_chestplate", armor(WarpboundArmor.FLAK, ArmorItem.Type.CHESTPLATE, 18));
@@ -101,7 +104,7 @@ public final class WarpboundItems {
                         out.accept(WarpboundBlocks.WARP_SAMPLER);
                         out.accept(SAMPLE_VIAL);
                         for (Item i : new Item[]{FOCUSING_LENS, CAPACITOR, LAS_BATTERY, LAS_BATTERY_DEPLETED, SERVO_MOTOR, CHAIN_BLADE,
-                                FLAK_PLATE, RESPIRATOR_FILTER, LASGUN, CHAINSWORD, FLAK_HELMET, FLAK_CHESTPLATE, FLAK_LEGGINGS,
+                                FLAK_PLATE, RESPIRATOR_FILTER, LASGUN, BOLTER_GUARD, BOLTER_ASTARTES, CHAINSWORD, FLAK_HELMET, FLAK_CHESTPLATE, FLAK_LEGGINGS,
                                 FLAK_BOOTS, RESPIRATOR}) {
                             out.accept(i);
                         }
@@ -113,6 +116,8 @@ public final class WarpboundItems {
                         out.accept(WarpboundBlocks.MANUAL_PRESS);
                         out.accept(WarpboundBlocks.MECHANICUS_FORGE);
                         out.accept(WarpboundBlocks.PROMETHIUM_EXTRACTOR);
+                        out.accept(WarpboundBlocks.PROMETHIUM_SEEP);
+                        out.accept(WarpboundBlocks.PROMETHIUM_FISSURE);
                         WarpboundBlocks.CHAIN_MACHINES.forEach(out::accept);
                         out.accept(WarpboundBlocks.FLUID_PIPE);
                         out.accept(WarpboundBlocks.ENERGY_CABLE);

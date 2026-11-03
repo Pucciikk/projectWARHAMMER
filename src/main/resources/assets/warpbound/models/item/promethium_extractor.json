@@ -1,3 +1,6 @@
 {
- "parent": "warpbound:block/promethium_extractor"
+ "parent": "minecraft:item/generated",
+ "textures": {
+  "layer0": "warpbound:item/machine_promethium_extractor"
+ }
 }

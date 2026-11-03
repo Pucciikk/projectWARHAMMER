@@ -1,0 +1,115 @@
+# Новые машины. Площадка новая: после заливки ждём пересчёт света
+cmd time set noon
+cmd weather clear
+cmd gamerule doDaylightCycle false
+cmd gamemode creative
+cmd tp @s 12000 215 -30 0 30
+wait 60
+cmd fill 11950 199 -30 12030 199 40 minecraft:polished_deepslate
+hud off
+wait 300
+cmd setblock 11960 200 -10 warpbound:chem_reactor[facing=north]
+cmd tp @s 11960 200 -12 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 11972 200 -10 warpbound:powder_works[facing=north]
+cmd tp @s 11972 200 -12 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 11984 200 -10 warpbound:cement_mill[facing=north]
+cmd tp @s 11984 200 -12 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 11996 200 -10 warpbound:cracker[facing=north]
+cmd tp @s 11996 200 -12 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 12010 200 -10 warpbound:promethium_gen[facing=north]
+cmd tp @s 12010 200 -12 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 11960 200 12 warpbound:hydroponics[facing=north]
+cmd tp @s 11960 200 10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 11974 200 12 warpbound:lumber[facing=north]
+cmd tp @s 11974 200 10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 11990 200 12 warpbound:deep_drill[facing=north]
+cmd tp @s 11990 200 10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 12018 200 12 warpbound:salvage_forge[facing=north]
+cmd tp @s 12018 200 10 0 0
+wait 8
+cmd wb machine build
+wait 8
+cmd setblock 12026 200 12 warpbound:manual_press[facing=north]
+cmd tp @s 12026 200 10 0 0
+wait 8
+cmd wb machine build
+wait 8
+clearchat
+cmd kill @e[type=item]
+cmd tp @s 11963.52 202.31 -14.00 28.8 17.0
+wait 25
+shot chem_reactor
+cmd tp @s 11976.08 202.66 -15.00 28.8 17.0
+wait 25
+shot powder_works
+wait 16
+shot powder_works_b
+cmd tp @s 11987.52 202.31 -14.00 28.8 17.0
+wait 25
+shot cement_mill
+wait 16
+shot cement_mill_b
+cmd tp @s 12000.08 203.16 -15.00 28.8 17.0
+wait 25
+shot cracker
+cmd tp @s 12014.08 202.66 -15.00 28.8 17.0
+wait 25
+shot promethium_gen
+wait 16
+shot promethium_gen_b
+cmd tp @s 11964.08 202.66 7.00 28.8 17.0
+wait 25
+shot hydroponics
+cmd tp @s 11978.62 203.00 7.00 28.8 17.0
+wait 25
+shot lumber
+wait 16
+shot lumber_b
+cmd tp @s 11998.20 209.28 0.50 28.8 17.0
+wait 25
+shot deep_drill
+cmd tp @s 12020.98 201.45 9.00 28.8 17.0
+wait 25
+shot salvage_forge
+cmd tp @s 12028.70 201.28 9.00 28.8 17.0
+wait 25
+shot manual_press
+cmd tp @s 11995 225 -32 0 30
+wait 60
+fps все новые машины в кадре
+shot all
+cmd tp @s 60000 150 60000 0 60
+wait 80
+cmd wb deposit tp
+wait 200
+cmd wb deposit tp
+wait 200
+clearchat
+shot seep_far
+wait 40
+shot seep_b
+quit

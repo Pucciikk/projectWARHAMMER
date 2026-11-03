@@ -18,7 +18,9 @@ public final class WarpboundNetwork {
         PayloadTypeRegistry.playC2S().register(ShipyardActionPayload.TYPE, ShipyardActionPayload.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(NavJumpPayload.TYPE, NavJumpPayload.STREAM_CODEC);
         PayloadTypeRegistry.playS2C().register(StarChartPayload.TYPE, StarChartPayload.STREAM_CODEC);
-        PayloadTypeRegistry.playS2C().register(LasBeamPayload.TYPE, LasBeamPayload.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(GunActionPayload.TYPE, GunActionPayload.STREAM_CODEC);
+        PayloadTypeRegistry.playS2C().register(GunFxPayload.TYPE, GunFxPayload.STREAM_CODEC);
+        PayloadTypeRegistry.playS2C().register(GunHitPayload.TYPE, GunHitPayload.STREAM_CODEC);
         PayloadTypeRegistry.playS2C().register(ShipConsolePayload.TYPE, ShipConsolePayload.STREAM_CODEC);
         PayloadTypeRegistry.playC2S().register(ShipConsoleActionPayload.TYPE, ShipConsoleActionPayload.STREAM_CODEC);
     }

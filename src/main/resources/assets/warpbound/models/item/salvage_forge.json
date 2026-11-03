@@ -1,3 +1,6 @@
 {
-  "parent": "warpbound:block/salvage_forge"
+ "parent": "minecraft:item/generated",
+ "textures": {
+  "layer0": "warpbound:item/machine_salvage_forge"
+ }
 }

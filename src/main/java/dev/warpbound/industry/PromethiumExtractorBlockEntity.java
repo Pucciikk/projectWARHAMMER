@@ -20,7 +20,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -71,11 +70,10 @@ public class PromethiumExtractorBlockEntity extends MachineCoreBlockEntity imple
         return getBlockState().getValue(BlockStateProperties.LIT);
     }
 
-    /** Богатство залежи, 30–100%: постоянно для чанка и мира. */
+    /** Богатство залежи, 30–100%: постоянно для чанка и мира. Вне поля залежей 0, качать нечего. */
     public int richness(ServerLevel level) {
         ChunkPos c = new ChunkPos(getBlockPos());
-        long h = level.getSeed() ^ (c.x * 341873128712L + c.z * 132897987541L);
-        return 30 + Mth.abs((int) (h ^ (h >>> 32))) % 71;
+        return PromethiumDeposits.richness(level.getSeed(), c.x, c.z);
     }
 
     public int stored() {
@@ -98,9 +96,10 @@ public class PromethiumExtractorBlockEntity extends MachineCoreBlockEntity imple
 
     @Override
     public void tickFormed(ServerLevel level) {
-        boolean run = stored() < CAPACITY;
+        int rich = richness(level);
+        boolean run = rich > 0 && stored() < CAPACITY;
         if (run) {
-            progress += RATE * richness(level);
+            progress += RATE * rich;
             if (progress >= 100) {
                 add(progress / 100);
                 progress %= 100;
