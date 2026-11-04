@@ -35,6 +35,9 @@ public final class DreadCockpitHud {
 
     private static void cockpit(GuiGraphics g, Minecraft mc, DreadConceptEntity d) {
         int w = g.guiWidth(), h = g.guiHeight();
+        // ванильные сердца и хотбар уже записаны в буфер глубины и прорезали бы панель и приборы
+        g.flush();
+        RenderSystem.clear(org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT, Minecraft.ON_OSX);
         RenderSystem.enableBlend();
         g.blit(COCKPIT, 0, 0, w, h, 0f, 0f, 1920, 1080, 1920, 1080);
         RenderSystem.disableBlend();
