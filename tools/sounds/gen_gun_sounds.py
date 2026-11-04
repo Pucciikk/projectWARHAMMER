@@ -142,4 +142,33 @@ for v in range(3):
 save("gun_dry", mix(0.12, (0, click(rng, 3600, 0.006), 1), (0.03, click(rng, 1600, 0.008), 0.5)), 0.6)
 save("gun_raise", mix(0.3, (0, band(noise(0.25, rng), 400, 2200) * env(int(0.25 * RATE), 0.04, 0.05), 0.6), (0.12, click(rng, 1700, 0.012), 0.6)), 0.5)
 save("hit_marker", click(rng, 5200, 0.012, 0.06, 0.8), 0.5)
+# ---------------------------------------------------------------- цепной меч
+rng = np.random.default_rng(500)
+# мотор: двухтактный рёв с кратной основной частотой и стрёкот цепи. Ровно 1 с и целые числа периодов: цикл без щелчка на стыке
+sec = 1.0
+tt = t(sec)
+F = 72
+engine = sum(g * np.sin(2 * np.pi * F * h * tt + ph) for h, g, ph in ((1, 1.0, 0), (2, 0.8, 0.7), (3, 0.55, 1.9), (4, 0.42, 0.4), (6, 0.3, 2.2), (9, 0.16, 1.1)))
+engine = np.tanh(engine * 1.4)
+grain = rng.standard_normal(len(tt))
+grain = np.real(np.fft.ifft(np.fft.fft(grain) * ((np.abs(np.fft.fftfreq(len(tt), 1 / RATE)) > 1800) & (np.abs(np.fft.fftfreq(len(tt), 1 / RATE)) < 7000))))
+rattle = grain * (0.55 + 0.45 * np.sin(2 * np.pi * 288 * tt)) * 1.1
+loop = engine * 0.7 + rattle * 0.4
+loop = loop / np.max(np.abs(loop)) * 0.85
+wavfile.write(os.path.join(OUT, "chainsword_engine.wav"), RATE, (loop * 32767).astype(np.int16))
+# укус: цепь рвёт металл и мясо, пульсация с частотой зубьев
+for v in range(3):
+    r = np.random.default_rng(510 + v)
+    n = int(0.55 * RATE)
+    teeth = 0.5 + 0.5 * np.sign(np.sin(2 * np.pi * (170 + v * 22) * t(0.55)))
+    tear = band(noise(0.55, r), 700, 6000) * teeth * env(n, 0.004, 0.2)
+    screech = sweep(0.55, 2600 + v * 240, 1500, 2) * env(n, 0.01, 0.16)
+    save(f"chainsword_bite_{v}", mix(0.6, (0, tear, 1.0), (0, screech, 0.22), (0, thump(0.2, 80, 0.05), 0.8), (0, click(r, 1600, 0.02, 0.1), 0.6)))
+# взмах: воздух и нарастающий мотор
+for v in range(2):
+    r = np.random.default_rng(520 + v)
+    n = int(0.4 * RATE)
+    tt2 = t(0.4)
+    shape = np.sin(np.pi * np.minimum(tt2 / 0.34, 1)) ** 2
+    save(f"chainsword_swing_{v}", band(noise(0.4, r), 300 + v * 80, 2400) * shape, 0.55)
 print("wav:", len(os.listdir(OUT)))

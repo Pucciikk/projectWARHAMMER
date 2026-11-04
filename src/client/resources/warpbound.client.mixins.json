@@ -5,8 +5,10 @@
   "client": [
     "AbstractContainerScreenAccessor",
     "CameraMixin",
+    "DreadRiderHideMixin",
     "GunFovMixin",
     "GunGuiMixin",
+    "GunHolderMixin",
     "GunRenderMixins",
     "PlayerArmPoseMixin"
   ],

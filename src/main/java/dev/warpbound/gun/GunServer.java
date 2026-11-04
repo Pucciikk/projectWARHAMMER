@@ -4,6 +4,7 @@ import dev.warpbound.core.WarpboundItems;
 import dev.warpbound.core.WarpboundSounds;
 import dev.warpbound.network.GunActionPayload;
 import dev.warpbound.network.GunFxPayload;
+import dev.warpbound.network.GunSpecSyncPayload;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -38,6 +39,8 @@ public final class GunServer {
         int reloadSlot;
     }
 
+    /** Косинус допуска между взглядом на сервере и направлением выстрела: около 15°, больше не набегает даже с отдачей и задержкой. */
+    private static final double AIM_TOLERANCE = 0.966;
     private static final Map<UUID, State> STATES = new HashMap<>();
 
     private GunServer() {
@@ -50,9 +53,14 @@ public final class GunServer {
         ServerPlayNetworking.registerGlobalReceiver(GunActionPayload.TYPE, (payload, context) -> {
             ServerPlayer player = context.player();
             context.server().execute(() -> {
-                if (payload.action() == GunActionPayload.FIRE) fire(player, payload.aiming());
+                if (payload.action() == GunActionPayload.FIRE) fire(player, payload.aiming(), new Vec3(payload.x(), payload.y(), payload.z()));
                 else if (payload.action() == GunActionPayload.RELOAD) startReload(player);
             });
+        });
+        // клиенту нужны скорость и разброс, чтобы показать снаряд сразу: сам он датапак не читает
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> sender.sendPacket(new GunSpecSyncPayload(GunSpec.REGISTRY.all())));
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, resources, ok) -> {
+            for (ServerPlayer p : server.getPlayerList().getPlayers()) ServerPlayNetworking.send(p, new GunSpecSyncPayload(GunSpec.REGISTRY.all()));
         });
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> STATES.remove(handler.player.getUUID()));
         ServerTickEvents.END_SERVER_TICK.register(GunServer::tick);
@@ -80,7 +88,7 @@ public final class GunServer {
         }
     }
 
-    private static void fire(ServerPlayer player, boolean aiming) {
+    private static void fire(ServerPlayer player, boolean aiming, Vec3 wanted) {
         ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
         if (!(stack.getItem() instanceof GunItem gun)) return;
         State s = state(player);
@@ -92,7 +100,7 @@ public final class GunServer {
         s.lastShot = now;
         GunItem.setAmmo(stack, ammo - 1);
         GunSpec spec = GunSpec.of(gun);
-        spawn(player, gun, spec, aiming);
+        spawn(player, gun, spec, aiming, wanted);
         SoundEvent sound = gun.mechanics.kind() == GunItem.Kind.LAS ? WarpboundSounds.GUN_LAS_FIRE : WarpboundSounds.GUN_BOLTER_FIRE;
         // стрелку звук уже сыграл его клиент, остальным — отсюда
         player.serverLevel().playSound(player, player.getX(), player.getEyeY(), player.getZ(), sound, SoundSource.PLAYERS,
@@ -107,22 +115,19 @@ public final class GunServer {
      * Снаряд вылетает из дула и летит в точку, которая стоит под прицелом: луч от глаз находит её, снаряд идёт туда.
      * Так видно, что стреляет оружие, а попадает он всё равно куда смотрит игрок.
      */
-    public static GunProjectile spawn(ServerPlayer player, GunItem gun, GunSpec spec, boolean aiming) {
+    public static GunProjectile spawn(ServerPlayer player, GunItem gun, GunSpec spec, boolean aiming, Vec3 wanted) {
         ServerLevel level = player.serverLevel();
         GunProjectile p = gun.mechanics.kind() == GunItem.Kind.LAS ? GunProjectiles.LAS_BOLT.create(level) : GunProjectiles.BOLT_ROUND.create(level);
         p.setOwner(player);
         p.configure(spec);
         Vec3 look = player.getLookAngle();
         Vec3 eye = player.getEyePosition();
-        double moving = player.getDeltaMovement().horizontalDistanceSqr() > 0.002 ? 1.6 : 1.0;
-        double spread = Math.toRadians(aiming ? spec.spreadAim() : spec.spreadHip() * moving);
-        var r = player.getRandom();
-        // равномерно по кругу разброса
-        double angle = r.nextDouble() * Math.PI * 2, dist = Math.sqrt(r.nextDouble()) * spread;
         Vec3 worldUp = Math.abs(look.y) > 0.95 ? new Vec3(1, 0, 0) : new Vec3(0, 1, 0);
         Vec3 right = look.cross(worldUp).normalize();
         Vec3 up = right.cross(look).normalize();
-        Vec3 aimDir = look.add(right.scale(Math.cos(angle) * dist)).add(up.scale(Math.sin(angle) * dist)).normalize();
+        // направление считает клиент (там же разброс), сервер только не даёт уйти далеко от взгляда
+        double wantedLen = wanted.length();
+        Vec3 aimDir = wantedLen > 0.5 && wanted.scale(1 / wantedLen).dot(look) > AIM_TOLERANCE ? wanted.scale(1 / wantedLen) : look;
 
         // куда смотрит прицел: блок, существо или просто даль
         Vec3 far = eye.add(aimDir.scale(spec.speed() * spec.lifeTicks()));
@@ -139,7 +144,7 @@ public final class GunServer {
         Vec3 dir = target.subtract(muzzle);
         dir = dir.lengthSqr() < 0.04 ? aimDir : dir.normalize();
         p.setPos(muzzle.x, muzzle.y, muzzle.z);
-        p.setDeltaMovement(dir.scale(spec.speed()));
+        p.setDeltaMovement(dir.scale(spec.muzzleSpeed()));
         p.setYRot((float) (Mth.atan2(dir.x, dir.z) * Mth.RAD_TO_DEG));
         p.setXRot((float) (Mth.atan2(dir.y, dir.horizontalDistance()) * Mth.RAD_TO_DEG));
         p.yRotO = p.getYRot();

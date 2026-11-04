@@ -1,0 +1,206 @@
+# Дредноут
+cmd time set noon
+cmd weather clear
+cmd gamerule doDaylightCycle false
+cmd gamerule doMobSpawning false
+cmd gamemode creative
+cmd tp @s 26000 282 0 0 30
+wait 60
+cmd fill 25970 279 -30 26030 279 30 minecraft:polished_deepslate
+wait 80
+hud off
+cmd kill @e[type=!minecraft:player]
+wait 6
+wait 30
+cmd kill @e[type=!minecraft:player]
+wait 6
+cmd summon warpbound:dread_castraferrum 26000 280 -25 {Rotation:[0f,0f]}
+cmd tp @s 26005 280 -20 135 -4
+wait 30
+shot empty0
+wait 60
+shot empty1
+cmd tp @s 26007 280 -25 90 -3
+wait 4
+shot empty_side
+cmd item replace entity @s weapon.mainhand with minecraft:air
+cmd ride @s mount @e[type=warpbound:dread_castraferrum,limit=1,sort=nearest]
+wait 14
+look 0 0
+hud on
+clearchat
+shot cab0
+pos старт
+key forward on
+wait 40
+shot cab_walk
+pos шаг40
+wait 40
+pos шаг80
+key sprint on
+wait 30
+pos бег0
+shot cab_run
+wait 40
+pos бег40
+key sprint off
+key forward off
+wait 30
+shot cab_stop
+look 30 0
+wait 20
+shot cab_turn
+look 0 0
+wait 20
+dread fire on
+wait 6
+shot cab_fire0
+wait 3
+shot cab_fire1
+dread fire off
+wait 16
+dread claw
+wait 8
+shot cab_claw0
+wait 4
+shot cab_claw1
+wait 20
+camera back
+look 0 12
+wait 10
+shot rd_idle
+key back on
+wait 16
+shot rd_back
+key back off
+wait 14
+dread fire on
+wait 6
+shot rd_fire
+dread fire off
+wait 10
+dread claw
+wait 10
+shot rd_claw
+wait 30
+camera first
+key shift on
+wait 4
+key shift off
+wait 10
+hud off
+cmd kill @e[type=!minecraft:player]
+wait 6
+wait 240
+cmd summon warpbound:dread_castraferrum 26000 280 -15 {Rotation:[0f,0f]}
+cmd tp @s 26003 280 -15
+wait 2
+cmd ride @s mount @e[type=warpbound:dread_castraferrum,limit=1,sort=nearest]
+wait 14
+look 0 0
+hud on
+cmd summon minecraft:zombie 25999 280 -12 {Health:900f,attributes:[{id:"minecraft:generic.max_health",base:900}]}
+cmd summon minecraft:zombie 26001 280 -12 {Health:900f,attributes:[{id:"minecraft:generic.max_health",base:900}]}
+cmd summon minecraft:zombie 25999 280 -11 {Health:900f,attributes:[{id:"minecraft:generic.max_health",base:900}]}
+cmd summon minecraft:zombie 26001 280 -11 {Health:900f,attributes:[{id:"minecraft:generic.max_health",base:900}]}
+wait 10
+cmd data get entity @e[type=minecraft:zombie,limit=1,sort=nearest] Pos
+shot shove_cab0
+dread shove
+wait 7
+shot shove_cab1
+wait 6
+shot shove_cab2
+cmd data get entity @e[type=minecraft:zombie,limit=1,sort=nearest] Pos
+wait 30
+camera back
+look 0 12
+dread shove
+wait 5
+shot shove_rd0
+wait 4
+shot shove_rd1
+wait 30
+camera first
+key shift on
+wait 4
+key shift off
+wait 10
+cmd kill @e[type=!minecraft:player]
+wait 6
+wait 240
+cmd summon warpbound:dread_castraferrum 26000 280 -15 {Rotation:[0f,0f],Fuel:0,Ammo:0}
+cmd tp @s 26003 280 -15
+wait 2
+cmd ride @s mount @e[type=warpbound:dread_castraferrum,limit=1,sort=nearest]
+wait 14
+look 0 0
+shot cab_empty
+key forward on
+wait 20
+pos без_топлива
+key forward off
+key shift on
+wait 4
+key shift off
+wait 10
+hud off
+cmd kill @e[type=!minecraft:player]
+wait 6
+cmd tp @s 26006 280 5 130 -4
+cmd summon warpbound:dread_castraferrum 26000 280 0 {Rotation:[0f,0f]}
+wait 30
+shot death_before
+cmd kill @e[type=warpbound:dread_castraferrum,distance=..30]
+wait 8
+shot death0
+wait 8
+shot death1
+wait 8
+shot death2
+wait 8
+shot death3
+wait 8
+shot death4
+wait 8
+shot death5
+wait 8
+shot death6
+wait 8
+shot death7
+wait 8
+shot death8
+wait 8
+shot death9
+wait 8
+shot death10
+wait 8
+shot death11
+wait 8
+shot death12
+wait 8
+shot death13
+wait 100
+shot death_end
+wait 120
+shot death_gone
+cmd kill @e[type=!minecraft:player]
+wait 6
+hud on
+cmd gamemode creative
+clearchat
+cmd item replace entity @s weapon.mainhand with minecraft:iron_sword
+wait 16
+shot vanilla_first
+cmd item replace entity @s weapon.mainhand with warpbound:chainsword
+wait 16
+shot sword_first
+gun swing
+wait 4
+shot sword_swing
+wait 20
+camera back
+wait 8
+shot sword_back
+camera first
+quit

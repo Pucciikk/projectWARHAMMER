@@ -65,20 +65,29 @@ ribbon(os.path.join(EFFECT, "las_bolt.png"), 32, 16, lambda d: np.clip(1 - d, 0,
 ribbon(os.path.join(EFFECT, "bolt_flame.png"), 32, 16, lambda d: np.clip(1 - d, 0, 1) ** 1.1, lambda u: np.clip(u, 0, 1) ** 1.6)
 ribbon(os.path.join(EFFECT, "bolt_trail.png"), 64, 16, lambda d: np.clip(1 - d, 0, 1) ** 1.8, lambda u: np.clip(u, 0, 1) ** 2.2)
 
-# корпус болта: сверху (v=0 в Java) носик стальной с красной полосой, снизу латунный корпус с пояском
-tex = Image.new("RGBA", (16, 16))
+Image.new("RGBA", (4, 4), (255, 255, 255, 255)).save(os.path.join(EFFECT, "white.png"))
+
+# корпус болта вдоль v: v=0 нос, v=1 сопло. Стальной колпачок, красный поясок, латунный корпус с проточками, тёмная хвостовая часть
+tex = Image.new("RGBA", (16, 64))
 px = tex.load()
-for y in range(16):
+for y in range(64):
+    k = y / 63
     for x in range(16):
-        n = random.Random(x * 31 + y).randint(-6, 6)
-        if y < 8:
-            base = (170, 176, 186) if y > 2 else (92, 96, 104)
-            if y in (6, 7):
-                base = (150, 26, 22)
+        n = random.Random(x * 31 + y * 7).randint(-5, 5)
+        if k < 0.1:
+            base = (70, 74, 82)
+        elif k < 0.3:
+            base = (168, 174, 184)
+        elif k < 0.36:
+            base = (150, 26, 22)
+        elif k < 0.8:
+            base = (196, 150, 66)
+            if abs(k - 0.46) < 0.012 or abs(k - 0.7) < 0.012:
+                base = (112, 80, 30)
+            elif 0.5 < k < 0.66 and x % 4 == 0:
+                base = (164, 122, 50)
         else:
-            base = (186, 142, 60)
-            if y in (9, 13):
-                base = (108, 76, 28)
+            base = (54, 54, 60)
         px[x, y] = (base[0] + n, base[1] + n, base[2] + n, 255)
 tex.save(os.path.join(A, "textures/entity/bolt_round.png"))
 
@@ -97,17 +106,30 @@ with open(os.path.join(A, "particles/gun_casing.json"), "w", encoding="utf-8") a
 
 # ---------------------------------------------------------------- sounds.json: добавляем записи оружия
 SOUNDS = {
-    "gun.las_fire": (["las_fire_0", "las_fire_1", "las_fire_2", "las_fire_3"], 48),
-    "gun.bolter_fire": (["bolter_fire_0", "bolter_fire_1", "bolter_fire_2", "bolter_fire_3"], 80),
+    "gun.las_fire": ([f"las_fire_{i}" for i in range(6)], 48),
+    "gun.bolter_fire": ([f"bolter_fire_{i}" for i in range(6)], 80),
     "gun.bolt_explode": (["bolt_explode_0", "bolt_explode_1", "bolt_explode_2"], 56),
     "gun.casing": (["casing_0", "casing_1", "casing_2"], 16),
 }
-for name in ("las_hit", "las_charge", "las_cell_out", "las_cell_in", "las_lever", "bolter_mag_out", "bolter_mag_in", "bolter_rack_back", "bolter_rack_fwd", "gun_dry", "gun_raise", "hit_marker"):
+SOUNDS["gun.chainsword_engine"] = (["chainsword_engine"], 24)
+SOUNDS["gun.chainsword_bite"] = (["chainsword_bite_0", "chainsword_bite_1", "chainsword_bite_2"], 24)
+SOUNDS["gun.chainsword_swing"] = ([f"chainsword_swing_{i}" for i in range(4)], 16)
+SOUNDS["gun.chainsword_start"] = (["chainsword_start_0", "chainsword_start_1"], 16)
+SOUNDS["gun.las_hit"] = ([f"las_hit_{i}" for i in range(4)], 16)
+for name in ("las_charge", "las_cell_out", "las_cell_in", "las_lever", "bolter_mag_out", "bolter_mag_in", "bolter_rack_back", "bolter_rack_fwd", "gun_dry", "gun_raise", "hit_marker"):
     SOUNDS["gun." + name] = ([name], 16)
 path = os.path.join(A, "sounds.json")
 data = json.load(open(path, encoding="utf-8"))
 for name, (files, dist) in SOUNDS.items():
     data[name] = {"sounds": [{"name": f"warpbound:gun/{f}", "attenuation_distance": dist} for f in files]}
+# дредноут: файлы в sounds/dread, длинные гул и мотор читаются потоком
+DREAD = {"dread.step": ([f"dread_step_{i}" for i in range(6)], 32), "dread.foley": ([f"dread_foley_{i}" for i in range(6)], 20),
+         "dread.servo": ([f"dread_servo_{i}" for i in range(4)], 16), "dread.stomp": ([f"dread_stomp_{i}" for i in range(3)], 48),
+         "dread.fire": ([f"dread_fire_{i}" for i in range(6)], 96), "dread.punch": ([f"dread_punch_{i}" for i in range(3)], 32),
+         "dread.fall": (["dread_fall"], 56), "dread.idle": (["dread_idle"], 18)}
+for name, (files, dist) in DREAD.items():
+    data[name] = {"sounds": [{"name": f"warpbound:dread/{f}", "attenuation_distance": dist, **({"stream": True} if name == "dread.idle" else {})} for f in files]}
+data["gun.chainsword_engine"]["sounds"][0]["stream"] = True
 with open(path, "w", encoding="utf-8") as f:
     json.dump(data, f, indent=1, ensure_ascii=False)
 
@@ -116,8 +138,8 @@ D = os.path.join(ROOT, "src/main/resources/data/warpbound/gun")
 os.makedirs(D, exist_ok=True)
 GUNS = {
     "lasgun": dict(damage=6.0, speed=9.0, life_ticks=24, spread_hip=1.6, spread_aim=0.25, head=1.5, knockback=0.05),
-    "bolter_guard": dict(damage=9.0, blast_damage=5.0, blast_radius=2.0, speed=5.5, life_ticks=40, spread_hip=2.4, spread_aim=0.5, head=1.5, knockback=0.35),
-    "bolter_astartes": dict(damage=14.0, blast_damage=7.0, blast_radius=2.4, speed=6.5, life_ticks=40, spread_hip=2.0, spread_aim=0.35, head=1.5, knockback=0.45),
+    "bolter_guard": dict(damage=9.0, blast_damage=5.0, blast_radius=2.0, speed=6.5, speed_start=2.2, accel=1.55, life_ticks=40, spread_hip=2.4, spread_aim=0.5, head=1.5, knockback=0.35),
+    "bolter_astartes": dict(damage=14.0, blast_damage=7.0, blast_radius=2.4, speed=7.5, speed_start=2.5, accel=1.55, life_ticks=40, spread_hip=2.0, spread_aim=0.35, head=1.5, knockback=0.45),
 }
 for name, spec in GUNS.items():
     with open(os.path.join(D, name + ".json"), "w", encoding="utf-8") as f:

@@ -33,14 +33,10 @@ public final class GearRenderers {
                     }
                 });
             } else if (item == WarpboundItems.CHAINSWORD) {
-                String name = "chainsword_3d";
                 consumer.accept(new GeoRenderProvider() {
-                    private GeoItemRenderer renderer;
-
                     @Override
                     public BlockEntityWithoutLevelRenderer getGeoItemRenderer() {
-                        if (renderer == null) renderer = new GeoItemRenderer(new DefaultedItemGeoModel(Warpbound.id(name)));
-                        return renderer;
+                        return dev.warpbound.client.gun.ChainswordRenderer.get();
                     }
                 });
             } else {

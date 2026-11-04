@@ -21,9 +21,9 @@ record GunVisual(String model, float scale, float hipX, float hipY, float hipZ, 
 
     private static GunVisual build(Item item) {
         if (item == WarpboundItems.LASGUN) {
-            return new GunVisual("lasgun_3d", 0.6f, 0.17f, -0.15f, -0.42f, -0.56f, 0.135f, 0.78f, 0.03f, 1.6f, 0.8f, 0.55f, 0.22f, 0.32f, false);
+            return new GunVisual("lasgun_3d", 0.6f, 0.145f, -0.125f, -0.46f, -0.66f, 0.135f, 0.78f, 0.03f, 1.6f, 0.8f, 0.55f, 0.22f, 0.085f, false);
         }
         // болтер тяжелее: отдача больше и глуше, камера уходит заметнее
-        return new GunVisual("bolter_3d", 0.62f, 0.19f, -0.17f, -0.46f, -0.6f, 0.178f, 0.82f, 0.065f, 3.8f, 1.8f, 1.5f, 0.45f, 0.5f, true);
+        return new GunVisual("bolter_3d", 0.62f, 0.16f, -0.14f, -0.5f, -0.72f, 0.178f, 0.82f, 0.065f, 3.8f, 1.8f, 1.5f, 0.45f, 0.13f, true);
     }
 }

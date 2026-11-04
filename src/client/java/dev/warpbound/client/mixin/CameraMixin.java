@@ -32,7 +32,7 @@ public abstract class CameraMixin {
     @ModifyArg(method = "setup", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"))
     private float warpbound$dreadnoughtZoom(float zoom) {
-        return entity != null && entity.getVehicle() instanceof DreadnoughtEntity ? zoom * 2.0f : zoom;
+        return entity != null && (entity.getVehicle() instanceof DreadnoughtEntity || entity.getVehicle() instanceof dev.warpbound.entity.dreadnought.concept.DreadConceptEntity) ? zoom * 2.0f : zoom;
     }
 
     /** Тряска от шагов. */

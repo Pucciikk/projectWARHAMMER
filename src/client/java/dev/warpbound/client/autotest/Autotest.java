@@ -169,6 +169,22 @@ public final class Autotest {
                     default -> net.minecraft.client.CameraType.FIRST_PERSON;
                 });
                 case "gun" -> dev.warpbound.client.gun.GunClient.autotest(arg);
+                case "dread" -> dev.warpbound.client.entity.DreadPilotClient.autotest(arg);
+                case "key" -> {
+                    // зажать кнопку движения: key forward on
+                    String[] k = arg.trim().split("\\s+");
+                    var map = switch (k[0]) {
+                        case "forward" -> mc.options.keyUp;
+                        case "back" -> mc.options.keyDown;
+                        case "left" -> mc.options.keyLeft;
+                        case "right" -> mc.options.keyRight;
+                        case "sprint" -> mc.options.keySprint;
+                        case "shift" -> mc.options.keyShift;
+                        default -> throw new IllegalArgumentException(k[0]);
+                    };
+                    map.setDown(k.length > 1 && k[1].equals("on"));
+                }
+                case "pos" -> log("позиция " + arg + ": " + mc.player.position() + (mc.player.getVehicle() != null ? " машина " + mc.player.getVehicle().position() : ""));
                 case "cmd" -> command(mc, arg.startsWith("/") ? arg.substring(1) : arg);
                 case "look" -> {
                     String[] angles = arg.split("\\s+");
@@ -180,6 +196,11 @@ public final class Autotest {
                 case "hud" -> mc.options.hideGui = arg.equalsIgnoreCase("off");
                 case "clearchat" -> mc.gui.getChat().clearMessages(false);
                 case "shot" -> screenshot(mc, arg);
+                case "delayshot" -> {
+                    // снимок между тиками: delayshot <мс> <имя>. Снаряд за тик пролетает десяток блоков, обычный снимок его не застаёт
+                    String[] d = arg.trim().split("\\s+", 2);
+                    delayedShot(mc, System.nanoTime() + Long.parseLong(d[0]) * 1_000_000L, d[1]);
+                }
                 case "log" -> log(arg);
                 case "useblock" -> {
                     // нажать ПКМ по блоку: useblock x y z
@@ -201,6 +222,24 @@ public final class Autotest {
             log("ОШИБКА в строке «" + line + "»: " + e);
             LOG.error("[warpbound] autotest", e);
         }
+    }
+
+    private static final java.util.List<Object[]> DELAYED = new java.util.ArrayList<>();
+    private static boolean delayedHook;
+
+    /** Снимок в нужный момент между тиками: проверяем каждый кадр при отрисовке интерфейса, мир и рука в этот момент уже нарисованы. */
+    private static void delayedShot(Minecraft mc, long at, String name) {
+        DELAYED.add(new Object[]{at, name});
+        if (delayedHook) return;
+        delayedHook = true;
+        net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback.EVENT.register((graphics, delta) -> {
+            long now = System.nanoTime();
+            DELAYED.removeIf(d -> {
+                if (now < (long) d[0]) return false;
+                screenshot(mc, (String) d[1]);
+                return true;
+            });
+        });
     }
 
     private static void command(Minecraft mc, String command) {

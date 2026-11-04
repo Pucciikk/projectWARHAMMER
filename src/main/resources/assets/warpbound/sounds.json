@@ -359,6 +359,14 @@
    {
     "name": "warpbound:gun/las_fire_3",
     "attenuation_distance": 48
+   },
+   {
+    "name": "warpbound:gun/las_fire_4",
+    "attenuation_distance": 48
+   },
+   {
+    "name": "warpbound:gun/las_fire_5",
+    "attenuation_distance": 48
    }
   ]
  },
@@ -378,6 +386,14 @@
    },
    {
     "name": "warpbound:gun/bolter_fire_3",
+    "attenuation_distance": 80
+   },
+   {
+    "name": "warpbound:gun/bolter_fire_4",
+    "attenuation_distance": 80
+   },
+   {
+    "name": "warpbound:gun/bolter_fire_5",
     "attenuation_distance": 80
    }
   ]
@@ -417,7 +433,19 @@
  "gun.las_hit": {
   "sounds": [
    {
-    "name": "warpbound:gun/las_hit",
+    "name": "warpbound:gun/las_hit_0",
+    "attenuation_distance": 16
+   },
+   {
+    "name": "warpbound:gun/las_hit_1",
+    "attenuation_distance": 16
+   },
+   {
+    "name": "warpbound:gun/las_hit_2",
+    "attenuation_distance": 16
+   },
+   {
+    "name": "warpbound:gun/las_hit_3",
     "attenuation_distance": 16
    }
   ]
@@ -507,6 +535,216 @@
    {
     "name": "warpbound:gun/hit_marker",
     "attenuation_distance": 16
+   }
+  ]
+ },
+ "gun.chainsword_engine": {
+  "sounds": [
+   {
+    "name": "warpbound:gun/chainsword_engine",
+    "attenuation_distance": 24,
+    "stream": true
+   }
+  ]
+ },
+ "gun.chainsword_bite": {
+  "sounds": [
+   {
+    "name": "warpbound:gun/chainsword_bite_0",
+    "attenuation_distance": 24
+   },
+   {
+    "name": "warpbound:gun/chainsword_bite_1",
+    "attenuation_distance": 24
+   },
+   {
+    "name": "warpbound:gun/chainsword_bite_2",
+    "attenuation_distance": 24
+   }
+  ]
+ },
+ "gun.chainsword_swing": {
+  "sounds": [
+   {
+    "name": "warpbound:gun/chainsword_swing_0",
+    "attenuation_distance": 16
+   },
+   {
+    "name": "warpbound:gun/chainsword_swing_1",
+    "attenuation_distance": 16
+   },
+   {
+    "name": "warpbound:gun/chainsword_swing_2",
+    "attenuation_distance": 16
+   },
+   {
+    "name": "warpbound:gun/chainsword_swing_3",
+    "attenuation_distance": 16
+   }
+  ]
+ },
+ "gun.chainsword_start": {
+  "sounds": [
+   {
+    "name": "warpbound:gun/chainsword_start_0",
+    "attenuation_distance": 16
+   },
+   {
+    "name": "warpbound:gun/chainsword_start_1",
+    "attenuation_distance": 16
+   }
+  ]
+ },
+ "dread.step": {
+  "sounds": [
+   {
+    "name": "warpbound:dread/dread_step_0",
+    "attenuation_distance": 32
+   },
+   {
+    "name": "warpbound:dread/dread_step_1",
+    "attenuation_distance": 32
+   },
+   {
+    "name": "warpbound:dread/dread_step_2",
+    "attenuation_distance": 32
+   },
+   {
+    "name": "warpbound:dread/dread_step_3",
+    "attenuation_distance": 32
+   },
+   {
+    "name": "warpbound:dread/dread_step_4",
+    "attenuation_distance": 32
+   },
+   {
+    "name": "warpbound:dread/dread_step_5",
+    "attenuation_distance": 32
+   }
+  ]
+ },
+ "dread.foley": {
+  "sounds": [
+   {
+    "name": "warpbound:dread/dread_foley_0",
+    "attenuation_distance": 20
+   },
+   {
+    "name": "warpbound:dread/dread_foley_1",
+    "attenuation_distance": 20
+   },
+   {
+    "name": "warpbound:dread/dread_foley_2",
+    "attenuation_distance": 20
+   },
+   {
+    "name": "warpbound:dread/dread_foley_3",
+    "attenuation_distance": 20
+   },
+   {
+    "name": "warpbound:dread/dread_foley_4",
+    "attenuation_distance": 20
+   },
+   {
+    "name": "warpbound:dread/dread_foley_5",
+    "attenuation_distance": 20
+   }
+  ]
+ },
+ "dread.servo": {
+  "sounds": [
+   {
+    "name": "warpbound:dread/dread_servo_0",
+    "attenuation_distance": 16
+   },
+   {
+    "name": "warpbound:dread/dread_servo_1",
+    "attenuation_distance": 16
+   },
+   {
+    "name": "warpbound:dread/dread_servo_2",
+    "attenuation_distance": 16
+   },
+   {
+    "name": "warpbound:dread/dread_servo_3",
+    "attenuation_distance": 16
+   }
+  ]
+ },
+ "dread.stomp": {
+  "sounds": [
+   {
+    "name": "warpbound:dread/dread_stomp_0",
+    "attenuation_distance": 48
+   },
+   {
+    "name": "warpbound:dread/dread_stomp_1",
+    "attenuation_distance": 48
+   },
+   {
+    "name": "warpbound:dread/dread_stomp_2",
+    "attenuation_distance": 48
+   }
+  ]
+ },
+ "dread.fire": {
+  "sounds": [
+   {
+    "name": "warpbound:dread/dread_fire_0",
+    "attenuation_distance": 96
+   },
+   {
+    "name": "warpbound:dread/dread_fire_1",
+    "attenuation_distance": 96
+   },
+   {
+    "name": "warpbound:dread/dread_fire_2",
+    "attenuation_distance": 96
+   },
+   {
+    "name": "warpbound:dread/dread_fire_3",
+    "attenuation_distance": 96
+   },
+   {
+    "name": "warpbound:dread/dread_fire_4",
+    "attenuation_distance": 96
+   },
+   {
+    "name": "warpbound:dread/dread_fire_5",
+    "attenuation_distance": 96
+   }
+  ]
+ },
+ "dread.punch": {
+  "sounds": [
+   {
+    "name": "warpbound:dread/dread_punch_0",
+    "attenuation_distance": 32
+   },
+   {
+    "name": "warpbound:dread/dread_punch_1",
+    "attenuation_distance": 32
+   },
+   {
+    "name": "warpbound:dread/dread_punch_2",
+    "attenuation_distance": 32
+   }
+  ]
+ },
+ "dread.fall": {
+  "sounds": [
+   {
+    "name": "warpbound:dread/dread_fall",
+    "attenuation_distance": 56
+   }
+  ]
+ },
+ "dread.idle": {
+  "sounds": [
+   {
+    "name": "warpbound:dread/dread_idle",
+    "attenuation_distance": 18,
+    "stream": true
    }
   ]
  }

@@ -25,6 +25,13 @@ import net.minecraft.world.phys.Vec3;
 public abstract class GunProjectile extends Projectile {
     protected float damage, blastDamage, blastRadius, headMultiplier = 1.5f, knockback = 0.1f;
     protected int lifeTicks = 30;
+    private float maxSpeed, accel = 1;
+    /** Подставляет клиент: стрелок ли это на этом компьютере. Его настоящий снаряд не должен оставлять след рядом с предсказанным. */
+    public static java.util.function.Predicate<Entity> LOCAL_OWNER = e -> false;
+    /** Снаряд стрелка на его же клиенте: появляется сразу у дула на экране, ни на что не влияет. Настоящий снаряд сервера у стрелка не рисуется. */
+    public boolean predicted;
+    /** Откуда вылетел: хвост не должен тянуться дальше дула. */
+    public Vec3 origin;
 
     protected GunProjectile(EntityType<? extends GunProjectile> type, Level level) {
         super(type, level);
@@ -38,6 +45,8 @@ public abstract class GunProjectile extends Projectile {
         headMultiplier = spec.head();
         knockback = spec.knockback();
         lifeTicks = spec.lifeTicks();
+        maxSpeed = spec.speed();
+        accel = spec.accel();
     }
 
     @Override
@@ -48,9 +57,15 @@ public abstract class GunProjectile extends Projectile {
     public void tick() {
         super.tick();
         Vec3 v = getDeltaMovement();
-        if (level() instanceof ServerLevel && tickCount > lifeTicks) {
+        if ((level() instanceof ServerLevel || predicted) && tickCount > lifeTicks) {
             discard();
             return;
+        }
+        // разгон болта: на клиенте чужого снаряда чисел нет, скорость приходит от сервера
+        if (maxSpeed > 0 && accel != 1 && v.length() < maxSpeed) {
+            v = v.scale(accel);
+            if (v.length() > maxSpeed) v = v.normalize().scale(maxSpeed);
+            setDeltaMovement(v);
         }
         HitResult hit = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
         if (hit.getType() != HitResult.Type.MISS) {
@@ -121,6 +136,8 @@ public abstract class GunProjectile extends Projectile {
 
     @Override
     protected boolean canHitEntity(Entity entity) {
+        if (entity instanceof dev.warpbound.entity.multipart.HitboxPart part && part.host == getOwner()) return false;
+        if (getOwner() != null && entity.getVehicle() == getOwner()) return false;
         return entity != getOwner() && super.canHitEntity(entity);
     }
 

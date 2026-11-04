@@ -43,6 +43,34 @@ shot las_burst0
 wait 8
 shot las_burst1
 wait 40
+gun fire 1
+wait 1
+shot las_fly1
+wait 24
+gun fire 1
+wait 2
+shot las_fly2
+wait 24
+gun fire 1
+wait 3
+shot las_fly3
+wait 24
+gun fire 1
+wait 5
+shot las_fly5
+wait 24
+gun aim on
+wait 18
+gun fire 1
+wait 1
+shot las_afly1
+wait 24
+gun fire 1
+wait 3
+shot las_afly3
+wait 24
+gun aim off
+wait 14
 gun reload
 wait 5
 shot las_r0
@@ -69,11 +97,25 @@ camera back
 cmd tp @s 20000 200 0 0 0
 wait 14
 shot las_third
-gun fire 2
-wait 3
-shot las_third_fire
-wait 10
+gun fire 1
+wait 1
+shot las_third_f1
+wait 2
+shot las_third_f2
+wait 20
+camera front
+wait 8
+shot las_front
+cmd tp @s 20000 200 0 90 0
+wait 4
+gun fire 1
+wait 1
+shot las_side_f1
+wait 2
+shot las_side_f2
+wait 20
 camera first
+cmd tp @s 20000 200 0 0 0
 wait 6
 cmd item replace entity @s weapon.mainhand with warpbound:bolter_guard[warpbound:gun_ammo=30]
 wait 30
@@ -105,6 +147,34 @@ shot bolt_burst0
 wait 8
 shot bolt_burst1
 wait 40
+gun fire 1
+wait 1
+shot bolt_fly1
+wait 24
+gun fire 1
+wait 2
+shot bolt_fly2
+wait 24
+gun fire 1
+wait 3
+shot bolt_fly3
+wait 24
+gun fire 1
+wait 5
+shot bolt_fly5
+wait 24
+gun aim on
+wait 18
+gun fire 1
+wait 1
+shot bolt_afly1
+wait 24
+gun fire 1
+wait 3
+shot bolt_afly3
+wait 24
+gun aim off
+wait 14
 gun reload
 wait 6
 shot bolt_r0
@@ -131,12 +201,94 @@ camera back
 cmd tp @s 20000 200 0 0 0
 wait 14
 shot bolt_third
-gun fire 2
-wait 3
-shot bolt_third_fire
-wait 10
+gun fire 1
+wait 1
+shot bolt_third_f1
+wait 2
+shot bolt_third_f2
+wait 20
+camera front
+wait 8
+shot bolt_front
+cmd tp @s 20000 200 0 90 0
+wait 4
+gun fire 1
+wait 1
+shot bolt_side_f1
+wait 2
+shot bolt_side_f2
+wait 20
 camera first
+cmd tp @s 20000 200 0 0 0
 wait 6
+cmd summon minecraft:zombie 19997.8 200 4 {NoAI:1b,Rotation:[90f,0f],HandItems:[{id:"warpbound:lasgun",count:1},{}]}
+cmd summon minecraft:zombie 20000.0 200 4 {NoAI:1b,Rotation:[90f,0f],HandItems:[{id:"warpbound:bolter_guard",count:1},{}]}
+cmd summon minecraft:zombie 20002.2 200 4 {NoAI:1b,Rotation:[90f,0f],HandItems:[{id:"warpbound:chainsword",count:1},{}]}
+cmd item replace entity @s weapon.mainhand with minecraft:air
+wait 10
+shot held_side
+cmd kill @e[type=minecraft:zombie,distance=..8]
+wait 4
+cmd item replace entity @s weapon.mainhand with warpbound:chainsword
+wait 30
+shot sword_idle
+gun rev on
+wait 12
+shot sword_rev
+gun swing
+wait 2
+shot sword_s0_0
+wait 2
+shot sword_s0_1
+wait 2
+shot sword_s0_2
+wait 2
+shot sword_s0_3
+wait 2
+shot sword_s0_4
+wait 2
+shot sword_s0_5
+wait 20
+gun swing
+wait 2
+shot sword_s1_0
+wait 2
+shot sword_s1_1
+wait 2
+shot sword_s1_2
+wait 2
+shot sword_s1_3
+wait 2
+shot sword_s1_4
+wait 2
+shot sword_s1_5
+wait 20
+gun swing
+wait 2
+shot sword_s2_0
+wait 2
+shot sword_s2_1
+wait 2
+shot sword_s2_2
+wait 2
+shot sword_s2_3
+wait 2
+shot sword_s2_4
+wait 2
+shot sword_s2_5
+wait 20
+gun rev off
+camera front
+wait 8
+shot sword_front
+cmd tp @s 20000 200 0 90 0
+wait 6
+shot sword_side
+camera first
+cmd tp @s 20000 200 0 0 0
+wait 6
+cmd item replace entity @s hotbar.1 with warpbound:chainsword
+cmd item replace entity @s hotbar.2 with warpbound:bolter_guard
 cmd item replace entity @s weapon.mainhand with warpbound:lasgun[warpbound:gun_ammo=12]
 wait 4
 press inventory

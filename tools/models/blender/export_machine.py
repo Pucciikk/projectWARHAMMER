@@ -45,14 +45,46 @@ def _gather(scene, skip=("WB_Key", "WB_Fill"), locators=()):
     return bones, bm
 
 
-def _bake_atlas(scene, atlas, name):
-    """Цвет, затенение по углам (AO) и свечение одним проходом Cycles по развёртке."""
+def _studio_world():
+    """Студийный свет для запечки бликов: яркий верх, тёмный низ, светлая полоса сбоку. Отражение зависит только от нормали, поэтому работает как матовый снимок металла."""
+    w = bpy.data.worlds.get("WB_GunStudio") or bpy.data.worlds.new("WB_GunStudio")
+    w.use_nodes = True
+    nt = w.node_tree
+    nt.nodes.clear()
+    out = nt.nodes.new("ShaderNodeOutputWorld")
+    bg = nt.nodes.new("ShaderNodeBackground")
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+    ramp = nt.nodes.new("ShaderNodeValToRGB")
+    ramp.color_ramp.elements[0].position = 0.0
+    ramp.color_ramp.elements[0].color = (0.03, 0.03, 0.035, 1)
+    ramp.color_ramp.elements[1].position = 1.0
+    ramp.color_ramp.elements[1].color = (1.5, 1.5, 1.6, 1)
+    mid = ramp.color_ramp.elements.new(0.52)
+    mid.color = (0.3, 0.31, 0.34, 1)
+    mid = ramp.color_ramp.elements.new(0.62)
+    mid.color = (1.0, 1.0, 1.04, 1)
+    mid = ramp.color_ramp.elements.new(0.72)
+    mid.color = (0.4, 0.41, 0.45, 1)
+    remap = nt.nodes.new("ShaderNodeMapRange")
+    remap.inputs["From Min"].default_value = -1
+    remap.inputs["From Max"].default_value = 1
+    nt.links.new(tc.outputs["Generated"], sep.inputs[0])
+    nt.links.new(sep.outputs["Z"], remap.inputs["Value"])
+    nt.links.new(remap.outputs[0], ramp.inputs["Fac"])
+    nt.links.new(ramp.outputs[0], bg.inputs[0])
+    nt.links.new(bg.outputs[0], out.inputs[0])
+    return w
+
+
+def _bake_atlas(scene, atlas, name, gloss=False, samples=16):
+    """Цвет, затенение по углам (AO) и свечение одним проходом Cycles по развёртке. gloss: ещё и отражения студии, для вещей, которые видно вплотную."""
     try:
         scene.render.engine = "CYCLES"
     except TypeError as e:
         raise RuntimeError(f"нужен Cycles: {e}")
     scene.cycles.device = "CPU"
-    scene.cycles.samples = 16
+    scene.cycles.samples = samples
     scene.cycles.use_denoising = False
     scene.render.bake.margin = 6
     scene.render.bake.use_clear = True
@@ -78,6 +110,12 @@ def _bake_atlas(scene, atlas, name):
         img.pixels.foreach_get(px)
         return px.reshape(BAKE_SIZE[0], BAKE_SIZE[0], 4)
 
+    reflect = None
+    if gloss:
+        keep_world = scene.world
+        scene.world = _studio_world()
+        reflect = bake("gloss", "GLOSSY", pass_filter={"DIRECT", "INDIRECT", "COLOR"})
+        scene.world = keep_world
     metals = {}
     for mat in atlas.data.materials:                      # цвет металла иначе запечётся чёрным
         p = next(n for n in mat.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
@@ -120,7 +158,7 @@ def _bake_atlas(scene, atlas, name):
         n = mat.node_tree.nodes.get("WB_Target")
         if n:
             mat.node_tree.nodes.remove(n)
-    return color, ao, emit, edge
+    return color, ao, emit, edge, reflect
 
 
 def _to_srgb(linear):
@@ -137,8 +175,8 @@ def _save(rgba, path):
     bpy.data.images.remove(img)
 
 
-def machine_export(name, tracks, length, core_offset_y=1.0, idle=None, size=1024, work_name="work.active", work_loop=True, folder="block", locators=()):
-    """work_name и work_loop: ручной пресс бьёт одним ударом по триггеру (work.strike), а не крутит цикл."""
+def machine_export(name, tracks, length, core_offset_y=1.0, idle=None, size=1024, work_name="work.active", work_loop=True, folder="block", locators=(), gloss=False, samples=16):
+    """work_name и work_loop: ручной пресс бьёт одним ударом по триггеру (work.strike), а не крутит цикл. gloss и samples: для оружия, которое видно вплотную."""
     BAKE_SIZE[0] = size
     scene = bpy.context.scene
     bones, bm = _gather(scene, locators=locators)
@@ -162,13 +200,15 @@ def machine_export(name, tracks, length, core_offset_y=1.0, idle=None, size=1024
     bpy.ops.uv.smart_project(angle_limit=math.radians(40), island_margin=0.006, scale_to_bounds=True)
     bpy.ops.object.mode_set(mode="OBJECT")
 
-    color, ao, emit, edge = _bake_atlas(work, atlas, name)
+    color, ao, emit, edge, reflect = _bake_atlas(work, atlas, name, gloss, samples)
     # в игре нет теней от модели: углы затемняем в самой текстуре
     shade = 0.32 + 0.68 * np.clip(ao[..., :1], 0, 1)
     mask = (emit[..., :3].max(axis=2) > 0.02).astype(np.float32)
     # свечение ложится на цвет сложением: под ним основа тёмная, иначе огонь уходит в жёлтый и белый
     wear = np.clip(edge[..., :1] * 7, 0, 1)
     lit = color[..., :3] * shade * EXPOSURE
+    if reflect is not None:
+        lit = lit * 0.65 + reflect[..., :3] * shade * 0.65
     lit = lit * (1 + 1.3 * wear) + 0.025 * wear     # кромки стёрты до светлого металла: так форма читается без бликов
     rgb = _to_srgb(lit) * (1 - 0.8 * mask[..., None])
     base = np.dstack((rgb, np.ones(rgb.shape[:2])))

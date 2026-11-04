@@ -135,6 +135,13 @@ public class WarpboundDataGenerator implements DataGeneratorEntrypoint {
             builder.add("entity.warpbound.las_bolt", "Лазерный импульс");
             builder.add("entity.warpbound.bolt_round", "Болт");
             builder.add("item.warpbound.chainsword", "Цепной меч");
+            builder.add("entity.warpbound.dread_castraferrum", "Дредноут-саркофаг");
+            builder.add("key.warpbound.dread_shove", "Дредноут: толчок клешнёй");
+            builder.add("hud.warpbound.dread.ammo", "БОЛТЫ");
+            builder.add("hud.warpbound.dread.fuel", "ПРОМЕТИЙ");
+            builder.add("hud.warpbound.dread.armor", "БРОНЯ");
+            builder.add("hud.warpbound.dread.no_fuel", "ПРОМЕТИЙ ИСЧЕРПАН");
+            builder.add("hud.warpbound.dread.no_ammo", "БОЛТЫ ИСЧЕРПАНЫ");
             builder.add("item.warpbound.flak_helmet", "Флак-шлем");
             builder.add("item.warpbound.flak_chestplate", "Флак-жилет");
             builder.add("item.warpbound.flak_leggings", "Флак-штаны");
@@ -517,6 +524,13 @@ public class WarpboundDataGenerator implements DataGeneratorEntrypoint {
             builder.add("entity.warpbound.las_bolt", "Las Bolt");
             builder.add("entity.warpbound.bolt_round", "Bolt Round");
             builder.add("item.warpbound.chainsword", "Chainsword");
+            builder.add("entity.warpbound.dread_castraferrum", "Sarcophagus Dreadnought");
+            builder.add("key.warpbound.dread_shove", "Dreadnought: claw shove");
+            builder.add("hud.warpbound.dread.ammo", "BOLTS");
+            builder.add("hud.warpbound.dread.fuel", "PROMETHIUM");
+            builder.add("hud.warpbound.dread.armor", "ARMOUR");
+            builder.add("hud.warpbound.dread.no_fuel", "PROMETHIUM EXHAUSTED");
+            builder.add("hud.warpbound.dread.no_ammo", "BOLTS EXHAUSTED");
             builder.add("item.warpbound.flak_helmet", "Flak Helmet");
             builder.add("item.warpbound.flak_chestplate", "Flak Vest");
             builder.add("item.warpbound.flak_leggings", "Flak Trousers");

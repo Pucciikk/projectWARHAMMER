@@ -28,6 +28,14 @@ public final class DreadnoughtFx {
         DreadnoughtEntity.stepListener = DreadnoughtFx::onStep;
     }
 
+    /** Толчок камеры от чужой техники: сила 0..1 уже с учётом того, кто смотрит. */
+    public static void kick(float amount) {
+        Minecraft mc = Minecraft.getInstance();
+        Entity viewer = mc.getCameraEntity();
+        // пилота трясёт полностью; остальные здесь не считаются: тряска только в кабине
+        if (viewer != null && viewer.getVehicle() instanceof dev.warpbound.entity.dreadnought.concept.DreadConceptEntity) shake = Math.max(shake, amount);
+    }
+
     private static void onStep(DreadnoughtEntity e, boolean rightFoot) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) {

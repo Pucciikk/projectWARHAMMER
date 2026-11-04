@@ -24,7 +24,7 @@ BATCH = {
 }
 
 
-GUNS = {"lasgun": "lasgun_3d", "bolter": "bolter_3d"}
+GUNS = {"lasgun": "lasgun_3d", "bolter": "bolter_3d", "chainsword": "chainsword_3d"}
 
 
 def run_gun(*names):
@@ -36,7 +36,7 @@ def run_gun(*names):
             exec(open(os.path.join(HERE, "guns", n + ".py"), encoding="utf-8").read(), ns)
             exec(open(os.path.join(HERE, "export_machine.py"), encoding="utf-8").read(), ns)
             model = GUNS[n]
-            ns["machine_export"](model, {}, 1.0, core_offset_y=0.0, size=2048, folder="item", locators=("arm_r", "arm_l", "muzzle", "eject"))
+            ns["machine_export"](model, {}, 1.0, core_offset_y=0.0, size=2048, folder="item", locators=("arm_r", "arm_l", "muzzle", "eject", "exhaust"), gloss=True, samples=32)
             ns["export_clips"](model, ns["CLIPS"])
             print(n, "готово за", round(time.time() - t), "с")
         except Exception:

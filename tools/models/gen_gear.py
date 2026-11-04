@@ -245,7 +245,6 @@ def respirator():
 
 
 if __name__ == "__main__":
-    lasgun()
-    chainsword()
+    # лазган, болтер и цепной меч теперь настоящие меши: tools/models/blender/guns/, выгрузка export_batch.run_gun
     flak_armor()
     respirator()

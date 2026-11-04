@@ -18,3 +18,5 @@ previews/
 # Исходные 3D-модели автора (большие, не в git)
 references/
 tools/sounds/wav/
+tools/sounds/game/
+tools/sounds/wav_dread/

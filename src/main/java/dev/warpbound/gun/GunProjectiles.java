@@ -68,20 +68,6 @@ public final class GunProjectiles {
             level.playSound(null, at.x, at.y, at.z, WarpboundSounds.GUN_BOLT_EXPLODE, SoundSource.PLAYERS, 1.3f, 0.9f + level.random.nextFloat() * 0.2f);
         }
 
-        /** Дымный след: частицы по пути за тик, иначе при такой скорости след рвётся на отдельные клочки. */
-        @Override
-        public void tick() {
-            Vec3 from = position();
-            super.tick();
-            if (level().isClientSide && isAlive() && tickCount > 1) {
-                Vec3 step = position().subtract(from);
-                for (int i = 0; i < 3; i++) {
-                    Vec3 p = from.add(step.scale(i / 3.0));
-                    level().addParticle(ParticleTypes.SMOKE, p.x, p.y, p.z, 0, 0.01, 0);
-                }
-            }
-        }
-
         @Override
         protected void impactBlock(ServerLevel level, BlockHitResult hit) {
             explode(level, hit.getLocation(), Vec3.atLowerCornerOf(hit.getDirection().getNormal()), level.getBlockState(hit.getBlockPos()));

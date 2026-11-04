@@ -3,6 +3,16 @@ package dev.warpbound.client.gun;
 import com.mojang.blaze3d.platform.InputConstants;
 import dev.warpbound.Warpbound;
 import dev.warpbound.gun.GunItem;
+import dev.warpbound.gun.GunProjectile;
+import dev.warpbound.gun.GunProjectiles;
+import dev.warpbound.gun.GunSpec;
+import dev.warpbound.network.GunSpecSyncPayload;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
+import java.util.Map;
 import dev.warpbound.network.GunActionPayload;
 import dev.warpbound.network.GunFxPayload;
 import dev.warpbound.network.GunHitPayload;
@@ -32,6 +42,10 @@ public final class GunClient {
     private static final ResourceLocation AIM_SLOW = Warpbound.id("gun_aim_slow");
     public static final KeyMapping RELOAD = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.warpbound.reload", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_R, "key.categories.warpbound"));
 
+    /** Числа оружия от сервера. */
+    private static Map<ResourceLocation, GunSpec> SPECS = Map.of();
+    /** Предсказанные снаряды живут только на этом клиенте: номера не пересекаются с серверными. */
+    private static int nextPredictedId = -1_000_000;
     private static GunItem held;
     private static int heldSlot = -1;
     /** Время в тиках игры, когда началось действие; меньше нуля — не идёт. */
@@ -65,14 +79,17 @@ public final class GunClient {
             hitHead = payload.head();
             playLocal(GunClips.sound("hit_marker"), payload.killed() ? 0.9f : 0.6f, payload.head() ? 1.4f : 1.0f);
         });
+        GunProjectile.LOCAL_OWNER = e -> e == Minecraft.getInstance().player;
+        ClientPlayNetworking.registerGlobalReceiver(GunSpecSyncPayload.TYPE, (payload, context) -> SPECS = payload.specs());
         ClientPlayNetworking.registerGlobalReceiver(GunFxPayload.TYPE, (payload, context) -> {
             Minecraft mc = context.client();
             if (mc.level == null) return;
             Entity shooter = mc.level.getEntity(payload.shooter());
             if (shooter == null) return;
-            Vec3 m = GunView.approxMuzzle(shooter, 1f);
+            Vec3 m = GunRenderer.worldMuzzle(shooter, 1f);
             mc.level.addParticle(ParticleTypes.SMOKE, m.x, m.y, m.z, 0, 0.02, 0);
             mc.level.addParticle(ParticleTypes.FLAME, m.x, m.y, m.z, 0, 0, 0);
+            GunRenderer.markFlash(payload.shooter());
         });
     }
 
@@ -183,13 +200,65 @@ public final class GunClient {
         if (autoShots > 0) autoShots--;
         pending++;
         player.setSprinting(false);
-        ClientPlayNetworking.send(new GunActionPayload(GunActionPayload.FIRE, aimKey));
+        fireProjectile(mc, player, gun);
         fireAt = now(mc);
         bloom = Math.min(1, bloom + (gun.mechanics.kind() == GunItem.Kind.LAS ? 0.22f : 0.38f));
         GunView.onShot(visual, player);
         boolean las = gun.mechanics.kind() == GunItem.Kind.LAS;
         String name = (las ? "las_fire" : "bolter_fire");
         playLocal(GunClips.sound(name), las ? 0.75f : 1.15f, 0.97f + player.getRandom().nextFloat() * 0.06f);
+    }
+
+    /**
+     * Разброс считаем здесь и сообщаем серверу готовое направление. Снаряд стрелка появляется сразу у дула на экране и летит в точку под прицелом, ответа сервера не ждёт.
+     */
+    private static void fireProjectile(Minecraft mc, LocalPlayer player, GunItem gun) {
+        GunSpec spec = spec(gun);
+        Vec3 look = player.getViewVector(1f), eye = player.getEyePosition(1f);
+        double moving = player.getDeltaMovement().horizontalDistanceSqr() > 0.002 ? 1.6 : 1.0;
+        double spread = Math.toRadians(aimKey ? spec.spreadAim() : spec.spreadHip() * moving);
+        var r = player.getRandom();
+        double angle = r.nextDouble() * Math.PI * 2, dist = Math.sqrt(r.nextDouble()) * spread;
+        Vec3 worldUp = Math.abs(look.y) > 0.95 ? new Vec3(1, 0, 0) : new Vec3(0, 1, 0);
+        Vec3 right = look.cross(worldUp).normalize(), up = right.cross(look).normalize();
+        Vec3 aimDir = look.add(right.scale(Math.cos(angle) * dist)).add(up.scale(Math.sin(angle) * dist)).normalize();
+        ClientPlayNetworking.send(new GunActionPayload(GunActionPayload.FIRE, aimKey, (float) aimDir.x, (float) aimDir.y, (float) aimDir.z));
+
+        // куда смотрит прицел: блок, существо или просто даль
+        var level = mc.level;
+        Vec3 far = eye.add(aimDir.scale(spec.speed() * spec.lifeTicks()));
+        var block = level.clip(new ClipContext(eye, far, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
+        Vec3 target = block.getType() == HitResult.Type.MISS ? far : block.getLocation();
+        var entity = ProjectileUtil.getEntityHitResult(level, player, eye, target, new AABB(eye, target).inflate(1),
+                e -> e != player && e.isAlive() && e.isPickable() && !e.isSpectator(), 0.2f);
+        if (entity != null) target = entity.getLocation();
+
+        Vec3 muzzle = mc.options.getCameraType().isFirstPerson() ? GunView.muzzleWorld(mc, 1f) : GunRenderer.worldMuzzle(player, 1f);
+        if (level.clip(new ClipContext(eye, muzzle, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player)).getType() != HitResult.Type.MISS) muzzle = eye;
+        Vec3 dir = target.subtract(muzzle);
+        dir = dir.lengthSqr() < 0.04 ? aimDir : dir.normalize();
+
+        GunProjectile p = gun.mechanics.kind() == GunItem.Kind.LAS ? GunProjectiles.LAS_BOLT.create(level) : GunProjectiles.BOLT_ROUND.create(level);
+        if (p == null) return;
+        p.predicted = true;
+        p.origin = muzzle;
+        p.setId(nextPredictedId--);
+        p.setOwner(player);
+        p.configure(spec);
+        p.setPos(muzzle.x, muzzle.y, muzzle.z);
+        p.setOldPosAndRot();
+        p.setDeltaMovement(dir.scale(spec.muzzleSpeed()));
+        level.addEntity(p);
+        // сразу один шаг: кадр рисует путь от дула к следующей точке, снаряд не стоит на месте до конца тика.
+        // при tickCount == 0 рендер сбросил бы старую позицию на текущую, и снаряд появился бы уже впереди дула
+        p.tickCount = 1;
+        p.tick();
+        GunRenderer.markFlash(player.getId());
+    }
+
+    private static GunSpec spec(GunItem gun) {
+        GunSpec s = SPECS.get(BuiltInRegistries.ITEM.getKey(gun));
+        return s != null ? s : GunSpec.FALLBACK;
     }
 
     private static void startReload(Minecraft mc, LocalPlayer player, GunItem gun, ItemStack stack, GunVisual visual) {
@@ -199,7 +268,7 @@ public final class GunClient {
             playLocal(GunClips.sound("gun_dry"), 0.7f, 0.8f);
             return;
         }
-        ClientPlayNetworking.send(new GunActionPayload(GunActionPayload.RELOAD, false));
+        ClientPlayNetworking.send(new GunActionPayload(GunActionPayload.RELOAD, false, 0, 0, 0));
         reloadAt = mc.level.getGameTime();
         eventCursor = 0;
     }
@@ -244,6 +313,10 @@ public final class GunClient {
             case "reload" -> {
                 if (held != null && mc.player != null) startReload(mc, mc.player, held, mc.player.getMainHandItem(), GunVisual.of(held));
             }
+            case "swing" -> {
+                if (mc.player != null) mc.player.swing(net.minecraft.world.InteractionHand.MAIN_HAND);
+            }
+            case "rev" -> ChainswordClient.autoRev(parts.length > 1 && parts[1].equals("on"));
             default -> throw new IllegalArgumentException(arg);
         }
     }

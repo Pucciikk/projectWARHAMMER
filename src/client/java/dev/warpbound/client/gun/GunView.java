@@ -33,18 +33,14 @@ import org.joml.Vector3f;
  * Руки — настоящие руки игрока со скином: кости arm_r и arm_l только говорят, где им быть.
  */
 public final class GunView {
-    private static final float ARM_SCALE = 0.7f;
+    private static final float ARM_SCALE = 0.7f, ARM_STRETCH = 2.1f;
     private static final float[] VIEW = new float[6], SEC = new float[1];
-    /** Вспышки: несколько вариантов, чтобы каждый выстрел выглядел иначе. */
-    private static final ResourceLocation[] FLASH_LAS = {Warpbound.id("textures/effect/flash_las_0.png"), Warpbound.id("textures/effect/flash_las_1.png")};
-    private static final ResourceLocation[] FLASH_BOLT = {Warpbound.id("textures/effect/flash_bolt_0.png"), Warpbound.id("textures/effect/flash_bolt_1.png")};
 
     // ---- пружины отдачи: x — смещение, v — скорость
     private static float backX, backV, pitchX, pitchV, rollX, rollV, sideX, sideV;
     // ---- подъём камеры: сколько ещё прибавить за кадры и сколько вернуть
     private static float camUpLeft, camSideLeft, camReturn;
     private static float flashLeft;
-    private static int flashVariant;
     private static float flashSpin;
     /** Для снимков автотеста: вспышка живёт дольше одного кадра. */
     static boolean holdFlash;
@@ -67,18 +63,13 @@ public final class GunView {
         camUpLeft += v.camUp() * (0.85f + r.nextFloat() * 0.3f);
         camSideLeft += (r.nextFloat() - 0.5f) * v.camSide();
         flashLeft = 0.055f;
-        flashVariant = r.nextInt(2);
-        flashSpin = r.nextFloat() * 360;
+                flashSpin = r.nextFloat() * 360;
         Vec3 m = muzzleWorld(Minecraft.getInstance(), 1f);
         var level = player.level();
-        level.addParticle(ParticleTypes.SMOKE, m.x, m.y, m.z, 0, 0.015, 0);
         if (v.casing()) {
             Vec3 e = viewToWorld(Minecraft.getInstance(), EJECT_VIEW);
             Vec3 side = Vec3.directionFromRotation(0, player.getYRot() + 90);
             level.addParticle(WarpboundParticles.GUN_CASING, e.x, e.y, e.z, side.x * 0.13 + player.getDeltaMovement().x, 0.14, side.z * 0.13 + player.getDeltaMovement().z);
-            level.addParticle(ParticleTypes.LARGE_SMOKE, m.x, m.y, m.z, 0, 0.02, 0);
-        } else {
-            level.addParticle(ParticleTypes.ELECTRIC_SPARK, m.x, m.y, m.z, 0, 0.02, 0);
         }
     }
 
@@ -192,14 +183,19 @@ public final class GunView {
         GunRenderer.viewPass = false;
         pose.popPose();
         // руки и вспышка — уже по позициям костей
-        renderArm(player, buffers, pose, shown, "arm_r", true);
-        renderArm(player, buffers, pose, shown, "arm_l", false);
+        renderArm(player, buffers, shown, "arm_r", true);
+        renderArm(player, buffers, shown, "arm_l", false);
         Matrix4f muzzle = GunRenderer.CAPTURED.get("muzzle");
         Matrix4f eject = GunRenderer.CAPTURED.get("eject");
         // за пределами этого метода матрицы не живут: координаты камеры считаем сейчас, с учётом обратного вида
         if (muzzle != null) muzzle.getTranslation(MUZZLE_VIEW);
         if (eject != null) eject.getTranslation(EJECT_VIEW);
-        if (flashLeft > 0 && muzzle != null) renderFlash(muzzle, gun, v, buffers);
+        if (flashLeft > 0 && muzzle != null) {
+            PoseStack fp = new PoseStack();
+            fp.last().pose().set(muzzle);
+            fp.last().normal().set(GunRenderer.CAPTURED_NORMAL.get("muzzle"));
+            ShotMesh.flash(buffers, fp.last(), gun.mechanics.kind() == GunItem.Kind.LAS, v.flash(), Math.min(1, flashLeft / 0.055f), flashSpin);
+        }
         if (holdFlash && GunRenderer.CAPTURED.isEmpty()) Warpbound.LOG.warn("gun: кости-точки не захвачены");
         pose.popPose();
     }
@@ -209,7 +205,7 @@ public final class GunView {
     }
 
     @SuppressWarnings("unchecked")
-    private static void renderArm(AbstractClientPlayer player, MultiBufferSource buffers, PoseStack base, int light, String name, boolean right) {
+    static void renderArm(AbstractClientPlayer player, MultiBufferSource buffers, int light, String name, boolean right) {
         Matrix4f m = GunRenderer.CAPTURED.get(name);
         Matrix3f n = GunRenderer.CAPTURED_NORMAL.get(name);
         if (m == null) return;
@@ -227,7 +223,9 @@ public final class GunView {
         // рука модели идёт сверху вниз (+Y к кисти): разворачиваем так, чтобы кисть была в точке кости, а локоть уходил к стрелку
         p.mulPose(Axis.XP.rotationDegrees(-90));
         // кисть в середине ладони: у модели игрока это y = 11, x около ±1 пикселя
-        p.translate(right ? 1 / 16f : -1 / 16f, -11 / 16f, 0);
+        p.translate(right ? 1 / 16f : -1 / 16f, -11 / 16f * ARM_STRETCH, 0);
+        // модель руки короче настоящей: без растяжки за кистью виден её срез, а не плечо за краем экрана
+        p.scale(0.82f, ARM_STRETCH, 0.82f);
         for (ModelPart part : new ModelPart[]{arm, sleeve}) {
             part.setPos(0, 0, 0);
             part.setRotation(0, 0, 0);
@@ -242,35 +240,6 @@ public final class GunView {
         sleeve.setRotation(srx, sry, srz);
     }
 
-    /** Звезда вспышки смотрит в камеру, язык пламени вытянут вдоль ствола. */
-    private static void renderFlash(Matrix4f muzzle, GunItem gun, GunVisual v, MultiBufferSource buffers) {
-        boolean las = gun.mechanics.kind() == GunItem.Kind.LAS;
-        ResourceLocation tex = (las ? FLASH_LAS : FLASH_BOLT)[flashVariant];
-        VertexConsumer vc = buffers.getBuffer(RenderType.eyes(tex));
-        Vector3f at = muzzle.getTranslation(new Vector3f());
-        float s = v.flash() * (0.8f + 0.5f * (flashLeft / 0.055f));
-        float c = Mth.cos(flashSpin * Mth.DEG_TO_RAD) * s, d = Mth.sin(flashSpin * Mth.DEG_TO_RAD) * s;
-        PoseStack.Pose id = new PoseStack().last();
-        quad(vc, id, at.x - c + d, at.y - d - c, at.z, at.x + c + d, at.y + d - c, at.z, at.x + c - d, at.y + d + c, at.z, at.x - c - d, at.y - d + c, at.z);
-        // язык вдоль ствола: виден, когда смотрим сбоку от бедра
-        Vector3f forward = muzzle.transformDirection(new Vector3f(0, 0, -1)).normalize();
-        Vector3f tip = new Vector3f(at).add(new Vector3f(forward).mul(s * 1.6f));
-        Vector3f side = new Vector3f(forward).cross(new Vector3f(at).normalize()).normalize().mul(s * 0.45f);
-        quad(vc, id, at.x - side.x, at.y - side.y, at.z - side.z, at.x + side.x, at.y + side.y, at.z + side.z,
-                tip.x + side.x, tip.y + side.y, tip.z + side.z, tip.x - side.x, tip.y - side.y, tip.z - side.z);
-    }
-
-    private static void quad(VertexConsumer vc, PoseStack.Pose p, float x0, float y0, float z0, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3) {
-        vertex(vc, p, x0, y0, z0, 0, 1);
-        vertex(vc, p, x1, y1, z1, 1, 1);
-        vertex(vc, p, x2, y2, z2, 1, 0);
-        vertex(vc, p, x3, y3, z3, 0, 0);
-    }
-
-    private static void vertex(VertexConsumer vc, PoseStack.Pose p, float x, float y, float z, float u, float v) {
-        vc.addVertex(p, x, y, z).setColor(255, 255, 255, 255).setUv(u, v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(LightTexture.FULL_BRIGHT).setNormal(p, 0, 1, 0);
-    }
-
     // ---------------------------------------------------------------- из камеры в мир
 
     /** У рук своя ширина угла зрения (70°), у мира — настройка игрока: координаты надо пересчитать, чтобы точка осталась на том же месте экрана. */
@@ -278,10 +247,14 @@ public final class GunView {
         Camera cam = mc.gameRenderer.getMainCamera();
         double worldFov = mc.options.fov().get() * player(mc);
         float k = (float) (Math.tan(Math.toRadians(worldFov) / 2) / Math.tan(Math.toRadians(70) / 2));
-        Vector3f p = new Vector3f(v.x * k, v.y * k, v.z);
-        // камера смотрит в -Z своего пространства
-        cam.rotation().transform(p);
-        return cam.getPosition().add(p.x, p.y, p.z);
+        // матрица рук в 1.21 уже содержит обратный поворот камеры: v — смещение от камеры в осях мира, поворачивать его ещё раз нельзя.
+        // раскладываем по векторам камеры только затем, чтобы поправка угла зрения легла на боковые оси, а не на глубину
+        Vector3f look = cam.getLookVector(), up = cam.getUpVector(), left = cam.getLeftVector();
+        float ahead = v.dot(look), high = v.dot(up) * k, side = -v.dot(left) * k;
+        return cam.getPosition().add(
+                look.x() * ahead + up.x() * high - left.x() * side,
+                look.y() * ahead + up.y() * high - left.y() * side,
+                look.z() * ahead + up.z() * high - left.z() * side);
     }
 
     private static double player(Minecraft mc) {

@@ -55,7 +55,13 @@ public class HitboxPart extends Entity {
 
     @Override
     public boolean isPickable() {
-        return true;
+        return host.isAlive();
+    }
+
+    /** Части твёрдые, как и хозяин: нельзя пройти сквозь руку или ногу. */
+    @Override
+    public boolean canBeCollidedWith() {
+        return host.canBeCollidedWith();
     }
 
     @Nullable
