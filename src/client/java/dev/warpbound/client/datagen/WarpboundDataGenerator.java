@@ -136,6 +136,8 @@ public class WarpboundDataGenerator implements DataGeneratorEntrypoint {
             builder.add("entity.warpbound.bolt_round", "Болт");
             builder.add("item.warpbound.chainsword", "Цепной меч");
             builder.add("entity.warpbound.dread_castraferrum", "Дредноут-саркофаг");
+            builder.add("entity.warpbound.astartes", "Астартес");
+            builder.add("entity.warpbound.thunder_warrior", "Громовой воин");
             builder.add("key.warpbound.dread_shove", "Дредноут: толчок клешнёй");
             builder.add("hud.warpbound.dread.ammo", "БОЛТЫ");
             builder.add("hud.warpbound.dread.fuel", "ПРОМЕТИЙ");
@@ -525,6 +527,8 @@ public class WarpboundDataGenerator implements DataGeneratorEntrypoint {
             builder.add("entity.warpbound.bolt_round", "Bolt Round");
             builder.add("item.warpbound.chainsword", "Chainsword");
             builder.add("entity.warpbound.dread_castraferrum", "Sarcophagus Dreadnought");
+            builder.add("entity.warpbound.astartes", "Astartes");
+            builder.add("entity.warpbound.thunder_warrior", "Thunder Warrior");
             builder.add("key.warpbound.dread_shove", "Dreadnought: claw shove");
             builder.add("hud.warpbound.dread.ammo", "BOLTS");
             builder.add("hud.warpbound.dread.fuel", "PROMETHIUM");

@@ -20,3 +20,6 @@ references/
 tools/sounds/wav/
 tools/sounds/game/
 tools/sounds/wav_dread/
+
+# загрузки автора с исходниками моделей: тяжёлые, в git не нужны
+conceptARMOR/

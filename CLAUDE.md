@@ -65,6 +65,7 @@ python3 tools/textures/gen_gun_fx.py        # эффекты оружия, sound
 python3 tools/sounds/import_game_sounds.py <vgmstream-cli.exe>  # звуки из папки автора в tools/sounds/game (скачанный vgmstream запускает сам автор: защита не даёт это Claude)
 python3 tools/sounds/mix_game_sounds.py      # сведение в tools/sounds/wav и wav_dread; потом tools/sounds/encode_ogg.py внутри Blender и tools/textures/gen_gun_fx.py (sounds.json)
 python3 tools/sounds/gen_gun_sounds.py       # старый синтез, затрёт сведённые файлы: нужен только для гильз, щелчков, метки попадания
+# Астартес и Громовой воин: tools/models/blender/astartes/astartes.py и thunder_warrior.py внутри Blender, затем facet_export (вызов с параметрами — в начале каждого скрипта). Только четырёхугольники: кольца и коробки (stack_model) и чёткие пиксели. Автору не понравились ни ступеньки вокселей, ни треугольники упрощённого меша
 python3 tools/models/gen_extractor.py       # УСТАРЕЛ, не запускать: старая кубическая модель экстрактора затрёт меш (теперь tools/models/blender/extractor.py)
 python3 tools/models/blender/register_chain.py  # ресурсы машин цепочки: состояния, предмет, лут, шаблон, теги
 # Машины — настоящие меши из Blender: tools/models/blender/<машина>.py + export_machine.py (запускать внутри Blender), MeshModelFactory читает poly_mesh
@@ -84,6 +85,7 @@ python3 tools/industry/loyalist_chain.py [html]  # цепочка лоялист
 ./gradlew runAutotest -Pscenario=gunfly   # снаряд в полёте при замедленном времени (delayshot снимает между тиками) и удары цепного меча
 ./gradlew runAutotest -Pscenario=dread    # дредноут-саркофаг: покой, ходьба, стрельба, удар, упор в узкий проход, смерть (пишет tools/autotest/gen_dread.py)
 ./gradlew runAutotest -Pscenario=factory  # все машины цепочки на мешах и замер FPS (сценарий пишет tools/autotest/gen_factory.py); chain, chain2..5 — по партиям
+./gradlew runAutotest -Pscenario=astartes  # Астартес и Громовой воин: покой, ходьба, бег, удар, смерть (пишет tools/autotest/gen_astartes.py)
 ./gradlew runAutotest -Pscenario=smoke  # клиент сам проходит tools/autotest/smoke.txt, скриншоты в run/screenshots/autotest/
 ./gradlew runAutotest -Pscenario=arrival   # прибытие операторов: челнок, капсула, ритуал
 ./gradlew runAutotest -Pscenario=cruiser   # крейсер на верфи; interior — отсеки и экран пульта; multiblocks — горн, пресс, Кузня
@@ -221,6 +223,8 @@ src/main/resources/data/warpbound/
 - **Дредноут управляемый (4.11.2026):** вид одобрен автором (`/summon warpbound:dread_castraferrum`), ПКМ — сесть, Shift — выйти. Без пилота стоит неподвижно, присев и наклонив корпус (клип `misc.dormant`), мотор и дым выключены. W/S ход, A/D ноги, мышь корпус и пушка, Ctrl бег, ЛКМ пушка, ПКМ клешня, V толчок (`network/DreadControlPayload`, `client/entity/DreadPilotClient`). Кабина от первого лица: `client/entity/DreadCockpitHud`, щель, аквила и приборы `tools/textures/gen_dread_hud.py`, обзор ×0,62. Запасы болтов и прометия в сущности, заправка снаружи ПКМ с `promethium_canister`, `crude_promethium_bucket` или `bolt_magazine`. Скрипт `tools/models/blender/dread/castraferrum.py`, движения `gait.py`: ноги считает обратная кинематика, звук и пыль идут от меток клипа. Шаг 2,04 блока в секунду и бег 4,35 проверены замером; менять их только вместе с `MOVEMENT_SPEED` и константами в `DreadConceptEntity`. Файлы шага обрезаны по моменту удара (`hit_start` в `mix_game_sounds.py`). Старый шагоход `DreadnoughtEntity` автор велел не удалять (4.11.2026), пусть лежит на всякий случай. Нового пока можно вызвать только командой: крафта нет.
 - **Цепной меч:** автор просил держать как обычный меч: в первом лице без руки, поза сверена с ванильным мечом на одном кадре (кончик вверх и вправо, `ChainswordView`); третье лицо — `models/item/chainsword.json`.
 - **Звуки (4.11.2026):** болтер, лазган, цепной меч, снаряды и дредноут переведены на звуки из `D:\\filesFromGWToMeOficial\\extraction_sounds`. Сведение выбирает варианты только по длине и громкости, на слух их оценивает автор. Гильзы и метка попадания остались синтезом.
+
+- **Макеты Астартес и Громового воина (6.11.2026, ждут вердикта автора):** сущности `warpbound:astartes` и `warpbound:thunder_warrior`, общий скелет и клипы (`tools/models/blender/astartes/biped_gait.py`). Форма только из четырёхугольников: кольца и коробки (`stack_model`), чёткие пиксели (`facet_export`). Упрощённые меши с треугольниками автор отверг. Дальше: вернуть детали блоками и пикселями, переделать шлем воина и знамя, отделить оружие от рук воина, потом перенос на игрока.
 
 **Не проверено:** оружие и дредноут на выделенном сервере, звуки на слух, удар игрока по отдельным хитбоксам. **Не сделано:** звук перезарядки для других игроков, вспышка у дула дредноутов, идеи для выживания и из вахи (автор просил подумать).
 

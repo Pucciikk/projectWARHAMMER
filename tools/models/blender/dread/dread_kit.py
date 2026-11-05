@@ -171,6 +171,78 @@ def cluster(me, cell, materials):
     return _mesh("tmp", nv, nt[ok], mi[ok], materials)
 
 
+def _densify(verts, tris, size, max_edge):
+    """Делит пополам по длинной стороне все грани длиннее max_edge. Только для запекания: стыки тут не важны."""
+    v, t, s = verts, tris, size
+    for _ in range(12):
+        a, b, c_ = v[t[:, 0]], v[t[:, 1]], v[t[:, 2]]
+        edges = np.stack((np.linalg.norm(a - b, axis=1), np.linalg.norm(b - c_, axis=1), np.linalg.norm(c_ - a, axis=1)), axis=1)
+        longest = edges.argmax(axis=1)
+        big = edges.max(axis=1) > max_edge
+        if not big.any():
+            break
+        tb, lb = t[big], longest[big]
+        rows = np.arange(len(tb))
+        p0, p1, p2 = tb[rows, lb], tb[rows, (lb + 1) % 3], tb[rows, (lb + 2) % 3]
+        mids = (v[p0] + v[p1]) / 2
+        m_i = np.arange(len(v), len(v) + len(mids))
+        v = np.concatenate((v, mids))
+        t = np.concatenate((t[~big], np.stack((p0, m_i, p2), axis=1), np.stack((m_i, p1, p2), axis=1)))
+        s = np.concatenate((s[~big], s[big], s[big]))
+    return v, t, s
+
+
+def cut(point, normal, plus, minus, cap=True):
+    """Узел дерева разрезов: plus — куда идёт сторона по нормали, minus — обратная. Листья — имена костей. cap=False для разреза, который потом срастается (таз по оси X)."""
+    return (tuple(point), tuple(normal), plus, minus, cap)
+
+
+def _bm_from(verts, tris):
+    bm = bmesh.new()
+    vs = [bm.verts.new(v) for v in verts.tolist()]
+    bm.verts.ensure_lookup_table()
+    for a, b, c_ in tris.tolist():
+        try:
+            bm.faces.new((vs[a], vs[b], vs[c_]))
+        except ValueError:
+            pass
+    return bm
+
+
+def _split_tree(verts, tris, tree):
+    """Режет замкнутую оболочку плоскостями. Срезы плоские, поэтому заливка не даёт шипов, а кость остаётся цельным телом."""
+    out = {}
+
+    def add(name, bm):
+        bmesh.ops.triangulate(bm, faces=[f for f in bm.faces if len(f.verts) > 3])
+        v = np.array([x.co[:] for x in bm.verts], dtype=np.float64)
+        bm.verts.index_update()
+        t = np.array([[x.index for x in f.verts] for f in bm.faces], dtype=np.int64).reshape(-1, 3)
+        bm.free()
+        if len(t) == 0:
+            return
+        if name in out:
+            pv, pt = out[name]
+            out[name] = (np.concatenate((pv, v)), np.concatenate((pt, t + len(pv))))
+        else:
+            out[name] = (v, t)
+
+    def walk(bm, node):
+        if isinstance(node, str):
+            add(node, bm)
+            return
+        point, normal, plus, minus, cap = node
+        other = bm.copy()
+        for mesh, branch, clear_inner in ((bm, plus, True), (other, minus, False)):
+            geom = list(mesh.verts) + list(mesh.edges) + list(mesh.faces)
+            # срез здесь не закрываем: одна кость может собираться из нескольких кусков, стенка внутри сломала бы упрощение. Куски срастаются и закрываются в build
+            bmesh.ops.bisect_plane(mesh, geom=geom, dist=1e-7, plane_co=point, plane_no=normal, clear_inner=clear_inner, clear_outer=not clear_inner)
+            walk(mesh, branch)
+
+    walk(_bm_from(verts, tris), tree)
+    return out
+
+
 class Concept:
     def __init__(self, name, height=3.6):
         self.name, self.height = name, height
@@ -178,28 +250,37 @@ class Concept:
         self.bones = {}   # имя -> (родитель, точка вращения, бюджет граней)
         self.scene = None
         self.objects = {}
+        self.shells = {}
+        self.bone_xform = {}
         self.voxel = 0.016
+        self.symmetric = False    # упрощать зеркально: для симметричных деталей брони
         self.parts = []
 
-    def add_part(self, verts, tris, bone_fn, mat_fn):
-        """verts уже в игровых координатах. bone_fn и mat_fn получают центры граней (N×3) и размер куска каждой грани, возвращают номера."""
+    def add_part(self, verts, tris, bone_fn, mat_fn, voxel=None, max_edge=None, hi_mask=None, low=True):
+        """verts уже в игровых координатах. bone_fn и mat_fn получают центры граней (N×3) и размер куска каждой грани, возвращают номера.
+        max_edge: длинные грани исходника дробятся перед покраской, иначе граница цвета идёт зубцами по треугольникам. На форму не влияет."""
         labels = islands(len(verts), tris)
         size = island_size(verts, labels)
         centers = verts[tris].mean(axis=1)
         face_size = size[labels[tris[:, 0]]]
         offset = sum(len(v) for v in self.verts)
-        self.verts.append(verts)
-        self.tris.append(tris + offset)
-        self.bone_of.append(bone_fn(centers, face_size))
-        self.mat_of.append(mat_fn(centers, face_size))
-        self.sizes.append(face_size)
-        self.parts.append((verts, tris, bone_fn, face_size))
+        # hi_mask: какие грани исходника идут в запекание (остальные заменит другая деталь). low=False: только запекание, без своей оболочки
+        ht0, hs0 = (tris[hi_mask], face_size[hi_mask]) if hi_mask is not None else (tris, face_size)
+        hv, ht, hs = _densify(verts, ht0, hs0, max_edge) if max_edge else (verts, ht0, hs0)
+        self.verts.append(hv)
+        self.tris.append(ht + offset)
+        self.bone_of.append(bone_fn(centers, face_size) if callable(bone_fn) else np.zeros(len(tris), dtype=np.int64))
+        self.mat_of.append(mat_fn(hv[ht].mean(axis=1), hs))
+        self.sizes.append(hs)
+        if low:
+            self.parts.append((verts, tris, bone_fn, face_size, voxel or self.voxel))
 
     def bone(self, name, parent, pivot, budget):
         self.bones[name] = (parent, Vector(pivot), budget)
 
-    def build(self, min_island=0.14):
-        """Сцена с костями низкой детализации и общий меш высокой детализации (упрощён только до разумного размера)."""
+    def build(self, min_island=0.14, cap=False, direct=False, hi_limit=700000):
+        """Сцена с костями низкой детализации и общий меш высокой детализации (упрощён только до разумного размера). cap: закрыть срезы на границах костей, иначе в сгибе видно пустоту.
+        direct: упрощать исходник без воксельной оболочки. Только для чистых моделей из отдельных деталей: зато кромки брони остаются острыми, а не оплывают."""
         verts = np.concatenate(self.verts)
         tris = np.concatenate(self.tris)
         bone_of = np.concatenate(self.bone_of)
@@ -220,6 +301,9 @@ class Concept:
             d = ob.modifiers.new("d", "DECIMATE")
             d.ratio = ratio
             d.use_collapse_triangulate = True
+            if self.symmetric:
+                d.use_symmetry = True
+                d.symmetry_axis = "X"
             bpy.context.view_layer.update()
             dg = bpy.context.evaluated_depsgraph_get()
             out = bpy.data.meshes.new_from_object(ob.evaluated_get(dg))
@@ -231,18 +315,39 @@ class Concept:
         low_v = {i: [] for i in range(len(names))}
         low_t = {i: [] for i in range(len(names))}
         low_n = {i: 0 for i in range(len(names))}
-        for pv, pt, bone_fn, face_size in self.parts:
+        for pv, pt, bone_fn, face_size, part_voxel in self.parts:
             keep = face_size >= min_island
             t = pt[keep]
             used, inv = np.unique(t, return_inverse=True)
-            me = remesh(_mesh("tmp", pv[used], inv.reshape(-1, 3)), self.voxel, sc)
-            rv = np.zeros(len(me.vertices) * 3, dtype=np.float64)
-            me.vertices.foreach_get("co", rv)
-            rv = rv.reshape(-1, 3)
-            me.calc_loop_triangles()
-            rt = np.zeros(len(me.loop_triangles) * 3, dtype=np.int64)
-            me.loop_triangles.foreach_get("vertices", rt)
-            rt = rt.reshape(-1, 3)
+            if direct:
+                rv, rt = pv[used], inv.reshape(-1, 3)
+            else:
+                me = remesh(_mesh("tmp", pv[used], inv.reshape(-1, 3)), part_voxel, sc)
+                rv = np.zeros(len(me.vertices) * 3, dtype=np.float64)
+                me.vertices.foreach_get("co", rv)
+                rv = rv.reshape(-1, 3)
+                me.calc_loop_triangles()
+                rt = np.zeros(len(me.loop_triangles) * 3, dtype=np.int64)
+                me.loop_triangles.foreach_get("vertices", rt)
+                rt = rt.reshape(-1, 3)
+            if cap:
+                # статуи внутри полые: у оболочки появляется вторая, внутренняя поверхность. Она вывернута, объём у неё отрицательный. Без неё срез закрывается сплошным диском, а не двумя кольцами
+                labels = islands(len(rv), rt)
+                a_, b_, c_ = rv[rt[:, 0]], rv[rt[:, 1]], rv[rt[:, 2]]
+                vol = np.einsum("ij,ij->i", a_, np.cross(b_, c_)) / 6
+                totals = np.zeros(labels.max() + 1)
+                np.add.at(totals, labels[rt[:, 0]], vol)
+                keep_t = totals[labels[rt[:, 0]]] > 0
+                print("оболочки: всего", int((np.bincount(labels[rt[:, 0]]) > 0).sum()), "выброшено внутренних", int(((totals < 0)).sum()))
+                used2, inv2 = np.unique(rt[keep_t], return_inverse=True)
+                rv, rt = rv[used2], inv2.reshape(-1, 3)
+            if not callable(bone_fn):      # дерево разрезов: каждая кость получает замкнутый кусок с ровным срезом
+                for bone_name, (bv, bt) in _split_tree(rv, rt, bone_fn).items():
+                    i = names.index(bone_name)
+                    low_v[i].append(bv)
+                    low_t[i].append(bt + low_n[i])
+                    low_n[i] += len(bv)
+                continue
             owner = bone_fn(rv[rt].mean(axis=1), np.full(len(rt), 99.0))
             for i in np.unique(owner):
                 sel = rt[owner == i]
@@ -257,7 +362,25 @@ class Concept:
             if n_in == 0:
                 me = bpy.data.meshes.new(f"{self.name}_{name}")
             else:
-                me = _mesh("tmp", np.concatenate(low_v[i]), np.concatenate(low_t[i]), None, mats)
+                _lv = np.concatenate(low_v[i])
+                if name in self.bone_xform:       # кость целиком поворачивается в нужную позу уже после того, как оболочка вырезана из цельной статуи
+                    _lv = self.bone_xform[name](_lv)
+                me = _mesh("tmp", _lv, np.concatenate(low_t[i]), None, mats)
+                if cap:
+                    bm = bmesh.new()
+                    bm.from_mesh(me)
+                    bmesh.ops.remove_doubles(bm, verts=list(bm.verts), dist=1e-5)
+                    bmesh.ops.holes_fill(bm, edges=[e for e in bm.edges if e.is_boundary], sides=0)
+                    bmesh.ops.triangulate(bm, faces=[f for f in bm.faces if len(f.verts) > 3])
+                    bm.to_mesh(me)
+                    bm.free()
+                # оболочка кости целиком: из неё блочная версия (astartes/voxel_kit.py) строит воксели
+                _sv = np.zeros(len(me.vertices) * 3, dtype=np.float64)
+                me.vertices.foreach_get("co", _sv)
+                me.calc_loop_triangles()
+                _st = np.zeros(len(me.loop_triangles) * 3, dtype=np.int64)
+                me.loop_triangles.foreach_get("vertices", _st)
+                self.shells[name] = (_sv.reshape(-1, 3), _st.reshape(-1, 3))
                 for _ in range(3):
                     if len(me.polygons) <= budget * 1.05:
                         break
@@ -291,8 +414,8 @@ class Concept:
                 ob.matrix_parent_inverse = self.objects[p].matrix_world.inverted()
         # высокая детализация для запекания
         hi = _mesh(self.name + "_hi", verts, tris, mat_of, mats)
-        if len(tris) > 700000:
-            hi = decimate(hi, 700000 / len(tris), "hi_tmp")
+        if len(tris) > hi_limit:
+            hi = decimate(hi, hi_limit / len(tris), "hi_tmp")
         self.hi = hi
         self.verts, self.tris, self.bone_of, self.mat_of, self.sizes, self.parts = [], [], [], [], [], []
         return sc
@@ -317,8 +440,8 @@ def _blur(a, r):
     return out
 
 
-def bake_export(c, size=2048, samples=20, tracks=None):
-    """Развёртка, запекание с высокой детализации на низкую, цвет с подсветкой из нормалей, файлы мода."""
+def bake_export(c, size=2048, samples=20, tracks=None, cage=0.03, ray=0.08, relight=False, uv_angle=50, uv_margin=0.004):
+    """Развёртка, запекание с высокой детализации на низкую, цвет с подсветкой из нормалей, файлы мода. cage и ray — доли роста: у фигур с близкими деталями меньше, чтобы рука не запекла на себя торс."""
     name = c.name
     work = bpy.data.scenes.get("WB_Bake") or bpy.data.scenes.new("WB_Bake")
     for o in list(work.collection.objects):
@@ -371,7 +494,7 @@ def bake_export(c, size=2048, samples=20, tracks=None):
     low.select_set(True)
     bpy.ops.object.mode_set(mode="EDIT")
     bpy.ops.mesh.select_all(action="SELECT")
-    bpy.ops.uv.smart_project(angle_limit=math.radians(50), island_margin=0.004, scale_to_bounds=True)
+    bpy.ops.uv.smart_project(angle_limit=math.radians(uv_angle), island_margin=uv_margin, scale_to_bounds=True)
     bpy.ops.object.mode_set(mode="OBJECT")
     hi.select_set(True)
     low.select_set(True)
@@ -385,7 +508,7 @@ def bake_export(c, size=2048, samples=20, tracks=None):
             bpy.data.images.remove(img)
         img = bpy.data.images.new(f"{name}_{kind}", size, size, alpha=True, float_buffer=True)
         node.image = img
-        bpy.ops.object.bake(type=bake_type, use_selected_to_active=True, cage_extrusion=0.03 * diag, max_ray_distance=0.08 * diag, **kw)
+        bpy.ops.object.bake(type=bake_type, use_selected_to_active=True, cage_extrusion=cage * diag, max_ray_distance=ray * diag, **kw)
         px = np.zeros(size * size * 4, dtype=np.float32)
         img.pixels.foreach_get(px)
         print(kind, round(time.time() - t0), "с")
@@ -407,6 +530,15 @@ def bake_export(c, size=2048, samples=20, tracks=None):
     edge = np.clip(np.linalg.norm(n - _blur(n, 3), axis=2, keepdims=True) * 2.2 - 0.12, 0, 1)
     lit = color[..., :3] * shade * cav * 1.5
     lit = lit * (1 + 1.2 * edge) + 0.045 * edge + glint * (0.08 + color[..., :3] * 0.6) * cav
+    if relight:
+        # фигура в доспехе: рисованный свет сверху спереди и слева даёт объём, кромка только тонкая и в цвет брони, глубокие щели почти чёрные
+        key = np.clip(n @ np.array((0.28, -0.55, 0.79), dtype=np.float32), 0, 1)[..., None]
+        fill = np.clip(n @ np.array((-0.5, 0.3, 0.2), dtype=np.float32), 0, 1)[..., None]
+        cav = np.clip(ao[..., :1], 0, 1) ** 1.6
+        spec = np.clip(n @ np.array((0.2, -0.45, 0.87), dtype=np.float32), 0, 1)[..., None] ** 22
+        thin = np.clip(np.linalg.norm(n - _blur(n, 1), axis=2, keepdims=True) * 2.4 - 0.2, 0, 1)
+        lit = color[..., :3] * (0.42 + 1.25 * key + 0.28 * fill) * (0.12 + 0.88 * cav) * 1.6
+        lit = lit * (1 + 0.7 * thin) + 0.012 * thin + spec * (0.1 + color[..., :3] * 1.6) * cav
     rgba = np.dstack((_to_srgb(lit), np.ones((size, size))))
     out_img = bpy.data.images.new("dr_save", size, size, alpha=True)
     out_img.pixels.foreach_set(rgba.astype(np.float32).ravel())
@@ -416,6 +548,17 @@ def bake_export(c, size=2048, samples=20, tracks=None):
     out_img.file_format = "PNG"
     out_img.save()
     bpy.data.images.remove(out_img)
+    if "lens" in COLORS:
+        # линзы шлема светятся: маска по их цвету, который нигде больше не встречается
+        target = np.array(COLORS["lens"][0], dtype=np.float32)
+        glow = (np.linalg.norm(color[..., :3] - target, axis=2) < 0.2).astype(np.float32)
+        rgba_g = np.dstack((_to_srgb(lit) * glow[..., None] * 1.0 + np.array((1.0, 0.1, 0.05)) * glow[..., None] * 0.6, glow))
+        gm = bpy.data.images.new("dr_glow", size, size, alpha=True)
+        gm.pixels.foreach_set(np.clip(rgba_g, 0, 1).astype(np.float32).ravel())
+        gm.filepath_raw = os.path.join(ASSETS, "textures", "entity", name + "_glow.png")
+        gm.file_format = "PNG"
+        gm.save()
+        bpy.data.images.remove(gm)
 
     # ---- меш по костям
     bm = bmesh.new()

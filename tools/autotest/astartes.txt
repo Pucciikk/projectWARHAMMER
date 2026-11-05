@@ -1,0 +1,137 @@
+# Астартес и Громовой воин
+cmd time set noon
+cmd weather clear
+cmd gamerule doDaylightCycle false
+cmd gamerule doMobSpawning false
+cmd gamemode creative
+cmd tp @s 28000 282 0 0 30
+wait 60
+cmd fill 27970 279 -30 28030 279 30 minecraft:polished_deepslate
+wait 320
+hud off
+camera first
+cmd kill @e[type=!minecraft:player]
+wait 110
+cmd summon warpbound:astartes 27999.2 280 0 {NoAI:1b,Rotation:[0f,0f],Clip:"misc.idle"}
+cmd summon warpbound:thunder_warrior 28001.8 280 0 {NoAI:1b,Rotation:[0f,0f],Clip:"misc.idle"}
+cmd summon minecraft:armor_stand 28004 280 0 {NoGravity:1b,ShowArms:1b,Rotation:[0f,0f]}
+wait 30
+cmd tp @s 28000 281 5 180 0
+wait 12
+shot pair_front
+cmd tp @s 28006 281 0 90 0
+wait 12
+shot pair_side
+cmd tp @s 28000 281 -5 0 0
+wait 12
+shot pair_back
+cmd tp @s 27996.5 281.4 3 225 0
+wait 12
+shot pair_quarter
+cmd tp @s 27998.7 280.2 1.5 180 -8
+wait 12
+shot astartes_face
+cmd tp @s 28001.7 280.4 1.1 180 -2
+wait 12
+shot warrior_face
+cmd kill @e[type=!minecraft:player]
+wait 110
+cmd summon warpbound:astartes 27999.2 280 0 {NoAI:1b,Rotation:[0f,0f],Clip:"misc.stasis"}
+cmd summon warpbound:thunder_warrior 28001.8 280 0 {NoAI:1b,Rotation:[0f,0f],Clip:"misc.stasis"}
+wait 20
+cmd tp @s 28000 281 5 180 0
+wait 12
+shot stasis
+cmd kill @e[type=!minecraft:player]
+wait 110
+cmd summon warpbound:astartes 27999.2 280 0 {NoAI:1b,Rotation:[0f,0f],Clip:"move.walk"}
+cmd summon warpbound:thunder_warrior 28001.8 280 0 {NoAI:1b,Rotation:[0f,0f],Clip:"move.walk"}
+wait 14
+cmd tp @s 28005 281 3 120 0
+wait 8
+wait 2
+shot walk0
+wait 2
+shot walk1
+wait 2
+shot walk2
+wait 2
+shot walk3
+wait 2
+shot walk4
+wait 2
+shot walk5
+wait 2
+shot walk6
+wait 2
+shot walk7
+cmd kill @e[type=!minecraft:player]
+wait 110
+cmd summon warpbound:astartes 27999.2 280 0 {NoAI:1b,Rotation:[0f,0f],Clip:"move.run"}
+cmd summon warpbound:thunder_warrior 28001.8 280 0 {NoAI:1b,Rotation:[0f,0f],Clip:"move.run"}
+wait 14
+cmd tp @s 28005 281 3 120 0
+wait 8
+wait 1
+shot run0
+wait 1
+shot run1
+wait 1
+shot run2
+wait 1
+shot run3
+wait 1
+shot run4
+wait 1
+shot run5
+wait 1
+shot run6
+wait 1
+shot run7
+cmd kill @e[type=!minecraft:player]
+wait 110
+cmd summon warpbound:astartes 28000 280 0 {Rotation:[0f,0f]}
+cmd tp @s 28003 281 3 135 0
+wait 40
+shot live_look
+cmd summon minecraft:husk 28000 280 -1.4 {NoAI:1b,Rotation:[180f,0f],Health:900f,attributes:[{id:"minecraft:generic.max_health",base:900}]}
+cmd damage @e[type=warpbound:astartes,limit=1] 1 minecraft:mob_attack by @e[type=minecraft:husk,limit=1]
+wait 10
+wait 2
+shot melee0
+wait 2
+shot melee1
+wait 2
+shot melee2
+wait 2
+shot melee3
+wait 2
+shot melee4
+wait 2
+shot melee5
+cmd kill @e[type=!minecraft:player]
+wait 110
+cmd summon warpbound:astartes 27999.2 280 0 {NoAI:1b,Rotation:[0f,0f]}
+cmd summon warpbound:thunder_warrior 28001.8 280 0 {NoAI:1b,Rotation:[0f,0f]}
+wait 16
+cmd tp @s 28005 281 3 120 0
+wait 8
+cmd kill @e[type=warpbound:astartes]
+cmd kill @e[type=warpbound:thunder_warrior]
+wait 8
+shot death0
+wait 8
+shot death1
+wait 8
+shot death2
+wait 8
+shot death3
+wait 8
+shot death4
+wait 8
+shot death5
+wait 8
+shot death6
+wait 30
+shot death_end
+quit

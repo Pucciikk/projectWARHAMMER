@@ -124,6 +124,10 @@ public class WarpboundClient implements ClientModInitializer {
             String model = net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(t).getPath();
             EntityRendererRegistry.register(t, ctx -> new dev.warpbound.client.entity.DreadConceptRenderer(ctx, model, 1.4f));
         }
+        for (var t : dev.warpbound.entity.astartes.AstartesConcepts.TYPES) {
+            var v = dev.warpbound.entity.astartes.AstartesConcepts.variantOf(t);
+            EntityRendererRegistry.register(t, ctx -> new dev.warpbound.client.entity.BipedConceptRenderer(ctx, v.model(), v.glow()));
+        }
         EntityRendererRegistry.register(dev.warpbound.gun.GunProjectiles.LAS_BOLT, dev.warpbound.client.gun.GunProjectileRenderers.Las::new);
         EntityRendererRegistry.register(dev.warpbound.gun.GunProjectiles.BOLT_ROUND, dev.warpbound.client.gun.GunProjectileRenderers.Bolt::new);
     }
