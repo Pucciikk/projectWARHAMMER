@@ -1,0 +1,251 @@
+# Игрок-Астартес: особые состояния
+cmd time set noon
+cmd weather clear
+cmd gamerule doDaylightCycle false
+cmd gamerule doMobSpawning false
+cmd gamemode survival
+cmd effect give @s minecraft:resistance infinite 10 true
+cmd effect give @s minecraft:water_breathing infinite 0 true
+cmd tp @s 29100 282 0 0 30
+wait 60
+cmd fill 29070 279 -30 29130 279 30 minecraft:polished_deepslate
+wait 300
+cmd fill 29070 280 -20 29130 292 20 minecraft:air
+wait 20
+cmd kill @e[type=!minecraft:player]
+cmd clear @s
+cmd wb gene astartes
+hud off
+cmd fill 29099 280 -4 29101 288 -4 minecraft:stone
+cmd fill 29100 280 -3 29100 288 -3 minecraft:ladder[facing=south]
+cmd tp @s 29100.5 280 -1.5 180 -10
+wait 10
+camera back
+wait 6
+key forward on
+wait 2
+shot ladder_up0
+wait 2
+shot ladder_up1
+wait 2
+shot ladder_up2
+wait 2
+shot ladder_up3
+wait 2
+shot ladder_up4
+wait 2
+shot ladder_up5
+wait 2
+shot ladder_up6
+wait 2
+shot ladder_up7
+wait 2
+shot ladder_up8
+wait 2
+shot ladder_up9
+wait 2
+shot ladder_up10
+wait 2
+shot ladder_up11
+key forward off
+wait 4
+shot ladder_hang0
+key shift on
+wait 10
+shot ladder_hang1
+key shift off
+wait 2
+shot ladder_down0
+wait 2
+shot ladder_down1
+wait 2
+shot ladder_down2
+wait 2
+shot ladder_down3
+wait 2
+shot ladder_down4
+wait 2
+shot ladder_down5
+wait 2
+shot ladder_down6
+wait 2
+shot ladder_down7
+wait 30
+camera front
+cmd fill 29106 280 -6 29120 284 6 minecraft:glass
+cmd fill 29107 280 -5 29119 284 5 minecraft:water
+wait 10
+cmd tp @s 29113 282 0 90 0
+wait 4
+camera front
+wait 2
+shot tread0
+wait 2
+shot tread1
+wait 2
+shot tread2
+wait 2
+shot tread3
+wait 2
+shot tread4
+wait 2
+shot tread5
+wait 2
+shot tread6
+wait 2
+shot tread7
+cmd tp @s 29118 281.5 0 90 10
+wait 6
+key forward on
+key sprint on
+wait 10
+wait 1
+shot swim0
+wait 1
+shot swim1
+wait 1
+shot swim2
+wait 1
+shot swim3
+wait 1
+shot swim4
+wait 1
+shot swim5
+wait 1
+shot swim6
+wait 1
+shot swim7
+wait 1
+shot swim8
+wait 1
+shot swim9
+key forward off
+key sprint off
+wait 10
+cmd fill 29106 280 -6 29120 284 6 minecraft:air
+wait 10
+cmd fill 29088 281 6 29096 281 10 minecraft:stone
+cmd tp @s 29096.5 280 8.5 90 0
+wait 10
+camera back
+key forward on
+wait 2
+shot crawl0
+wait 2
+shot crawl1
+wait 2
+shot crawl2
+wait 2
+shot crawl3
+wait 2
+shot crawl4
+wait 2
+shot crawl5
+wait 2
+shot crawl6
+wait 2
+shot crawl7
+wait 2
+shot crawl8
+wait 2
+shot crawl9
+key forward off
+wait 10
+cmd fill 29088 281 6 29096 281 10 minecraft:air
+cmd tp @s 29100 280 8 180 10
+cmd summon minecraft:oak_boat 29100 280 6
+wait 6
+cmd ride @s mount @e[type=minecraft:oak_boat,limit=1,sort=nearest]
+wait 10
+camera front
+wait 6
+shot sit0
+wait 20
+shot sit1
+cmd ride @s dismount
+cmd kill @e[type=minecraft:oak_boat]
+wait 10
+cmd setblock 29104 280 12 minecraft:red_bed[facing=south,part=foot]
+cmd setblock 29104 280 13 minecraft:red_bed[facing=south,part=head]
+cmd time set 18000
+cmd tp @s 29104 280 10 0 30
+wait 10
+useblock 29104 280 12
+wait 30
+camera front
+wait 4
+shot sleep0
+camera back
+wait 4
+shot sleep1
+cmd time set noon
+wait 10
+key shift on
+wait 2
+key shift off
+wait 20
+cmd item replace entity @s armor.chest with minecraft:elytra
+cmd tp @s 29100 320 0 180 10
+wait 4
+camera back
+wait 10
+key jump on
+wait 1
+key jump off
+wait 2
+key jump on
+wait 1
+key jump off
+wait 3
+shot glide0
+wait 3
+shot glide1
+wait 3
+shot glide2
+wait 3
+shot glide3
+wait 3
+shot glide4
+wait 3
+shot glide5
+wait 3
+shot glide6
+wait 3
+shot glide7
+wait 3
+shot glide8
+wait 3
+shot glide9
+cmd item replace entity @s armor.chest with minecraft:air
+cmd tp @s 29100 280 0 180 0
+wait 30
+cmd gamemode creative
+cmd tp @s 29100 283 0 180 0
+wait 4
+fly on
+camera front
+wait 20
+wait 5
+shot fly0
+wait 5
+shot fly1
+wait 5
+shot fly2
+wait 5
+shot fly3
+key forward on
+wait 15
+wait 4
+shot flymove0
+wait 4
+shot flymove1
+wait 4
+shot flymove2
+wait 4
+shot flymove3
+key forward off
+fly off
+cmd gamemode survival
+wait 30
+cmd wb gene human
+quit

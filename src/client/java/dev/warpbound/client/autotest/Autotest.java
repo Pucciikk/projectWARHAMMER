@@ -180,9 +180,22 @@ public final class Autotest {
                         case "right" -> mc.options.keyRight;
                         case "sprint" -> mc.options.keySprint;
                         case "shift" -> mc.options.keyShift;
+                        case "jump" -> mc.options.keyJump;
+                        case "attack" -> mc.options.keyAttack;
+                        case "usekey" -> mc.options.keyUse;
                         default -> throw new IllegalArgumentException(k[0]);
                     };
                     map.setDown(k.length > 1 && k[1].equals("on"));
+                }
+                case "fly" -> {
+                    // полёт творческого режима: fly on | fly off (нужен режим creative)
+                    mc.player.getAbilities().flying = arg.trim().equals("on");
+                    mc.player.onUpdateAbilities();
+                }
+                case "click" -> {
+                    // одиночное нажатие: click attack | click use (удар в воздух, взмах, установка блока)
+                    var map = arg.trim().equals("use") ? mc.options.keyUse : mc.options.keyAttack;
+                    net.minecraft.client.KeyMapping.click(map.getDefaultKey());
                 }
                 case "pos" -> log("позиция " + arg + ": " + mc.player.position() + (mc.player.getVehicle() != null ? " машина " + mc.player.getVehicle().position() : ""));
                 case "cmd" -> command(mc, arg.startsWith("/") ? arg.substring(1) : arg);

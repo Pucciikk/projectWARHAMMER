@@ -90,7 +90,8 @@ class Legs:
 
 
 def arm(p, s, sign, swing, elbow, out=4.0, wrist=0.0, curl=12.0, twist=0.0, thumb=None):
-    """Рука: swing < 0 вперёд, elbow > 0 согнуть локоть (всегда немного согнут), out наружу, curl сжать пальцы."""
+    """Рука: swing < 0 вперёд, elbow > 0 согнуть локоть (всегда немного согнут), curl сжать пальцы.
+    Внимание: out — поворот вокруг вертикали (у висящей руки разворачивает локоть), а в сторону руку отводит twist: twist < 0 — наружу."""
     p["arm_" + s] = {"rot": (swing, sign * twist, -sign * out)}
     p["forearm_" + s] = {"rot": (-elbow, 0, 0)}
     p["hand_" + s] = {"rot": (wrist, 0, 0)}

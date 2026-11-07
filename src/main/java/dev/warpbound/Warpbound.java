@@ -51,6 +51,7 @@ public class Warpbound implements ModInitializer {
         WarpboundConfig.load();
         ChaosAttachments.register();
         PlayerAttachments.register();
+        dev.warpbound.player.GeneForms.register();
         WarpboundBlocks.register();
         WarpboundBuildingBlocks.register();
         WarpboundWorldgen.register();

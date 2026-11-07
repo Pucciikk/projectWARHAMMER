@@ -1,0 +1,25 @@
+# эталон хвата: обычный игрок и Астартес с мечом и щитом
+cmd gamemode survival
+cmd clear @s
+cmd kill @e[type=!minecraft:player]
+cmd item replace entity @s weapon.mainhand with minecraft:diamond_sword
+cmd item replace entity @s weapon.offhand with minecraft:shield
+hud off
+camera front
+cmd wb gene human
+cmd tp @s 29000 280 0 180 0
+wait 30
+shot h_front
+look 220 0
+wait 6
+shot h_q1
+cmd wb gene astartes
+cmd tp @s 29000 280 0 180 0
+wait 30
+shot a_front
+look 220 0
+wait 6
+shot a_q1
+cmd clear @s
+cmd wb gene human
+quit

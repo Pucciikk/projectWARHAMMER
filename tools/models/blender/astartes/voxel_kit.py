@@ -874,7 +874,46 @@ def _simplify(ts, exts, tol):
     return sorted(keep)
 
 
-def _add_stack(bm, pts, axis, step, tol):
+def _smooth_along(a, width):
+    """Сглаживание вдоль стопки колец: медиана по трём (убирает одиночные выбросы), потом окно width. Края не двигаем."""
+    if len(a) < 3:
+        return a
+    med = a.copy()
+    med[1:-1] = np.median(np.stack((a[:-2], a[1:-1], a[2:])), axis=0)
+    if width < 2:
+        return med
+    k = np.hanning(width + 2)[1:-1]
+    k /= k.sum()
+    pad = np.concatenate((np.repeat(med[:1], width // 2, 0), med, np.repeat(med[-1:], width // 2, 0)))
+    out = np.stack([np.convolve(pad[:, j], k, mode="valid") for j in range(a.shape[1])], axis=1)
+    out[0], out[-1] = med[0], med[-1]
+    return out
+
+
+def _even_rings(exts, cut, width):
+    """Ровные восьмигранники: стороны сглажены вдоль оси, фаска на каждом углу — доля от соседних граней в пределах cut.
+    Тогда ни фаска, ни грань не схлопываются, и между кольцами не бывает клиньев-треугольников."""
+    exts = exts.copy()
+    exts[:, 0::2] = _smooth_along(exts[:, 0::2], width)
+    r2 = np.sqrt(2)
+    # длина каждой осевой грани без фасок: от соседней оси до соседней оси
+    side = np.stack([exts[:, (i + 2) % 8] + exts[:, (i - 2) % 8] for i in range(0, 8, 2)], axis=1)
+    ratio = np.zeros((len(exts), 4))
+    lim = np.zeros((len(exts), 4))
+    for j, i in enumerate(range(1, 8, 2)):
+        a_, b_ = exts[:, i - 1], exts[:, (i + 1) % 8]
+        depth = np.maximum((a_ + b_) / r2 - exts[:, i], 0)
+        m_ = np.minimum(side[:, (i - 1) // 2], side[:, ((i + 1) % 8) // 2])
+        lim[:, j] = m_
+        ratio[:, j] = np.clip(depth * r2 / np.maximum(m_, 1e-6), *cut)
+    ratio = _smooth_along(ratio, width + 2)
+    for j, i in enumerate(range(1, 8, 2)):
+        a_, b_ = exts[:, i - 1], exts[:, (i + 1) % 8]
+        exts[:, i] = (a_ + b_) / r2 - ratio[:, j] * lim[:, j] / r2
+    return exts
+
+
+def _add_stack(bm, pts, axis, step, tol, even=None):
     if len(pts) < 8:
         return
     a, b_, c2 = axis, (axis + 1) % 3, (axis + 2) % 3
@@ -893,6 +932,15 @@ def _add_stack(bm, pts, axis, step, tol):
     if len(ts) < 2:
         return
     ts, exts = np.array(ts), np.array(exts)
+    if even is not None:
+        # концы, сходящиеся в точку, срезаем: торец тупой и плоский, без веера клиньев
+        if len(even) > 2 and even[2]:
+            size = np.minimum(exts[:, 0] + exts[:, 4], exts[:, 2] + exts[:, 6])
+            big = np.where(size >= even[2] * size.max())[0]
+            ts, exts = ts[big[0]:big[-1] + 1], exts[big[0]:big[-1] + 1]
+            if len(ts) < 2:
+                return
+        exts = _even_rings(exts, even[0], even[1])
     keep = _simplify(ts, exts, tol)
     rings = []
     for i in keep:
@@ -912,6 +960,47 @@ def _add_stack(bm, pts, axis, step, tol):
             bm.faces.new(vs[::-1] if flip else vs)
 
 
+def _prism_rings(center, size, axis, cham):
+    """Два кольца восьмигранной призмы вдоль оси axis: нижнее и верхнее, против часовой стрелки (как в _add_stack). cham — фаска в долях полуширины."""
+    a, b_, c2 = axis, (axis + 1) % 3, (axis + 2) % 3
+    hu, hv, ht = size[b_] / 2, size[c2] / 2, size[a] / 2
+    ch = cham * min(hu, hv)
+    ring2 = ((hu, -(hv - ch)), (hu, hv - ch), (hu - ch, hv), (-(hu - ch), hv), (-hu, hv - ch), (-hu, -(hv - ch)), (-(hu - ch), -hv), (hu - ch, -hv))
+    rings = []
+    for t in (-ht, ht):
+        r = []
+        for u, v in ring2:
+            co = [0.0, 0.0, 0.0]
+            co[a], co[b_], co[c2] = center[a] + t, center[b_] + u, center[c2] + v
+            r.append(co)
+        rings.append(r)
+    return rings
+
+
+_PRISM_CAP = ((0, 1, 2, 3), (0, 3, 4, 7), (7, 4, 5, 6))
+
+
+def _prism_quads(rings):
+    """Грани призмы номерами вершин (кольцо 0 — 0..7, кольцо 1 — 8..15)."""
+    q = [(i, (i + 1) % 8, 8 + (i + 1) % 8, 8 + i) for i in range(8)]
+    q += [tuple(i for i in f[::-1]) for f in _PRISM_CAP]
+    q += [tuple(8 + i for i in f) for f in _PRISM_CAP]
+    return q
+
+
+def prism_mesh(center, size, axis, cham=0.55):
+    """Восьмигранная призма для запекания (треугольники): гранаты, сопла, наколенники."""
+    v = np.array(sum(_prism_rings(center, size, axis, cham), []), dtype=np.float64)
+    t = np.array([tri for a, b, c_, d in _prism_quads(None) for tri in ((a, b, c_), (a, c_, d))], dtype=np.int64)
+    return v, t
+
+
+def _add_prism(bm, center, size, axis, cham=0.55):
+    vs = [bm.verts.new(co) for co in sum(_prism_rings(center, size, axis, cham), [])]
+    for f in _prism_quads(None):
+        bm.faces.new([vs[i] for i in f])
+
+
 def _add_box(bm, center, size):
     v, t = box_mesh(center, size)
     vs = [bm.verts.new(x) for x in v.tolist()]
@@ -919,16 +1008,21 @@ def _add_box(bm, center, size):
         bm.faces.new([vs[i] for i in q])
 
 
-def stack_model(c, pieces, boxes, step=0.03, tol=0.012):
-    """Кость -> список (ось, фильтр точек или None). Точки — оболочка кости из build. boxes: (кость, центр, размер) в игровых координатах."""
+def stack_model(c, pieces, boxes, step=0.03, tol=0.012, even=None):
+    """Кость -> список (ось, фильтр точек или None). Точки — оболочка кости из build. boxes: (кость, центр, размер) в игровых координатах.
+    even=(cut, width): ровные кольца без клиньев (см. _even_rings), cut = (мин, макс) доля фаски, width — окно сглаживания в кольцах."""
     bms = {}
     for bone, (verts, tris) in c.shells.items():
         bm = bms.setdefault(bone, bmesh.new())
         for axis, where in pieces.get(bone, ((2, None),)):
             pts = verts if where is None else verts[where(verts)]
-            _add_stack(bm, pts, axis, step, tol)
-    for bone, center, size in boxes:
-        _add_box(bms.setdefault(bone, bmesh.new()), center, size)
+            _add_stack(bm, pts, axis, step, tol, even)
+    for bone, center, size, *axis in boxes:
+        # (кость, центр, размер[, ось]): с осью — восьмигранная призма вдоль неё
+        if axis and axis[0] is not None:
+            _add_prism(bms.setdefault(bone, bmesh.new()), center, size, axis[0])
+        else:
+            _add_box(bms.setdefault(bone, bmesh.new()), center, size)
     for bm in bms.values():
         bm.normal_update()
         bm.faces.ensure_lookup_table()

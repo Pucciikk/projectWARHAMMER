@@ -1,0 +1,57 @@
+# сон, лодка и полёт на чистом месте
+cmd gamemode survival
+cmd kill @e[type=!minecraft:player]
+cmd fill 29130 280 -10 29150 290 20 minecraft:air
+cmd fill 29130 279 -10 29150 279 20 minecraft:polished_deepslate
+hud off
+cmd setblock 29140 280 12 minecraft:red_bed[facing=south,part=foot]
+cmd setblock 29140 280 13 minecraft:red_bed[facing=south,part=head]
+cmd wb gene human
+cmd time set 18000
+cmd tp @s 29140 280 10 0 30
+wait 10
+useblock 29140 280 12
+wait 30
+camera back
+wait 4
+shot h_sleep
+cmd time set noon
+wait 20
+cmd wb gene astartes
+cmd time set 18000
+cmd tp @s 29140 280 10 0 30
+wait 10
+useblock 29140 280 12
+wait 30
+camera back
+wait 4
+shot a_sleep
+log сплю
+pos sleep
+cmd time set noon
+wait 20
+cmd tp @s 29140 280 0 180 10
+cmd summon minecraft:boat 29140 280 -2
+wait 6
+cmd ride @s mount @e[type=minecraft:boat,limit=1,sort=nearest]
+wait 10
+camera front
+wait 6
+shot a_sit
+cmd ride @s dismount
+cmd kill @e[type=minecraft:boat]
+cmd gamemode creative
+cmd tp @s 29140 283 0 0 0
+wait 4
+fly on
+camera front
+wait 20
+shot a_fly
+key forward on
+wait 15
+shot a_flymove
+key forward off
+fly off
+cmd gamemode survival
+cmd wb gene human
+quit

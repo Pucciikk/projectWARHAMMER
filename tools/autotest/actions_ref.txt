@@ -1,0 +1,56 @@
+# эталон действий: обычный игрок и Астартес
+cmd gamemode survival
+cmd kill @e[type=!minecraft:player]
+cmd clear @s
+hud off
+camera front
+cmd wb gene human
+cmd tp @s 29200 280 0 180 0
+wait 10
+look 180 0
+cmd item replace entity @s weapon.mainhand with warpbound:lasgun
+wait 10
+shot h_lasgun
+look 225 0
+wait 4
+shot h_lasgun_side
+look 180 0
+wait 4
+cmd item replace entity @s weapon.mainhand with minecraft:spyglass
+key usekey on
+wait 10
+shot h_spyglass
+key usekey off
+cmd item replace entity @s weapon.mainhand with minecraft:shield
+key usekey on
+wait 10
+shot h_shield
+key usekey off
+cmd item replace entity @s weapon.mainhand with minecraft:air
+wait 10
+cmd wb gene astartes
+cmd tp @s 29200 280 0 180 0
+wait 10
+look 180 0
+cmd item replace entity @s weapon.mainhand with warpbound:lasgun
+wait 10
+shot a_lasgun
+look 225 0
+wait 4
+shot a_lasgun_side
+look 180 0
+wait 4
+cmd item replace entity @s weapon.mainhand with minecraft:spyglass
+key usekey on
+wait 10
+shot a_spyglass
+key usekey off
+cmd item replace entity @s weapon.mainhand with minecraft:shield
+key usekey on
+wait 10
+shot a_shield
+key usekey off
+cmd item replace entity @s weapon.mainhand with minecraft:air
+wait 10
+cmd wb gene human
+quit

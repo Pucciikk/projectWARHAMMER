@@ -1,0 +1,20 @@
+# эталон: ванильная рука от первого лица на том же месте
+cmd gamemode survival
+cmd clear @s
+cmd wb gene human
+cmd tp @s 29000 280 0 180 10
+wait 30
+hud on
+camera first
+clearchat
+wait 10
+shot fp_vanilla
+click attack
+wait 3
+shot fp_vanilla_swing
+cmd wb gene astartes
+wait 10
+clearchat
+wait 2
+shot fp_astartes
+quit

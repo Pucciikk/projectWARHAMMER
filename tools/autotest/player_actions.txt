@@ -1,0 +1,225 @@
+# Игрок-Астартес: действия
+cmd time set noon
+cmd weather clear
+cmd gamerule doDaylightCycle false
+cmd gamemode survival
+cmd effect give @s minecraft:resistance infinite 10 true
+cmd tp @s 29200 282 0 0 30
+wait 60
+cmd fill 29170 279 -30 29230 279 30 minecraft:polished_deepslate
+wait 300
+cmd fill 29170 280 -20 29230 292 20 minecraft:air
+wait 20
+cmd kill @e[type=!minecraft:player]
+cmd clear @s
+cmd item replace entity @s hotbar.8 with minecraft:arrow 64
+cmd wb gene astartes
+hud off
+cmd tp @s 29200 280 0 180 0
+wait 10
+camera front
+look 215 0
+wait 10
+cmd item replace entity @s weapon.mainhand with minecraft:shield
+cmd item replace entity @s weapon.offhand with minecraft:air
+wait 6
+key usekey on
+wait 2
+shot shield0
+wait 2
+shot shield1
+wait 2
+shot shield2
+wait 2
+shot shield3
+wait 2
+shot shield4
+key usekey off
+wait 10
+cmd item replace entity @s weapon.mainhand with minecraft:bow
+cmd item replace entity @s weapon.offhand with minecraft:air
+wait 6
+key usekey on
+wait 5
+shot bow0
+wait 5
+shot bow1
+wait 5
+shot bow2
+wait 5
+shot bow3
+wait 5
+shot bow4
+key usekey off
+wait 10
+cmd item replace entity @s weapon.mainhand with minecraft:crossbow
+cmd item replace entity @s weapon.offhand with minecraft:air
+wait 6
+key usekey on
+wait 6
+shot crossbow0
+wait 6
+shot crossbow1
+wait 6
+shot crossbow2
+wait 6
+shot crossbow3
+wait 6
+shot crossbow4
+key usekey off
+wait 10
+wait 4
+shot crossbow_hold0
+wait 4
+shot crossbow_hold1
+cmd item replace entity @s weapon.mainhand with minecraft:trident
+cmd item replace entity @s weapon.offhand with minecraft:air
+wait 6
+key usekey on
+wait 2
+shot trident0
+wait 2
+shot trident1
+wait 2
+shot trident2
+wait 2
+shot trident3
+wait 2
+shot trident4
+key usekey off
+wait 10
+cmd item replace entity @s weapon.mainhand with minecraft:spyglass
+cmd item replace entity @s weapon.offhand with minecraft:air
+wait 6
+key usekey on
+wait 2
+shot spyglass0
+wait 2
+shot spyglass1
+wait 2
+shot spyglass2
+wait 2
+shot spyglass3
+wait 2
+shot spyglass4
+key usekey off
+wait 10
+cmd item replace entity @s weapon.mainhand with minecraft:golden_apple
+cmd item replace entity @s weapon.offhand with minecraft:air
+wait 6
+key usekey on
+wait 4
+shot apple0
+wait 4
+shot apple1
+wait 4
+shot apple2
+wait 4
+shot apple3
+wait 4
+shot apple4
+key usekey off
+wait 10
+cmd item replace entity @s weapon.mainhand with minecraft:potion
+cmd item replace entity @s weapon.offhand with minecraft:air
+wait 6
+key usekey on
+wait 4
+shot potion0
+wait 4
+shot potion1
+wait 4
+shot potion2
+wait 4
+shot potion3
+wait 4
+shot potion4
+key usekey off
+wait 10
+cmd item replace entity @s weapon.mainhand with warpbound:lasgun
+cmd item replace entity @s weapon.offhand with minecraft:air
+wait 10
+wait 4
+shot lasgun0
+wait 4
+shot lasgun1
+look 215 30
+wait 4
+shot lasgun_down
+look 215 -25
+wait 4
+shot lasgun_up
+look 215 0
+cmd item replace entity @s weapon.mainhand with minecraft:diamond_sword
+cmd item replace entity @s weapon.offhand with minecraft:air
+wait 6
+click attack
+wait 1
+shot sword0_0
+wait 1
+shot sword0_1
+wait 1
+shot sword0_2
+wait 1
+shot sword0_3
+wait 1
+shot sword0_4
+wait 1
+shot sword0_5
+wait 8
+click attack
+wait 1
+shot sword1_0
+wait 1
+shot sword1_1
+wait 1
+shot sword1_2
+wait 1
+shot sword1_3
+wait 1
+shot sword1_4
+wait 1
+shot sword1_5
+wait 8
+cmd setblock 29201 281 -2 minecraft:stone
+cmd tp @s 29200 280 0 200 25
+wait 6
+cmd item replace entity @s weapon.mainhand with minecraft:iron_pickaxe
+cmd item replace entity @s weapon.offhand with minecraft:air
+key attack on
+wait 1
+shot mine0
+wait 1
+shot mine1
+wait 1
+shot mine2
+wait 1
+shot mine3
+wait 1
+shot mine4
+wait 1
+shot mine5
+wait 1
+shot mine6
+wait 1
+shot mine7
+wait 1
+shot mine8
+wait 1
+shot mine9
+wait 1
+shot mine10
+wait 1
+shot mine11
+wait 1
+shot mine12
+wait 1
+shot mine13
+wait 1
+shot mine14
+wait 1
+shot mine15
+key attack off
+cmd clear @s
+cmd wb gene human
+quit

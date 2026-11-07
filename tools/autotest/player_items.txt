@@ -1,0 +1,102 @@
+# Игрок-Астартес: предметы и первое лицо
+cmd time set noon
+cmd weather clear
+cmd gamerule doDaylightCycle false
+cmd gamemode survival
+cmd effect give @s minecraft:resistance infinite 10 true
+cmd tp @s 29000 282 0 0 30
+wait 60
+cmd fill 28970 279 -30 29030 279 60 minecraft:polished_deepslate
+wait 320
+cmd fill 28988 280 -12 29012 288 30 minecraft:air
+wait 20
+cmd kill @e[type=!minecraft:player]
+cmd clear @s
+cmd wb gene astartes
+cmd tp @s 29000 280 0 180 10
+wait 20
+hud on
+camera first
+wait 10
+shot fp_empty
+click attack
+wait 1
+shot fp_swing0
+wait 1
+shot fp_swing1
+wait 1
+shot fp_swing2
+wait 1
+shot fp_swing3
+wait 1
+shot fp_swing4
+wait 1
+shot fp_swing5
+wait 10
+cmd item replace entity @s weapon.mainhand with minecraft:diamond_sword
+wait 10
+shot fp_sword
+cmd item replace entity @s weapon.mainhand with minecraft:air
+cmd item replace entity @s weapon.offhand with minecraft:torch
+wait 10
+shot fp_offhand
+hud off
+camera front
+cmd item replace entity @s weapon.mainhand with minecraft:diamond_sword
+cmd item replace entity @s weapon.offhand with minecraft:air
+cmd tp @s 29000 280 0 180 0
+wait 12
+shot tp_diamond_sword_front
+look 220 0
+wait 6
+shot tp_diamond_sword_q1
+look 140 0
+wait 6
+shot tp_diamond_sword_q2
+cmd item replace entity @s weapon.mainhand with minecraft:iron_pickaxe
+cmd item replace entity @s weapon.offhand with minecraft:air
+cmd tp @s 29000 280 0 180 0
+wait 12
+shot tp_iron_pickaxe_front
+look 220 0
+wait 6
+shot tp_iron_pickaxe_q1
+look 140 0
+wait 6
+shot tp_iron_pickaxe_q2
+cmd item replace entity @s weapon.mainhand with minecraft:bow
+cmd item replace entity @s weapon.offhand with minecraft:air
+cmd tp @s 29000 280 0 180 0
+wait 12
+shot tp_bow_front
+look 220 0
+wait 6
+shot tp_bow_q1
+look 140 0
+wait 6
+shot tp_bow_q2
+cmd item replace entity @s weapon.mainhand with minecraft:iron_axe
+cmd item replace entity @s weapon.offhand with minecraft:shield
+cmd tp @s 29000 280 0 180 0
+wait 12
+shot tp_iron_axe_front
+look 220 0
+wait 6
+shot tp_iron_axe_q1
+look 140 0
+wait 6
+shot tp_iron_axe_q2
+cmd item replace entity @s weapon.mainhand with minecraft:air
+cmd item replace entity @s weapon.offhand with minecraft:torch
+cmd tp @s 29000 280 0 180 0
+wait 12
+shot tp_air_front
+look 220 0
+wait 6
+shot tp_air_q1
+look 140 0
+wait 6
+shot tp_air_q2
+cmd clear @s
+cmd wb gene human
+quit

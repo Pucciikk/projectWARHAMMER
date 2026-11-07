@@ -1,0 +1,340 @@
+# Игрок-Астартес
+cmd time set noon
+cmd weather clear
+cmd gamerule doDaylightCycle false
+cmd gamerule doMobSpawning false
+cmd gamemode survival
+cmd effect give @s minecraft:resistance infinite 10 true
+cmd effect give @s minecraft:saturation infinite 10 true
+cmd tp @s 29000 282 0 0 30
+wait 60
+cmd fill 28970 279 -30 29030 279 60 minecraft:polished_deepslate
+wait 320
+cmd fill 28988 280 -12 29012 288 30 minecraft:air
+wait 20
+cmd kill @e[type=!minecraft:player]
+cmd wb gene astartes
+hud off
+cmd tp @s 29000 280 0 180 0
+wait 20
+camera front
+wait 10
+shot idle0
+wait 30
+shot idle1
+key forward on
+wait 20
+wait 1
+shot walk0
+wait 1
+shot walk1
+wait 1
+shot walk2
+wait 1
+shot walk3
+wait 1
+shot walk4
+wait 1
+shot walk5
+wait 1
+shot walk6
+wait 1
+shot walk7
+wait 1
+shot walk8
+wait 1
+shot walk9
+wait 1
+shot walk10
+wait 1
+shot walk11
+key sprint on
+wait 20
+wait 1
+shot run0
+wait 1
+shot run1
+wait 1
+shot run2
+wait 1
+shot run3
+wait 1
+shot run4
+wait 1
+shot run5
+wait 1
+shot run6
+wait 1
+shot run7
+wait 1
+shot run8
+wait 1
+shot run9
+wait 1
+shot run10
+wait 1
+shot run11
+key sprint off
+key forward off
+wait 20
+cmd tp @s 29000 280 0 180 0
+wait 10
+key shift on
+wait 15
+shot sneak_idle
+key forward on
+wait 15
+wait 1
+shot sneak0
+wait 1
+shot sneak1
+wait 1
+shot sneak2
+wait 1
+shot sneak3
+wait 1
+shot sneak4
+wait 1
+shot sneak5
+wait 1
+shot sneak6
+wait 1
+shot sneak7
+wait 1
+shot sneak8
+wait 1
+shot sneak9
+wait 1
+shot sneak10
+wait 1
+shot sneak11
+wait 1
+shot sneak12
+wait 1
+shot sneak13
+key forward off
+key shift off
+wait 20
+cmd tp @s 29000 280 0 180 0
+wait 10
+key jump on
+wait 1
+key jump off
+wait 1
+shot jump0
+wait 1
+shot jump1
+wait 1
+shot jump2
+wait 1
+shot jump3
+wait 1
+shot jump4
+wait 1
+shot jump5
+wait 1
+shot jump6
+wait 1
+shot jump7
+wait 1
+shot jump8
+wait 1
+shot jump9
+wait 1
+shot jump10
+wait 1
+shot jump11
+wait 1
+shot jump12
+wait 1
+shot jump13
+wait 20
+cmd tp @s 29000 280 0 180 0
+wait 10
+key forward on
+key sprint on
+wait 25
+key jump on
+wait 1
+key jump off
+wait 1
+shot runjump0
+wait 1
+shot runjump1
+wait 1
+shot runjump2
+wait 1
+shot runjump3
+wait 1
+shot runjump4
+wait 1
+shot runjump5
+wait 1
+shot runjump6
+wait 1
+shot runjump7
+wait 1
+shot runjump8
+wait 1
+shot runjump9
+wait 1
+shot runjump10
+wait 1
+shot runjump11
+wait 1
+shot runjump12
+wait 1
+shot runjump13
+key forward off
+key sprint off
+wait 20
+cmd tp @s 29000 284 0 180 0
+wait 1
+shot drop0
+wait 1
+shot drop1
+wait 1
+shot drop2
+wait 1
+shot drop3
+wait 1
+shot drop4
+wait 1
+shot drop5
+wait 1
+shot drop6
+wait 1
+shot drop7
+wait 1
+shot drop8
+wait 1
+shot drop9
+wait 1
+shot drop10
+wait 1
+shot drop11
+wait 1
+shot drop12
+wait 1
+shot drop13
+wait 1
+shot drop14
+wait 1
+shot drop15
+wait 1
+shot drop16
+wait 1
+shot drop17
+wait 20
+cmd tp @s 29000 280 0 180 0
+wait 10
+click attack
+wait 1
+shot punch0_0
+wait 1
+shot punch0_1
+wait 1
+shot punch0_2
+wait 1
+shot punch0_3
+wait 1
+shot punch0_4
+wait 1
+shot punch0_5
+wait 1
+shot punch0_6
+wait 1
+shot punch0_7
+wait 6
+click attack
+wait 1
+shot punch1_0
+wait 1
+shot punch1_1
+wait 1
+shot punch1_2
+wait 1
+shot punch1_3
+wait 1
+shot punch1_4
+wait 1
+shot punch1_5
+wait 1
+shot punch1_6
+wait 1
+shot punch1_7
+wait 6
+click attack
+wait 1
+shot punch2_0
+wait 1
+shot punch2_1
+wait 1
+shot punch2_2
+wait 1
+shot punch2_3
+wait 1
+shot punch2_4
+wait 1
+shot punch2_5
+wait 1
+shot punch2_6
+wait 1
+shot punch2_7
+wait 6
+cmd setblock 29000 281 -2 minecraft:stone
+cmd tp @s 29000 280 0 180 25
+wait 10
+key attack on
+wait 1
+shot mine0
+wait 1
+shot mine1
+wait 1
+shot mine2
+wait 1
+shot mine3
+wait 1
+shot mine4
+wait 1
+shot mine5
+wait 1
+shot mine6
+wait 1
+shot mine7
+wait 1
+shot mine8
+wait 1
+shot mine9
+wait 1
+shot mine10
+wait 1
+shot mine11
+wait 1
+shot mine12
+wait 1
+shot mine13
+wait 1
+shot mine14
+wait 1
+shot mine15
+wait 1
+shot mine16
+wait 1
+shot mine17
+wait 1
+shot mine18
+wait 1
+shot mine19
+wait 1
+shot mine20
+wait 1
+shot mine21
+wait 1
+shot mine22
+wait 1
+shot mine23
+key attack off
+wait 10
+cmd wb gene human
+quit

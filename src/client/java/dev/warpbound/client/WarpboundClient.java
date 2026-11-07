@@ -62,6 +62,20 @@ public class WarpboundClient implements ClientModInitializer {
     public void onInitializeClient() {
         // модели мода: кубы и настоящие меши из Blender (poly_mesh)
         software.bernie.geckolib.loading.object.BakedModelFactory.register(dev.warpbound.Warpbound.MOD_ID, new dev.warpbound.client.multiblock.MeshModelFactory());
+        dev.warpbound.client.player.ClientGeneForms.register();
+        // движения Астартес (assets/warpbound/motion) перечитываются вместе с ресурсами
+        net.fabricmc.fabric.api.resource.ResourceManagerHelper.get(net.minecraft.server.packs.PackType.CLIENT_RESOURCES).registerReloadListener(
+                new net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener() {
+                    @Override
+                    public net.minecraft.resources.ResourceLocation getFabricId() {
+                        return dev.warpbound.Warpbound.id("biped_motion");
+                    }
+
+                    @Override
+                    public void onResourceManagerReload(net.minecraft.server.packs.resources.ResourceManager manager) {
+                        dev.warpbound.client.entity.BipedMotion.clear();
+                    }
+                });
         // Обработчики пакетов в 1.20.5+ вызываются в потоке клиента, синхронизация не нужна
         ClientPlayNetworking.registerGlobalReceiver(ChaosSyncPayload.TYPE,
                 (payload, context) -> ClientChaosState.set(payload.data()));
@@ -126,7 +140,7 @@ public class WarpboundClient implements ClientModInitializer {
         }
         for (var t : dev.warpbound.entity.astartes.AstartesConcepts.TYPES) {
             var v = dev.warpbound.entity.astartes.AstartesConcepts.variantOf(t);
-            EntityRendererRegistry.register(t, ctx -> new dev.warpbound.client.entity.BipedConceptRenderer(ctx, v.model(), v.glow()));
+            EntityRendererRegistry.register(t, ctx -> new dev.warpbound.client.entity.BipedConceptRenderer(ctx, v.model(), v.glow(), v.height() / v.modelHeight()));
         }
         EntityRendererRegistry.register(dev.warpbound.gun.GunProjectiles.LAS_BOLT, dev.warpbound.client.gun.GunProjectileRenderers.Las::new);
         EntityRendererRegistry.register(dev.warpbound.gun.GunProjectiles.BOLT_ROUND, dev.warpbound.client.gun.GunProjectileRenderers.Bolt::new);

@@ -51,6 +51,11 @@ public final class WarpboundCommands {
     private static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("wb")
                 .requires(source -> source.hasPermission(2))
+                // форма тела: /wb gene astartes | thunder_warrior | human — модель, движения и рост (позже это сделает генная модификация)
+                .then(Commands.literal("gene")
+                        .then(Commands.literal("human").executes(ctx -> gene(ctx, dev.warpbound.player.GeneForm.HUMAN)))
+                        .then(Commands.literal("thunder_warrior").executes(ctx -> gene(ctx, dev.warpbound.player.GeneForm.THUNDER_WARRIOR)))
+                        .then(Commands.literal("astartes").executes(ctx -> gene(ctx, dev.warpbound.player.GeneForm.ASTARTES))))
                 .then(Commands.literal("chaos")
                         .then(Commands.literal("get").executes(WarpboundCommands::chaosGet))
                         .then(Commands.literal("add")
@@ -233,6 +238,12 @@ public final class WarpboundCommands {
     }
 
     // --- Хаос ---
+
+    private static int gene(CommandContext<CommandSourceStack> ctx, dev.warpbound.player.GeneForm form) throws CommandSyntaxException {
+        dev.warpbound.player.GeneForms.set(ctx.getSource().getPlayerOrException(), form);
+        ok(ctx, "Форма тела: " + form.getSerializedName());
+        return 1;
+    }
 
     private static int chaosGet(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         ChaosData d = ChaosLogic.get(ctx.getSource().getPlayerOrException());
